@@ -1,56 +1,21 @@
-name: "Finist'R, édition 2022"
+name: "Finist'R, édition 2023"
 output_dir: "./build"
 navbar:
- title: "Finist'R 2022"
+ title: "Finist'R 2023"
  left:
   - text: ""
     icon: fa-github
-    href: https://github.com/StateOfTheR/finistR2022
+    href: https://github.com/StateOfTheR/finistR2023
     
  right:
   - text: "Workflow"
     icon: fa-gear
-    menu:
-    - text: "Docker"
-      href: introDockeR.html
-    - text: "Git avancé"
-      href: rebase.html
-  - text: "Développement"
-    menu:
-    - text: "pipe"
-      href: pipe.html
-    - text: "future"
-      href: future.html
   - text: "Analyse de données et modélisation"
     icon: fas fa-chart-bar
-    menu:
-    - text: "Webscrapping"
-      href: webscraping.html
-    - text: "R et SIG"
-      href: sig_with_sf.html
-    - text: "R et Bayésien"
-      href: bayes3.html 
-    - text: "tidymodels"
-      href: tidymodels.html  
   - text: "Visualisation et interaction"
     icon: fas fa-chart-network
-    menu:
-    - text: "Shiny extension"
-      href: extensionShiny.html
-    - text: "Visualisation de réseaux"
-      href: graphViz.html
-    - text: "Addins"
-      href: addins.html  
-  - text: "Quarto"
-    icon: fa-microphone
-    href: QuartoTest.html
   - text: "Machine learning"
-    menu:
-    - text: "Différentiation automatique"
-      href: autodiff.html
-    - text: "Autoencodeurs variationnels"
-      href: vae.html
-      
+
 output:
   html_document:
     theme: flatly
