@@ -1,17 +1,43 @@
 ---
 title: "R INLA"
 format: html
+toc: true
 author: 
   - Pierre Barbillon
   - Isabelle Sanchez
   - Jérémy Lamouroux
   - Félix Cheysson
+  - Théodore Vanrenterghem
 ---
 
-## Instalation de INLA
+## Introduction
+
+Présentation de la methodologie INLA (integrated nested Laplace approximation) en utilisant les package {INLA} et sa surcouche {inlabru}.
+
+L'approximation de Laplace intégrée et imbriquée (INLA) est une approche de l'inférence statistique pour les modèles de champs aléatoires gaussiens latents (GMRF) introduite par Rue et Martino (2006). Elle fournit une alternative rapide et déterministe au MCMC qui était l'outil standard pour l'inférence de tels modèles. Le principal avantage de l'approche INLA par rapport à la MCMC est qu'elle est beaucoup plus rapide à calculer.
+
+
+{inlabru} est une surcouche du package INLA, qui facilite l'utilisation du package R {INLA} en simplifiant la syntaxe. Ce package intègre deux extensions : 
+- Modèles de type GAM (pour intégrer des prédicteurs non linéaires)
+- Processus de Cox log-Gaussien  pour modéliser des processus univariés et spatiaux basés sur des données de comptages.
+
+
+Sources : 
+
+-   <https://www.r-inla.org/home>
+
+-   <https://inla.r-inla-download.org/r-inla.org/doc/inla-manual/inla-manual.pdf>
+
+-   <https://sites.google.com/inlabru.org/inlabru/home>
+
+-   <https://inlabru-org.github.io/inlabru/index.html>
+
+## Installation de INLA
 
 ```{r}
 #| eval: false
+# Base de R INLA
 install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+# inlabru wrapper
+install.packages("inlabru")
 ```
-
