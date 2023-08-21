@@ -1,9 +1,17 @@
 ---
 title: "R INLA"
 format: html
+author: 
+  - Pierre Barbillon
+  - Isabelle Sanchez
+  - Jérémy Lamouroux
+  - Félix Cheysson
 ---
 
+## Instalation de INLA
 
+```{r}
+#| eval: false
+install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+```
 
-
-## 
