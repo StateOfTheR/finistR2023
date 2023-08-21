@@ -130,4 +130,52 @@ summary(fit5.glmm.bru)
 
 ### Exemple 2
 
+```{r package-1}
+#| message: false
+#| warning: false
+library(ggplot2)
+library(ggpolypath)
+library(RColorBrewer)
+```
+
+Dans le jeu de données gorillas on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude)
+
+```{r data-set-2}
+data(gorillas, package = "inlabru")
+```
+
+
+```{r extract-value}
+nests <- gorillas$nests
+mesh <- gorillas$mesh
+boundary <- gorillas$boundary
+gcov <- gorillas$gcov
+
+summary(gcov$vegetation)
+```
+
+
+
+
+```{r plot-without-mesh}
+ggplot() +
+  gg(gcov$vegetation) +
+  gg(boundary) +
+  gg(nests, color = "white", cex = 0.5) +
+  coord_equal()
+```
+
+```{r plot-mesh}
+ggplot() +
+  gg(gcov$vegetation) +
+  gg(mesh) +
+  gg(boundary) +
+  gg(nests, color = "white", cex = 0.5) +
+  coord_equal()
+```
+
+```{r formules-3}
+comp1 <- coordinates ~ vegetation(gcov$vegetation, model = "factor_full") - 1
+comp1alt <- coordinates ~ vegetation(gcov$vegetation, model = "factor_contrast") + 1
+```
 
