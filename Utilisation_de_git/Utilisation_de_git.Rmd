@@ -34,3 +34,7 @@ L'objectif de cet atelier est de progresser dans notre utilisation de git. En pa
 # Test conflit
 
 test
+
+
+#Test conflit v2 
+pull, push 
