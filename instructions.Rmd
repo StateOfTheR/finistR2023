@@ -1,0 +1,80 @@
+---
+title: "Instructions pour le dépot sur le site web"
+author: "Julie Aubert, Julien Chiquet, Marie-Pierre Étienne"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Processus de mise en commun des ateliers
+
+* Créer une branche propre à l'atelier nommée explicitement `mon_nom_parlant` et basculer dessus
+
+` git checkout -b mon_nom_parlant` 
+
+*  Créer un fichier Rmarkdown de restitution de votre atelier `fichier.Rmd` dans votre branche
+
+` git add fichier.Rmd `
+
+` git commit -m "restitution atelier" `
+
+* Pousser vos modifications sur le serveur distant
+ 
+` git  push --set-upstream origin mon_nom_parlant` ou 
+
+` git  push ` 
+
+* Faire une pull request (PR) sur github
+
+- indiquer dans le message de la PR la liste des packages ou autres besoins
+
+* Quand la PR passe les tests, demander le merge.
+
+- corriger les erreurs éventuelles dans la compilation du Rmarkdown
+- les admins peuvent avoir à mettre à jour l'image docker
+
+
+## Détails du fonctionnement
+
+
+### Le docker 
+
+Lien vers la fiche pense-bête : [https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf]
+
+Pour créer des images Docker en local sur sa machine, voici une liste de commandes utiles
+
+- Pour construire une image docker, il faut créer un fichier Dockerfile qui contient la recette du Docker. Pour ce site le ficher Dockerfile a la forme suivante
+
+```{r engine='bash', comment='', echo = FALSE}
+cat Dockerfile
+```
+
+puis demander la construction  de  l'image à l'aide de la commande
+
+```{r docker_build, comment='', echo = TRUE, eval = FALSE}
+ docker build -t nom_depot_dockerhub/nom_du_repo:version  . ## avec un nom
+```
+
+et enfin pousser sur  Dockerhub
+
+```{r docker_push, echo = TRUE, eval = FALSE}
+
+ docker push nom_depot_dockerhub/nom_du_repo:version
+```
+
+
+### Les actions
+
+Dans les action de Github, on peut spécifier un container docker à utiliser, c'est ce que fait la ligne container du fichier d'action suivant, utiliser pour créer ce site web
+
+
+```{r engine='bash', comment='', echo = FALSE}
+cat .github/workflows/website.yml 
+```
+
+
+
