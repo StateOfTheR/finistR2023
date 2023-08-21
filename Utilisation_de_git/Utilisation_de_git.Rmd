@@ -43,8 +43,12 @@ Ce coup ci c'est la bonne
 #Test conflit v2 
 pull, push 
 
+<<<<<<< HEAD
 
 
 
 # Test Annaig conflit 
 test 
+=======
+# Annaig fait des conflits 
+>>>>>>> 508b46cab0a566275ffc4c93136e6996900084a5
