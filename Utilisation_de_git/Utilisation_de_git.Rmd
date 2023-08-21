@@ -1,0 +1,34 @@
+---
+title: "FinistR : Utilisation de git"
+date: "du 21 au 25 août 2023"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+library(tidyverse)
+```
+
+# Introduction
+
+L'objectif de cet atelier est de progresser dans notre utilisation de git. En particulier pour ce bootcamp, on veut voir comment intéragir avec le dépot finisR2023 (pull request, proposer un fichier markdown, ...) 
+
+
+# Brainstorming
+
+- faire un repo propre, avec des logos, des sections, ...
+
+
+# Commandes à suivre
+
+- Créer une nouvelle branche : git branch nom_branche
+- Se déplacer sur la nouvelle branche : git checkout nom_branche
+- Ajouter le fichier RMD : git add
+- Pusher la nouvelle branche : git push --set-upstream origin Utilisation_de_git
+
+
+
+
