@@ -22,6 +22,7 @@ L'objectif de cet atelier est de progresser dans notre utilisation de git. En pa
 - faire un repo propre, avec des logos, des sections, ...
 
 
+
 # Commandes à suivre
 
 - Créer une nouvelle branche : git branch nom_branche
@@ -31,4 +32,9 @@ L'objectif de cet atelier est de progresser dans notre utilisation de git. En pa
 
 
 
+
+
+# Test conflits git 
+
+test
 
