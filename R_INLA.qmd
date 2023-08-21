@@ -106,7 +106,28 @@ Pour prendre en compte le problème classique de surdispersion dans les données
 ```{r effet-aleatoire}
 cmp3 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200)
 
-fit3.glmm.bru <- bru(cmp3, family = "poisson", data = awards )
+fit3.glmm.bru <- bru(cmp3, family = "poisson", data = awards)
 summary(fit3.glmm.bru)
 ```
+
+#### Comparaison avec l'approche fréquentiste 
+
+```{r freq2}
+cmp4<- num_awards ~ math + (1|id)
+fit4.glmm<-glmer(cmp4, family = poisson, data = awards)
+summary(fit4.glmm)
+```
+
+On remarque que les résultats sont un peu moins comparables. Pour rendre les résultats comparable, il suffit de modifier les options de modélisation de l'effet aléatoire. 
+
+```{r effet-aleatoire-2}
+cmp5 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200,
+                                                 hyper=list(prec=list(param=c(10,0.1),
+                                                                      prior="pc.prec")))
+fit5.glmm.bru <- bru(cmp5, family = "poisson", data = awards )
+summary(fit5.glmm.bru)
+```
+
+### Exemple 2
+
 
