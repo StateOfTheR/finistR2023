@@ -22,7 +22,7 @@ L'objectif de cet atelier est de progresser dans notre utilisation de git. En pa
 - faire un repo propre, avec des logos, des sections, ...
 
 
-# Commandes à faire
+# Commandes à suivre
 
 - Créer une nouvelle branche : git branch nom_branche
 - Se déplacer sur la nouvelle branche : git checkout nom_branche
