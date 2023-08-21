@@ -21,3 +21,14 @@ L'objectif de cet atelier est de progresser dans notre utilisation de git. En pa
 
 - faire un repo propre, avec des logos, des sections, ...
 
+
+# Commandes à faire
+
+- Créer une nouvelle branche : git branch nom_branche
+- Se déplacer sur la nouvelle branche : git checkout nom_branche
+- Ajouter le fichier RMD : git add
+- Pusher la nouvelle branche : git push --set-upstream origin Utilisation_de_git
+
+
+
+
