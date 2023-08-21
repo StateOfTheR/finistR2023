@@ -39,3 +39,6 @@ test
 # Test conflits encore et encore
 
 Ce coup ci c'est la bonne
+
+#Test conflit v2 
+pull, push 
