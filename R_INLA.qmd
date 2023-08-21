@@ -41,3 +41,72 @@ install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-dow
 # inlabru wrapper
 install.packages("inlabru")
 ```
+
+
+## Utilisation
+
+### Exemple 1
+
+#### Setup
+
+```{r loading}
+#| warning: false
+#| message: false
+# Chargement des packages
+library(inlabru)
+library(lme4) # pour comparer avec l'approche frequentiste 
+```
+
+Le dataset `awards` contient le nombre de réussites (`num_awards`) en math (`math`) pour une classe de 200 élèves. La réponse mesurée étant un comptage, nous devons spécifier un modèle généralisé avec fonction de lien Poisson. 
+
+```{r data-set}
+# Chargement des donnees
+load("data/awards.RData")
+head(awards)
+```
+
+La fonction `bru_options_set` permet de fixer des options sur des paramètres spécifiques à INLA.
+
+```{r set-options}
+bru_options_set(bru_verbose = TRUE,
+                control.compute = list(dic = TRUE, waic = TRUE))
+```
+
+On peut récupérer ces paramètres avec :
+
+```{r get-options}
+#| eval: false
+bru_options_get()
+```
+
+#### Application
+
+```{r first-apply}
+# Formulation du modele
+cmp1 <- num_awards ~ math + 1
+# Application de la formule avec un modèle de Poisson
+fit.glm.bru <- bru(cmp1, family = "poisson", data = awards)
+summary(fit.glm.bru)
+```
+
+#### Comparaison avec un GLM
+
+```{r glm1}
+cmp2 <- num_awards ~ math
+fit2.glm <- glm(cmp2, family="poisson", data = awards)
+summary(fit2.glm)
+```
+
+Les réponses sont proches. 
+
+#### Intégration d'un effet aléatoire
+
+Pour prendre en compte le problème classique de surdispersion dans les données de comptages, il peut être intéréssant de rajouter un effet aléatoire de la manière suivante.
+
+```{r effet-aleatoire}
+cmp3 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200)
+
+fit3.glmm.bru <- bru(cmp3, family = "poisson", data = awards )
+summary(fit3.glmm.bru)
+```
+
