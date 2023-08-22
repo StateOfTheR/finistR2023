@@ -15,7 +15,7 @@ website:
         href: https://github.com/StateOfTheR/finistR2023
         aria-label: GitHub
       - text: inla
-        href: RINLA.qmd
+        href: R_INLA.qmd
         aria-label: GitHub
 
 
