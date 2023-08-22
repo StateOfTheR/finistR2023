@@ -195,7 +195,8 @@ Pour construire un modèle expliquant les comptages de gorilles avec leurs répa
 
 Après avoir défini la formule du modèle, on estime les paramètres en utilisant la fonction `lgcp()` qui permet de modéliser un processus log-normalisé de Cox. Cette fonction est une sour-couche de la fonction de base `bru()`.
 
-Le LGCP est un modèle probabiliste de processus ponctuel observé dans un tissu spatial ou temporel.
+Le LGCP est un modèle probabiliste de processus ponctuel observé dans un tissu spatial ou temporel. 
+
 
 ```{r}
 fit1 <- lgcp(components = comp1, # formule du modèle
@@ -219,5 +220,11 @@ ggplot() +
 ```
 
 
+## References
 
+<https://www.pymc.io/projects/examples/en/latest/gaussian_processes/log-gaussian-cox-process.html>
 
+Fabian E. Bachl, Finn Lindgren, David L. Borchers, and Janine B. Illian (2019), inlabru: an R package for Bayesian spatial modelling from ecological survey data, Methods in Ecology and Evolution, British
+Ecological Society, 10, 760--766, doi:10.1111/2041-210X.13168
+
+Funwi-Gabga, N. and Mateu, J. (2012) Understanding the nesting spatial behaviour of gorillas in the Kagwene Sanctuary, Cameroon. Stochastic Environmental Research and Risk Assessment 26 (6), 793-811.
