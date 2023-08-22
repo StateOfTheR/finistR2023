@@ -144,7 +144,7 @@ PLN <-
 
 ### Évaluation du temps de calcul
 
-On crée une instance avec les données appropriée
+On crée une instance avec les données appropriées
 
 ```{r torch-pln-instantiate}
 Y <- oaks$Abundance
@@ -157,7 +157,7 @@ Testons notre implémentation simple de PLN utilisant R-torch:
 
 ```{r torch-pln-fit}
 system.time(myPLN$fit(1000, lr = 0.05, tol = 1e-9))
-plot(-myPLN$ELBO_list, type="l", log ='y')
+plot(-myPLN$ELBO_list, type="l")
 ```
 
 En fait, un backend torch est déjà disponible dans le package `PLNmodels`
@@ -166,13 +166,15 @@ En fait, un backend torch est déjà disponible dans le package `PLNmodels`
 system.time(myPLN_torch <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks, control = PLN_param(backend = 'torch', config_optim = list(lr = 0.01))))
 ```
 
+Les vraisemblances finales sont comparables
+
 ```{r elbo-comparison}
 myPLN_nlopt$loglik
 myPLN_torch$loglik
 myPLN$loglik
 ```
 
-
+Ainsi que les paramètres
 ```{r}
 plot(myPLN$B,
      myPLN_nlopt$model_par$B); abline(0, 1)
