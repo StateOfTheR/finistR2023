@@ -1,10 +1,8 @@
 ---
 title: "FinistR : bootcamp R à Roscoff"
+format: html
+toc: true
 date: "du 21 au 25 août 2023"
-output: 
-  html_document:
-   toc: true
-   toc_float: true
 ---
 
 ```{r setup, include=FALSE}
