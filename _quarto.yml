@@ -10,7 +10,7 @@ website:
         aria-label: GitHub
       - text: "Instructions"
         href: instructions.qmd
-    left:
+    right:
       - text: workflow
         href: https://github.com/StateOfTheR/finistR2023
         aria-label: GitHub
