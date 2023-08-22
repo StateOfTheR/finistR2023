@@ -49,6 +49,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#historique" id="toc-historique" class="nav-link" data-scroll-target="#historique">Historique</a>
   <ul class="collapse">
   <li><a href="#conclusion-intermédiaire" id="toc-conclusion-intermédiaire" class="nav-link" data-scroll-target="#conclusion-intermédiaire">Conclusion intermédiaire</a></li>
+  <li><a href="#arbre-de-la-branche" id="toc-arbre-de-la-branche" class="nav-link" data-scroll-target="#arbre-de-la-branche">Arbre de la branche</a></li>
   </ul></li>
   <li><a href="#commandes-utilisées" id="toc-commandes-utilisées" class="nav-link" data-scroll-target="#commandes-utilisées">Commandes utilisées</a></li>
   <li><a href="#brainstorming" id="toc-brainstorming" class="nav-link" data-scroll-target="#brainstorming">Brainstorming</a></li>
@@ -134,7 +135,23 @@ git push --set-upstream origin Utilisation_de_git </code></pre>
 <p>On s’est dit que l’on avait pas bien géré le problème, qu’on aurait du configurer le pull de la façon suivante de façon à ce que git gère automatiquement le conflit.</p>
 <p><code>git config pull.rebase false</code></p>
 <p>On a fait ce test et voici les résultats.</p>
-<p>1971 21/08/23 17:56:01 git pull –rebase 1972 21/08/23 17:56:01 cd 1973 21/08/23 17:56:01 cd finistR2023/Utilisation_de_git/ 1974 21/08/23 17:56:01 nvim Utilisation_de_git.Rmd 1975 21/08/23 17:56:01 cd .. 1976 21/08/23 17:56:01 git status 1977 21/08/23 17:56:01 git add . 1978 21/08/23 17:56:01 git commit -m “merge conflicts” 1979 21/08/23 17:56:01 git push 1980 21/08/23 17:56:01 git branch 1981 21/08/23 17:56:01 git rebase –continue 1982 21/08/23 17:56:01 git status 1983 21/08/23 17:56:01 git push</p>
+</section>
+<section id="arbre-de-la-branche" class="level2">
+<h2 class="anchored" data-anchor-id="arbre-de-la-branche">Arbre de la branche</h2>
+<p><img src="arbre_git_1.png" class="img-fluid"></p>
+<pre><code>1971  21/08/23 17:56:01 git pull --rebase
+1972  21/08/23 17:56:01 cd 
+1973  21/08/23 17:56:01 cd finistR2023/Utilisation_de_git/
+1974  21/08/23 17:56:01 nvim Utilisation_de_git.Rmd 
+1975  21/08/23 17:56:01 cd ..
+1976  21/08/23 17:56:01 git status
+1977  21/08/23 17:56:01 git add .
+1978  21/08/23 17:56:01 git commit -m "merge conflicts"
+1979  21/08/23 17:56:01 git push
+1980  21/08/23 17:56:01 git branch
+1981  21/08/23 17:56:01 git rebase --continue
+1982  21/08/23 17:56:01 git status
+1983  21/08/23 17:56:01 git push</code></pre>
 </section>
 </section>
 <section id="commandes-utilisées" class="level1">

@@ -96,22 +96,24 @@ On s'est dit que l'on avait pas bien géré le problème, qu'on aurait du config
 
 On a fait ce test et voici les résultats.
 
+## Arbre de la branche 
+
+![](arbre_git_1.png)
 
 
-
-1971  21/08/23 17:56:01 git pull --rebase
- 1972  21/08/23 17:56:01 cd 
- 1973  21/08/23 17:56:01 cd finistR2023/Utilisation_de_git/
- 1974  21/08/23 17:56:01 nvim Utilisation_de_git.Rmd 
- 1975  21/08/23 17:56:01 cd ..
- 1976  21/08/23 17:56:01 git status
- 1977  21/08/23 17:56:01 git add .
- 1978  21/08/23 17:56:01 git commit -m "merge conflicts"
- 1979  21/08/23 17:56:01 git push
- 1980  21/08/23 17:56:01 git branch
- 1981  21/08/23 17:56:01 git rebase --continue
- 1982  21/08/23 17:56:01 git status
- 1983  21/08/23 17:56:01 git push
+    1971  21/08/23 17:56:01 git pull --rebase
+    1972  21/08/23 17:56:01 cd 
+    1973  21/08/23 17:56:01 cd finistR2023/Utilisation_de_git/
+    1974  21/08/23 17:56:01 nvim Utilisation_de_git.Rmd 
+    1975  21/08/23 17:56:01 cd ..
+    1976  21/08/23 17:56:01 git status
+    1977  21/08/23 17:56:01 git add .
+    1978  21/08/23 17:56:01 git commit -m "merge conflicts"
+    1979  21/08/23 17:56:01 git push
+    1980  21/08/23 17:56:01 git branch
+    1981  21/08/23 17:56:01 git rebase --continue
+    1982  21/08/23 17:56:01 git status
+    1983  21/08/23 17:56:01 git push
 
 
 # Commandes utilisées
