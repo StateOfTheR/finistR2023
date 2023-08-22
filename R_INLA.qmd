@@ -8,6 +8,7 @@ author:
   - Jérémy Lamouroux
   - Félix Cheysson
   - Théodore Vanrenterghem
+date: 20/08/2023
 ---
 
 ## Introduction
@@ -55,6 +56,9 @@ install.packages("inlabru")
 # Chargement des packages
 library(inlabru)
 library(lme4) # pour comparer avec l'approche frequentiste 
+library(ggplot2)
+library(ggpolypath)
+library(RColorBrewer)
 ```
 
 Le dataset `awards` contient le nombre de réussites (`num_awards`) en math (`math`) pour une classe de 200 élèves. La réponse mesurée étant un comptage, nous devons spécifier un modèle généralisé avec fonction de lien Poisson. 
@@ -118,7 +122,7 @@ fit4.glmm<-glmer(cmp4, family = poisson, data = awards)
 summary(fit4.glmm)
 ```
 
-On remarque que les résultats sont un peu moins comparables. Pour rendre les résultats comparable, il suffit de modifier les options de modélisation de l'effet aléatoire. 
+On remarque que les résultats sont un peu moins comparables. Pour se rapprocher de `glmer()`, il suffit de modifier les options de modélisation de l'effet aléatoire. 
 
 ```{r effet-aleatoire-2}
 cmp5 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200,
@@ -130,20 +134,14 @@ summary(fit5.glmm.bru)
 
 ### Exemple 2
 
-```{r package-1}
-#| message: false
-#| warning: false
-library(ggplot2)
-library(ggpolypath)
-library(RColorBrewer)
-```
 
-Dans le jeu de données gorillas on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude)
+Dans le jeu de données gorillas on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).
 
 ```{r data-set-2}
 data(gorillas, package = "inlabru")
 ```
 
+On importe l'objet liste `gorillas` qui contient 4 sous-listes contenant les localisations d'habitats de gorilles (`nests`), le maillage de la zone d'intérêt (`mesh`), la frontière du domaine (`boundary`) et les variables explicatives (`gcov`).
 
 ```{r extract-value}
 nests <- gorillas$nests
@@ -154,7 +152,15 @@ gcov <- gorillas$gcov
 summary(gcov$vegetation)
 ```
 
+La construction du maillage peut se faire avec les fonctions de {INLA}:
 
+- `inla.mesh.2d()`,
+- `inla.mesh.create()`, 
+- `inla.mesh.1d()`, 
+- `inla.mesh.basis()`,
+- `inla.spde2.pcmatern()`.
+
+voir la vignette suivante pour quelques exemples: https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html.
 
 
 ```{r plot-without-mesh}
@@ -174,8 +180,44 @@ ggplot() +
   coord_equal()
 ```
 
+Les graphiques ci-dessus permettent de visualiser les différentes types de végétaions ainsi que les localisations d'habitats de gorilles dans la zone d'étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction `gg()` permettant avac la grammaire ggplot2 de rajouter les différentes couches d'informations.
+
 ```{r formules-3}
 comp1 <- coordinates ~ vegetation(gcov$vegetation, model = "factor_full") - 1
 comp1alt <- coordinates ~ vegetation(gcov$vegetation, model = "factor_contrast") + 1
 ```
+
+Pour construire un modèle expliquant les comptages de gorilles avec leurs répartitions dans la zone d'étude et prenant en compte les types de végatations, nous définissons la formule avec:
+
+- `coordinates()` la fonction de {sp} de récupération des coordonnées des habitats dans l'objet nests
+- `vegetation` sera le mot utilisé dans les sorties du modèle faisant référence à la variable explicative `gcov$vegetation` (possible d'écrire le mot que l'on veut...)
+- `model = "factor_full"` est pour indiquer que la variable explicative est un facteur. Il est possible d'utiliser "factor_full", "factor_contrast" etc... suivant les types de contraintes que l'on souhaite appliquer au modèle. "factor_full" indique estimations de toutes les modalités mais il faut alors supprimer l'intercept afin d'être dans un cas identifiable.
+
+Après avoir défini la formule du modèle, on estime les paramètres en utilisant la fonction `lgcp()` qui permet de modéliser un processus log-normalisé de Cox. Cette fonction est une sour-couche de la fonction de base `bru()`.
+
+Le LGCP est un modèle probabiliste de processus ponctuel observé dans un tissu spatial ou temporel.
+
+```{r}
+fit1 <- lgcp(components = comp1, # formule du modèle
+             data = nests,       # data set
+             samplers = boundary,  # frontière de la zone d'étude
+             domain = list(coordinates = mesh) # maillage de la zone
+             )
+```
+
+`fit1` estime l'intensité des présences de gorilles dans la zone d'étude. Il est alors possible de représenter l'intensité moyenne de ces habitats:
+
+```{r}
+pred.df <- fm_pixels(mesh, mask = boundary, format = "sp")
+int1 <- predict(fit1, pred.df, ~ exp(vegetation))
+
+ggplot() +
+  gg(int1) +
+  gg(boundary, alpha = 0, lwd = 2) +
+  gg(nests, color = "DarkGreen") +
+  coord_equal()
+```
+
+
+
 
