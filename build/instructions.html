@@ -11,7 +11,7 @@
 
 <meta name="author" content="Julie Aubert, Julien Chiquet, Marie-Pierre Étienne" />
 
-<meta name="date" content="2023-08-21" />
+<meta name="date" content="2023-08-22" />
 
 <title>Instructions pour le dépot sur le site web</title>
 
@@ -368,7 +368,7 @@ $(document).ready(function () {
 web</h1>
 <h4 class="author">Julie Aubert, Julien Chiquet, Marie-Pierre
 Étienne</h4>
-<h4 class="date">2023-08-21</h4>
+<h4 class="date">2023-08-22</h4>
 
 </div>
 
@@ -440,11 +440,8 @@ RUN apt-get update \
   mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \ 
   libc6-i386
   
-RUN R -e &quot;install.packages(&#39;rjags&#39;)&quot;
-RUN R -e &quot;install.packages(&#39;nimble&#39;)&quot;
-RUN R -e &quot;install.packages(&#39;ggmcmc&#39;)&quot;
-RUN R -e &quot;install.packages(&#39;rstan&#39;)&quot;
-RUN R -e &quot;install.packages(&#39;coda&#39;)&quot;
+  
+RUN R -e &quot;install.packages(&quot;INLA&quot;,repos=c(getOption(&#39;repos&#39;),INLA=&#39;https://inla.r-inla-download.org/R/stable&#39;), dep=TRUE)&quot;
 RUN R -e &quot;install.packages(&#39;reticulate&#39;)&quot;</code></pre>
 <p>puis demander la construction de l’image à l’aide de la commande</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> docker build <span class="sc">-</span>t nom_depot_dockerhub<span class="sc">/</span>nom_du_repo<span class="sc">:</span>version  . <span class="do">## avec un nom</span></span></code></pre></div>
