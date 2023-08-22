@@ -137,13 +137,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023"><i class="bi bi-fa-github" role="img">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023"><i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
  </a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./instructions.html" aria-current="page">Instructions</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023">workflow</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./R_INLA.html">inla</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -264,7 +272,7 @@ RUN apt-get update \
   
 RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 RUN R -e "install.packages('reticulate')"
-RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer'))"</code></pre>
+RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"</code></pre>
 </div>
 </div>
 <p>puis demander la construction de l’image à l’aide de la commande</p>
@@ -291,7 +299,7 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.1
+    container: stateofther/r-finistr2023:0.2
 
     steps:
       - name: Checkout repository
