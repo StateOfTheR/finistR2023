@@ -55,6 +55,7 @@ install.packages("inlabru")
 #| message: false
 # Chargement des packages
 library(inlabru)
+library(INLA)
 library(lme4) # pour comparer avec l'approche frequentiste 
 library(ggplot2)
 library(ggpolypath)
@@ -162,6 +163,7 @@ La construction du maillage peut se faire avec les fonctions de {INLA}:
 
 voir la vignette suivante pour quelques exemples: https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html.
 
+#### Visualisation des données gorilles
 
 ```{r plot-without-mesh}
 ggplot() +
@@ -181,6 +183,8 @@ ggplot() +
 ```
 
 Les graphiques ci-dessus permettent de visualiser les différentes types de végétaions ainsi que les localisations d'habitats de gorilles dans la zone d'étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction `gg()` permettant avac la grammaire ggplot2 de rajouter les différentes couches d'informations.
+
+#### Modèle 1
 
 ```{r formules-3}
 comp1 <- coordinates ~ vegetation(gcov$vegetation, model = "factor_full") - 1
@@ -238,13 +242,103 @@ sum(ips$weight) # some des surfaces de chaque triangle du mesh
 sf::st_area(sf::st_as_sf(boundary))
 ```
 
+#### Modèle avec utilisation SPDE
+
+Dans cette section, nous allons essayre d'expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matern en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la forule du modèle INLA.
+
+```{r}
+pcmatern <- inla.spde2.pcmatern(mesh,
+  prior.sigma = c(0.1, 0.01),
+  prior.range = c(0.1, 0.01)
+)
+
+comp2 <- coordinates ~
+            -1 +
+            vegetation(gcov$vegetation, model = "factor_full") +
+            mySmooth(coordinates, model = pcmatern)
+
+fit2 <- lgcp(components = comp2, 
+             data = nests, 
+             samplers = boundary, 
+             domain = list(coordinates = mesh))
+```
+
+On représente l'intensité médiane de la surface:
+
+```{r}
+int2 <- predict(fit2, pred.df, ~ exp(mySmooth + vegetation), n.samples = 1000)
+
+ggplot() +
+  gg(int2, aes(fill = q0.025)) +
+  gg(boundary, alpha = 0, lwd = 2) +
+  gg(nests) +
+  coord_equal()
+```
+
+et l'intensité intégrée attendue (moyenne des abondances):
+
+```{r}
+Lambda2 <- predict(fit2,
+                   fm_int(mesh, boundary),
+                   ~ sum(weight * exp(mySmooth + vegetation)))
+
+Lambda2
+```
+
+Look at the contributions to the linear predictor from the SPDE and from vegetation.
+
+Examinons les contributions au prédicteur linéaire de la partie SPDE et de celle due à la végatation.
+
+La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du graphique. Dans cet exemple, on le définit tel que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.
+
+```{r}
+lp2 <- predict(fit2, 
+               pred.df, ~ list(
+                        smooth_veg = mySmooth + vegetation,
+                        smooth = mySmooth,
+                        veg = vegetation
+              ))
+
+lprange <- range(lp2$smooth_veg$median, lp2$smooth$median, lp2$veg$median)
+csc <- scale_fill_gradientn(colours = brewer.pal(9, "YlOrRd"), limits = lprange)
+
+plot.lp2 <- ggplot() +
+  gg(lp2$smooth_veg) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("mySmooth + vegetation") +
+  coord_equal()
+
+plot.lp2.spde <- ggplot() +
+  gg(lp2$smooth) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("mySmooth") +
+  coord_equal()
+
+plot.lp2.veg <- ggplot() +
+  gg(lp2$veg) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("vegetation") +
+  coord_equal()
+
+multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, cols = 3)
+```
+
+
+
+
 
 
 ## References
 
-<https://www.pymc.io/projects/examples/en/latest/gaussian_processes/log-gaussian-cox-process.html>
-
-Fabian E. Bachl, Finn Lindgren, David L. Borchers, and Janine B. Illian (2019), inlabru: an R package for Bayesian spatial modelling from ecological survey data, Methods in Ecology and Evolution, British
+1. <https://www.pymc.io/projects/examples/en/latest/gaussian_processes/log-gaussian-cox-process.html>
+1. Fabian E. Bachl, Finn Lindgren, David L. Borchers, and Janine B. Illian (2019), inlabru: an R package for Bayesian spatial modelling from ecological survey data, Methods in Ecology and Evolution, British
 Ecological Society, 10, 760--766, doi:10.1111/2041-210X.13168
-
-Funwi-Gabga, N. and Mateu, J. (2012) Understanding the nesting spatial behaviour of gorillas in the Kagwene Sanctuary, Cameroon. Stochastic Environmental Research and Risk Assessment 26 (6), 793-811.
+1. Funwi-Gabga, N. and Mateu, J. (2012) Understanding the nesting spatial behaviour of gorillas in the Kagwene Sanctuary, Cameroon. Stochastic Environmental Research and Risk Assessment 26 (6), 793-811.
+1. https://www.muscardinus.be/2018/07/inlabru-bru/
+1. https://inlabru-org.github.io/inlabru/index.html
