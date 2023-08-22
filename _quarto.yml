@@ -42,8 +42,12 @@ website:
         href: https://github.com/StateOfTheR/finistR2023
         aria-label: GitHub
       - text: inla
+<<<<<<< HEAD
         href: RINLA.qmd
 >>>>>>> f04efc2 (add link to inla)
+=======
+        href: R_INLA.qmd
+>>>>>>> b12ca05 (Correct ref to R_INLA)
         aria-label: GitHub
 
 
