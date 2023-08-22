@@ -90,6 +90,9 @@ bru_options_get()
 
 #### Application
 
+Nous expliquons le nombre de récompenses obtenues en fonction de la note en math suivant le modèle 
+$$Y_i\overset{ind}{\sim}\mathcal{P}(\exp(\mu+\alpha\cdot x_i))\,.$$
+
 ```{r first-apply}
 # Formulation du modele
 cmp1 <- num_awards ~ math + 1
@@ -110,7 +113,10 @@ Les réponses sont proches.
 
 #### Intégration d'un effet aléatoire
 
-Pour prendre en compte le problème classique de surdispersion dans les données de comptages, il peut être intéréssant de rajouter un effet aléatoire de la manière suivante.
+Pour prendre en compte le problème classique de surdispersion dans les données de comptages, il peut être intéressant de rajouter un effet aléatoire de la manière suivante.
+
+$$Y_i\overset{ind}{\sim}\mathcal{P}(\exp(\mu+\alpha\cdot x_i+E_i)) \quad \text{avec}\quad E_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2).$$
+
 
 ```{r effet-aleatoire}
 cmp3 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200)
@@ -127,7 +133,7 @@ fit4.glmm<-glmer(cmp4, family = poisson, data = awards)
 summary(fit4.glmm)
 ```
 
-On remarque que les résultats sont un peu moins comparables. Pour se rapprocher de `glmer()`, il suffit de modifier les options de modélisation de l'effet aléatoire. 
+On remarque que les résultats sont un peu moins comparables. Pour se rapprocher de `glmer()`, on peut modifier la loi a priori sur l'effet aléatoire. 
 
 ```{r effet-aleatoire-2}
 cmp5 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200,
@@ -190,6 +196,10 @@ Les graphiques ci-dessus permettent de visualiser les différentes types de vég
 
 #### Modèle 1
 
+On peut supposer un processus ponctuel spatial d'intensité 
+$$\lambda(x,y)=\exp(\alpha_i(x,y))$$
+où $\alpha$ est un paramètre correspondant à un type de végétation (modélisation factor full sans intercept donc).
+
 ```{r formules-3}
 comp1 <- coordinates ~ vegetation(gcov$vegetation, model = "factor_full") - 1
 comp1alt <- coordinates ~ vegetation(gcov$vegetation, model = "factor_contrast") + 1
@@ -248,6 +258,9 @@ sf::st_area(sf::st_as_sf(boundary)) # surface totale
 #### Modèle avec utilisation SPDE
 
 Dans cette section, nous allons essayre d'expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matern en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la forule du modèle INLA.
+Le modèle intègre alors un champ gaussien avec covariance de Matérn.
+$$\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))$$
+avec $\xi$ suivant un champ gaussien.
 
 ```{r spde-1}
 pcmatern <- inla.spde2.pcmatern(mesh,
@@ -455,7 +468,7 @@ ggplot(filter(predicted_field, metric == "range95")) +
   aes(x = x, y = y, fill = value) +
   geom_raster() +
   scale_fill_viridis_c()
-
+beepr::beep(3)
 ```
 
 
