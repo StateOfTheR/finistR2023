@@ -466,7 +466,6 @@ ggplot(filter(predicted_field, metric == "range95")) +
   aes(x = x, y = y, fill = value) +
   geom_raster() +
   scale_fill_viridis_c()
-beepr::beep(3)
 ```
 
 
