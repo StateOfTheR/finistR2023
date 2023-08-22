@@ -54,12 +54,16 @@ install.packages("inlabru")
 #| warning: false
 #| message: false
 # Chargement des packages
+library(INLA)
 library(inlabru)
 library(lme4) # pour comparer avec l'approche frequentiste 
 library(ggplot2)
 library(ggpolypath)
 library(RColorBrewer)
+library(geoR)
+library(tidyverse)
 ```
+
 
 Le dataset `awards` contient le nombre de réussites (`num_awards`) en math (`math`) pour une classe de 200 élèves. La réponse mesurée étant un comptage, nous devons spécifier un modèle généralisé avec fonction de lien Poisson. 
 
@@ -230,6 +234,136 @@ ips <- fm_int(mesh, boundary)
 Lambda1 <- predict(fit1, ips, ~ sum(weight * exp(vegetation)))
 Lambda1
 ```
+
+
+### Exemple 3
+
+Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre "Spatial and Spatio-temporal Bayesian Models with R-INLA.
+
+```{r}
+data(gambia, package = "geoR")
+# les coordonnées correspondent au village où se trouve les enfants
+# create one index for each of the 65 villages
+village_index <- unite(gambia, col = "lon_lat", sep = "_", "x", "y") %>% 
+  pull("lon_lat") %>% 
+  factor(labels = 1:65)
+gambia <- gambia %>%
+  add_column(village_index) 
+```
+
+On transforme les données et on transforme le jeu de données en type {SpatialPointsDataFrame}.
+```{r}
+gambia <- gambia %>%
+  mutate(x = x * 0.001, # to km
+         y = y * 0.001, # to km
+         age = age / 365) 
+coordinates(gambia) <- c("x", "y") 
+class(gambia)
+```
+On définit ensuite un maillage pour le champ spatial avec un maillage plus fin dans la zone où il y a des observations et qui "déborde" avec un maillage plus grossier.
+```{r}
+hull = inla.nonconvex.hull(gambia,convex = -0.1)
+gambia_mesh <- inla.mesh.2d(boundary = hull,
+                            offset = c(30, 60), max.edge = c(20,40))
+
+plot(gambia_mesh,main="",asp=1)
+points(gambia,pch=21,bg="white",cex=1.5,lwd=1.5)
+```
+
+On définit à partir du maillage le champ spatial spde qui correspond à un champ spatial gaussien avec une covariance Matérn. Nous considérons les lois a priori par défaut sur les paramètres de variance et de portée du champ spatial.
+```{r}
+gambia_spde <- inla.spde2.matern(mesh = gambia_mesh, alpha=2)
+```
+
+Tout est prêt pour définir le modèle à ajuster et son estimation :
+Pour l'enfant $j$ du village $i$, nous supposons 
+$$Y_{ij}|V_i\overset{ind}{\sim}b(p_{ij})$$
+avec $$S_i\sim GRF, \quad V_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2_V)$$
+et $$p_{ij}=\mu+\beta_1 \cdot treated_{ij}+\beta_2 \cdot netuse_{ij}+\beta_3 \cdot age_{ij}+\beta_4 \cdot green_{ij}+beta_5\cdot phc_{ij}+S_i+V_i.$$
+
+```{r}
+formula = pos ~ -1 +
+  Intercept(1) +
+  treated +
+  netuse +
+  age +
+  green +
+  phc +
+   spatial_field(coordinates, model=gambia_spde) +
+  village(village_index, model="iid")
+
+fit <- bru(components = formula,
+           data = gambia,
+           family= "binomial"
+)
+
+summary(fit)
+```
+
+
+
+On peut accéder aux distributions marginales des effets aléatoires et des hyperparamètres :
+```{r,eval=FALSE}
+fit$summary.random 
+fit$summary.hyperpar
+```
+
+
+Nous pouvons tracer les distributions a posteriori marginales des effets, par exemple :
+```{r}
+age <- fit$marginals.fixed[[4]]
+ggplot(data.frame(inla.smarginal(age)), aes(x, y)) +
+  geom_line() +
+  theme_bw()
+rfprecision <- fit$marginals.hyperpar$`Precision for village`
+ggplot(data.frame(inla.smarginal(rfprecision)), aes(x, y)) +
+  geom_line() +
+  theme_bw()
+```
+
+
+Nous essayons de représenter le champ gaussien latent
+
+```{r}
+domain_lims <- apply(hull$loc, 2, range)
+grd_dims <- round(c(x = diff(domain_lims[, 1]), 
+                    y = diff(domain_lims[, 2])) / 1)
+mesh_proj <- fm_evaluator(
+  gambia_mesh,
+  xlim = domain_lims[, 1], ylim = domain_lims[, 2], dims = grd_dims
+)
+
+spatial_field <- data.frame(
+  median = inla.link.invlogit(fit$summary.random$spatial_field$"0.5quant"),
+  range95 = (inla.link.invlogit(fit$summary.random$spatial_field$"0.975quant") -
+               inla.link.invlogit(fit$summary.random$spatial_field$"0.025quant"))
+)
+
+predicted_field <- fm_evaluate(mesh_proj, spatial_field) %>%
+  as.matrix() %>%
+  as.data.frame() %>%
+  bind_cols(expand.grid(x = mesh_proj$x, y = mesh_proj$y), .) %>%
+  pivot_longer(cols = -c("x", "y"),
+               names_to = "metric",
+               values_to = "value")
+# Median
+ggplot(filter(predicted_field, metric == "median")) +
+  aes(x = x, y = y, fill = value) +
+  geom_raster() +
+  scale_fill_viridis_c()
+# 95% range
+ggplot(filter(predicted_field, metric == "range95")) +
+  aes(x = x, y = y, fill = value) +
+  geom_raster() +
+  scale_fill_viridis_c()
+
+```
+
+
+
+
+
+
 
 
 
