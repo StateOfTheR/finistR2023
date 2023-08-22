@@ -8,16 +8,16 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2022:0.12
+    container: stateofther/r-finistr2023:0.2
 
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Generate slides
-        run: Rscript -e "rmarkdown::render_site(encoding = 'UTF-8')"
+        run: "quarto render"
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./_site

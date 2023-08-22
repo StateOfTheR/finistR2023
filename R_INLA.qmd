@@ -1,0 +1,479 @@
+---
+title: "R INLA"
+format: html
+toc: true
+author: 
+  - Pierre Barbillon
+  - Isabelle Sanchez
+  - Jérémy Lamouroux
+  - Félix Cheysson
+  - Théodore Vanrenterghem
+date: 20/08/2023
+---
+
+## Introduction
+
+Présentation de la méthodologie INLA (integrated nested Laplace approximation) en utilisant les packages {INLA} et sa surcouche {inlabru}.
+
+L'approximation de Laplace intégrée et imbriquée (INLA) est une approche de l'inférence statistique pour les modèles de champs aléatoires gaussiens latents (GMRF) introduite par Rue et Martino (2006). Elle fournit une alternative rapide et déterministe au MCMC qui était l'outil standard pour l'inférence de tels modèles. Le principal avantage de l'approche INLA par rapport à la MCMC est qu'elle est beaucoup plus rapide à calculer.
+
+
+{inlabru} est une surcouche du package INLA, qui facilite l'utilisation du package R {INLA} en simplifiant la syntaxe. Ce package intègre deux extensions : 
+- Modèles de type GAM (pour intégrer des prédicteurs non linéaires)
+- Processus de Cox log-Gaussien  pour modéliser des processus univariés et spatiaux basés sur des données de comptages.
+
+
+Sources : 
+
+-   <https://www.r-inla.org/home>
+
+-   <https://inla.r-inla-download.org/r-inla.org/doc/inla-manual/inla-manual.pdf>
+
+-   <https://sites.google.com/inlabru.org/inlabru/home>
+
+-   <https://inlabru-org.github.io/inlabru/index.html>
+
+## Installation de INLA
+
+```{r}
+#| eval: false
+# Base de R INLA
+install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+# inlabru wrapper
+install.packages("inlabru")
+```
+
+
+## Utilisation
+
+### Exemple 1
+
+#### Setup
+
+```{r loading}
+#| warning: false
+#| message: false
+# Chargement des packages
+library(INLA)
+library(inlabru)
+library(INLA)
+library(lme4) # pour comparer avec l'approche frequentiste 
+library(ggplot2)
+library(ggpolypath)
+library(RColorBrewer)
+library(geoR)
+library(tidyverse)
+```
+
+
+Le dataset `awards` contient le nombre de réussites (`num_awards`) en math (`math`) pour une classe de 200 élèves. La réponse mesurée étant un comptage, nous devons spécifier un modèle généralisé avec fonction de lien Poisson. 
+
+```{r data-set}
+# Chargement des donnees
+load("data/awards.RData")
+head(awards)
+```
+
+La fonction `bru_options_set` permet de fixer des options sur des paramètres spécifiques à INLA.
+
+```{r set-options}
+bru_options_set(bru_verbose = TRUE,
+                control.compute = list(dic = TRUE, waic = TRUE))
+```
+
+On peut récupérer ces paramètres avec :
+
+```{r get-options}
+#| eval: false
+bru_options_get()
+```
+
+#### Application
+
+Nous expliquons le nombre de récompenses obtenues en fonction de la note en math suivant le modèle 
+$$Y_i\overset{ind}{\sim}\mathcal{P}(\exp(\mu+\alpha\cdot x_i))\,.$$
+
+```{r first-apply}
+# Formulation du modele
+cmp1 <- num_awards ~ math + 1
+# Application de la formule avec un modèle de Poisson
+fit.glm.bru <- bru(cmp1, family = "poisson", data = awards)
+summary(fit.glm.bru)
+```
+
+#### Comparaison avec un GLM
+
+```{r glm1}
+cmp2 <- num_awards ~ math
+fit2.glm <- glm(cmp2, family="poisson", data = awards)
+summary(fit2.glm)
+```
+
+Les réponses sont proches. 
+
+#### Intégration d'un effet aléatoire
+
+Pour prendre en compte le problème classique de surdispersion dans les données de comptages, il peut être intéressant de rajouter un effet aléatoire de la manière suivante.
+
+$$Y_i\overset{ind}{\sim}\mathcal{P}(\exp(\mu+\alpha\cdot x_i+E_i)) \quad \text{avec}\quad E_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2).$$
+
+
+```{r effet-aleatoire}
+cmp3 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200)
+
+fit3.glmm.bru <- bru(cmp3, family = "poisson", data = awards)
+summary(fit3.glmm.bru)
+```
+
+#### Comparaison avec l'approche fréquentiste 
+
+```{r freq2}
+cmp4<- num_awards ~ math + (1|id)
+fit4.glmm<-glmer(cmp4, family = poisson, data = awards)
+summary(fit4.glmm)
+```
+
+On remarque que les résultats sont un peu moins comparables. Pour se rapprocher de `glmer()`, on peut modifier la loi a priori sur l'effet aléatoire. 
+
+```{r effet-aleatoire-2}
+cmp5 <- num_awards ~ math + 1 + rand.eff(map = 1:200, model = "iid", n = 200,
+                                                 hyper=list(prec=list(param=c(10,0.1),
+                                                                      prior="pc.prec")))
+fit5.glmm.bru <- bru(cmp5, family = "poisson", data = awards )
+summary(fit5.glmm.bru)
+```
+
+### Exemple 2
+
+
+Dans le jeu de données gorillas on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).
+
+```{r data-set-2}
+data(gorillas, package = "inlabru")
+```
+
+On importe l'objet liste `gorillas` qui contient 4 sous-listes contenant les localisations d'habitats de gorilles (`nests`), le maillage de la zone d'intérêt (`mesh`), la frontière du domaine (`boundary`) et les variables explicatives (`gcov`).
+
+```{r extract-value}
+nests <- gorillas$nests
+mesh <- gorillas$mesh
+boundary <- gorillas$boundary
+gcov <- gorillas$gcov
+
+summary(gcov$vegetation)
+```
+
+La construction du maillage peut se faire avec les fonctions de {INLA}:
+
+- `inla.mesh.2d()`,
+- `inla.mesh.create()`, 
+- `inla.mesh.1d()`, 
+- `inla.mesh.basis()`,
+- `inla.spde2.pcmatern()`.
+
+voir la vignette suivante pour quelques exemples: https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html.
+
+#### Visualisation des données gorilles
+
+```{r plot-without-mesh}
+ggplot() +
+  gg(gcov$vegetation) +
+  gg(boundary) +
+  gg(nests, color = "white", cex = 0.5) +
+  coord_equal()
+```
+
+```{r plot-mesh}
+ggplot() +
+  gg(gcov$vegetation) +
+  gg(mesh) +
+  gg(boundary) +
+  gg(nests, color = "white", cex = 0.5) +
+  coord_equal()
+```
+
+Les graphiques ci-dessus permettent de visualiser les différentes types de végétaions ainsi que les localisations d'habitats de gorilles dans la zone d'étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction `gg()` permettant avac la grammaire ggplot2 de rajouter les différentes couches d'informations.
+
+#### Modèle 1
+
+On peut supposer un processus ponctuel spatial d'intensité 
+$$\lambda(x,y)=\exp(\alpha_i(x,y))$$
+où $\alpha$ est un paramètre correspondant à un type de végétation (modélisation factor full sans intercept donc).
+
+```{r formules-3}
+comp1 <- coordinates ~ vegetation(gcov$vegetation, model = "factor_full") - 1
+comp1alt <- coordinates ~ vegetation(gcov$vegetation, model = "factor_contrast") + 1
+```
+
+Pour construire un modèle expliquant les comptages de gorilles avec leurs répartitions dans la zone d'étude et prenant en compte les types de végétations, nous définissons la formule avec:
+
+- `coordinates()` la fonction de {sp} de récupération des coordonnées des habitats dans l'objet nests
+- `vegetation` sera le mot utilisé dans les sorties du modèle faisant référence à la variable explicative `gcov$vegetation` (possible d'écrire le mot que l'on veut...)
+- `model = "factor_full"` est pour indiquer que la variable explicative est un facteur. Il est possible d'utiliser "factor_full", "factor_contrast" etc... suivant les types de contraintes que l'on souhaite appliquer au modèle. "factor_full" indique estimations de toutes les modalités mais il faut alors supprimer l'intercept afin d'être dans un cas identifiable.
+
+Après avoir défini la formule du modèle, on estime les paramètres en utilisant la fonction `lgcp()` qui permet de modéliser un processus log-normalisé de Cox. Cette fonction est une surcouche de la fonction de base `bru()`.
+
+Le LGCP est un modèle probabiliste de processus ponctuel observé dans un tissu spatial ou temporel. 
+
+
+```{r fit-3}
+fit1 <- lgcp(components = comp1, # formule du modèle
+             data = nests,       # data set
+             samplers = boundary,  # frontière de la zone d'étude
+             domain = list(coordinates = mesh) # maillage de la zone
+             )
+```
+
+`fit1` estime l'intensité des présences de gorilles dans la zone d'étude. Il est alors possible de représenter l'intensité moyenne de ces habitats:
+
+```{r prediction-pixel-df}
+pred.df <- fm_pixels(mesh, mask = boundary, format = "sp")
+int1 <- predict(fit1, pred.df, ~ exp(vegetation))
+
+ggplot() +
+  gg(int1) +
+  gg(boundary, alpha = 0, lwd = 2) +
+  gg(nests, color = "DarkGreen") +
+  coord_equal()
+```
+
+Pour visualiser les résultats du modèle, nous utilisons la fonction `predict()` (sans oublier de passer à l'exponentielle) et `fm_pixels()` qui en prenant la zone d'étude (mesh + frontière) crée l'objet spatial adéquat.
+
+
+Nous remarquons que les intensités sont les plus fortes dans la végétation br{Primaire}, ce qui est logique. Ici, l'intensité représente le nombre d'habitats de gorilles par unité de surface. Attention donc à comment vous définissez les coordonnées de vos zones d'études.
+
+En utilisant les fonctions `fm_int()`et `predict()` nous allons tenter d'estimer les abondances moyennes sachant que nous savons qu'il y a 647 habitats en réalité:
+
+```{r estimation-abondance}
+ips <- fm_int(mesh, boundary)
+Lambda1 <- predict(fit1, ips, ~ sum(weight * exp(vegetation)))
+Lambda1
+```
+
+```{r calcul-surface}
+# Calcul de la surface de la zone
+sum(ips$weight) # some des surfaces de chaque triangle du mesh
+sf::st_area(sf::st_as_sf(boundary)) # surface totale 
+```
+
+#### Modèle avec utilisation SPDE
+
+Dans cette section, nous allons essayre d'expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matern en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la forule du modèle INLA.
+Le modèle intègre alors un champ gaussien avec covariance de Matérn.
+$$\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))$$
+avec $\xi$ suivant un champ gaussien.
+
+```{r spde-1}
+pcmatern <- inla.spde2.pcmatern(mesh,
+  prior.sigma = c(0.1, 0.01),
+  prior.range = c(0.1, 0.01)
+)
+
+comp2 <- coordinates ~
+            -1 +
+            vegetation(gcov$vegetation, model = "factor_full") +
+            mySmooth(coordinates, model = pcmatern)
+
+fit2 <- lgcp(components = comp2, 
+             data = nests, 
+             samplers = boundary, 
+             domain = list(coordinates = mesh))
+```
+
+On représente l'intensité médiane de la surface:
+
+```{r maps-4}
+int2 <- predict(fit2, pred.df, ~ exp(mySmooth + vegetation), n.samples = 1000)
+
+ggplot() +
+  gg(int2, aes(fill = q0.025)) +
+  gg(boundary, alpha = 0, lwd = 2) +
+  gg(nests) +
+  coord_equal()
+```
+
+et l'intensité intégrée attendue (moyenne des abondances):
+
+```{r lambda}
+Lambda2 <- predict(fit2,
+                   fm_int(mesh, boundary),
+                   ~ sum(weight * exp(mySmooth + vegetation)))
+
+Lambda2
+```
+
+Look at the contributions to the linear predictor from the SPDE and from vegetation.
+
+Examinons les contributions au prédicteur linéaire de la partie SPDE et de celle due à la végatation.
+
+La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du graphique. Dans cet exemple, on le définit tel que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.
+
+```{r final-triple-plot}
+lp2 <- predict(fit2, 
+               pred.df, ~ list(
+                        smooth_veg = mySmooth + vegetation,
+                        smooth = mySmooth,
+                        veg = vegetation
+              ))
+
+lprange <- range(lp2$smooth_veg$median, lp2$smooth$median, lp2$veg$median)
+csc <- scale_fill_gradientn(colours = brewer.pal(9, "YlOrRd"), limits = lprange)
+
+plot.lp2 <- ggplot() +
+  gg(lp2$smooth_veg) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("mySmooth + vegetation") +
+  coord_equal()
+
+plot.lp2.spde <- ggplot() +
+  gg(lp2$smooth) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("mySmooth") +
+  coord_equal()
+
+plot.lp2.veg <- ggplot() +
+  gg(lp2$veg) +
+  csc +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("vegetation") +
+  coord_equal()
+
+multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, cols = 3)
+```
+
+### Exemple 3
+
+Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre "Spatial and Spatio-temporal Bayesian Models with R-INLA.
+
+```{r}
+data(gambia, package = "geoR")
+# les coordonnées correspondent au village où se trouve les enfants
+# create one index for each of the 65 villages
+village_index <- unite(gambia, col = "lon_lat", sep = "_", "x", "y") %>% 
+  pull("lon_lat") %>% 
+  factor(labels = 1:65)
+gambia <- gambia %>%
+  add_column(village_index) 
+```
+
+On transforme les données et on transforme le jeu de données en type {SpatialPointsDataFrame}.
+```{r}
+gambia <- gambia %>%
+  mutate(x = x * 0.001, # to km
+         y = y * 0.001, # to km
+         age = age / 365) 
+coordinates(gambia) <- c("x", "y") 
+class(gambia)
+```
+On définit ensuite un maillage pour le champ spatial avec un maillage plus fin dans la zone où il y a des observations et qui "déborde" avec un maillage plus grossier.
+```{r}
+hull = inla.nonconvex.hull(gambia,convex = -0.1)
+gambia_mesh <- inla.mesh.2d(boundary = hull,
+                            offset = c(30, 60), max.edge = c(20,40))
+
+plot(gambia_mesh,main="",asp=1)
+points(gambia,pch=21,bg="white",cex=1.5,lwd=1.5)
+```
+
+On définit à partir du maillage le champ spatial spde qui correspond à un champ spatial gaussien avec une covariance Matérn. Nous considérons les lois a priori par défaut sur les paramètres de variance et de portée du champ spatial.
+```{r}
+gambia_spde <- inla.spde2.matern(mesh = gambia_mesh, alpha=2)
+```
+
+Tout est prêt pour définir le modèle à ajuster et son estimation :
+Pour l'enfant $j$ du village $i$, nous supposons 
+$$Y_{ij}|V_i\overset{ind}{\sim}b(p_{ij})$$
+avec $$S_i\sim GRF, \quad V_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2_V)$$
+et $$p_{ij}=\mu+\beta_1 \cdot treated_{ij}+\beta_2 \cdot netuse_{ij}+\beta_3 \cdot age_{ij}+\beta_4 \cdot green_{ij}+beta_5\cdot phc_{ij}+S_i+V_i.$$
+
+```{r}
+formula = pos ~ -1 +
+  Intercept(1) +
+  treated +
+  netuse +
+  age +
+  green +
+  phc +
+   spatial_field(coordinates, model=gambia_spde) +
+  village(village_index, model="iid")
+
+fit <- bru(components = formula,
+           data = gambia,
+           family= "binomial"
+)
+
+summary(fit)
+```
+
+
+
+On peut accéder aux distributions marginales des effets aléatoires et des hyperparamètres :
+```{r,eval=FALSE}
+fit$summary.random 
+fit$summary.hyperpar
+```
+
+
+Nous pouvons tracer les distributions a posteriori marginales des effets, par exemple :
+```{r}
+age <- fit$marginals.fixed[[4]]
+ggplot(data.frame(inla.smarginal(age)), aes(x, y)) +
+  geom_line() +
+  theme_bw()
+rfprecision <- fit$marginals.hyperpar$`Precision for village`
+ggplot(data.frame(inla.smarginal(rfprecision)), aes(x, y)) +
+  geom_line() +
+  theme_bw()
+```
+
+
+Nous essayons de représenter le champ gaussien latent
+
+```{r}
+domain_lims <- apply(hull$loc, 2, range)
+grd_dims <- round(c(x = diff(domain_lims[, 1]), 
+                    y = diff(domain_lims[, 2])) / 1)
+mesh_proj <- fm_evaluator(
+  gambia_mesh,
+  xlim = domain_lims[, 1], ylim = domain_lims[, 2], dims = grd_dims
+)
+
+spatial_field <- data.frame(
+  median = inla.link.invlogit(fit$summary.random$spatial_field$"0.5quant"),
+  range95 = (inla.link.invlogit(fit$summary.random$spatial_field$"0.975quant") -
+               inla.link.invlogit(fit$summary.random$spatial_field$"0.025quant"))
+)
+
+predicted_field <- fm_evaluate(mesh_proj, spatial_field) %>%
+  as.matrix() %>%
+  as.data.frame() %>%
+  bind_cols(expand.grid(x = mesh_proj$x, y = mesh_proj$y), .) %>%
+  pivot_longer(cols = -c("x", "y"),
+               names_to = "metric",
+               values_to = "value")
+# Median
+ggplot(filter(predicted_field, metric == "median")) +
+  aes(x = x, y = y, fill = value) +
+  geom_raster() +
+  scale_fill_viridis_c()
+# 95% range
+ggplot(filter(predicted_field, metric == "range95")) +
+  aes(x = x, y = y, fill = value) +
+  geom_raster() +
+  scale_fill_viridis_c()
+```
+
+
+## References
+
+1. <https://www.pymc.io/projects/examples/en/latest/gaussian_processes/log-gaussian-cox-process.html>
+1. Fabian E. Bachl, Finn Lindgren, David L. Borchers, and Janine B. Illian (2019), inlabru: an R package for Bayesian spatial modelling from ecological survey data, Methods in Ecology and Evolution, British
+Ecological Society, 10, 760--766, doi:10.1111/2041-210X.13168
+1. Funwi-Gabga, N. and Mateu, J. (2012) Understanding the nesting spatial behaviour of gorillas in the Kagwene Sanctuary, Cameroon. Stochastic Environmental Research and Risk Assessment 26 (6), 793-811.
+1. <https://www.muscardinus.be/2018/07/inlabru-bru/>
+1. <https://inlabru-org.github.io/inlabru/index.html>

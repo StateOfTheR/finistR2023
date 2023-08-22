@@ -1,0 +1,28 @@
+project:
+  type: website
+
+website:
+  title: "Finist'R 2023"
+  navbar:
+    left:
+      - icon: github
+        href: https://github.com/StateOfTheR/finistR2023
+        aria-label: GitHub
+      - text: "Instructions"
+        href: instructions.qmd
+    left:
+      - text: workflow
+        href: https://github.com/StateOfTheR/finistR2023
+        aria-label: GitHub
+      - text: inla
+        href: R_INLA.qmd
+        aria-label: GitHub
+
+
+
+format:
+  html:
+    theme: flatly
+    highlight: tango
+    toc: true
+    
