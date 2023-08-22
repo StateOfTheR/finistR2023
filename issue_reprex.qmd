@@ -1,0 +1,51 @@
+---
+title: "Partager un exemple reproductible dans une issue GitHub"
+format: html
+editor: visual
+---
+
+## Objectif
+
+L'objectif de ce tuto est de présenter des conseils pour écrire une issue pour demander des améliorations ou soumettre des bugs dans un code déposé sur GitHub.
+
+## Recommandations
+
+Les recommandations proposées sur les dépôts des packages du tidyverse :
+
+-   Inclure un exemple minimal reproductible, dit `reprex`.
+
+Lire [What is a reprex](https://github.com/tidyverse/reprex#what-is-a-reprex) pour plus de détails.
+
+-   Si les données sont confidentielles, utiliser des données disponibles dans [modeldata](https://modeldata.tidymodels.org/reference/index.html), simuler des données ou anonymiser les données.
+
+-   Utiliser des graines `set.seed()`
+
+-   Vérifier sur les blogs ou forums que le problème n'a pas déjà été signalé ou réglé.
+
+D'autres recommandations sont proposées dans le cas d'utilisation de calculs parallèles.
+
+## Structure de l'issue
+
+1.  Présenter en premier le problème (I'm having trouble with ...)
+2.  Donner un exemple reproductible dans un format
+
+Un bon exemple de report de bug [#46](https://github.com/tidymodels/tune/issues/46).
+
+## Exemple reproductible avec le package {reprex}
+
+Il est possible de créer un exemple reproductible avec le package {reprex} qui produit une sortie bien formatée pour GitHub.
+
+Si le code est un peu long, faire un script, par exemple `mon_probleme.R`
+
+Il suffit ensuite d'utiliser la fonction reprex du package du même nom avec les options de son choix. Par exemple `reprex(input = 'mon_probleme.R', session_info = TRUE)`.
+
+L'option `session_info = TRUE` permet de récuperer les informations sur notre session R.
+
+La fonction génère un fichier markdown (`mon_probleme.md`) dans le cas de l'utilisation d'un script directement intégrable dans l'issue et ouvre également par défaut le rendu dans le viewer de RStudio ou un navigateur (peut se modifier avec l'argument `html_preview = FALSE`.
+
+Petit exemple plus court (sans utilisation de script extérieur) issu du package {reprex}
+
+```{r}
+library(reprex)
+reprex(rbinom(3, size = 10, prob = 0.5), session_info = TRUE)
+```
