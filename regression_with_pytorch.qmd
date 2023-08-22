@@ -1,7 +1,35 @@
 ---
-title: "Différentiation automatique avec `pytorch`"
-format: html
+title: "FinistR : bootcamp R à Roscoff"
+subtitle: "Différentiation automatique: pytorch"
+date: "du 21 au 25 août 2023"
+execute: 
+    freeze: auto
+output: 
+  html_document:
+   toc: true
+   toc_float: true
 ---
+
+Cette page constitue une traduction en Python avec pytorch de la [page équivalente](https://stateofther.github.io/finistR2022/autodiff.html) produite avec {{torch}} lors de FinistR 2022 
+
+## Installation 
+
+Une façon (parmi d'autres) d'avoir une installation fonctionnelle de torch consiste à l'installer via conda. La [page officielle](https://pytorch.org/get-started/locally/) est très bien documentée et fournit toutes les instructions nécessaires. La solution adoptée ici consiste à créer un environnement conda (nommé torch) pour y installer torch (en version CPU). 
+
+```{bash}
+#| eval: false
+conda create -n torch
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+conda install pandas matplotlib scikit-learn jupyter
+```
+
+Il suffit alors d'activer l'environnement torch pour produire le html à partir du qmd
+
+```{bash}
+#| eval: false
+conda activate torch
+quarto render my_document.qmd --to html
+```
 
 ## Exploration de {{torch}} pour la différentiation automatique
 
