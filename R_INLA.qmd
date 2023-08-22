@@ -236,7 +236,7 @@ Lambda1 <- predict(fit1, ips, ~ sum(weight * exp(vegetation)))
 Lambda1
 ```
 
-```{r}
+```{r calcul-surface}
 # Calcul de la surface de la zone
 sum(ips$weight) # some des surfaces de chaque triangle du mesh
 sf::st_area(sf::st_as_sf(boundary))
@@ -246,7 +246,7 @@ sf::st_area(sf::st_as_sf(boundary))
 
 Dans cette section, nous allons essayre d'expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matern en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la forule du modèle INLA.
 
-```{r}
+```{r spde-1}
 pcmatern <- inla.spde2.pcmatern(mesh,
   prior.sigma = c(0.1, 0.01),
   prior.range = c(0.1, 0.01)
@@ -265,7 +265,7 @@ fit2 <- lgcp(components = comp2,
 
 On représente l'intensité médiane de la surface:
 
-```{r}
+```{r maps-4}
 int2 <- predict(fit2, pred.df, ~ exp(mySmooth + vegetation), n.samples = 1000)
 
 ggplot() +
@@ -277,7 +277,7 @@ ggplot() +
 
 et l'intensité intégrée attendue (moyenne des abondances):
 
-```{r}
+```{r lambda}
 Lambda2 <- predict(fit2,
                    fm_int(mesh, boundary),
                    ~ sum(weight * exp(mySmooth + vegetation)))
@@ -291,7 +291,7 @@ Examinons les contributions au prédicteur linéaire de la partie SPDE et de cel
 
 La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du graphique. Dans cet exemple, on le définit tel que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.
 
-```{r}
+```{r final-triple-plot}
 lp2 <- predict(fit2, 
                pred.df, ~ list(
                         smooth_veg = mySmooth + vegetation,
@@ -340,5 +340,5 @@ multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, cols = 3)
 1. Fabian E. Bachl, Finn Lindgren, David L. Borchers, and Janine B. Illian (2019), inlabru: an R package for Bayesian spatial modelling from ecological survey data, Methods in Ecology and Evolution, British
 Ecological Society, 10, 760--766, doi:10.1111/2041-210X.13168
 1. Funwi-Gabga, N. and Mateu, J. (2012) Understanding the nesting spatial behaviour of gorillas in the Kagwene Sanctuary, Cameroon. Stochastic Environmental Research and Risk Assessment 26 (6), 793-811.
-1. https://www.muscardinus.be/2018/07/inlabru-bru/
-1. https://inlabru-org.github.io/inlabru/index.html
+1. <https://www.muscardinus.be/2018/07/inlabru-bru/>
+1. <https://inlabru-org.github.io/inlabru/index.html>
