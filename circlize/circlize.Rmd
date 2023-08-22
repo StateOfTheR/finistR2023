@@ -1,0 +1,110 @@
+---
+title: "circlize"
+output: html_document
+date: "2023-08-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Introduction 
+
+Circlize est un package R qui permet de combiner des graphiques de manières circulaires. Toutes les possibilités du package circlize sont expliquées en détail sur ce site [https://jokergoo.github.io/circlize_book/book/introduction.html]. 
+
+<center>
+![Examples d'utilisation de circlize](example_intro.png)
+</center>
+
+## Idées générales
+
+Le cercle est divisé en **secteur (sector)**, qui est défini par une variable catégorielle. Chaque sector sera divisé en plusieurs **circuits (tracks)** concentriques, qui permettent de faire la construction du graphique depuis l'extérieur du cercle vers l'intérieur. Une intersection entre un secteur et un circuit s'appelle une  **cellule (cell)**.
+
+<center>
+
+![](sector_tracks.png)
+
+</center>
+
+Le package circlize contient différents types de fonction :
+
+* Les fonctions globales, qui régissent la construction générale du cercle
+  *  circos.initialize() 
+  *  circos.track()
+  *  circos.update()
+  *  circos.par() 
+  *  circos.info() 
+  *  circos.clear()
+
+
+* Les fonctions graphiques dites "bas niveau"
+  * circos.points()
+  * circos.lines()
+  * circos.segments()
+  * circos.rect()
+  * circos.polygon()
+  * circos.text()
+  * circos.axis() ands circos.yaxis()
+
+* Les fonctions graphiques dites "haut niveau"
+  * circos.barplot()
+  * circos.boxplot()
+  * circos.violin()
+  * circos.heatmap()
+  * circos.raster()
+  * circos.arrow()
+
+
+* Les fonctions graphiques de liens entre cellule
+  * circos.link()
+
+
+   
+
+
+
+
+```{r}
+# Upload library
+library(circlize)
+ 
+# Create data
+data = data.frame(
+    factor = sample(letters[1:8], 1000, replace = TRUE),
+    x = rnorm(1000), 
+    y = runif(1000)
+    )
+```
+
+
+
+
+
+```{r}
+# Step1: Initialise the chart giving factor and x-axis.
+circos.par(gap.degree=1)
+
+circos.initialize( factors=data$factor,
+                   x=data$x ,
+                   sector.width = c(1,1,1,1,3,1,1,1))
+
+# Step 2: Build the regions. 
+circos.track(factors = data$factor,
+                       x= data$x,
+                       y = data$y,
+                       panel.fun = function(x,y){circos.axis()
+                         circos.points(x,y,col = "blue",pch= 16 , cex = 0.5)})
+ 
+# Step 3: Add points
+#circos.trackPoints(data$factor, data$x, data$y, col = "blue", pch = 16, cex = 0.5) 
+
+# Step 3: Add points
+circos.trackHist(data$factor, data$x, col = "red") 
+
+circos.trackPlotRegion(factors = data$factor,y=data$y)
+circos.trackLines(data$factor,data$x,data$y)
+circos.clear()
+```
+
+
