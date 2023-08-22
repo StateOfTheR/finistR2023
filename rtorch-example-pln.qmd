@@ -55,6 +55,7 @@ PLN <-
       B = NULL,
       Sigma = NULL,
       Omega = NULL,
+      loglik = NULL,
       ELBO_list = NULL,
 
       ## Constructor
@@ -69,7 +70,7 @@ PLN <-
         self$M <- torch_zeros(self$n, self$p, requires_grad = TRUE)
         self$S <- torch_ones(self$n , self$p, requires_grad = TRUE)
         ## Model parameters
-        self$B <- torch_zeros(self$d, self$p, requires_grad = TRUE)
+        self$B <- torch_full(c(self$d, self$p), -8.0, requires_grad = TRUE)
         self$Sigma <- torch_eye(self$p)
         self$Omega <- torch_eye(self$p)
         ## Monitoring
@@ -77,19 +78,26 @@ PLN <-
       },
 
       get_Sigma = function(M, S){
-        1/self$n * (torch_matmul(torch_transpose(M,2,1),M) + torch_diag(torch_sum(torch_multiply(S,S), dim = 1)))
+        1/self$n * (torch_mm(torch_t(M),M) + torch_diag(torch_sum(S**2, dim = 1)))
       },
 
       get_ELBO = function(B, M, S, Omega){
-        S2 <- torch_multiply(S, S)
-        XB <- torch_matmul(self$X, B)
+        S2 <- torch_square(S)
+        XB <- torch_mm(self$X, B)
         A  <- torch_exp(self$O + M + XB + S2/2)
-
-        elbo <- self$n/2 * torch_logdet(Omega)
-        elbo <- torch_add(elbo, torch_sum(- A + torch_multiply(self$Y, self$O + M + XB) + .5 * torch_log(S2)))
-        elbo <- torch_sub(elbo, .5 * torch_trace(torch_matmul(torch_matmul(torch_transpose(M, 2, 1), M) + torch_diag(torch_sum(S2, dim = 1)), Omega)))
-        elbo <- torch_add(elbo, .5 * self$n * self$p - torch_sum(log_stirling(self$Y)))
-        elbo
+        self$n/2 * torch_logdet(Omega) -
+          torch_sum(A - self$Y * (self$O + M + XB) - .5 * torch_log(S2))
+      },
+    
+      get_loglik = function(B, M, S, Omega) {
+        S2 <- S**2
+        XB <- torch_mm(self$X, B)
+        A  <- torch_exp(self$O + M + XB + S2/2)
+        J <- self$n/2 * torch_logdet(Omega) + 
+            .5 * self$n * self$p - torch_sum(log_stirling(self$Y)) -
+            torch_sum(A - self$Y * (self$O + M + XB) - .5 * torch_log(S2)) -
+          .5 * torch_sum(torch_mm(M, Omega) * M + S2 * torch_diag(Omega))
+        J
       },
 
       fit = function(N_iter, lr, tol = 1e-8, verbose = FALSE){
@@ -124,6 +132,7 @@ PLN <-
             objective0 <- objective
           }
         }
+        self$loglik <- self$get_loglik(self$B, self$M, self$S, self$Omega)
       },
 
       plotLogNegElbo = function(from = 10){
@@ -147,7 +156,8 @@ myPLN <- PLN$new(Y = Y, O = O, X = X)
 Testons notre implémentation simple de PLN utilisant R-torch:
 
 ```{r torch-pln-fit}
-system.time(myPLN$fit(30, lr = 0.1, tol = 1e-5))
+system.time(myPLN$fit(1000, lr = 0.05, tol = 1e-9))
+plot(-myPLN$ELBO_list, type="l", log ='y')
 ```
 
 En fait, un backend torch est déjà disponible dans le package `PLNmodels`
@@ -159,5 +169,13 @@ system.time(myPLN_torch <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks,
 ```{r elbo-comparison}
 myPLN_nlopt$loglik
 myPLN_torch$loglik
-tail(myPLN$ELBO_list, n=1)
+myPLN$loglik
+```
+
+
+```{r}
+plot(myPLN$B,
+     myPLN_nlopt$model_par$B); abline(0, 1)
+plot(myPLN_torch$model_par$Sigma,
+     myPLN$Sigma); abline(0, 1)
 ```

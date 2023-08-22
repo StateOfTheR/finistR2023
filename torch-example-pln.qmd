@@ -58,10 +58,7 @@ class PLN() :
       XB = self.X @ self.B
       A = torch.exp(self.O + self.M + XB + S2/2)
 
-      elbo = self.n/2 * torch.logdet(self.Omega)
-      elbo += torch.sum(- A + self.Y * (self.O + self.M + XB) + .5 * torch.log(S2))
-      elbo -= .5 * torch.trace(self.M.T @ self.M + torch.diag(torch.sum(S2, dim = 0)) @ self.Omega)
-      elbo += .5 * self.n * self.p  - torch.sum(_log_stirling(self.Y))
+      elbo = self.n/2 * torch.logdet(self.Omega) +  torch.sum(- A + self.Y * (self.O + self.M + XB) + .5 * torch.log(S2)) - .5 * torch.trace(self.M.T @ self.M + torch.diag(torch.sum(S2, dim = 0)) @ self.Omega) + .5 * self.n * self.p  - torch.sum(_log_stirling(self.Y))
       return elbo
 
     def fit(self, N_iter, lr, tol = 1e-8) :
@@ -105,7 +102,7 @@ Y = oaks['counts']
 O = np.log(oaks['offsets'])
 X = np.ones([Y.shape[0],1])
 myPLN = PLN(Y, O, X)
-myPLN.fit(50, lr = 0.01, tol = 1e-8)
+myPLN.fit(50, lr = 0.1, tol = 1e-8)
 plt.plot(np.log(-myPLN.ELBO))
 ```
 
