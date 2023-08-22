@@ -259,6 +259,7 @@ pcmatern <- inla.spde2.pcmatern(mesh,
 comp2 <- coordinates ~
             -1 +
             vegetation(gcov$vegetation, model = "factor_full") +
+            elevation(gcov$elevation) +
             mySmooth(coordinates, model = pcmatern)
 
 fit2 <- lgcp(components = comp2, 
@@ -298,39 +299,52 @@ La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du gra
 ```{r final-triple-plot}
 lp2 <- predict(fit2, 
                pred.df, ~ list(
-                        smooth_veg = mySmooth + vegetation,
-                        smooth = mySmooth,
-                        veg = vegetation
+                        smooth_veg = (mySmooth + vegetation + elevation),
+                        not_smooth = (vegetation + elevation),
+                        smooth = (mySmooth),
+                        veg = (vegetation),
+                        ele = (elevation)
               ))
 
-lprange <- range(lp2$smooth_veg$median, lp2$smooth$median, lp2$veg$median)
-csc <- scale_fill_gradientn(colours = brewer.pal(9, "YlOrRd"), limits = lprange)
+lprange <- range(lp2$smooth_veg$median, lp2$smooth$median, lp2$veg$median, lp2$ele$median, lp2$not_smooth$median)
 
 plot.lp2 <- ggplot() +
-  gg(lp2$smooth_veg) +
-  csc +
+  gg(lp2$not_smooth) +
   theme(legend.position = "bottom") +
   gg(boundary, alpha = 0) +
-  ggtitle("mySmooth + vegetation") +
+  ggtitle("vegetation + elevation") +
+  gg(nests, color = "firebrick") +
+  scale_fill_viridis_c(limits = lprange) +
   coord_equal()
 
 plot.lp2.spde <- ggplot() +
   gg(lp2$smooth) +
-  csc +
   theme(legend.position = "bottom") +
   gg(boundary, alpha = 0) +
   ggtitle("mySmooth") +
+  gg(nests, color = "firebrick") +
+  scale_fill_viridis_c(limits = lprange) +
   coord_equal()
 
 plot.lp2.veg <- ggplot() +
   gg(lp2$veg) +
-  csc +
   theme(legend.position = "bottom") +
   gg(boundary, alpha = 0) +
   ggtitle("vegetation") +
+  gg(nests, color = "firebrick") +
+  scale_fill_viridis_c(limits = lprange) +
   coord_equal()
 
-multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, cols = 3)
+plot.lp2.ele <- ggplot() +
+  gg(lp2$ele) +
+  theme(legend.position = "bottom") +
+  gg(boundary, alpha = 0) +
+  ggtitle("elevation") +
+  gg(nests, color = "firebrick") +
+  scale_fill_viridis_c(limits = lprange) +
+  coord_equal()
+
+multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, plot.lp2.ele, cols = 2)
 ```
 
 ### Exemple 3
