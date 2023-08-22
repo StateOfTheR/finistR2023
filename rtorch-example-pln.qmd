@@ -10,15 +10,28 @@ output:
    toc_float: true
 ---
 
-## PLN woth R-torch
+## PLN with R-torch
 
-```{r}
+### Préliminaires
+
+On charge le jeu de données `oaks` contrnu dans `PLNmodels`
+
+```{r load-plnmodels, messages=FALSE}
 library(PLNmodels)
 data(oaks)
-myPLN_classical <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks)
 ```
 
-```{r}
+Pour référence, on optimise avec le package dédié (qui utilise le backend `NLOpt`, une bilbiothèque `C++` d'optimisation non linéaire. La variance `CCSQA`, utilisant les gradients explicites, est utilisée). 
+
+```{r oaks-(plnmodels)}
+system.time(myPLN_nlopt <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks))
+```
+
+### Implémentation en R-torch
+
+On définit une simple classe avec une routine d'optimisation utilisant `Rprop` et l'auto-differentiation sur l'le critère à optimiser (l'ELBO = Expected Lower BOund).
+
+```{r pln-torch-class}
 library(torch)
 library(R6)
 
@@ -120,12 +133,31 @@ PLN <-
   )
 ```
 
-```{r}
+### Évaluation du temps de calcul
+
+On crée une instance avec les données appropriée
+
+```{r torch-pln-instantiate}
 Y <- oaks$Abundance
 X <- cbind(rep(1, nrow(Y)))
 O <- log(oaks$Offset)
-myPLN <- PLN$new(Y = Y, O = log(O), X = X)
-myPLN$fit(30, lr = 0.1, tol = 1e-5)
-myPLN$plotLogNegElbo()
+myPLN <- PLN$new(Y = Y, O = O, X = X)
 ```
 
+Testons notre implémentation simple de PLN utilisant R-torch:
+
+```{r torch-pln-fit}
+system.time(myPLN$fit(30, lr = 0.1, tol = 1e-5))
+```
+
+En fait, un backend torch est déjà disponible dans le package `PLNmodels`
+
+```{r torch-plnmodels-fit}
+system.time(myPLN_torch <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks, control = PLN_param(backend = 'torch', config_optim = list(lr = 0.01))))
+```
+
+```{r elbo-comparison}
+myPLN_nlopt$loglik
+myPLN_torch$loglik
+tail(myPLN$ELBO_list, n=1)
+```
