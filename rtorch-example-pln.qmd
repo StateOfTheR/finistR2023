@@ -14,7 +14,7 @@ output:
 
 ### Préliminaires
 
-On charge le jeu de données `oaks` contrnu dans `PLNmodels`
+On charge le jeu de données `oaks` contenu dans `PLNmodels`
 
 ```{r load-plnmodels, messages=FALSE}
 library(PLNmodels)
@@ -29,7 +29,7 @@ system.time(myPLN_nlopt <- PLN(Abundance ~ 1 + offset(log(Offset)), data = oaks)
 
 ### Implémentation en R-torch
 
-On définit une simple classe avec une routine d'optimisation utilisant `Rprop` et l'auto-differentiation sur l'le critère à optimiser (l'ELBO = Expected Lower BOund).
+On définit une simple classe avec une routine d'optimisation utilisant `Rprop` et l'auto-differentiation sur le critère à optimiser (l'ELBO = Expected Lower BOund).
 
 ```{r pln-torch-class}
 library(torch)
@@ -176,8 +176,13 @@ myPLN$loglik
 
 Ainsi que les paramètres
 ```{r}
+#| layout-ncol: 2
 plot(myPLN$B,
-     myPLN_nlopt$model_par$B); abline(0, 1)
+     myPLN_nlopt$model_par$B, 
+     xlab = "Naive torch", ylab = "PLN torch", 
+     main = "Regression coefficients"); abline(0, 1, col = "red")
 plot(myPLN_torch$model_par$Sigma,
-     myPLN$Sigma); abline(0, 1)
+     myPLN$Sigma,
+     xlab = "Naive torch", ylab = "PLN torch", 
+     main = "Covariance matrix"); abline(0, 1, col = "red")
 ```
