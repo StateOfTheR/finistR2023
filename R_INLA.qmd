@@ -198,7 +198,7 @@ Après avoir défini la formule du modèle, on estime les paramètres en utilisa
 Le LGCP est un modèle probabiliste de processus ponctuel observé dans un tissu spatial ou temporel. 
 
 
-```{r}
+```{r fit-3}
 fit1 <- lgcp(components = comp1, # formule du modèle
              data = nests,       # data set
              samplers = boundary,  # frontière de la zone d'étude
@@ -208,7 +208,7 @@ fit1 <- lgcp(components = comp1, # formule du modèle
 
 `fit1` estime l'intensité des présences de gorilles dans la zone d'étude. Il est alors possible de représenter l'intensité moyenne de ces habitats:
 
-```{r}
+```{r prediction-pixel-df}
 pred.df <- fm_pixels(mesh, mask = boundary, format = "sp")
 int1 <- predict(fit1, pred.df, ~ exp(vegetation))
 
@@ -221,16 +221,21 @@ ggplot() +
 
 Pour visualiser les résultats du modèle, nous utilisons la fonction `predict()` (sans oublier de passer à l'exponentielle) et `fm_pixels()` qui en prenant la zone d'étude (mesh + frontière) crée l'objet spatial adéquat.
 
-Nous remarquons que les intensités sont les plus fortes dans la végétation br{Primaire}, ce qui est logique. Ici, l'intensité représente le nombre d'habitats de gorilles par unité de surface. Attention donc à comment vous définisser les coordonnées de vos zones d'études.
+Nous remarquons que les intensités sont les plus fortes dans la végétation br{Primaire}, ce qui est logique. Ici, l'intensité représente le nombre d'habitats de gorilles par unité de surface (ici km²). Attention donc à comment vous définisser les coordonnées de vos zones d'études.
 
 En utilisant les fonctions `fm_int()`et `predict()` nous allons tenter d'estimer les abondances moyennes sachant que nous savons qu'il y a 647 habitats en réalité:
 
-```{r}
+```{r estimation-abondance}
 ips <- fm_int(mesh, boundary)
 Lambda1 <- predict(fit1, ips, ~ sum(weight * exp(vegetation)))
 Lambda1
 ```
 
+```{r}
+# Calcul de la surface de la zone
+sum(ips$weight) # some des surfaces de chaque triangle du mesh
+sf::st_area(sf::st_as_sf(boundary))
+```
 
 
 
