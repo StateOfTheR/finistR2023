@@ -37,10 +37,29 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#historique" id="toc-historique" class="nav-link" data-scroll-target="#historique">Historique</a>
+  <ul class="collapse">
+  <li><a href="#conclusion-intermédiaire" id="toc-conclusion-intermédiaire" class="nav-link" data-scroll-target="#conclusion-intermédiaire">Conclusion intermédiaire</a></li>
+  </ul></li>
+  <li><a href="#commandes-utilisées" id="toc-commandes-utilisées" class="nav-link" data-scroll-target="#commandes-utilisées">Commandes utilisées</a></li>
+  <li><a href="#brainstorming" id="toc-brainstorming" class="nav-link" data-scroll-target="#brainstorming">Brainstorming</a></li>
+  <li><a href="#commandes-à-suivre" id="toc-commandes-à-suivre" class="nav-link" data-scroll-target="#commandes-à-suivre">Commandes à suivre</a></li>
+  <li><a href="#test-conflit" id="toc-test-conflit" class="nav-link" data-scroll-target="#test-conflit">Test conflit</a></li>
+  <li><a href="#test-conflits-encore-et-encore" id="toc-test-conflits-encore-et-encore" class="nav-link" data-scroll-target="#test-conflits-encore-et-encore">Test conflits encore et encore</a></li>
+  <li><a href="#test-annaig-conflit" id="toc-test-annaig-conflit" class="nav-link" data-scroll-target="#test-annaig-conflit">Test Annaig conflit</a></li>
+  <li><a href="#annaig-fait-des-conflits" id="toc-annaig-fait-des-conflits" class="nav-link" data-scroll-target="#annaig-fait-des-conflits">Annaig fait des conflits</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -70,11 +89,87 @@ ul.task-list li input[type="checkbox"] {
 <h1>Introduction</h1>
 <p>L’objectif de cet atelier est de progresser dans notre utilisation de git. En particulier pour ce bootcamp, on veut voir comment intéragir avec le dépot finisR2023 (pull request, proposer un fichier markdown, …)</p>
 </section>
+<section id="historique" class="level1">
+<h1>Historique</h1>
+<p>Dans la partie qui suit, on a travaillé avec deux ordinateurs et on a eu des conflits. On va voir comment on les a géré. On va donner les commandes que l’on a exécuté de façon chronologique, avec les deux ordinateurs.</p>
+<p><strong>Ordinateur 1</strong></p>
+<p>On commence par cloner le dépôt StateOfTheR/finistR2023 :</p>
+<p><code>git clone git@github.com:StateOfTheR/finistR2023.git</code></p>
+<p>On créer une nouvelle branche pour cet atelier git :</p>
+<p><code>git branch Utilisation_de_git</code></p>
+<p>On se déplace sur cette branche :</p>
+<p><code>git checkout Utilisation_de_git</code></p>
+<p>On crée un fichier Rmd dans un nouveau dossier dédié à cet atelier :</p>
+<pre><code>mkdir Utilisation_de_git
+cd Utilisation_de_git 
+nvim Utilisation_de_git.Rmd</code></pre>
+<p>On commit les modification et on les push dans le dépôt.</p>
+<pre><code>git add .
+git commit -m "création d'une branche pour l'atelier sur git"
+git push --set-upstream origin Utilisation_de_git </code></pre>
+<p>La partie <code>--set-upstream origin Utilisation_de_git</code> de la troisième commande n’est utile que parce que la branche n’existe pas encore dans le dépôt.</p>
+<p>A ce stade le fichier Utilisation_de_git.md est comme suit :</p>
+<p><img src="rmd_1.png" title="fichier Rmd" class="img-fluid"></p>
+<p><strong>Ordinateur 2</strong></p>
+<p>Avec le deuxième ordinateur, on a cloné le dépôt, on s’est placé sur la branche de l’atelier git, on a ajouté du texte au fichier Rmd sans modifier le texte déjà présent, puis on a pushé ces modifications sur le dépôt après avoir commité. Le fichier Utilisation_de_git.md est comme suit au moment du push :</p>
+<p><img src="rmd_2.png" class="img-fluid"></p>
+<p><strong>Ordinateur 1</strong></p>
+<p>En parallèle de cette opération sur le deuxième ordinateur, on a aussi fait un ajout sur le premier ordinateur :</p>
+<p><img src="rmd_3.png" class="img-fluid"></p>
+<p>Après avoir fait ces changements, on a fait un git pull et on a eu un conflit auquel on ne s’attendait pas étant donnée que la nature des différences entre le fichier sur le dépôt et le fichier en local :</p>
+<p><img src="conflit_1.png" class="img-fluid"></p>
+<p>On pensait pouvoir résoudre le conflit en fast forward, on a configuré le pull de cette façon :</p>
+<p><code>git config pull.ff only</code></p>
+<p>Puis on a fait un git pull. Ca n’a pas fonctionné.</p>
+<p>[Manque le message d’erreur]</p>
+<p>On a alors utilisé rebase :</p>
+<p><code>git pull --rebase</code></p>
+<p>Puis on a <strong>ouvert le fichier md pour gérer les conflits en supprimant les “=” et les “&gt;”</strong>, après quoi on a commit ces modifications. On a alors essayé de faire un push et on a eu le message d’erreur suivant :</p>
+<p><img src="conflit_2.png" class="img-fluid"></p>
+<p>On a résolu le problème avec :</p>
+<p><code>git rebase --continue</code></p>
+<p>Le push a ensuite bien marché.</p>
+<section id="conclusion-intermédiaire" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-intermédiaire">Conclusion intermédiaire</h2>
+<p>On s’est dit que l’on avait pas bien géré le problème, qu’on aurait du configurer le pull de la façon suivante de façon à ce que git gère automatiquement le conflit.</p>
+<p><code>git config pull.rebase false</code></p>
+<p>On a fait ce test et voici les résultats.</p>
+<p>1971 21/08/23 17:56:01 git pull –rebase 1972 21/08/23 17:56:01 cd 1973 21/08/23 17:56:01 cd finistR2023/Utilisation_de_git/ 1974 21/08/23 17:56:01 nvim Utilisation_de_git.Rmd 1975 21/08/23 17:56:01 cd .. 1976 21/08/23 17:56:01 git status 1977 21/08/23 17:56:01 git add . 1978 21/08/23 17:56:01 git commit -m “merge conflicts” 1979 21/08/23 17:56:01 git push 1980 21/08/23 17:56:01 git branch 1981 21/08/23 17:56:01 git rebase –continue 1982 21/08/23 17:56:01 git status 1983 21/08/23 17:56:01 git push</p>
+</section>
+</section>
+<section id="commandes-utilisées" class="level1">
+<h1>Commandes utilisées</h1>
+</section>
 <section id="brainstorming" class="level1">
 <h1>Brainstorming</h1>
 <ul>
 <li>faire un repo propre, avec des logos, des sections, …</li>
 </ul>
+</section>
+<section id="commandes-à-suivre" class="level1">
+<h1>Commandes à suivre</h1>
+<ul>
+<li>Créer une nouvelle branche : git branch nom_branche</li>
+<li>Se déplacer sur la nouvelle branche : git checkout nom_branche</li>
+<li>Ajouter le fichier RMD : git add</li>
+<li>Pusher la nouvelle branche : git push –set-upstream origin nom_branche</li>
+</ul>
+</section>
+<section id="test-conflit" class="level1">
+<h1>Test conflit</h1>
+<p>test</p>
+</section>
+<section id="test-conflits-encore-et-encore" class="level1">
+<h1>Test conflits encore et encore</h1>
+<p>Ce coup ci c’est la bonne</p>
+<p>#Test conflit v2 pull, push</p>
+</section>
+<section id="test-annaig-conflit" class="level1">
+<h1>Test Annaig conflit</h1>
+<p>test</p>
+</section>
+<section id="annaig-fait-des-conflits" class="level1">
+<h1>Annaig fait des conflits</h1>
 </section>
 
 </main>

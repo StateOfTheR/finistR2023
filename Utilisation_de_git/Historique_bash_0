@@ -1,0 +1,2080 @@
+clear
+exit
+cdpuceron
+gpom
+cd
+vim .bashrc
+tmux
+exit
+nvim tmp
+exit
+tmux
+cdpuceron
+git status
+cdinfo
+git status
+cdpuceron & git status
+git status & cdpuceron
+clear
+df
+lsblk
+sudo umount /media/armand/6C91-4106 
+df
+lsblk
+cd Téléchargements/
+sudo dd if=debian-11.7.0-amd64-netinst.iso of=/dev/sdd bs = 1M status=progress
+df
+sudo dd if=debian-11.7.0-amd64-netinst.iso of=/dev/sdb bs = 1M status=progress
+sudo dd if=debian-11.7.0-amd64-netinst.iso of=/dev/sdb bs=1M status=progress
+sudo dd if=ubuntu-22.04.2-desktop-amd64.iso of=/dev/sdb bs=1M status=progress
+nvim
+exit
+cdinfo
+nvim Overview.md
+exit
+cdpuceron
+gpom
+ls
+nvim meeting_minutes.md
+ls
+cd
+nvim .bash_history 
+exiit
+exit
+cdinfo
+gpom
+exit
+tmux
+exit
+git status
+jupyter-lab
+exit
+tmux
+exit
+cdpuceron
+nvim notes.md 
+exit
+cdpuceron
+jupyter-lab
+exit
+tmux
+exit
+cdpuceron 
+jupyter-lab
+exit
+cdpuceron
+jupyter-lab
+cdpuceron
+gacp
+cdinfo
+gacp
+clear
+ls
+cdpuceron
+gpom
+cdinfo
+gpom
+cdpuceron
+jupyter-lab
+exit
+cdpuceron
+jupyter-lab
+clear
+cdpuceron
+nvim notes.md 
+jupyter-lab
+clear
+gacp
+cdinfo
+gacp
+cdpuceron
+nvim notes.md 
+tmux
+# Déjà dans ce répertoire mais c'est pour pouvoir faire un ctrl A + execute, après avoir fait
+cdpuceron
+gpom
+cdinfo
+gpom
+exit
+cdpuceron
+jupyter-lab
+cdpuceron
+jupyter-lab
+cdpuceron
+gacp
+cdpuceron
+gpom
+jupyter-lab
+cdpuceron
+nvim meeting_minutes.md 
+exit
+cdpuceron
+nvim notes.md 
+exit
+cdpuceron
+jupyter-lab
+clear
+exit
+tmux
+exit
+cdpuceron
+jupyter-lab
+exit
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+sudo apt-get purge wps-office
+cd Bureau/
+ls
+nvim Lettre_de_motivation_these
+mv Lettre_de_motivation_these Lettre_de_motivation_these.md
+ls
+nvim Lettre_de_motivation_these.md 
+ls
+cdinfo
+nvim Overview.md 
+exit
+find . -name *otivation* -printf "%T@ %Tc %p\n" | sort -n
+exit
+cdinfo
+nvim Overview.md 
+exit
+find . -name *otivation*
+tldr find
+find . -name *otivation* -printf "\n%AD %AT %p"
+find . -name *otivation* -printf "\n%AD %AT %p" | head -n 20
+find . -name *otivation* -printf "\n%AD %AT %p" | head -n 40
+find . -name *otivation* -printf "\n%AD %AT %p" | head -n 80
+find . -type f -name *otivation* -printf "\n%AD %AT %p" | head -n 80
+find . -type f -name *otivation* -printf "\n%AD %AT %p" | sort -n
+tldr head
+find . -type f -name *otivation* -printf "\n%AD %AT %p" | sort -n | head -n 30
+find . -type f -name *otivation* -printf "\n%AD %AT %p" | sort -n 
+find . -type f -name *otivation* -printf "\n%AD %p" | sort -n 
+find . -type f -name *otivation* -printf "\n%AD %p" | sort -k 1nr 
+tldr sort
+find . -name *otivation* -printf "%T@ %Tc %p\n" | sort -n 
+tmux
+exit
+ls
+cdnomad
+cdnomadyo
+cdriyourt
+cd Documents/Vie_pro/Expériences/2020-05\ Mission\ Nomad\ Yo\ pour\ Papa/
+ls
+nvim notes.md
+tmux
+cd Bureau/
+ls
+nvim Lettre_de_motivation_these.md 
+cdpuceron
+git status
+cdinfo
+git status
+gacp
+cdpuceron
+gpom
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+cdpuceron
+jupyter-lab
+exit
+tmux
+exit
+cd Bureau/
+nvim Lettre_de_motivation_these.md 
+exit
+cdpuceron
+gacp
+exit
+cdpuceron
+gpom
+nvim borne_arcade.md 
+exit
+nvim Bureau/Lettre_de_motivation_these.md 
+exit
+nvim notes.md 
+cdpuceron
+tmux
+cdpuceron
+git status
+jupyter-lab
+ls
+nvim meeting_minutes.md 
+cdpuceron
+tmux
+ls
+nvim notes_article_2.md 
+exit
+cdpuceron
+tmux
+nvim notes_article_2.md 
+exit
+cdpuceron
+tmux 
+exit
+cdpuceron
+nvim notes_article_2.md 
+cdpuceron
+gacp
+clear
+cdpuceron
+gpom
+exit
+nvim notes.md 
+exit
+cdpuceron
+jupyter-lab
+exit
+cdpuceron
+nvim notes.md 
+cdpuceron
+git status
+gacp
+cdpuceron
+nvim notes.md 
+git status
+cdpuceron
+git status
+gpom
+nvim notes.md 
+rm -f notes.md
+gpom
+git status
+git add .
+git commit -m "-"
+gpom
+git config pull.rebase false
+gpom
+git config pull.rebase true
+gpom
+git status
+git commit -m "-"
+git add .
+git commit -m "-"
+gpom
+git rm notes.md
+git rebase --continue
+git status
+gpom
+ls
+gpom
+ls
+gpom
+ls
+gpom
+git add notes.md
+git rebase --continue
+ls
+nvim notes.md 
+gpom
+nvim notes.md 
+gpom
+gacp
+nvim notes.md 
+nvim meeting_minutes.md 
+jupyter-lab
+cdpuceron
+nvim notes.md 
+tmux
+nvim tmp
+exit
+cdpuceron
+jupyter-lab
+exit
+cdpuceron
+gacp
+cdpuceron
+gpom
+cdinfo
+gpom
+nvim Overview.md 
+cdpuceron
+nvim notes.md 
+nvim meeting_minutes.md 
+git status
+cdpuceron
+git status
+nvim notes.md 
+gacp
+nvim notes.md 
+exit
+cd
+nvim ~/.profile
+exit
+gpom
+cdinfo
+gpom
+cdpuceron
+jupyter-lab
+cdpuceron
+tmux
+jupyter-lab
+clear
+nvim notes.md 
+cdpuceron
+tmux
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+cdpuceron
+nvim borne_arcade.md 
+cp borne_arcade.md ~
+cd
+ls
+cdpuceron
+git status
+git restore borne_arcade.md
+git status
+cdpuceron
+gpom
+cd 00_Data/
+ls
+ls France/
+ls France/Audrey/
+ls France/Audrey/2022-12-16_Rendement_essais_FPE/
+ls Audrey/
+ls Audrey/2022-12-16_Rendement_essais_FPE/
+ls France/
+rm -r Audrey/
+jupyter-lab
+exit
+cdpuceron
+tmux
+sudo find . -name *2022623_fpe_filtres.csv*
+sudo find ~ -name *2022623_fpe_filtres.csv*
+cp ~/.local/share/Trash/files/test_nvim/2022623_fpe_filtres.csv 00_Data/France/Audrey/2022-12-16_Rendement_essais_FPE/
+jupyter-lab
+cdpuceron
+tmux
+nvim tmp
+cdpuceron
+jupyter-lab
+cdpuceron
+tmux
+cdpuceron
+gacp
+cdinfo
+git status
+nvim meeting_minutes.md 
+gpom
+jupyter-lab
+cdpuceron
+tmux
+find -name *iplome*
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+cdpuceron
+git status
+cdpuceron
+cp borne_arcade.md ~
+cd
+nvim borne_arcade.md 
+cdpuceron
+gpom
+nvim meeting_minutes.md 
+exit
+cdpuceron
+git status
+cdpuceron
+jupyter-lab
+grep --exclude=\*.{css,yml,js} -rl "essai_diff"
+grep --exclude=\*.{css,yml,js} -rl -not -path "./01_Description_des_donnees/*" "essai_diff"
+grep --exclude=\*.{css,yml,js} -rl --exclude-dir="./01_Description_des_donnees/*" "essai_diff"
+grep --exclude=\*.{css,yml,js} -rl --exclude-dir=01_Description_des_donnees "essai_diff"
+tldr grep
+grep --exclude=\*.{css,yml,js} -rl "essai_diff"
+grep --exclude=\*.{css,yml,js} -l "essai_diff"
+exit
+cdinfo
+nvim Overview.md 
+exit
+nvim notes.md 
+exit
+cdpuceron
+gpom
+tmux
+exit
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+gacp
+cdpuceron
+gpom
+jupyter-lab
+cdpuceron
+nvim notes.md 
+cdpuceron
+jupyter-lab
+clear
+cdpuceron
+jupyter-lab
+clear
+exit
+cdpuceron
+jupyter-lab
+clear
+nvim
+cd Images/
+ls
+stat animation.gif 
+tldr stat
+stat --terse animation.gif 
+stat animation.gif 
+cdinfo
+exit
+cdinfo
+nvim Overview.md 
+exit
+tldr grep
+exit
+ls
+cd Images/
+ls
+cd ..
+nvim Kitesurf.md 
+tldr grep
+grep -l "gif"
+grep -lr --include=\*.md "gif"
+cd ..
+ls
+grep -lr --include=\*.md "gif"
+cd ..
+ls
+grep -lr --include=\*.md "gif"
+cd..
+cd ..
+ls
+grep -lr --include=\*.md "gif"
+cdpuceron
+grep -lr --include=\*.md "gif"
+cd
+cd Documents/Theatre/
+ls
+grep -lr "gif"
+grep -lr --exclude=\*.jpd "gif"
+grep --exclude=\*.{jpg,mp4} -rl
+grep --exclude=\*.{jpg,mp4} -rl "gif"
+cd ..
+grep --exclude=\*.{jpg,mp4} -rl "gif"
+grep --exclude=\*.{jpg,mp4,mp3,png,ipynb} -rl "gif"
+cd
+find . -name *.blend*
+exit
+cdinfo
+nvim Overview.md 
+exit
+tldr grep
+exit
+cdkite
+ls
+git status
+nvim Kitesurf.md 
+tmux
+cdpuceron
+jupyter-lab
+cdinfo
+nvim Overview.md 
+git status
+gacp
+cdpuceron
+gacp
+exit
+tmux
+cdpuceron
+gpom
+jupyter-lab
+gacp
+clear
+exit
+cdpuceron
+gpom
+jupyter-lab
+cdpuceron
+nvim meeting_minutes.md 
+jupyter-lab
+cdpuceorn
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+cd
+ls
+cdpuceron
+gpom
+nvim notes.md 
+:q!
+exit
+firefox
+jupyter-lab
+stat
+tldr stat
+stat .
+tldr
+unname
+uname
+uname -a
+uname -v
+uname -r
+sudo lshw
+System information
+lsb_release -a
+exit
+sudo systemctl enable bluetooth
+sudo rebooy
+sudo reboot
+sudo apt install smartmontools
+sudo lsblk 
+sudo lsblk | less
+du -h
+du -h --max-depth=1
+du -h --max-depth=1 /
+df -h
+ls
+ls -al Vidéos/
+ls -alh Vidéos/
+ls
+sudo lsof
+sudo lsof L+1
+sudo lsof +L1
+sudo lsof +L1 [[E-
+sudo lsof +L1 -h
+sudo lsof +L1
+sudo systemctl restart pulseaudio
+sudo apt-get clean
+df -h
+sudo apt install ncdu
+ncdu
+sudo ncdu /
+mv Téléchargements/blender-3.2.0-linux-x64 .
+rm -r Téléchargements/*
+rm -rf Téléchargements/*
+df -h
+sudo reboot
+ls
+cd S2
+ls
+find . -name *registrement*
+find . -name *vocal*
+find . -name *Vocal*
+find . -name *Vocal* | rm -f
+find . -name *Vocal* 
+find . -name *Vocal* --exec rm [-f]
+find . -name *Vocal* -exec rm [-f]
+find . -name *Vocal* -exec rm [-f]{}
+find . -name *Vocal* -exec rm [f]{}
+find . -name *Vocal* -exec rm -f {}
+find . -name *Vocal* -exec rm -f {} \;
+find . -name *Vocal* 
+cd ..
+ncdu
+exit
+tldr ncdu
+cd Documents/Etudes/Maths/M2\ MSV/Louis/
+ncdu 
+ncdu
+exit
+cdpuceron
+grep -lr "geom_ribbon"
+cdinfo
+nvim Overview.md 
+cdpuceron
+git status
+gpom
+jupyter-lab
+exit
+grep -lr "res_fpe_facto_classes_1"
+find . -name *res_fpe_facto_classes_1*
+jupyter-lab
+gacp
+cdpuceron
+tmux
+nvim notes.md 
+jupyter-lab
+cdpuceron
+gpom
+tmux
+clear
+jupyter-lab
+clear
+gacp
+cdpuceron
+tmux
+cdinfo
+nvim Overview.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+gpom
+tmux
+exit
+cdpuceron
+tmux
+jupyter-lab
+exit
+cdpuceron
+tmux
+cdpuceron
+gacp
+cdinfo
+gacp
+cdpuceron
+gpom
+cdinfo
+gpom
+cdpuceron
+tmux
+nvim 04_Modelisation/00_Rendements/99_model_pucerons.txt 
+exit
+nvim notes.md 
+exit
+jupyter-lab
+gacp
+exit
+cdpuceron
+tmux
+exit
+nvim notes.md 
+exit
+gpom
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+jupyter-lab
+cdpuceron
+tmux
+cdpuceron
+gacp
+cdinfo
+git status
+nvim tmp
+R
+nvim 04_Modelisation/00_Rendements/99_model_pucerons.txt 
+exit
+jupyter-lab
+git status
+git restore .
+git status
+gpom
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+nvim 04_Modelisation/00_Rendements/99_model_pucerons.txt 
+exot
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+jupyter-lab
+clear
+exit
+cdpuceron
+tmux
+exit
+cdpuceron
+gacp
+cdinfo
+git status
+exit
+gpom
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+nvim notes.md 
+exit
+jupyter-lab
+clear
+exit
+cdpuceron
+tmux
+exit
+cdpuceron
+gacp
+nvim notes.md 
+cdinfo
+nvim Overview.md 
+exit
+gpom
+jupyter-lab
+exit
+cdpuceron
+tmux
+ls
+find . -name *newsletter.odg*
+cdpuceron
+git status
+gacp
+cdinfo
+git status
+exit
+ncdu
+exit
+nvim notes.md 
+exit
+nvim meeting_minutes.md 
+exit
+cdpuceron
+tmux
+exit
+cdpuceron
+git status
+gpom
+jupyter-lab
+exit
+cdpuceron
+gacp
+cdinfo
+gpom
+exit
+gpom
+jupyter-lab
+cdpuceron
+tmux
+cdpuceron
+git status
+gacp
+cdinfo 
+git status
+gpom
+exit
+cdpuceorn
+cdpuceron
+tmux
+exit
+nvim notes.md 
+exit
+jupyter-lab
+clera
+cdpuceorn
+cdpuceron
+tmux
+nvim notes.md 
+exit
+cdpuceron
+tmux
+exit
+R
+nvim  notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+nvim notes_article_2.md 
+exit
+nvim notes.md 
+exit
+jupyter-lab
+clear
+exit
+cdpuceron
+tmux
+R
+exit
+nvim notes_article_2.md 
+exit
+cp notes_article_2.md ~
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+nvim notes.md 
+exit
+jupyter-lab
+gacp
+exit
+cdpuceron
+tmux
+jupyter-lab
+git status
+exit
+cdpuceron
+tmux
+exit
+find . -name *these*
+find . -name *moniac*
+find . -name *_vf*
+find . -name *_VF*
+curl -o- https://deb.packages.mattermost.com/repo-setup.sh | sudo bash -s mattermost
+sudo apt update
+sudo apt install mattermost -y
+sudo install -C -m 600 -o mattermost -g mattermost /opt/mattermost/config/config.defaults.json /opt/mattermost/config/config.json
+tmux
+cdpuceron
+jupyter-lab
+clear
+jupyter-lab
+clear
+git status
+gacp
+journal
+nvim Journal 
+exit
+cd Bureau/
+ls
+rm -f 2023-04-21_ndj_nvim 
+nvim 2023-02-28_ndj 
+ls
+mv 2023-02-28_ndj notes
+ls
+cd ..
+ls
+nvim .bash_aliases 
+exit
+cd Bureau/
+journal
+ls
+nvim Journal 
+rm -f Journal 
+ls
+exit
+cd Bureau/
+journal
+ls
+nvim ~/Journal 
+ls
+cd 
+find . -name *Journal*
+cdinfo
+ls
+pwd
+nvim Journal 
+rm -f Journal 
+ls
+cd ~/Bureau/
+ls
+nvim 2023-03-04_ndj 
+rm -f nvim 2023-03-04_ndj 
+ls
+nvim firefox 
+mv firefox ~/Documents/Informatique/firefox_temporary_notes
+ls
+cd
+find . -name *Id.pdf*
+rm -f Bureau/Id.pdf 
+cd Bureau/
+ls
+mv note_theatre ~/Documents/Theatre/
+ls
+mv notes Notes
+mv Bandit.png ~/Documents/Voile/Kitesurf/
+ls
+ls Cite_u/
+rm -r Cite_u/
+ls
+ls These/
+mv These/ ~/Documents/Vie_pro/Expériences/Thèse/
+ls
+rm -f dernier_gel_orly.png 
+cd ~/Documents/Vie_pro/Expériences/
+ls
+ls Thèse/
+cd Thèse/
+rm -f ALFAM2-data-master/
+rm -r ALFAM2-data-master/
+cdinfo
+ls
+cdinfo
+ls
+nvim tmp 
+exit
+cdinfo
+nivm Overview.md 
+nvim Overview.md 
+exit
+tmux
+exit
+cdpuceron
+gacp
+gpom
+jupyter-lab
+clera
+exit
+cdpuceron
+tmux
+exit
+cd 00_Data/Belgique/2022-02-03\ \(reception\)/
+ls
+cd ..
+ls
+cd ..
+cd Kathleen/2022-02-03\ \(reception\)/
+ls
+cd ..
+ls
+cdpuceron
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+cd 00_Data/
+ls
+find . Elma
+cd Elma
+find .
+exit
+jupyter-lab
+gacp
+cdpuceron
+tmux
+cdpuceron
+cd 00_Data/Pays_Bas/
+find .
+cd ..
+ls
+cd Elma/
+find .
+cd ../Belgique/
+find .
+cdpuceron
+gpom
+jupyter-lab
+gpom
+jupyter-lab
+exit
+nvim tmp
+exit
+nvim meeting_minutes.md 
+exit
+nvim notes.md 
+exit
+cd Téléchargements/
+tar -tvf mattermost-desktop-5.4.0-linux-x64.tar.tar 
+ls *matter*
+cd
+curl -o- https://deb.packages.mattermost.com/setup-repo.sh | sudo bash
+sudo apt install mattermost-desktop
+sudo apt upgrade mattermost-desktop
+cdpuceron
+tmux
+exit
+cdpuceron
+nvim notes.md 
+exit
+nvim notes_article_2.md 
+exit
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+nvim tmp
+exit
+nvim meeting_minutes.md 
+exit
+cdpuceron
+tmux
+exit
+nvim tmp
+cdpuceron
+tmux
+cdpuceron
+gacp
+nvim notes.md 
+tmux
+cdpuceron
+gpom
+nvim meeting_minutes.md 
+exit
+cdpuceron
+tmux
+exit
+cd Bureau/
+nvim Notes 
+ls
+cd Bureau_interieur/
+ls
+nvim Ma_description_these 
+rm -f Ma_description_these 
+rm -f 'Notes - bilan 2022 Nomad Yo' Newsletter_ITB.odg 
+mv Revue\ de\ presse_NNI $aph
+ls
+nvim 2022-12-22_ndj_Nomad_Yo 
+rm -f 2022-12-22_ndj_Nomad_Yo 
+nvim 2023-02-18_ndj 
+rm -f 2023-02-18_ndj 
+ls
+mv quizz Quizz_MIA_2022
+ls
+mv Quizz_MIA_2022/ ~/Documents
+ls
+ls extension_computo/a
+ls extension_computo/
+mv extension_computo/ ~
+ls mysubmission/
+ls Article_computo_2/
+ncdu
+ls
+mv Article_computo_2 ~/Documents/Vie_pro/Expériences/2021-11_Mission_Puceron_Inrae/
+mv mysubmission ~/Documents/Vie_pro/Expériences/2021-11_Mission_Puceron_Inrae/
+ls
+cdpuceron
+nvim notes.md 
+tmux
+youtube-dl https://www.youtube.com/watch?v=rbDzVzBsbGM
+youtudedl https://www.youtube.com/watch?v=rbDzVzBsbGM
+youtube-dl https://www.youtube.com/watch?v=rbDzVzBsbGM
+sudo apt-get update
+sudo apt-get install Youtube-dl
+sudo wget https://yt-dl.org/latest/youtube-dl -O /usr/local/bin/youtube-dl
+sudo chmod a+x /usr/local/bin/youtube-dl
+hash -r
+youtube-dl https://www.youtube.com/watch?v=rbDzVzBsbGM
+youtube-dl -U
+youtube-dl --verbose https://www.youtube.com/watch?v=rbDzVzBsbGM
+rm -r /usr/local/bin/youtube-dl 
+sudo rm -r /usr/local/bin/youtube-dl 
+youtube-dl https://www.youtube.com/watch?v=rbDzVzBsbGM
+cdpuceron
+gacp
+exit
+gpom
+nvim notes.md 
+exit
+cdpuceron
+tmux
+nvim
+nvim tmp
+nvim lettre_de_motivation_cite_u
+exity
+exit
+find . -name *otivation*
+find . -name *otivation.odt*
+find . -name *cite_u*
+exit
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+git status
+nvim notes.md 
+ls
+nvim notes.md 
+cp notes.md ~
+git restore .
+gpom
+ls ~
+rm -f notes.md 
+mv ~/notes.md .
+ls
+nvim notes.md 
+tmux
+exit
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+gacp
+cdpuceron
+gpom
+cdpuceorn
+cdpuceron
+nvim notes.md 
+exit
+ls
+nvim karaoke 
+rm -f karaoke 
+nvim Les\ femmes 
+nvim Pour\ la\ rentrée 
+rm -f Pour\ la\ rentrée 
+rm -f quizz_reflexions 
+nvim rattrapage\ la\ Guerre\ et\ la\ Paix 
+rm -f rattrapage\ la\ Guerre\ et\ la\ Paix 
+nvim Relaxation 
+rm -f Relaxation 
+nvim Résultats_article 
+rm -f Résultats_article 
+nvim Shopping 
+ls
+cd ..
+ls
+mv Notes/ ~/Documents/
+cd VIM/
+ls
+nvim Notes 
+ls
+cd ..
+rm -rf VIM/
+ls
+ls Photos\ Arthur/
+mv Photos\ Arthur/ Album_pour_Arthur
+ls
+mv Album_pour_Arthur/ ~/Images/
+ls
+cd ..
+rm -r Bureau_interieur/
+ls
+cd ..
+ls
+nvim 2022-10-12_ndj 
+rm -f *ndj*
+ls
+ms
+ls
+rm -f 2022-11-11_formulations 2022-11-12_notes_articles 2023-05-16_borne 
+ls
+rm -f *Back_button*
+rm -rf Back_button_files/
+rm -f borne_arcade.md 
+nvim brainstorming_info 
+rm -f brainstorming_info 
+rm -f data.Rdata data_EKF.Rdata 
+ls
+rm -f Lettre\ de\ motivation\ cité\ u.pdf Liste\ bars script_bash.sh temp_cr_pleniere 
+ls
+nvim Theatre 
+mv Theatre ~/Documents/Theatre/
+ls
+rm -f notes_article_2.md 
+nvim test_nano 
+rm -f test_nano 
+ls
+rm -f test_source.ipynb tmp tmp.R tmp.Rmd Untitled.ipynb untitled.r tsetup.2.7.4.tar.xz.part matrice_de_covariance.R matrice_de_covariance.Rmd 
+ls
+rm -f *.deb*
+ls
+rm -f mathjaxr_1.4-0.tar.gz 
+ls
+xdg-open 5f2d66c87dd69_maxnewsworldfive216740-4955414.jpg 
+rm -f *.jpg*
+rm -f 88_carte_EKF.png 
+rm -f Aphid_project___Seminaire_MIA___PSAE__2023_06_08__-4.pdf 
+ls
+ls inst/
+rm -rf inst/
+mv s\'embrasser s_embrasser
+ls
+mv s_embrasser Documents/Notes/
+ls
+ls extension_computo/
+rm -rf extension_computo/
+rm -f lshw.html 
+ls Paquets/
+rm -rf test_quarto_nvim/ mathjaxr_1.4-0/ testcomputo/ Zotero monod.png Test.ipynb Zotero_linux-x86_64/
+ls
+nvim Notes 
+rm -f Notes 
+rm -rf colorout/
+ls
+exit
+cdinfo
+nvim Overview.
+nvim Overview.md 
+exit
+cdpuceron
+cd ~/Bureau/
+ls
+cd Notes
+cd Bureau_interieur/
+cd Notes/
+ls
+nvim Commandes 
+rm -f Commandes 
+tmux
+exit
+cdpuceron
+git status
+nvim notes.md 
+cdpuceron
+jupyter-lab
+exit
+tmux
+cdpuceron
+gacp
+exit
+jupyter-lab
+exit
+cdpuceron
+gpom
+tmux
+exit
+nvim notes.md 
+jupyter-lab
+cdpuceron
+tmux
+vim test
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+exit
+nvim notes.md 
+jupyter-lab
+cdpuceron
+tmux
+cdpuceron
+gacp
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+gpom
+tmux
+exit
+cdpuceron
+gacp
+exit
+sudo find / *endeley*
+sudo find / *Mendeley*
+sudo apt-get remove mendeleydesktop
+mv Téléchargements/mendeley-reference-manager-2.97.0-x86_64.AppImage .
+chmod a+x mendeley-reference-manager-2.97.0-x86_64.AppImage 
+./mendeley-reference-manager-2.97.0-x86_64.AppImage --no-sandbox
+cdinfo
+gpom
+cdpuceron
+git status
+gpom
+options(width = 200)
+cdpuceron
+jupyter-lab
+R --version
+cd Téléchargements/
+ls
+mv rstudio-2023.06.1-524-amd64.deb ~
+ls
+cd ..
+sudo apt install -f ./rstudio-2023.06.1-524-amd64.deb 
+exit
+nvim tmp
+tmux
+cdpuceron
+nvim notes.md 
+exit
+nvim tmp 
+cd Bureau/
+ls
+cd ~
+ls
+cd Documents/
+ls
+cd Voile/
+ls
+cd Windsurf/
+ls
+nvim Spots
+nvim Spots.md
+cd ~
+ls
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+jupyter-lab
+cdpuceron
+tmux
+jupyter-lab
+clear
+cdpuceron
+tmux
+nvim notes.md 
+jupyter-lab
+cdpuceron
+tmux
+nvim notes.md 
+exit
+jupyter-lab
+cdpuceron
+tmux
+nvim notes.md 
+exit
+jupyter-lab
+nvim notes.md 
+cdpuceron
+tmux
+nvim notes.md 
+jupyter-lab
+exit
+cdpuceron
+tmux
+nvim notes.md 
+exit
+exit
+nvim notes.md 
+exit
+cdpuceron
+jupyter-lab
+exit
+nvim notes.md 
+exit
+jupyter-lab
+exit
+cdpuceron
+tmux
+jupyter-lab
+journal
+nvim tmp
+cdpuceron
+tmux
+nvim notes_article_2.md 
+nvim meeting_minutes.md 
+cdinfo
+nvim Overview.md 
+cd ~
+./mendeley-reference-manager-2.97.0-x86_64.AppImage --no-sandbox
+nvim notes.md 
+jupyter-lab
+exit
+cdpuceron
+tmux
+nvim notes.md 
+nvim notes_article_2.md 
+./mendeley-reference-manager-2.97.0-x86_64.AppImage --no-sandbox
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage --no-sandbox
+nvim meeting_minutes.md 
+cdpuceron
+tmux
+ls
+cd 00_Data/
+ls
+cd Divers/
+ls
+mkdir Sugar_Beet_Production
+cd Sugar_Beet_Production/
+nvim Notes
+ls
+exit
+nvim notes_article_2.md 
+exit
+nvim notes.md 
+exit
+cd
+nvim glossary_of_agriculture.md
+cdpuceron
+nvim glossary_of_agriculture.md
+exit
+cd 00_Data/Divers/Sugar_Beet_Production/
+ls
+nvim Sugar\ Beet\ Production\ in\ Belgium.xlsx 
+exit
+cd
+ls
+cd Téléchargements/
+ls
+mv *Sugar Beet* $aph/00_Data/Divers/Sugar_Beet_Production
+ls *Sugar*
+mv *Sugar\ Beet* $aph/00_Data/Divers/Sugar_Beet_Production
+exit
+jupyter-lab
+exit
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+cdpuceron
+nvim notes.md 
+tmux
+quarto render response_strategy.Rmd 
+exit
+cd /usr/
+ls
+cd share/vim/
+ls
+ls addons/
+cd addons/syntax/
+ls
+nvim espeaklist.vim 
+nvim espeakrules.vim 
+nvim jinja.vim 
+cd ..
+ls 
+ls plugin/
+cd ..
+ls vimfiles/
+cd vimfiles/syntax/
+ls
+nvim cmake.vim 
+exigt
+exit
+cd
+nvim tmp
+cd
+find . *my_submission*
+cdpuceron
+jupyter-lab
+cdpuceron
+nvim meeting_minutes.md 
+exit
+nvim response_strategy.Rmd 
+ls
+mv response_strategy.Rmd response_strategy.md
+rm -f response_strategy.html 
+ls
+nvim response_strategy.md 
+exit
+ls
+quarto render response_strategy.md 
+exit
+cdinfo
+nvim Overview.md 
+exit
+cdpuceron
+ls
+cd 10_Article/
+ls
+mkdir Newsletter_ITB
+mv *ewslet* Newsletter_ITB/
+mv *ewsletter.* Newsletter_ITB/
+ls
+mkdir Article_1
+mv *.* Article_1
+ls
+cat Dependancies 
+ls
+mv Dependancies Article_1
+ls figures/
+rm -rf figures/
+ls
+cd Article_1
+ls
+mkdir Review
+cd Review
+nvim response_strategy.Rmd
+tmux
+exit
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+nvim notes.md 
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+nvim glossary_of_agriculture.md 
+cdpuceron
+tmux
+nvim glossary_of_agriculture.md 
+exit
+nvim notes.md 
+exit
+nvim meeting_minutes.md 
+exit
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+exit
+cdpuceron
+tmux
+exit
+nvim meeting_minutes.md 
+exit
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+exit
+cdpuceron
+tmux
+cd
+find . -name *Article_2.Rmd*
+nvim tmp
+cd
+nvim export.bib 
+cdpuceron
+jupyter-lab
+nvim notes.md 
+cd
+./mendeley-reference-manager-2.97.0-x86_64.AppImage 
+cdpuceron
+tmux
+axis_text_size = 18;   axis_title_size = 18;   title_size = 22
+cd Documents/Voile/Windsurf/2023-08-17_Lery_Poses/
+quarto render Firs_time_in_Lery_Poses.md 
+cd ..
+ls
+cd ..
+ls
+exit
+cd Documents/Voile/Kitesurf/
+ls
+cp styles.css ../Windsurf/2023-08-17_Lery_Poses/
+cd ../Windsurf/2023-08-17_Lery_Poses/
+nvim Firs_time_in_Lery_Poses.md
+exit
+cd Documents/Voile/Kitesurf/
+nvim Kitesurf.md 
+exit
+nvim Documents/Voile/Kitesurf/Kitesurf.md 
+exit
+cd Documents/Voile/Windsurf/2023-08-17_Lery_Poses/
+nvim Firs_time_in_Lery_Poses.md 
+exit
+cd Documents/Voile/Windsurf/2023-08-17_Lery_Poses/
+quarto render Firs_time_in_Lery_Poses.md 
+exit
+nvim tmp
+exit
+nvim tmp
+tmux
+cd Documents/Voile/
+find .
+ncpu
+ncdu
+exit
+exit
+cdinfo
+nvim Overview.md 
+exit
+cd Documents/Voile/Kitesurf/
+ls
+ls Videos/
+ls Videos/Montages/
+ls Videos/BL_proxy/
+ls Videos/Montages/BL_proxy/
+ls
+ls Images/
+ncdu
+cd ../Windsurf/
+ls
+ls 2022-09-04_photos/
+ls 2022-09-04_videos/
+cd ..
+ls
+cd Kitesurf/
+ls
+ls Videos/
+exit
+nvim tmp
+exit
+cd Documents/Voile/Kitesurf/
+ls
+ls -a
+git status
+ls
+ls Images/
+nvim .gitignore
+cat .gitignore 
+ls
+git status
+git add .gitignore 
+git commit -m "-"
+git status
+gacp
+git status
+nvim .gitignore 
+gpom
+git config pull.rebase false
+git status
+nvim .gitignore 
+gacp
+gpom
+git status
+gpom
+ls
+nvim .gitignore 
+ls Videos/
+ls
+git rm --cached Bandit.png 
+ls
+ls Images/
+git rm --cached *.png*
+git rm Images --cached *.png*
+cd Images/
+git rm --cached *.png*
+git rm --cached *.gif*
+git rm --cached *.mp4*
+git rm --cached *.jpg*
+cd 2023-05-19_screenshots/
+ls
+git rm --cached *.png*
+cd ../
+ls
+cd ../
+ls
+cd Videos/
+ls
+git rm --cached *.png*
+git rm --cached *.jpg*
+git rm --cached *.mp4*
+cd Montages/
+ls
+git rm --cached *.mp4*
+git rm --cached *.blend*
+cd BL_proxy/
+ls
+git rm --cached *.mp4*
+cd 20230625_193820.mp4/
+ls
+cd ../
+ls
+cd ..
+ls
+cd ..
+ls
+cd Montages/
+ls
+git rm --cached *.mp4*
+cd ../
+ls
+cd ..
+ls
+git status
+gacp
+ls
+nvim .gitignore 
+git status
+ls
+ls Images/
+cd Videos/
+git rm --cached *.mp4*
+ls
+git rm --cached 20230625_170835.mp4 
+ls
+cd BL_proxy/
+ls
+cd ..
+git rm -r BL_proxy/ --cached *.mp4*
+git rm -r BL_proxy/ --cached *.avi*
+cd ..
+git rm -r BL_proxy/ --cached *.mp4*
+git rm -r BL_proxy/ --cached *.p,g*
+git rm -r BL_proxy/ --cached *.png*
+git rm -r BL_proxy/ --cached *.jpg*
+git rm -r BL_proxy/ --cached *.blend*
+git status
+gacp
+exit
+cdpuceron
+ls
+nvim .gitignore 
+exit
+nvim tmp
+tmux
+exit
+nvim tmp
+cd Documents/Voile/
+cd Kitesurf/
+ls
+git log
+git log --oneline
+ls
+ls Videos/
+git log -p --follow Videos/20230625_170616.mp4
+git log -p --follow --Videos/20230625_170616.mp4
+git log -p --follow -- Videos/20230625_170616.mp4
+git log -p --follow Videos/20230625_170616.mp4
+cd Documents/Voile/Kitesurf/
+git log -p --follow Videos/20230625_170616.mp4
+git ls-tree -r master --name-only
+git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d'
+git ls-tree -r master --name-only
+git log --pretty=format: --name-only --all | sort -u | sed '/^$/d'~
+git log --pretty=format: --name-only --all | sort -u | sed '/^$/d'
+git log --oneline
+git log
+git rebase -i 11e9ef8c5ae667badc97f1583fdc79059f7c6d49
+ls
+git rm --cached -r Videos/
+git rebase --continue
+git rebase --edit-todo
+git rebase continue
+ls
+git log --pretty=format: --name-only --all | sort -u | sed '/^$/d'
+exit
+cd Documents/Voile/Kitesurf/
+git log --oneline
+git log
+exit
+cd Documents/Voile/
+cd Kitesurf/
+ls
+ls Videos/
+mv Videos/ ..
+ls
+git status
+git rebase --edit-todo 
+git rebase --continue
+git commit --amend
+git status
+gacp
+exit
+cdinfo
+ls
+nvim Overview.md
+exit
+tmux
+cd 
+cd finistR2023/
+ls
+cd Utilisation_de_git/
+xdg-open Utilisation_de_git.html 
+exit
+cd
+git clone git@github.com:StateOfTheR/finistR2023.git
+ls
+cd finistR2023/
+ls
+mkdir Utilisation_a_git
+mv Utilisation_a_git/ Utilisation_de_git
+cd Utilisation_de_git/
+nvim Utilisation_de_git.Rmd
+quarto render Utilisation_de_git.Rmd 
+git branch Utilisation_de_git
+git tree
+git branch -a
+git branch
+git checkout Utilisation_de_git 
+git branch
+ls
+git status
+cd ..
+git status
+git add .
+git commit -m "Création d'une branche pour l'atelier "Utilisation de git""
+git commit -m "Création d'une branche pour l'atelier Utilisation de git"
+git branch
+git push
+git push --set-upstream origin Utilisation_de_git 
+ls 
+cd Utilisation_de_git/
+ls
+nvim Utilisation_de_git.Rmd 
+exit
+git status
+cd
+git status
+cd finistR2023/
+cd Utilisation_de_git/
+ls
+git status
+git add .
+git commit -m "test de conflits git"
+git push --set-upstream origin Utilisation_de_git
+git pull
+ls
+git unstage
+git --help
+ls
+cd ..
+git branch 
+git branch -a
+git status
+git push 
+git pull
+git branch -a
+git config pull.ff only
+git pull
+git status
+git pull --rebase
+cd 
+cd finistR2023/Utilisation_de_git/
+nvim Utilisation_de_git.Rmd 
+cd ..
+git status
+git add .
+git commit -m "merge conflicts"
+git push
+git branch
+git rebase --continue
+git status
+git push
+cdinfo
+nvim Overview.md 
+cd 13_FinistR_08_2023/
+nvim notes
+cdpuceron
+cd
+cd Documents/Vie_pro/
+ls
+cd Expériences/
+ls
+cdpuceron
+ls
+mkdir 13_FinistR_08_2023
+tmux
+1
+l
+c1
+cdpuceron
+cdpuceron
+jupyter-lab
+exit
+#1692636781
+history
+#1692636924
+HISTTIMEFORMAT="%d/%m/%y %T "
+#1692636926
+history
+#1692636968
+history >> historique_bash_2
+#1692636980
+exit
+#1692633984
+cd Documents/Voile/Kitesurf/
+#1692633985
+ls
+#1692633987
+git status
+#1692634003
+git log
+#1692634021
+git log --online
+#1692634107
+ls
+#1692634113
+ls Images/
+#1692636511
+history
+#1692636674
+echo "history" >> historique_bash
+#1692636679
+nvim historique_bash 
+#1692636734
+history >> historique_bash
+#1692636737
+nvim historique_bash 
+#1692636986
+history
+#1692636990
+HISTTIMEFORMAT="%d/%m/%y %T "
+#1692637001
+rm -f historique_bash 
+#1692637013
+history >> historique_bash_1
+#1692637022
+exit
+#1692637031
+HISTTIMEFORMAT="%d/%m/%y %T "
+#1692637033
+history
+#1692637060
+history >> historique_bash_3
+#1692637074
+exit
+nvim tmp
+cdpuceron
+ls
+cd 13
+cd 13_FinistR_08_2023/
+ls
+nvim notes 
+exit
+#1692637115
+history
+#1692637132
+find . *historique_bash*
+#1692637152
+find . -name *Historique_bash*
+#1692637160
+find . -name *historique_bash*
+#1692637199
+history
+#1692637209
+HISTTIMEFORMAT="%d/%m/%y %T "
+#1692637219
+history >> historique_bash_5
+#1692637221
+exit
+#1692636584
+cdinfo
+#1692636588
+nvim Overview.md 
+#1692637088
+HISTTIMEFORMAT="%d/%m/%y %T "
+#1692637090
+history
+#1692637232
+exit
+cd finistR2023/Utilisation_de_git/
+ls
+cd ..
+git config pull.rebase false
+ls
+cd Utilisation_de_git/
+nvim Utilisation_de_git.Rmd 
+exit
+nvim .bash_history 
+exit
+cd finistR2023/Utilisation_de_git/
+git status
+cd ..
+git status
+.bash _history
+git status
+git pull
+cd Utilisation_de_git/
+ls
+nvim Utilisation_de_git.Rmd 
+git add .
+git commit -m "test conflits, encore"
+git push
+nvim Utilisation_de_git.Rmd 
+git add .
+git commit -m "suite du test"
+git push
+git pull
+git config pull.rebase false
+git pull
+git config --global pull.rebase false
+git pull
+git pull --merge
+git pull merge
+git pull --merge
+git config -l
+git config --global pull.ff false
+git pull 
+git config  pull.ff false
+git config -l
+git pull 
+git status
+nvim Utilisation_de_git.Rmd 
+git status
+git pull
+git status
+git add .
+git commit -m "fixing conflicts"
+git status
+git push
+git pull
+nvim Utilisation_de_git.Rmd 
+git add .
+git commit -m "Annaïg fait des conflits"
+git push
+git pull
+git log
+git status
+git push
+gitk
+sudo apt install gitk
+gitk
+git status
+gitk
+exit
+tmux
+exit
+cdinfo
+nvim Overview.md
+exit
+#1692685621
+history
+#1692685668
+exit
+echo 'export HISTTIMEFORMAT="%d/%m/%y %T "' >> ~/.bash_profile
+nvim .bash_profile
+exit
+ls
+nvim historique_bash_2
+exit
+tmux
+exit
+cdinfo
+nvim Overview.md 
+exit
+#1692698038
+cdpuceron
+#1692698039
+ls
+#1692698043
+cd 10_Article/
+#1692698044
+ls
+#1692698049
+cd Article_1
+#1692698050
+ls
+#1692698079
+cd Review/
+#1692698079
+ls
+#1692698085
+nvim response_strategy.md 
+#1692698111
+xdg-open response_strategy.html 
+#1692698131
+exit
+#1692697711
+cdvoile
+#1692697719
+cd Documents/Voile/Kitesurf/
+#1692697720
+ls
+#1692697724
+nvim Kitesurf.md 
+#1692697936
+cd
+#1692697946
+find . -name *.md*
+#1692697961
+cdpuceron
+#1692697969
+find . -name *.md*
+#1692697992
+cd
+#1692697994
+cd Documents/
+#1692698002
+find . -name *.md*
+#1692698373
+cdpuceron
+#1692698375
+jupyter-lab
+#1692699982
+exit
+#1692698498
+cd Documents/Voile/
+#1692698498
+ls
+#1692698500
+cd Kitesurf/
+#1692698501
+ls
+#1692698505
+nvim Kitesurf.md 
+#1692698584
+quarto render Kitesurf.md 
+#1692698613
+nvim Kitesurf.md 
+#1692699991
+exit
+#1692694411
+cdpuceron
+#1692694413
+ls
+#1692694418
+cd 13_FinistR_08_2023/
+#1692694426
+cd ..
+#1692694430
+jupyter-lab
+#1692700006
+exit
