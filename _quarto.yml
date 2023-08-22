@@ -5,11 +5,18 @@ website:
   title: "Finist'R 2023"
   navbar:
     left:
-    - text: ""
-      icon: fa-github
-      href: https://github.com/StateOfTheR/finistR2023
-    - text: "Instructions"
-      href: instructions.qmd
+      - icon: github
+        href: https://github.com/StateOfTheR/finistR2023
+        aria-label: GitHub
+      - text: "Instructions"
+        href: instructions.qmd
+    left:
+      - text: workflow
+        href: https://github.com/StateOfTheR/finistR2023
+        aria-label: GitHub
+      - text: inla
+        href: RINLA.qmd
+        aria-label: GitHub
 
 
 
