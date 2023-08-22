@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "FinistR : bootcamp R à Roscoff",
+    "section": "",
+    "text": "L’atelier Finist’R 2023 – ou bootcamp R du groupe State Of The R s’est déroulé à la station biologique de Roscoff du 21 au 25 août 2023.\nStateoftheR est un réseau du département MathNum INRAE.\n\n\nIl s’agissait de la septième édition de l’atelier Finist’R. Cet atelier réunit annuellement un groupe de chercheurs, ingénieurs, doctorants, tous utilisateurs avancés de R et développeurs de paquets pour explorer les dernières fonctionnalités du logiciel et les nouvelles pratiques de développement. A l’issue de l’atelier le collectif produit une synthèse de cette veille logiciel de manière à progresser collectivement dans l’utilisation du logiciel mais surtout dans la production d’outils statistiques à destination de la communauté.\nLe résultat de cette semaine est disponible sur cette page"
+  },
+  {
+    "objectID": "index.html#participants",
+    "href": "index.html#participants",
+    "title": "FinistR : bootcamp R à Roscoff",
+    "section": "Participants",
+    "text": "Participants\nEmré Anakok, Julie Aubert, Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche, Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff, Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, Emily Walker."
+  },
+  {
+    "objectID": "index.html#idées-explorées",
+    "href": "index.html#idées-explorées",
+    "title": "FinistR : bootcamp R à Roscoff",
+    "section": "Idées explorées",
+    "text": "Idées explorées"
+  },
+  {
+    "objectID": "index.html#soutien",
+    "href": "index.html#soutien",
+    "title": "FinistR : bootcamp R à Roscoff",
+    "section": "Soutien",
+    "text": "Soutien"
+  },
+  {
+    "objectID": "Readme.html",
+    "href": "Readme.html",
+    "title": "Finist'R 2023",
+    "section": "",
+    "text": "website\n\n\nL’atelier Finist’R 2023 – ou bootcamp R s’est déroulé à la station biologique de Roscoff du 21 au 25 août 2023.\nIl s’agit de la septième édition de l’atelier Finist’R. Cet atelier réunit annuellement un groupe de chercheurs, ingénieurs, doctorants, tous utilisateurs avancés de R et dévelopeurs de paquets pour explorer les dernières fonctionalités du logiciel et les nouvelles pratiques de développement. A l’issu de l’atelier le collectif produit une synthèse de cette veille logiciel de manière à progresser collectivement dans l’utilisation du logiciel mais surtout dans la production d’outils statistiques à destination de la communauté.\nLa restitution se fait sous forme de site web. Le site de l’édition 2023 sera disponible ici"
+  },
+  {
+    "objectID": "instructions.html",
+    "href": "instructions.html",
+    "title": "Instructions pour le dépot sur le site web",
+    "section": "",
+    "text": "Créer une branche propre à l’atelier nommée explicitement mon_nom_parlant et basculer dessus\n\ngit checkout -b mon_nom_parlant\n\nCréer un fichier Rmarkdown de restitution de votre atelier fichier.Rmd dans votre branche\n\ngit add fichier.Rmd\ngit commit -m \"restitution atelier\"\n\nPousser vos modifications sur le serveur distant\n\ngit  push --set-upstream origin mon_nom_parlant ou\ngit  push\n\nFaire une pull request (PR) sur github\nindiquer dans le message de la PR la liste des packages ou autres besoins\nQuand la PR passe les tests, demander le merge.\ncorriger les erreurs éventuelles dans la compilation du Rmarkdown\nles admins peuvent avoir à mettre à jour l’image docker"
+  },
+  {
+    "objectID": "instructions.html#détails-du-fonctionnement",
+    "href": "instructions.html#détails-du-fonctionnement",
+    "title": "Instructions pour le dépot sur le site web",
+    "section": "Détails du fonctionnement",
+    "text": "Détails du fonctionnement\n\nLe docker\nLien vers la fiche pense-bête : [https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf]\nPour créer des images Docker en local sur sa machine, voici une liste de commandes utiles\n\nPour construire une image docker, il faut créer un fichier Dockerfile qui contient la recette du Docker. Pour ce site le ficher Dockerfile a la forme suivante\n\n\n\n\nFROM rocker/geospatial:4\nRUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \\\n && apt-get install -y pandoc \\\n    pandoc-citeproc\nRUN R -e \"install.packages('remotes')\"\nRUN R -e \"install.packages('microbenchmark')\"\nRUN R -e \"install.packages('purrr')\" # map function\nRUN R -e \"install.packages('BiocManager')\" # map function\nRUN R -e \"BiocManager::install('BiocPkgTools')\" \nRUN R -e \"install.packages('httr')\" # GET function\nENV R_CRAN_WEB=\"https://cran.rstudio.com/\" \nRUN R -e \"install.packages('cowplot')\" # GET function\nRUN R -e \"install.packages('torch')\"\nRUN R -e \"torch::install_torch(type = 'cpu')\"\nRUN R -e \"install.packages('PLNmodels')\"\nRUN R -e \"install.packages('torchvision')\"\n\nRUN apt-get update \\\n && apt-get install -y --no-install-recommends \\\n  jags \\\n  mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \\ \n  libc6-i386\n  \n  \nRUN R -e \"install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)\"\nRUN R -e \"install.packages('reticulate')\"\nRUN R -e \"install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer'))\"\n\n\npuis demander la construction de l’image à l’aide de la commande\n\n docker build -t nom_depot_dockerhub/nom_du_repo:version  . ## avec un nom\n\net enfin pousser sur Dockerhub\n\n docker push nom_depot_dockerhub/nom_du_repo:version\n\n\n\nLes actions\nDans les action de Github, on peut spécifier un container docker à utiliser, c’est ce que fait la ligne container du fichier d’action suivant, utiliser pour créer ce site web\n\n\nname: website\non:\n  push:\n    branches:\n      - main\n\njobs:   \n  build:\n    name: Build website with rmarkdown\n    runs-on: ubuntu-latest\n    container: stateofther/r-finistr2023:0.1\n\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v2\n      - name: Generate slides\n        run: \"quarto render\"\n      - name: GitHub Pages action\n        uses: peaceiris/actions-gh-pages@v3\n        with:\n          github_token: ${{ secrets.GITHUB_TOKEN }}\n          publish_dir: ./_site"
+  }
+]
