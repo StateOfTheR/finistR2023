@@ -17,6 +17,13 @@ website:
       - text: inla
         href: R_INLA.qmd
         aria-label: GitHub
+      - text: torch (R vs Py)
+        menu: 
+          - torch_test-brulee.qmd
+          - torch_python-regression.qmd
+          - torch_R-PLN.qmd
+          - torch_python-PLN.qmd
+        aria-label: GitHub
 
 
 
