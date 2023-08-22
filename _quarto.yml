@@ -10,7 +10,6 @@ website:
         aria-label: GitHub
       - text: "Instructions"
         href: instructions.qmd
-<<<<<<< HEAD
     right:
       - text: Enseignement
         menu:
@@ -36,18 +35,6 @@ website:
           - torch_Python-regression.qmd
           - torch_R-PLN.qmd
           - torch_Python-PLN.qmd
-=======
-    left:
-      - text: workflow
-        href: https://github.com/StateOfTheR/finistR2023
-        aria-label: GitHub
-      - text: inla
-<<<<<<< HEAD
-        href: RINLA.qmd
->>>>>>> f04efc2 (add link to inla)
-=======
-        href: R_INLA.qmd
->>>>>>> b12ca05 (Correct ref to R_INLA)
         aria-label: GitHub
 
 
