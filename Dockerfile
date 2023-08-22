@@ -22,11 +22,8 @@ RUN apt-get update \
   mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \ 
   libc6-i386
   
-RUN R -e "install.packages('rjags')"
-RUN R -e "install.packages('nimble')"
-RUN R -e "install.packages('ggmcmc')"
-RUN R -e "install.packages('rstan')"
-RUN R -e "install.packages('coda')"
+  
+RUN R -e "install.packages("INLA",repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 RUN R -e "install.packages('reticulate')"
 
 
