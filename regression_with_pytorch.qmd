@@ -281,6 +281,7 @@ print(df)
 **Attention** la mécanique présentée ci-dessus avec `.step()` ne fonctionne pas pour certaines routines d'optimisation (BFGS, gradient conjugué) qui nécessite de calculer plusieurs fois la fonction objective. Dans ce cas, il faut définir une *closure*, qui renvoie la fonction objective, et la passer en argument à `.step()`.
 
 ```{python}
+%%time
 # Remise à zéro du paramètre courant
 theta_current = torch.zeros(len(theta), requires_grad=True)
 optimizer = optim.Rprop([theta_current], lr=0.01)
@@ -432,6 +433,7 @@ Theta.grad
 Il n'y a plus qu'à itérer !
 
 ```{python}
+%%time
 ## Run the optimization
 num_iterations = 100
 loss_vector = torch.empty(num_iterations)
@@ -484,4 +486,5 @@ sigma_squared_theta = Theta[11]
 
 print("Variance du modèle de régression linéaire :", sigma_squared_lm)
 print("Variance de Theta[12] :", sigma_squared_theta.item())
-```    
+```
+
