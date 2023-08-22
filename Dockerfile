@@ -25,7 +25,7 @@ RUN apt-get update \
   
 RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 RUN R -e "install.packages('reticulate')"
-RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer'))"
+RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"
 
 
 
