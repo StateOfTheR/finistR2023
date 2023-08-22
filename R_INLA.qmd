@@ -219,6 +219,20 @@ ggplot() +
   coord_equal()
 ```
 
+Pour visualiser les résultats du modèle, nous utilisons la fonction `predict()` (sans oublier de passer à l'exponentielle) et `fm_pixels()` qui en prenant la zone d'étude (mesh + frontière) crée l'objet spatial adéquat.
+
+Nous remarquons que les intensités sont les plus fortes dans la végétation br{Primaire}, ce qui est logique. Ici, l'intensité représente le nombre d'habitats de gorilles par unité de surface. Attention donc à comment vous définisser les coordonnées de vos zones d'études.
+
+En utilisant les fonctions `fm_int()`et `predict()` nous allons tenter d'estimer les abondances moyennes sachant que nous savons qu'il y a 647 habitats en réalité:
+
+```{r}
+ips <- fm_int(mesh, boundary)
+Lambda1 <- predict(fit1, ips, ~ sum(weight * exp(vegetation)))
+Lambda1
+```
+
+
+
 
 ## References
 
