@@ -389,7 +389,7 @@ Tout est prêt pour définir le modèle à ajuster et son estimation :
 Pour l'enfant $j$ du village $i$, nous supposons 
 $$Y_{ij}|V_i\overset{ind}{\sim}b(p_{ij})$$
 avec $$S_i\sim GRF, \quad V_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2_V)$$
-et $$p_{ij}=\mu+\beta_1 \cdot treated_{ij}+\beta_2 \cdot netuse_{ij}+\beta_3 \cdot age_{ij}+\beta_4 \cdot green_{ij}+beta_5\cdot phc_{ij}+S_i+V_i.$$
+et $$p_{ij}=\mu+\beta_1 \cdot treated_{ij}+\beta_2 \cdot netuse_{ij}+\beta_3 \cdot age_{ij}+\beta_4 \cdot green_{ij}+\beta_5\cdot phc_{ij}+S_i+V_i.$$
 
 ```{r}
 formula = pos ~ -1 +
