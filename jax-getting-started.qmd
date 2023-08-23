@@ -38,10 +38,16 @@ quarto render my_document.qmd --to html
 
 ### Pip
 
-Si vous préférez une installaiton via pip, 
+Si vous préférez une installation via pip (pour une version cpu), 
 
 ```{bash}
 pip3 install jax jaxlib
+```
+
+Pour une installation GPU (avec cuda 12 par exemple, on vous laisse gérer la compatibilité de vos driver Nvidia and Cie),
+
+```{bash}
+pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
 
 L'utilisation de `venv` est recommandable (mais non obligatoire).
