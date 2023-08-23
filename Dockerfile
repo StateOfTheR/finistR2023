@@ -26,6 +26,13 @@ RUN apt-get update \
 RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 RUN R -e "install.packages('reticulate')"
 RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"
+RUN R -e "install.packages(c('tidymodels', 'brulee', 'reprex'))"
+RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv && \
+    pip3 install jupyter jupyter-cache flatlatex matplotlib && \
+    apt-get --purge -y remove texlive.\*-doc$ && \
+    apt-get clean
 
+RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio 
+RUN pip3 install pyplnmodels
 
-
+    
