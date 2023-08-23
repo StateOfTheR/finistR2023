@@ -14,6 +14,8 @@ Le but de cette vignette est d'implémenter une régression logistique et/ou une
 
 ## Installation 
 
+### Conda
+
 Jax est disponible dans le channel conda-forge et peut donc s'installer dans un environnement conda
 
 ```{bash}
@@ -34,6 +36,15 @@ conda activate jax
 quarto render my_document.qmd --to html
 ```
 
+### Pip
+
+Si vous préférez une installaiton via pip, 
+
+```{bash}
+pip3 install jax jaxlib
+```
+
+L'utilisation de `venv` est recommandable (mais non obligatoire).
 
 ## Import de la librairie
 
