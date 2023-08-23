@@ -1,0 +1,49 @@
+---
+title: "Premiers pas avec jax"
+subtitle: "Différentiation automatique avec Jax"
+date: "du 21 au 25 août 2023"
+execute: 
+    freeze: auto
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+---
+
+Le but de cette vignette est d'implémenter une régression logistique et/ou une régression multivariée avec JAX.
+
+## Installation 
+
+Jax est disponible dans le channel conda-forge et peut donc s'installer dans un environnement conda
+
+```{bash}
+#| eval: true
+conda create -n jax
+conda activate jax
+## Install the CPU version
+conda install jax -c conda-forge
+```
+
+Pour des instruction détaillées pour l'installation en mode GPU ou TPU, se référer à la [documentation officielle](https://github.com/google/jax#installation). 
+
+Il suffit alors d'activer l'environnement jax pour produire le html à partir du qmd
+
+```{bash}
+#| eval: false
+conda activate jax
+quarto render my_document.qmd --to html
+```
+
+
+## Import de la librairie
+
+```{python}
+import jax.numpy as jnp
+from jax import grad, jit, vmap
+from jax import random
+```
+
+
+```{python}
+
+```
