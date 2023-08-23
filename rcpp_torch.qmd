@@ -106,7 +106,16 @@ toc()
 
 ## Torch on R
 
-La librairie torch de R permet la manipulation de tenseur en R en intégrant automatiquement les graphs computationnels. Elle simplifie énormément le calcul de gradient.  
+La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d'évaluer numériquement le gradient d'une fonction et d'effectuer des descente de gradient.
+
+```{r}
+library(torch)
+```
+
+[Présentation finistR2022](https://stateofther.github.io/finistR2022/autodiff.html)
+
+[Cours state of the R (2023)](https://stateofther.netlify.app/post/variational-autoencoder-with-torch/)
+
 
 ## References
 
