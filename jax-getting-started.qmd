@@ -12,9 +12,11 @@ output:
 
 Le but de cette vignette est d'implémenter une régression logistique et/ou une régression multivariée avec JAX.
 
-## Installation 
+## Préliminaires
 
-### Conda
+### Installation 
+
+#### Conda
 
 Jax est disponible dans le channel conda-forge et peut donc s'installer dans un environnement conda
 
@@ -36,7 +38,7 @@ conda activate jax
 quarto render my_document.qmd --to html
 ```
 
-### Pip
+#### Pip
 
 Si vous préférez une installation via pip (pour une version cpu), 
 
@@ -52,7 +54,21 @@ pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-re
 
 L'utilisation de `venv` est recommandable (mais non obligatoire).
 
-## Import de la librairie
+## Premiers pas 
+
+
+### Philosophie
+
+En quelques mots, JAX est une bibliothèque Python développé par Google et itinitalement utilisé dans TensorFLow. Elle permet de faire de l'algèbre linéaire à la `numpy`, avec 2 propriétés clés le rendant extrêment performant:
+
+1. un *autograd* permettant la différention automatique de calcul Python/Numpy
+2. un *compileur* pour GPU et autres ([XLA](https://www.tensorflow.org/xla)), dédié à l'algèbre linéaire qui permet d'optimiser les temps d'exécution grace à une approche *JIT* (Just-in Time, c'est-à-dire une optimsiation du code à l'exécution et non pas avant l'appel come avec un compileur classique).
+
+L'objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la `Numpy`, notamment à l'aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certains nombres de contraintes d'écriture des programmes s'appliquent, que nous allons essayer de présenter pas à pas. 
+
+### Import de la bibliothèque
+
+L'import complet/standard est le suivant: 
 
 ```{python}
 import jax.numpy as jnp
@@ -60,7 +76,24 @@ from jax import grad, jit, vmap
 from jax import random
 ```
 
+On peut détailler les fonctionnalité des modules comme suit:
+
+- le module `jax.numpy`, aka `jnp`, porte les opérations matricielles usuelles de manière quasi transparente 
+- le module `random` définit les outils de génération de nombres aléatoires, propres à JAX et très différents de Numpy 
+- le module `grad` gère l'autodifférentiation
+- le module `jit` gère la "just-in time" compilation (accélartion du code)
+- le module `vmap` permet de vectoriser automatiquement certaines opérations
+
+### Jax.numpy: interface Algèbre linéaire haut-niveau
 
 ```{python}
 
 ```
+
+### grad: auto-différentiation
+
+
+### Just-in-time compilation
+
+
+### Vectorisation
