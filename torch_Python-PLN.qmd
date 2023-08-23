@@ -1,5 +1,5 @@
 ---
-title: "FinistR : bootcamp R à Roscoff"
+title: "PLN with Pytorch"
 subtitle: "torch backend: Pytorch vs (R-)torch"
 date: "du 21 au 25 août 2023"
 execute:    
@@ -10,7 +10,6 @@ output:
    toc_float: true
 ---
 
-## PLN with Pytorch
 
 ```{python}
 import torch
