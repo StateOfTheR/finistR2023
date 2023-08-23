@@ -44,22 +44,22 @@ sessionInfo()
 
 ## Installation sur Windows
 
-1. Installer Intel MKL depuis <https://software.intel.com/en-us/mkl/choose-download>
+Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois mixrosoft R open installé, il suffit d'aller récupérer dans le répertoire :
 
-2. Copy all the contents from inside these folders
-```
-C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64\mkl
-C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows\redist\intel64\compiler
-```
-to 
+C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64
 
-```
-C:\Program Files\R\R-3.6.1\bin\x64
-```
+les trois fichiers nommés
+1. Rblas.dll
+1. Rlapack.dll
+1. libiomp5md.dll
 
-3. Inside the destination folder, create 2 copies of `mkl_rt.dll` and rename one of them `Rblas.dll` and the other `Rlapack.dll` replacing the originals and also keeping `mkl_rt.dll`.
+et de les copier dans le répertoire
 
-4.This will not provide you with the function `setMKLthreads()` and `getMKLthreads()` functions though to set the nr of intel MKL threads, as these come with the MRO package RevoUtilsMath. But for most people the default nr of threads set equal to the nr of physical cores will be OK though...
+C:\Program Files\R\R-4.1.2\bin\x64
+
+Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.
+
+
 
 ## Installation sur Linux (Ubuntu 22.04)
 
