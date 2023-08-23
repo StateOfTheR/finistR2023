@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Finist’R 2023 - FinistR : bootcamp R à Roscoff</title>
+<title>Finist’R 2023 - Partager un exemple reproductible dans une issue GitHub</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -128,10 +162,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#où-quand" id="toc-où-quand" class="nav-link active" data-scroll-target="#où-quand">Où ? Quand ?</a></li>
-  <li><a href="#participants" id="toc-participants" class="nav-link" data-scroll-target="#participants">Participants</a></li>
-  <li><a href="#idées-explorées" id="toc-idées-explorées" class="nav-link" data-scroll-target="#idées-explorées">Idées explorées</a></li>
-  <li><a href="#soutien" id="toc-soutien" class="nav-link" data-scroll-target="#soutien">Soutien</a></li>
+  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
+  <li><a href="#recommandations" id="toc-recommandations" class="nav-link" data-scroll-target="#recommandations">Recommandations</a></li>
+  <li><a href="#structure-de-lissue" id="toc-structure-de-lissue" class="nav-link" data-scroll-target="#structure-de-lissue">Structure de l’issue</a></li>
+  <li><a href="#exemple-reproductible-avec-le-package-reprex" id="toc-exemple-reproductible-avec-le-package-reprex" class="nav-link" data-scroll-target="#exemple-reproductible-avec-le-package-reprex">Exemple reproductible avec le package {reprex}</a></li>
   </ul>
 </nav>
     </div>
@@ -140,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FinistR : bootcamp R à Roscoff</h1>
+<h1 class="title">Partager un exemple reproductible dans une issue GitHub</h1>
 </div>
 
 
@@ -148,12 +182,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
-    </div>
-  </div>
   
     
   </div>
@@ -161,25 +189,56 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="où-quand" class="level2">
-<h2 class="anchored" data-anchor-id="où-quand">Où ? Quand ?</h2>
-<p>L’atelier Finist’R 2023 – ou <em>bootcamp R</em> du groupe <a href="https://stateofther.github.io/">State Of The R</a> s’est déroulé à la <a href="http://www.sb-roscoff.fr/">station biologique de Roscoff</a> du <strong>21 au 25 août 2023</strong>.</p>
-<p>StateoftheR est un réseau du <a href="https://www.inrae.fr/departements/mathnum">département MathNum INRAE</a>.</p>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1315.948753979185!2d-3.9885304282672522!3d48.726550043620456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4813e153cbdda967%3A0x6cd2956ee2bb8cfb!2sStation%20Biologique%20De%20Roscoff!5e0!3m2!1sen!2sfr!4v1687967458503!5m2!1sen!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-</iframe>
-<p>Il s’agissait de la septième édition de l’atelier Finist’R. Cet atelier réunit annuellement un groupe de chercheurs, ingénieurs, doctorants, tous utilisateurs avancés de <code>R</code> et développeurs de paquets pour explorer les dernières fonctionnalités du logiciel et les nouvelles pratiques de développement. A l’issue de l’atelier le collectif produit une synthèse de cette veille logiciel de manière à progresser collectivement dans l’utilisation du logiciel mais surtout dans la production d’outils statistiques à destination de la communauté.</p>
-<p>Le résultat de cette semaine est disponible <a href="https://stateofther.github.io/finistR2023/index.html">sur cette page</a></p>
+<section id="objectif" class="level2">
+<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
+<p>L’objectif de ce tuto est de présenter des conseils pour écrire une issue pour demander des améliorations ou soumettre des bugs dans un code déposé sur GitHub.</p>
 </section>
-<section id="participants" class="level2">
-<h2 class="anchored" data-anchor-id="participants">Participants</h2>
-<p>Emré Anakok, Julie Aubert, Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche, Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff, Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, Emily Walker.</p>
+<section id="recommandations" class="level2">
+<h2 class="anchored" data-anchor-id="recommandations">Recommandations</h2>
+<p>Les recommandations proposées sur les dépôts des packages du tidyverse :</p>
+<ul>
+<li>Inclure un exemple minimal reproductible, dit <code>reprex</code>.</li>
+</ul>
+<p>Lire <a href="https://github.com/tidyverse/reprex#what-is-a-reprex">What is a reprex</a> pour plus de détails.</p>
+<ul>
+<li><p>Si les données sont confidentielles, utiliser des données disponibles dans <a href="https://modeldata.tidymodels.org/reference/index.html">modeldata</a>, simuler des données ou anonymiser les données.</p></li>
+<li><p>Utiliser des graines <code>set.seed()</code></p></li>
+<li><p>Vérifier sur les blogs ou forums que le problème n’a pas déjà été signalé ou réglé.</p></li>
+</ul>
+<p>D’autres recommandations sont proposées dans le cas d’utilisation de calculs parallèles.</p>
 </section>
-<section id="idées-explorées" class="level2">
-<h2 class="anchored" data-anchor-id="idées-explorées">Idées explorées</h2>
+<section id="structure-de-lissue" class="level2">
+<h2 class="anchored" data-anchor-id="structure-de-lissue">Structure de l’issue</h2>
+<ol type="1">
+<li>Présenter en premier le problème (I’m having trouble with …)</li>
+<li>Donner un exemple reproductible dans un format</li>
+</ol>
+<p>Un bon exemple de report de bug <a href="https://github.com/tidymodels/tune/issues/46">#46</a>.</p>
 </section>
-<section id="soutien" class="level2">
-<h2 class="anchored" data-anchor-id="soutien">Soutien</h2>
-<p><img src="resources/logo/logotype-mathnum-couleur449x84.png" width="230"> <img src="resources/logo/Logo-INRAE.jpg" width="150"></p>
+<section id="exemple-reproductible-avec-le-package-reprex" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-reproductible-avec-le-package-reprex">Exemple reproductible avec le package {reprex}</h2>
+<p>Il est possible de créer un exemple reproductible avec le package {reprex} qui produit une sortie bien formatée pour GitHub.</p>
+<p>Si le code est un peu long, faire un script, par exemple <code>mon_probleme.R</code></p>
+<p>Il suffit ensuite d’utiliser la fonction reprex du package du même nom avec les options de son choix. Par exemple <code>reprex(input = 'mon_probleme.R', session_info = TRUE)</code>.</p>
+<p>L’option <code>session_info = TRUE</code> permet de récuperer les informations sur notre session R.</p>
+<p>La fonction génère un fichier markdown (<code>mon_probleme.md</code>) dans le cas de l’utilisation d’un script directement intégrable dans l’issue et ouvre également par défaut le rendu dans le viewer de RStudio ou un navigateur (peut se modifier avec l’argument <code>html_preview = FALSE</code>.</p>
+<p>Petit exemple plus court (sans utilisation de script extérieur) issu du package {reprex}</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reprex)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reprex</span>(<span class="fu">rbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>), <span class="at">session_info =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✖ Install the styler package in order to use `style = TRUE`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Non-interactive session, setting `html_preview = FALSE`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Rendering reprex...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>CLIPR_ALLOW has not been set, so clipr will not run interactively</code></pre>
+</div>
+</div>
 
 
 </section>
