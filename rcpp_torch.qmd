@@ -12,16 +12,16 @@ author:
 date: 20/08/2023
 ---
 
-## Intel MKL
+## Intel MKL et Open Blas
 
-Nous allons d'abord intsaller la librairie **Intel MKL** (il est nécéssaire d'avoir un processeur Intel), cette librairie d'algèbre linéaire permet de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébrique, notamment le calcul matriciel.
+Nous allons d'abord intsaller les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairie d'algèbre linéaires permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébrique, notamment le calcul matriciel.
 
 ```{r}
 library(tictoc)
 library(bench) # comparaison des vitesses 
 ```
 
-Nous testons la librairie **Intel MKL** avec un produit matriciel de 10000 x 10000
+Nous les testons avec un produit matriciel de 10000 x 10000
 
 ```{r}
 #| eval: false
@@ -40,13 +40,19 @@ Avant l'installation les librairies utilisées pour du calcul matriciel en R son
 sessionInfo()
 ```
 
-### Installation sur Windows
+### Installation sur Windows (seulement Intel MKL)
 
 Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois mixrosoft R open installé, il suffit d'aller récupérer dans le répertoire :
 
 `C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64`
 
-les trois fichiers nommés 1. `Rblas.dll` 1. `Rlapack.dll` 1. `libiomp5md.dll`
+les trois fichiers nommés
+
+1.  `Rblas.dll`
+
+2.  `Rlapack.dll`
+
+3.  `libiomp5md.dll`
 
 et de les copier dans le répertoire
 
@@ -54,24 +60,36 @@ et de les copier dans le répertoire
 
 Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.
 
-### Installation sur Linux (Ubuntu 22.04)
+### Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)
 
-```         
-sudo apt install intel-mkl
-```
+#### Intel MKL
 
-(Attention dans le terminal quand le message s'affiche appuyer sur la flèche droite puis finir l'instalation par défaut)
+`sudo apt install intel-mkl`
+
+#### Open Blas
+
+`sudo apt install libopenblas-base`
+
+#### Changement de librairie
+
+Pour switcher de librairie Blas
+
+`sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu`
+
+Pour switcher de librairie Lapack
+
+`sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu`
+
+Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
 
 ### Test de la librairie
 
-Une fois instalée vérifié si les librairies sont bien référencées pour le calcul matriciel avec
+Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec
 
 ```{r}
 #| eval: false
 sessionInfo()
 ```
-
-Après l'installation les librairies utilisées pour du calcul matriciel en R sont `BLAS/LAPACK` (`/usr/lib/x86_64-linux-gnu/libmkl_rt.so`) et `LAPACK` version 3.10.0
 
 ```{r}
 #| eval: false
@@ -80,7 +98,16 @@ get_res <- mat %*% mat
 toc()
 ```
 
-| Système d'exploitation | CPU                                  | Base R  | Intel MKL      |
-|------------------------|--------------------------------------|---------|----------------|
-| Ubuntu 22.04           |  Intel i7 - 8 processeur logiques    | 5 min   | Moins de 1 min |
-| Windows 10             | Intel Xeon - 16 processeur logiques  | 15 min  |<span style="color:red;">7 secondes</span> |
+| Système d'exploitation | Library                         | CPU                                 | Base R | Intel MKL                           |
+|--------------|--------------|-------------------|--------------|--------------|
+| **Windows 10**         | [Intel MKL]{style="color:red;"} | Intel Xeon - 16 processeur logiques | 15 min | [7 secondes]{style="color:red;"}    |
+| Ubuntu 22.04           | Intel MKL                       | Intel i7 - 8 processeur logiques    | 5 min  | Moins de 1 min                      |
+| **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
+
+## Torch on R
+
+La librairie torch de R permet la manipulation de tenseur en R en intégrant automatiquement les graphs computationnels. Elle simplifie énormément le calcul de gradient.  
+
+## References
+
+-   [finistR2022 - Torch Auto Diff](https://stateofther.github.io/finistR2022/autodiff.html)
