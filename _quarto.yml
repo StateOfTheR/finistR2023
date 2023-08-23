@@ -12,10 +12,9 @@ website:
         href: instructions.qmd
     right:
       - text: workflow
-        href: https://github.com/StateOfTheR/finistR2023
-        aria-label: GitHub
-      - text: inla
-        href: R_INLA.qmd
+        menu:
+        - text: inla
+          href: R_INLA.qmd
         aria-label: GitHub
       - text: torch (R vs Py)
         menu: 
