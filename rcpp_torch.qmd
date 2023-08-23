@@ -14,26 +14,26 @@ date: 20/08/2023
 
 ## Introduction
 
-Nous allons d'abord intsller la librairie intel MKL, cette librairie d'algèbre linéaire permet un certains nombre d'op
+Nous allons d'abord intsller la librairie intel MKL, cette librairie d'algèbre linéaire permet de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébrique, notamment le calcul matriciel.
 
 ```{r}
 library(tictoc)
 library(bench) # comparaison des vitesses 
 ```
 
-Sans la librairie **Intel MKL**, un produit matriciel de 10000 x 10000 dure environ 5 min.
+Sans la librairie **Intel MKL**, un produit matriciel de 10000 x 10000 dure environ 5 min (Intel i7 - 8 coeurs)
 
 ```{r}
 #| eval: false
 size <- 10000
+mat <- matrix(rnorm(size**2),size,size)
 
 tic()
-mat <- matrix(rnorm(size**2),size,size)
 get_res <- mat %*% mat
 toc()
 ```
 
-Avant l'installation les librairies utilisées pour du calcul matriciel en R sont  "libblas.so.3.10.0" et "liblapack.so.3.10.0" (on peut les voir avec la ligne)
+Avant l'installation les librairies utilisées pour du calcul matriciel en R sont  `libblas.so.3.10.0` et `liblapack.so.3.10.0` (on peut les voir avec la ligne)
 
 ```{r}
 #| eval: false
@@ -44,7 +44,7 @@ sessionInfo()
 
 ## Installation sur Windows
 
-1. Install Intel MKL from <https://software.intel.com/en-us/mkl/choose-download> (free) 
+1. Installer Intel MKL depuis <https://software.intel.com/en-us/mkl/choose-download>
 
 2. Copy all the contents from inside these folders
 ```
@@ -57,32 +57,32 @@ to
 C:\Program Files\R\R-3.6.1\bin\x64
 ```
 
-3. Inside the destination folder, create 2 copies of mkl_rt.dll and rename one of them Rblas.dll and the other Rlapack.dll replacing the originals and also keeping mkl_rt.dll.
+3. Inside the destination folder, create 2 copies of `mkl_rt.dll` and rename one of them `Rblas.dll` and the other `Rlapack.dll` replacing the originals and also keeping `mkl_rt.dll`.
 
-4.This will not provide you with the function setMKLthreads() and getMKLthreads() functions though to set the nr of intel MKL threads, as these come with the MRO package RevoUtilsMath. But for most people the default nr of threads set equal to the nr of physical cores will be OK though...
+4.This will not provide you with the function `setMKLthreads()` and `getMKLthreads()` functions though to set the nr of intel MKL threads, as these come with the MRO package RevoUtilsMath. But for most people the default nr of threads set equal to the nr of physical cores will be OK though...
 
 ## Installation sur Linux (Ubuntu 22.04)
 
 ```
 sudo apt install intel-mkl
 ```
-(Attention dans le terminal quand le message s'affiche appuyer sur la fleche droite puis finir l'instalation par défaut)
+(Attention dans le terminal quand le message s'affiche appuyer sur la flèche droite puis finir l'instalation par défaut)
 
 ## Test de la librairie
 
 Une fois instalée vérifié si les librairies sont bien référencées pour le calcul matriciel avec 
 
 ```{r}
+#| eval: false
 sessionInfo()
 ```
 
-Matrix products: default
-BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libmkl_rt.so;  LAPACK version 3.10.0
+
+Après l'installation les librairies utilisées pour du calcul matriciel en R sont  `BLAS/LAPACK` (`/usr/lib/x86_64-linux-gnu/libmkl_rt.so`) et `LAPACK` version 3.10.0
 
 ```{r}
 #| eval: false
 tic()
-mat <- matrix(rnorm(size**2),size,size)
 get_res <- mat %*% mat
 toc()
 ```
