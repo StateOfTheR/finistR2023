@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Finist’R 2023 - Régression logistique avec {tidymodels} et {torch}</title>
+<title>Finist’R 2023 - {torch} avec {tidymodels} et {brulee}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,23 +142,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
         <li>
     <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text">Régression logistique avec {tidymodels} et {torch}</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN with Pytorch</span></a>
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
- <span class="dropdown-text">Comparaison {torch} (<code>R</code>) et {pytorch}</span></a>
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
   </li>  
     </ul>
   </li>
@@ -178,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple">Exemple</a></li>
   <li><a href="#tidymodels" id="toc-tidymodels" class="nav-link" data-scroll-target="#tidymodels">Tidymodels</a></li>
   </ul>
@@ -189,7 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Régression logistique avec {tidymodels} et {torch}</h1>
+<h1 class="title"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></h1>
+<p class="subtitle lead">Résolution de la régression logistique</p>
 </div>
 
 
@@ -197,6 +198,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
   
     
   </div>
@@ -204,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro</h2>
-<p>L’idée ici est d’explorer la régression logistique en utilisant <code>torch</code> à l’aide du package {brulee}.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>L’idée ici est d’explorer la régression logistique en utilisant <code>{torch}</code> à l’aide du package <code>{brulee}</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -229,14 +236,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
+• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brulee)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exemple" class="level2">
 <h2 class="anchored" data-anchor-id="exemple">Exemple</h2>
-<p>Reprise de l’exemple proposé dans https://stateofther.github.io/finistR2022/autodiff.html.</p>
+<p>On reprend l’exemple détaillé l’an dernier pour la régression logistique, disponible à la page <a href="https://stateofther.github.io/finistR2022/autodiff.html" class="uri">https://stateofther.github.io/finistR2022/autodiff.html</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">45</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
@@ -311,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tidymodels" class="level2">
 <h2 class="anchored" data-anchor-id="tidymodels">Tidymodels</h2>
-<p>Il est possible d’effectuer une régression logistique à l’aide de plusieurs <code>engine</code> dans {tidymodels} :</p>
+<p>Il est possible d’effectuer une régression logistique à l’aide de plusieurs <code>engine</code> dans <code>{tidymodels}</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_engines</span>(<span class="st">"logistic_reg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -327,7 +334,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 7 brulee    classification</code></pre>
 </div>
 </div>
-<p>On vérifie qu’on retrouve bien les mêmes coefficient en utilisant le package {glm} dans {tidymodels} pour effectuer notre régression logistique :</p>
+<p>On vérifie qu’on retrouve bien les mêmes coefficient en utilisant le package <code>{glm}</code> dans <code>{tidymodels}</code> pour effectuer notre régression logistique :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>data_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Y =</span> <span class="fu">as.factor</span>(Y), <span class="at">X =</span> X)</span>
@@ -340,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  1.7914697 -1.0379660 -0.9728552 </code></pre>
 </div>
 </div>
-<p>Le package {brulee} de l’univers tidymodels propose différents modèles classiques (réseau de neurones, régression logistique, régression linéaire, régression multinomiale) via l’infrastructure <code>torch</code>. La liste des loss disponibles dans le package :</p>
+<p>Le package <code>{brulee}</code> de l’univers tidymodels propose différents modèles classiques (réseau de neurones, régression logistique, régression linéaire, régression multinomiale) via l’infrastructure <code>torch</code>. La liste des loss disponibles dans le package :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">"loss$"</span>, <span class="at">envir =</span> <span class="fu">asNamespace</span>(<span class="st">"torch"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

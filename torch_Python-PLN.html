@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Finist’R 2023 - PLN with Pytorch</title>
+<title>Finist’R 2023 - PLN version Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,23 +142,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
         <li>
     <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text">Régression logistique avec {tidymodels} et {torch}</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN with Pytorch</span></a>
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
- <span class="dropdown-text">Comparaison {torch} (<code>R</code>) et {pytorch}</span></a>
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
   </li>  
     </ul>
   </li>
@@ -174,15 +174,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pln-with-pytorch" id="toc-pln-with-pytorch" class="nav-link active" data-scroll-target="#pln-with-pytorch">PLN with Pytorch</a>
+  <ul class="collapse">
+  <li><a href="#préliminaires" id="toc-préliminaires" class="nav-link" data-scroll-target="#préliminaires">Préliminaires</a></li>
+  <li><a href="#implémentation-simple-en-pytorch" id="toc-implémentation-simple-en-pytorch" class="nav-link" data-scroll-target="#implémentation-simple-en-pytorch">Implémentation simple en Pytorch</a></li>
+  <li><a href="#évaluation-du-temps-de-calcul" id="toc-évaluation-du-temps-de-calcul" class="nav-link" data-scroll-target="#évaluation-du-temps-de-calcul">Évaluation du temps de calcul</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">PLN with Pytorch</h1>
-<p class="subtitle lead">torch backend: Pytorch vs (R-)torch</p>
+<h1 class="title">PLN version Python</h1>
 </div>
 
 
@@ -203,102 +213,150 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="pln-with-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="pln-with-pytorch">PLN with Pytorch</h2>
+<p>Comme vous pourrez le constater, les syntaxtes {torch} et Pytorch sont très proches.</p>
+<section id="préliminaires" class="level3">
+<h3 class="anchored" data-anchor-id="préliminaires">Préliminaires</h3>
+<p>On charge le jeu de données <code>oaks</code> contenu dans le package python <code>pyPLNmodels</code></p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyPLNmodels</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _log_stirling(integer: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    integer_ <span class="op">=</span> integer <span class="op">+</span> (integer <span class="op">==</span> <span class="dv">0</span>)  <span class="co"># Replace 0 with 1 since 0! = 1!</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.log(torch.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> integer_)) <span class="op">+</span> integer_ <span class="op">*</span> torch.log(integer_ <span class="op">/</span> math.exp(<span class="dv">1</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PLN() :</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Y : torch.Tensor</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    O : torch.Tensor</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    X : torch.Tensor</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    n : <span class="bu">int</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    p : <span class="bu">int</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    d : <span class="bu">int</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    M : torch.Tensor</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    S : torch.Tensor</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    B : torch.Tensor</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    Sigma : torch.Tensor</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    Omega : torch.Tensor</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ELBO_list : <span class="bu">list</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="co">## Constructor</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, Y: np.array, O: np.array, X: np.array) : </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Y <span class="op">=</span> torch.tensor(Y)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.O <span class="op">=</span> torch.tensor(O)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.X <span class="op">=</span> torch.tensor(X)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n, <span class="va">self</span>.p <span class="op">=</span> Y.shape</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.d <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Variational parameters</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.M <span class="op">=</span> torch.full(Y.shape, <span class="fl">0.0</span>, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.S <span class="op">=</span> torch.full(Y.shape, <span class="fl">1.0</span>, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Model parameters</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.B <span class="op">=</span> torch.zeros(<span class="va">self</span>.d, <span class="va">self</span>.p, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma <span class="op">=</span> torch.eye(<span class="va">self</span>.p)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> torch.eye(<span class="va">self</span>.p)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_Sigma(<span class="va">self</span>) :</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">/</span><span class="va">self</span>.n <span class="op">*</span> (<span class="va">self</span>.M.T <span class="op">@</span> <span class="va">self</span>.M <span class="op">+</span> torch.diag(torch.<span class="bu">sum</span>(<span class="va">self</span>.S<span class="op">**</span><span class="dv">2</span>, dim <span class="op">=</span> <span class="dv">0</span>)))</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_ELBO(<span class="va">self</span>): </span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      S2 <span class="op">=</span> torch.square(<span class="va">self</span>.S)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      XB <span class="op">=</span> <span class="va">self</span>.X <span class="op">@</span> <span class="va">self</span>.B</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      A <span class="op">=</span> torch.exp(<span class="va">self</span>.O <span class="op">+</span> <span class="va">self</span>.M <span class="op">+</span> XB <span class="op">+</span> S2<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      elbo <span class="op">=</span> <span class="va">self</span>.n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> torch.logdet(<span class="va">self</span>.Omega) <span class="op">+</span>  torch.<span class="bu">sum</span>(<span class="op">-</span> A <span class="op">+</span> <span class="va">self</span>.Y <span class="op">*</span> (<span class="va">self</span>.O <span class="op">+</span> <span class="va">self</span>.M <span class="op">+</span> XB) <span class="op">+</span> <span class="fl">.5</span> <span class="op">*</span> torch.log(S2)) <span class="op">-</span> <span class="fl">.5</span> <span class="op">*</span> torch.trace(<span class="va">self</span>.M.T <span class="op">@</span> <span class="va">self</span>.M <span class="op">+</span> torch.diag(torch.<span class="bu">sum</span>(S2, dim <span class="op">=</span> <span class="dv">0</span>)) <span class="op">@</span> <span class="va">self</span>.Omega) <span class="op">+</span> <span class="fl">.5</span> <span class="op">*</span> <span class="va">self</span>.n <span class="op">*</span> <span class="va">self</span>.p  <span class="op">-</span> torch.<span class="bu">sum</span>(_log_stirling(<span class="va">self</span>.Y))</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> elbo</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.ELBO <span class="op">=</span> np.zeros(N_iter)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      optimizer <span class="op">=</span> torch.optim.Rprop([<span class="va">self</span>.B, <span class="va">self</span>.M, <span class="va">self</span>.S], lr <span class="op">=</span> lr)</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>      objective0 <span class="op">=</span> np.infty</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_iter):</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        <span class="co">## reinitialize gradients</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        optimizer.zero_grad()</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">## compute current ELBO</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="op">-</span> <span class="va">self</span>.get_ELBO()</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        <span class="co">## backward propagation and optimization</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>        optimizer.step()</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">## update parameters with close form</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma <span class="op">=</span> <span class="va">self</span>.get_Sigma()</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> torch.inverse(<span class="va">self</span>.Sigma)</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">=</span> <span class="op">-</span>loss.item()</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ELBO[i] <span class="op">=</span> objective</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="bu">abs</span>(objective0 <span class="op">-</span> objective)<span class="op">/</span><span class="bu">abs</span>(objective) <span class="op">&lt;</span> tol):</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.ELBO <span class="op">=</span> <span class="va">self</span>.ELBO[<span class="dv">0</span>:i]</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>          <span class="cf">break</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>          objective0 <span class="op">=</span> objective</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.models <span class="im">import</span> PlnPCAcollection, Pln</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.oaks <span class="im">import</span> load_oaks</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>oaks <span class="op">=</span> load_oaks()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> oaks[<span class="st">'counts'</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> np.log(oaks[<span class="st">'offsets'</span>])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.ones([Y.shape[<span class="dv">0</span>],<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Pour référence, on optimise avec le package dédié (qui utilise pytorch et l’optimiseur Rprop.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyPLNmodels</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.models <span class="im">import</span> PlnPCAcollection, Pln</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.oaks <span class="im">import</span> load_oaks</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>oaks <span class="op">=</span> load_oaks()</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> oaks[<span class="st">'counts'</span>]</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> np.log(oaks[<span class="st">'offsets'</span>])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.ones([Y.shape[<span class="dv">0</span>],<span class="dv">1</span>])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>myPLN <span class="op">=</span> PLN(Y, O, X)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>myPLN.fit(<span class="dv">50</span>, lr <span class="op">=</span> <span class="fl">0.1</span>, tol <span class="op">=</span> <span class="fl">1e-8</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.plot(np.log(<span class="op">-</span>myPLN.ELBO))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pln <span class="op">=</span> Pln.from_formula(<span class="st">"counts ~ 1 "</span>, data <span class="op">=</span> oaks, take_log_offsets <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit pln.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting a Pln model with full covariance model.
+Initialization ...
+Initialization finished
+Tolerance 0.001 reached in 264 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 265 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 299 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 300 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 332 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 347 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 362 iterations
+Fitting a Pln model with full covariance model.
+Tolerance 0.001 reached in 371 iterations
+The slowest run took 32.54 times longer than the fastest. This could mean that an intermediate result is being cached.
+62 ms ± 51.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+</div>
+</div>
+</section>
+<section id="implémentation-simple-en-pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="implémentation-simple-en-pytorch">Implémentation simple en Pytorch</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _log_stirling(integer: torch.Tensor) <span class="op">-&gt;</span> torch.Tensor:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    integer_ <span class="op">=</span> integer <span class="op">+</span> (integer <span class="op">==</span> <span class="dv">0</span>)  <span class="co"># Replace 0 with 1 since 0! = 1!</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.log(torch.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> integer_)) <span class="op">+</span> integer_ <span class="op">*</span> torch.log(integer_ <span class="op">/</span> math.exp(<span class="dv">1</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PLN() :</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    Y : torch.Tensor</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    O : torch.Tensor</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    X : torch.Tensor</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    n : <span class="bu">int</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    p : <span class="bu">int</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    d : <span class="bu">int</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    M : torch.Tensor</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    S : torch.Tensor</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    B : torch.Tensor</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    Sigma : torch.Tensor</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    Omega : torch.Tensor</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    ELBO_list : <span class="bu">list</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      <span class="co">## Constructor</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, Y: np.array, O: np.array, X: np.array) : </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Y <span class="op">=</span> torch.tensor(Y)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.O <span class="op">=</span> torch.tensor(O)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.X <span class="op">=</span> torch.tensor(X)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n, <span class="va">self</span>.p <span class="op">=</span> Y.shape</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.d <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Variational parameters</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.M <span class="op">=</span> torch.full(Y.shape, <span class="fl">0.0</span>, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.S <span class="op">=</span> torch.full(Y.shape, <span class="fl">1.0</span>, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Model parameters</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.B <span class="op">=</span> torch.zeros(<span class="va">self</span>.d, <span class="va">self</span>.p, requires_grad <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma <span class="op">=</span> torch.eye(<span class="va">self</span>.p)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> torch.eye(<span class="va">self</span>.p)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_Sigma(<span class="va">self</span>) :</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="dv">1</span><span class="op">/</span><span class="va">self</span>.n <span class="op">*</span> (<span class="va">self</span>.M.T <span class="op">@</span> <span class="va">self</span>.M <span class="op">+</span> torch.diag(torch.<span class="bu">sum</span>(<span class="va">self</span>.S<span class="op">**</span><span class="dv">2</span>, dim <span class="op">=</span> <span class="dv">0</span>)))</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_ELBO(<span class="va">self</span>): </span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>      S2 <span class="op">=</span> torch.square(<span class="va">self</span>.S)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>      XB <span class="op">=</span> <span class="va">self</span>.X <span class="op">@</span> <span class="va">self</span>.B</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>      A <span class="op">=</span> torch.exp(<span class="va">self</span>.O <span class="op">+</span> <span class="va">self</span>.M <span class="op">+</span> XB <span class="op">+</span> S2<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      elbo <span class="op">=</span> <span class="va">self</span>.n<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> torch.logdet(<span class="va">self</span>.Omega) <span class="op">+</span>  torch.<span class="bu">sum</span>(<span class="op">-</span> A <span class="op">+</span> <span class="va">self</span>.Y <span class="op">*</span> (<span class="va">self</span>.O <span class="op">+</span> <span class="va">self</span>.M <span class="op">+</span> XB) <span class="op">+</span> <span class="fl">.5</span> <span class="op">*</span> torch.log(S2)) <span class="op">-</span> <span class="fl">.5</span> <span class="op">*</span> torch.trace(<span class="va">self</span>.M.T <span class="op">@</span> <span class="va">self</span>.M <span class="op">+</span> torch.diag(torch.<span class="bu">sum</span>(S2, dim <span class="op">=</span> <span class="dv">0</span>)) <span class="op">@</span> <span class="va">self</span>.Omega) <span class="op">+</span> <span class="fl">.5</span> <span class="op">*</span> <span class="va">self</span>.n <span class="op">*</span> <span class="va">self</span>.p  <span class="op">-</span> torch.<span class="bu">sum</span>(_log_stirling(<span class="va">self</span>.Y))</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> elbo</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>      <span class="va">self</span>.ELBO <span class="op">=</span> np.zeros(N_iter)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>      optimizer <span class="op">=</span> torch.optim.Rprop([<span class="va">self</span>.B, <span class="va">self</span>.M, <span class="va">self</span>.S], lr <span class="op">=</span> lr)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>      objective0 <span class="op">=</span> np.infty</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_iter):</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        <span class="co">## reinitialize gradients</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        optimizer.zero_grad()</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>        <span class="co">## compute current ELBO</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> <span class="op">-</span> <span class="va">self</span>.get_ELBO()</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        <span class="co">## backward propagation and optimization</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">## update parameters with close form</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma <span class="op">=</span> <span class="va">self</span>.get_Sigma()</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> torch.inverse(<span class="va">self</span>.Sigma)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">=</span> <span class="op">-</span>loss.item()</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ELBO[i] <span class="op">=</span> objective</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="bu">abs</span>(objective0 <span class="op">-</span> objective)<span class="op">/</span><span class="bu">abs</span>(objective) <span class="op">&lt;</span> tol):</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.ELBO <span class="op">=</span> <span class="va">self</span>.ELBO[<span class="dv">0</span>:i]</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>          <span class="cf">break</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>          objective0 <span class="op">=</span> objective</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="évaluation-du-temps-de-calcul" class="level3">
+<h3 class="anchored" data-anchor-id="évaluation-du-temps-de-calcul">Évaluation du temps de calcul</h3>
+<p>Testons notre implémentation simple de PLN utilisant:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>myPLN <span class="op">=</span> PLN(Y, O, X)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit myPLN.fit(<span class="dv">50</span>, lr <span class="op">=</span> <span class="fl">0.1</span>, tol <span class="op">=</span> <span class="fl">1e-8</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.plot(np.log(<span class="op">-</span>myPLN.ELBO))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>278 ms ± 14.3 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<p><img src="torch_Python-PLN_files/figure-html/cell-3-output-1.png" width="566" height="411"></p>
+<p><img src="torch_Python-PLN_files/figure-html/cell-5-output-2.png" width="596" height="411"></p>
 </div>
 </div>
+<p>```</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

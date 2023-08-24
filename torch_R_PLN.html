@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Finist’R 2023 - FinistR : bootcamp R à Roscoff</title>
+<title>Finist’R 2023 - PLN version R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,23 +142,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
         <li>
     <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text">Régression logistique avec {tidymodels} et {torch}</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN with Pytorch</span></a>
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
- <span class="dropdown-text">Comparaison {torch} (<code>R</code>) et {pytorch}</span></a>
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
   </li>  
     </ul>
   </li>
@@ -192,8 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FinistR : bootcamp R à Roscoff</h1>
-<p class="subtitle lead">torch backend: Pytorch vs (R-)torch</p>
+<h1 class="title">PLN version R</h1>
 </div>
 
 
@@ -241,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  4.081   1.060   2.662 </code></pre>
+  7.070   2.022   4.814 </code></pre>
 </div>
 </div>
 </section>
@@ -373,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(myPLN<span class="sc">$</span><span class="fu">fit</span>(<span class="dv">1000</span>, <span class="at">lr =</span> <span class="fl">0.05</span>, <span class="at">tol =</span> <span class="fl">1e-9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.526   0.574   1.100 </code></pre>
+  2.488   0.853   1.752 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="sc">-</span>myPLN<span class="sc">$</span>ELBO_list, <span class="at">type=</span><span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -392,23 +391,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  9.304   2.167   5.855 </code></pre>
+  9.974   2.573   6.520 </code></pre>
 </div>
 </div>
 <p>Les vraisemblances finales sont comparables</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>myPLN_nlopt<span class="sc">$</span>loglik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -32091.64</code></pre>
+<pre><code>[1] -32086.86</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>myPLN_torch<span class="sc">$</span>loglik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -32175.26</code></pre>
+<pre><code>[1] -32179.62</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>myPLN<span class="sc">$</span>loglik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch_tensor
--31816.1191
+-31816.6250
 [ CPUFloatType{1} ][ grad_fn = &lt;SubBackward0&gt; ]</code></pre>
 </div>
 </div>

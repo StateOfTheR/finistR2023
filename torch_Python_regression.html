@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Finist’R 2023 - FinistR : bootcamp R à Roscoff</title>
+<title>Finist’R 2023 - Introduction à Pytorch</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,23 +144,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
         <li>
     <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text">Régression logistique avec {tidymodels} et {torch}</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN with Pytorch</span></a>
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
- <span class="dropdown-text">Comparaison {torch} (<code>R</code>) et {pytorch}</span></a>
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
   </li>  
     </ul>
   </li>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#exploration-de-torch-pour-la-différentiation-automatique" id="toc-exploration-de-torch-pour-la-différentiation-automatique" class="nav-link" data-scroll-target="#exploration-de-torch-pour-la-différentiation-automatique">Exploration de {{torch}} pour la différentiation automatique</a></li>
+  <li><a href="#exploration-de-torch-pour-la-différentiation-automatique" id="toc-exploration-de-torch-pour-la-différentiation-automatique" class="nav-link" data-scroll-target="#exploration-de-torch-pour-la-différentiation-automatique">Exploration de <code>{torch}</code> pour la différentiation automatique</a></li>
   <li><a href="#principe-du-calcul-de-gradient" id="toc-principe-du-calcul-de-gradient" class="nav-link" data-scroll-target="#principe-du-calcul-de-gradient">Principe du calcul de gradient</a></li>
   <li><a href="#régression-logistique-avec-torch" id="toc-régression-logistique-avec-torch" class="nav-link" data-scroll-target="#régression-logistique-avec-torch">Régression logistique avec <code>torch</code></a></li>
   <li><a href="#exemple-de-régression-multivariée" id="toc-exemple-de-régression-multivariée" class="nav-link" data-scroll-target="#exemple-de-régression-multivariée">Exemple de régression multivariée</a></li>
@@ -193,8 +193,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FinistR : bootcamp R à Roscoff</h1>
-<p class="subtitle lead">Différentiation automatique: pytorch</p>
+<h1 class="title">Introduction à Pytorch</h1>
+<p class="subtitle lead">Traduction de la version <code>{torch}</code> en <code>pytorch</code></p>
 </div>
 
 
@@ -215,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Cette page constitue une traduction en Python avec pytorch de la <a href="https://stateofther.github.io/finistR2022/autodiff.html">page équivalente</a> produite avec {{torch}} lors de FinistR 2022</p>
+<p>Cette page constitue une traduction en Python avec pytorch de la <a href="https://stateofther.github.io/finistR2022/autodiff.html">page équivalente</a> produite avec <code>{torch}</code> lors de FinistR 2022</p>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p>Une façon (parmi d’autres) d’avoir une installation fonctionnelle de torch consiste à l’installer via conda. La <a href="https://pytorch.org/get-started/locally/">page officielle</a> est très bien documentée et fournit toutes les instructions nécessaires. La solution adoptée ici consiste à créer un environnement conda (nommé torch) pour y installer torch (en version CPU).</p>
@@ -229,7 +229,7 @@ conda activate torch
 quarto render my_document.qmd --to html</code></pre>
 </section>
 <section id="exploration-de-torch-pour-la-différentiation-automatique" class="level2">
-<h2 class="anchored" data-anchor-id="exploration-de-torch-pour-la-différentiation-automatique">Exploration de {{torch}} pour la différentiation automatique</h2>
+<h2 class="anchored" data-anchor-id="exploration-de-torch-pour-la-différentiation-automatique">Exploration de <code>{torch}</code> pour la différentiation automatique</h2>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.distributions <span class="im">as</span> dist</span>
@@ -243,7 +243,7 @@ quarto render my_document.qmd --to html</code></pre>
 </section>
 <section id="principe-du-calcul-de-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="principe-du-calcul-de-gradient">Principe du calcul de gradient</h2>
-<p>{{torch}} fonctionne avec ses propres types numériques, qu’il faut créer avec la fonction <code>torch.tensor()</code> et ses propres fonctions <code>torch.*()</code>. Considérons un exemple très simple: <span class="math inline">\(x \mapsto x^2\)</span></p>
+<p><code>{torch}</code> fonctionne avec ses propres types numériques, qu’il faut créer avec la fonction <code>torch.tensor()</code> et ses propres fonctions <code>torch.*()</code>. Considérons un exemple très simple: <span class="math inline">\(x \mapsto x^2\)</span></p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor(<span class="dv">3</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.square(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -274,7 +274,7 @@ quarto render my_document.qmd --to html</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>&lt;LogBackward0 at 0x7fdd08bfba30&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f789cf47b50&gt;</code></pre>
 </div>
 </div>
 <p>qui indique comment calculer le gradient en utilisant la dérivée des fonctions composées:</p>
@@ -307,14 +307,14 @@ x = 2 \xrightarrow{x \mapsto x^2} z = 4 \mapsto \xrightarrow{x \mapsto \log(x)} 
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;LogBackward0 at 0x7fdd08bfba30&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f789cf47b50&gt;</code></pre>
 </div>
 </div>
 <p>et les fonctions suivantes via <code>$next_functions</code></p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>((&lt;PowBackward0 at 0x7fdc2fa311e0&gt;, 0),)</code></pre>
+<pre><code>((&lt;PowBackward0 at 0x7f77cc4420b0&gt;, 0),)</code></pre>
 </div>
 </div>
 <p>Dans notre exemple, on a donc:</p>
@@ -472,8 +472,8 @@ Y_i \sim \mathcal{B}(\sigma(\theta^T x_i)) \quad \text{avec} \quad \sigma(x) = \
 <div class="cell-output cell-output-stdout">
 <pre><code>      torch   sklearn
 0  0.125890  0.125891
-1  0.423915  0.423912
-2 -0.341099 -0.341100</code></pre>
+1  0.423913  0.423912
+2 -0.341100 -0.341100</code></pre>
 </div>
 </div>
 <p><strong>Attention</strong> la mécanique présentée ci-dessus avec <code>.step()</code> ne fonctionne pas pour certaines routines d’optimisation (BFGS, gradient conjugué) qui nécessite de calculer plusieurs fois la fonction objective. Dans ce cas, il faut définir une <em>closure</em>, qui renvoie la fonction objective, et la passer en argument à <code>.step()</code>.</p>
@@ -498,8 +498,8 @@ Y_i \sim \mathcal{B}(\sigma(\theta^T x_i)) \quad \text{avec} \quad \sigma(x) = \
 <span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> optimizer.step(calc_loss).item()</span>
 <span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    loss_vector.append(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 34 ms, sys: 0 ns, total: 34 ms
-Wall time: 33.8 ms</code></pre>
+<pre><code>CPU times: user 60 ms, sys: 244 µs, total: 60.3 ms
+Wall time: 60 ms</code></pre>
 </div>
 </div>
 <p>On peut vérifier qu’on obtient des résultats identiques dans les deux cas d’utilisation:</p>
@@ -542,8 +542,10 @@ Wall time: 33.8 ms</code></pre>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>Theta <span class="op">=</span> torch.ones(<span class="dv">12</span>, requires_grad <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Quelques remarques :</p>
-<p>- le paramètre <span class="math inline">\(\theta\)</span> à optimiser est ici défini comme un tenseur, i.e.&nbsp;un objet qui va notamment stocker la valeur courante de <span class="math inline">\(\theta\)</span>. Avec l’option “requires_grad=True” la valeur courante du gradient de la dernière fonction appelée dépendant de <span class="math inline">\(\theta\)</span> va aussi être stockée.</p>
-<p>- la matrice <span class="math inline">\(X\)</span> est aussi définie comme un tenseur, mais l’option “requires_grad=TRUE” n’a pas été spécifiée, le gradient ne sera donc pas stocké pour cet objet. Cette distinction est explicitée lorsque l’on affiche les deux objets:</p>
+<ul>
+<li><p>le paramètre <span class="math inline">\(\theta\)</span> à optimiser est ici défini comme un tenseur, i.e.&nbsp;un objet qui va notamment stocker la valeur courante de <span class="math inline">\(\theta\)</span>. Avec l’option <code>requires_grad=True</code> la valeur courante du gradient de la dernière fonction appelée dépendant de <span class="math inline">\(\theta\)</span> va aussi être stockée.</p></li>
+<li><p>la matrice <span class="math inline">\(X\)</span> est aussi définie comme un tenseur, mais l’option “requires_grad=TRUE” n’a pas été spécifiée, le gradient ne sera donc pas stocké pour cet objet. Cette distinction est explicitée lorsque l’on affiche les deux objets:</p></li>
+</ul>
 <div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Theta[:<span class="dv">3</span>]</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>X[:<span class="dv">3</span>, :<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -577,17 +579,17 @@ Wall time: 33.8 ms</code></pre>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>toto <span class="op">=</span> LogLik()</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>toto.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>&lt;AddBackward0 at 0x7fdd08ba23e0&gt;</code></pre>
+<pre><code>&lt;AddBackward0 at 0x7f77c97ded40&gt;</code></pre>
 </div>
 </div>
 <p>correspondant à l’addition (AddBackward) des deux termes <span class="math display">\[  n\times \log(\theta[11]) \quad \text{et} \quad ||Y-X\theta[0:10]||^2/(2*\theta[11]^2)\]</span> dans le calcul de la perte. On peut afficher les opérations suivantes dans le graphe comme suit:</p>
 <div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>toto.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>((&lt;MulBackward0 at 0x7fdc2fae47f0&gt;, 0), (&lt;DivBackward0 at 0x7fdc2fae4790&gt;, 0))</code></pre>
+<pre><code>((&lt;MulBackward0 at 0x7f77cbe4cc10&gt;, 0), (&lt;DivBackward0 at 0x7f77cbe4cac0&gt;, 0))</code></pre>
 </div>
 </div>
-<p>L’étape suivante consiste à choisir la méthode d’optimisation à appliquer. L’intérêt d’utiliser le package `{{torch}}` est d’avoir accès à une large gamme de méthodes d’optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:</p>
+<p>L’étape suivante consiste à choisir la méthode d’optimisation à appliquer. L’intérêt d’utiliser le package <code>{torch}</code> est d’avoir accès à une large gamme de méthodes d’optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:</p>
 <div class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Specify the optimization parameters</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">0.01</span></span>
@@ -640,8 +642,8 @@ Wall time: 33.8 ms</code></pre>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    loss_vector[i] <span class="op">=</span> calc_loss().item()</span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 48.3 ms, sys: 0 ns, total: 48.3 ms
-Wall time: 48.7 ms</code></pre>
+<pre><code>CPU times: user 83 ms, sys: 120 µs, total: 83.2 ms
+Wall time: 83.1 ms</code></pre>
 </div>
 </div>
 <p>On vérifie que l’optimisation s’est bien passée (ie que l’on a minimisé la fonction de perte)</p>
@@ -659,9 +661,9 @@ Wall time: 48.7 ms</code></pre>
 <p><img src="torch_Python_regression_files/figure-html/cell-43-output-1.png" width="593" height="449"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>tensor([-7.5638e-05, -8.4504e-05,  3.2596e-05, -4.3469e-05, -8.8593e-05,
-         9.8785e-05,  3.1149e-05, -7.0865e-05, -1.0586e-04,  8.9571e-05,
-         4.5321e-05,  5.3406e-05])</code></pre>
+<pre><code>tensor([ 3.7193e-05,  4.4323e-05, -2.5496e-05, -6.4963e-05, -6.7316e-05,
+         9.8318e-05,  6.5755e-06, -2.4864e-05,  2.1660e-05, -5.0762e-05,
+         5.5040e-06,  5.3406e-05])</code></pre>
 </div>
 </div>
 <p>et que le résultat est comparable à la solution classique obtenue par OLS :</p>
@@ -694,10 +696,10 @@ Wall time: 48.7 ms</code></pre>
 <span id="cb67-26"><a href="#cb67-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Variance de Theta[12] :"</span>, sigma_squared_theta.item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients du modèle de régression linéaire :
- [ 1.7637295  -0.32114246  1.4978632  -0.11171225  0.40113908 -0.06434418
-  0.2032495  -0.25903088  0.9809813  -0.7663111  -0.6479076 ]
+ [ 1.7637296  -0.32114202  1.4978627  -0.11171199  0.4011397  -0.06434376
+  0.20324951 -0.2590317   0.98098207 -0.7663114  -0.64790714]
 Coefficients de Theta :
- [1.763728141784668, -0.3211430013179779, 1.4978625774383545, -0.11171171814203262, 0.40113818645477295, -0.06434360891580582, 0.20324911177158356, -0.2590320408344269, 0.9809804558753967, -0.7663102149963379, -0.6479072570800781]
+ [1.7637280225753784, -0.32114285230636597, 1.4978631734848022, -0.1117125004529953, 0.40113937854766846, -0.06434360891580582, 0.20324911177158356, -0.25903084874153137, 0.9809806942939758, -0.7663116455078125, -0.6479087471961975]
 Variance du modèle de régression linéaire : 1.2505516
 Variance de Theta[12] : 1.1182799339294434</code></pre>
 </div>
