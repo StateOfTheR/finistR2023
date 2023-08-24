@@ -76,6 +76,7 @@ L'import complet/standard est le suivant:
 import jax.numpy as jnp
 from jax import grad, jit, vmap
 from jax import random
+import matplotlib.pyplot as plt
 ```
 
 On peut détailler les fonctionnalité des modules comme suit:
@@ -88,25 +89,25 @@ On peut détailler les fonctionnalité des modules comme suit:
 
 ### Jax.numpy: interface Algèbre linéaire haut-niveau
 
-On commence par simuler des données aléatoires via les outils de jax. Attention la gestion de la clé aléatoire est **explicite**. Après avoir créé une clé et avant chaque appel à une fonction aléatoire, il faut faire 
+On commence par simuler des données aléatoires via les outils de jax. Attention la gestion de la clé aléatoire est **explicite**. Après avoir créé une clé et avant chaque appel à une fonction aléatoire, il faut faire évoluer la graine à la main
 
 ```{python}
 #| eval: false
 key,subkey = random.split(key, 2)
 ```
 
-et utiliser `subkey` dans l'appel à la fonction aléatoire comme écrit ci-dessous. 
+et utiliser `subkey` (les sous-clés) dans l'appel à la fonction aléatoire (ou aux fonctions aléatoire) comme écrit ci-dessous. 
 
 ```{python}
 n = 10000
 p = 100
 key = random.PRNGKey(0)
-key,subkey = random.split(key, 2)
+key,sub1,sub2 = random.split(key, 3)
 ones = jnp.ones((n, 1))
-x = random.normal(subkey, (n, p-1))
+x = random.normal(sub1, (n, p-1))
 x = jnp.concatenate([ones, x], axis = 1)
 key,subkey = random.split(key, 2)
-beta_true = random.normal(subkey, (p,1))
+beta_true = random.normal(sub2, (p,1))
 ```
 
 Avant de les multiplier. On utilise ici la fonction `block_until_ready()` uniquement pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme {{future}} en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
@@ -154,7 +155,25 @@ logistic_loss_jit = jit(logistic_loss)
 %timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
 ```
 
-La différence est assez importante dans cet example mais moins pour des échantillons plus gros parce que JAX va automatiquement mettre en cache 
+La différence est assez importante dans cet exemple mais il n'est pas toujours intéressant ni même possible de jitter une fonction. 
+
+En particulier, si une fonction implique un branchement conditionnel:
+
+```{python}
+def f(x):
+  if x > 5:
+    return x
+  else:
+    return 2*x
+```
+
+on ne peut la jitter facilement. 
+
+```{python}
+f_jit = jit(f)
+## Renvoie une erreur
+f_jit(1)
+```
 
 ### grad: auto-différentiation
 
@@ -170,10 +189,9 @@ def loss(theta):
 key,subkey = random.split(key, 2)
 theta = random.normal(key, (p, 1))
 grad_loss = grad(loss)
-print(grad_loss(theta))
 ```
 
-`grad()` peut-être combiné à `jit()` dans tous les sens. 
+`grad()` peut-être combiné à `jit()` dans tous les sens *à condition que les fonctions s'y prêtent*.
 
 ```{python}
 grad_loss = grad(loss)
@@ -182,12 +200,122 @@ grad_loss = grad(loss)
 
 ```{python}
 grad_loss = jit(grad(loss))
+## Warmup to cache grad loss
+grad_loss(theta).shape
+## Actual time recording
 %timeit grad_loss(theta)
 ```
 
+Mais ce n'est pas toujours intéressant. 
+
 ```{python}
 grad_loss = jit(grad(jit(loss)))
+## Warmup to cache grad loss
+grad_loss(theta).shape
+## Actual time recording
 %timeit grad_loss(theta)
 ```
 
 ### Vectorisation
+
+JAX permet enfin de vectoriser automatiquement des opérations de façon efficace (en faisant descendre la boucle à l'intérieur de la fonction, au niveau des primitives utilisées pour le calcul). 
+
+Considérons un example simple où on veut calculer des logs-odds sur mesures répétées. 
+
+```{python}
+## Matrice de covariables, répétées en temps 
+## [temps, individu, variable]
+key,subkey = random.split(key, 2)
+X = random.normal(key, (10, n, p))
+def compute_odds(x, theta):
+  return jnp.dot(x, theta)
+def compute_odds_batched(X,  theta):
+  return jnp.stack([compute_odds(x, theta) for x in X]) 
+```
+
+Et testons ce qui se passe. On appelle la fonction sur une tranche de X
+
+```{python}
+compute_odds(X[:1,:, :], beta_true).shape
+%timeit compute_odds(X[:1,:, :], beta_true)
+```
+
+Puis sur toutes les tranches de X avec notre fonction vectorisée manuellement. 
+
+```{python}
+compute_odds_batched(X, beta_true).shape
+%timeit compute_odds_batched(X, beta_true)
+```
+
+Puis sur toutes les tranches de X avec notre fonction vectorisée via `vmap()`. 
+
+```{python}
+def compute_odds_batched_vmap(X,  theta):
+  def f(x):
+    return compute_odds(x, theta)
+  return vmap(f)(X)
+```
+
+```{python}
+compute_odds_batched_vmap(X, beta_true).shape
+```
+```{python}
+%timeit compute_odds_batched_vmap(X, beta_true)
+```
+
+A comparer à la version native jax qui est déjà nativement vectorisée pour cette opération
+
+```{python}
+%timeit compute_odds(X, beta_true)
+```
+
+## Optimisation de la fonction objective
+
+### À la main 
+
+Contrairement à `torch`, on n'a pas d'optimiseur défini clé dans JAX. La dérivée est néanmoins une fonction *comme les autres* et on peut donc écrire très simplement un algorithme simple de descente de gradient. 
+
+```{python}
+num_iterations = 100
+loss_vector = []
+## Learning rate
+lr = 0.001
+## Initialisation de theta
+theta = jnp.zeros(p)
+## Fonction de perte, en mode jit
+@jit
+def loss(theta):
+  return logistic_loss(y, x, theta)
+## Gradient de la fonction de perte, en mode jit
+grad_loss = jit(grad(loss))
+
+## Descente de gradient
+for i in range(num_iterations):
+    # Suivi de la fonction de perte
+    loss_vector.append(loss(theta))
+    # Mise à jour du paramètre
+    theta = theta - lr * grad_loss(theta) 
+```
+
+Et on peut vérifier que la fonction de perte décroit au cours du temps. 
+
+```{python}
+plt.plot(range(1, num_iterations + 1), loss_vector)
+plt.xlabel('Iterations')
+plt.ylabel('Loss')
+plt.title('Loss vs. Iterations')
+plt.show()
+```
+
+Et que les paramètres de régression estimés se rapprochent des vraies valeurs
+
+```{python}
+plt.plot(beta_true, theta, marker='o', linestyle="none")
+plt.plot([-3, 3], [-3, 3], color='r', linestyle='-', linewidth=2)
+plt.xlabel('True parameter')
+plt.ylabel('Estimated parameter')
+plt.title('Estimated versus true parameter')
+plt.show()
+```
+
+### Avec JAXOPT
