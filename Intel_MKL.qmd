@@ -12,7 +12,7 @@ author:
 date: 20/08/2023
 ---
 
-Nous allons d'abord intsaller les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairie d'algèbre linéaires permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébrique, notamment le calcul matriciel.
+Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
 ```{r}
 library(tictoc)
@@ -23,7 +23,7 @@ Nous les testons avec un produit matriciel de 10000 x 10000
 ```{r}
 #| eval: false
 size <- 10000
-mat <- matrix(rnorm(size**2),size,size)
+mat <- matrix(rnorm(size**2), size, size)
 
 tic()
 get_res <- mat %*% mat
@@ -69,11 +69,11 @@ Concrètement on remplace les deux fichiers faisant appel au librairies blas et 
 
 #### Changement de librairie
 
-Pour switcher de librairie Blas
+Pour changer la librairie Blas
 
 `sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu`
 
-Pour switcher de librairie Lapack
+Pour changer la librairie Lapack
 
 `sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu`
 
@@ -100,4 +100,3 @@ toc()
 | **Windows 10**         | [Intel MKL]{style="color:red;"} | Intel Xeon - 16 processeur logiques | 15 min | [7 secondes]{style="color:red;"}    |
 | Ubuntu 22.04           | Intel MKL                       | Intel i7 - 8 processeur logiques    | 5 min  | Moins de 1 min                      |
 | **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
-
