@@ -1,0 +1,107 @@
+---
+title: "Nouveautés {learnr} et {exams}"
+format: html
+toc: true
+author: 
+  - Pierre Barbillon
+  - Marie-Pierre Etienne
+  - Isabelle Sanchez
+date: 24/08/2023
+---
+
+# Introduction
+
+Nous allons ici discuter de nouveautés dans les packages {learnr} et {exams} qui permettent respectivement de créer des tutoriaux interactifs et des feuilles d'examens (papier ou en ligne).
+
+{learnr} avait déjà été discuté durant la semaine Finist'R 2020: 
+
+<https://stateofther.github.io/finistR2020/teach_learnr_gradethis.html>.
+
+# Learnr
+
+{learnr} permet de créer de tutoriaux interactifs en s'appuyant sur shiny. Le tutoriel est construit à partir d'un fichier Rmarkdown et peut être soit executé en local via le bouton `run app` soit en déployant le fichier sur un serveur Shiny.
+
+Depuis 2020 environ, il est possible d'intégrer un tutoriel learnr dans un package, ce qui rend interactif les classiques vignettes. Les nouvelles versions de Rstudio ont de plus inclus un bouton `tutorial` disponible dans le panel "Environnement, Git etc...".
+
+L'idée est de partager un tutoriel facilement à une large audience et pour cela il est maintenant possible de les intégrer dans un package. Cela peut être intéressant autant pour des tutoriaux à destination d'étudiants mais également pour des tutoriaux à intégrer à dans les packages que vous développer pour rendre l'initiation aux méthodes développées plus interactives qu'une vignette.
+
+L'avantage technique d'intégrer un tutoriel learnr dans un package est qu'il est alors possible, après avoir installer le package, d'executer le tutoriel en local sans avoir à le déployer sur une serveur Shiny. C'est donc gratuit et simple d'utilisation.
+
+A noter qu'il n'est pas nécessaire que le package contenant le tutoriel soit déposé sur le CRAN ou autre, qu'il contienne d'autres ficheirs que le tutoriel. Tout est donc possible.
+
+Les étapes pour créer un package contenant un tutoriel:
+
+1. Si le package n'est pas déjà créé:
+
+```{r}
+#| eval: false
+usethis::create_package("<path_to_folder/name_of_package>")
+```
+
+1. Pour créer le fichier du tutoriel:
+
+```{r}
+#| eval: false
+usethis::use_tutorial("<name-of-learnr-file>", "<Title You'd Like the User to See>")
+```
+
+1. Puis dans Rstudio, cliquer sur "Build > Install and Restart".
+
+1. Si nécessaire, rajouter le package {gradethis} (noter la fonction de {usethis} spécifique pour les install de package en développement), 
+
+```{r}
+#| eval: false
+usethis::use_dev_package("gradethis")
+```
+
+1. Si nécessaire, rajouter les packages présent sur le CRAN toujours avec {usethis}
+
+```{r}
+#| eval: false
+usethis::use_package("palmerpenguins")
+```
+
+1. Si nécessaire, éditer le fichier DESCRIPTION
+
+1. Exécuter `usethis::use_readme_rmd()` pour rajouter un fichier README. puis compiler le tout.
+
+1. Déposer le package sur gitlab ou github puis partager le repository qui peut être installer avec les lignes de code suivantes: 
+
+
+```{r}
+#| eval: false
+devtools::install_github("<your-repo>/<package-name>")
+devtools::install_gitlab("<your-repo>/<package-name>")
+```
+
+1. Lorsque le package est installé, aller dans le panel `Tutorial` dans Rstudio et c'est parti...
+
+# exams
+
+{exams} est un package R disponible sur le CRAN. Il permet de construire des examens de manière automatique au format markdown ou LaTeX et incluant des chunks de code R dynamique. Comme pour learnr les exercices peuvent être à choix multiples ou simples, des problèmes arithmétiques, du code…
+
+<https://www.r-exams.org/>
+
+Un examen exams a plusieurs sorties possibles:
+
+* fichiers autonomes : PDF, HTML, Docx, ODT, ...
+* fichiers dynamiques: **Moodle XML**, QTI 1.2, QTI 2.1, Blackboard, Canvas, OpenOLAT, ARSnova, and TCExam
+    
+Il est possible **de scanner les feuilles d’examens imprimés** et de les évaluer automatiquement avec l'outil **NOPS**.
+
+Une autre option intéressante, pour réduire le risque de triche, exams propose un mécanisme de variations aléatoires des exercices:
+
+* mélange de l’ordre des questions
+* mélange des réponses possibles pour les QCMs
+* mélange des données des exercices
+
+Il est également possible de combiner {exams} avec un tutoriel {learnr}: <https://www.r-exams.org/tutorials/exams2learnr/>.
+
+# Références
+
+1. https://rstudio.github.io/learnr/
+1. https://education.rstudio.com/blog/2020/09/delivering-learnr-tutorials-in-a-package/
+1. https://www.r-exams.org/
+1. https://www.r-exams.org/tutorials/
+1. https://www.r-exams.org/intro/dynamic/
+
