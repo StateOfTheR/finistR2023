@@ -40,6 +40,8 @@ pln = Pln.from_formula("counts ~ 1 ", data = oaks, take_log_offsets = True)
 
 
 ```{python simple-plnclass}
+import torch
+import numpy as np
 import math
 
 def _log_stirling(integer: torch.Tensor) -> torch.Tensor:
