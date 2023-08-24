@@ -1,16 +1,16 @@
 ---
-title: "FinistR : bootcamp R à Roscoff"
-subtitle: "Différentiation automatique: pytorch"
+title: "Introduction à Pytorch"
+subtitle: "Traduction de la version `{torch}` en `pytorch`"
 date: "du 21 au 25 août 2023"
 execute: 
-    freeze: auto
+  freeze: auto
 output: 
   html_document:
-   toc: true
-   toc_float: true
+    toc: true
+    toc_float: true
 ---
 
-Cette page constitue une traduction en Python avec pytorch de la [page équivalente](https://stateofther.github.io/finistR2022/autodiff.html) produite avec {{torch}} lors de FinistR 2022 
+Cette page constitue une traduction en Python avec pytorch de la [page équivalente](https://stateofther.github.io/finistR2022/autodiff.html) produite avec `{torch}` lors de FinistR 2022 
 
 ## Installation 
 
@@ -31,7 +31,7 @@ conda activate torch
 quarto render my_document.qmd --to html
 ```
 
-## Exploration de {{torch}} pour la différentiation automatique
+## Exploration de `{torch}` pour la différentiation automatique
 
 ```{python}
 import torch
@@ -46,7 +46,7 @@ from sklearn.linear_model import LinearRegression
 
 ## Principe du calcul de gradient
 
-{{torch}} fonctionne avec ses propres types numériques, qu’il faut créer avec la fonction `torch.tensor()` et ses propres fonctions `torch.*()`. Considérons un exemple très simple: $x \mapsto x^2$
+`{torch}` fonctionne avec ses propres types numériques, qu’il faut créer avec la fonction `torch.tensor()` et ses propres fonctions `torch.*()`. Considérons un exemple très simple: $x \mapsto x^2$
 
 ```{python}
 x = torch.tensor(3)
@@ -372,9 +372,9 @@ Theta = torch.ones(12, requires_grad = True)
 
 Quelques remarques :
 
-\- le paramètre $\theta$ à optimiser est ici défini comme un tenseur, i.e. un objet qui va notamment stocker la valeur courante de $\theta$. Avec l'option "requires_grad=True" la valeur courante du gradient de la dernière fonction appelée dépendant de $\theta$ va aussi être stockée.
+- le paramètre $\theta$ à optimiser est ici défini comme un tenseur, i.e. un objet qui va notamment stocker la valeur courante de $\theta$. Avec l'option `requires_grad=True` la valeur courante du gradient de la dernière fonction appelée dépendant de $\theta$ va aussi être stockée.
 
-\- la matrice $X$ est aussi définie comme un tenseur, mais l'option "requires_grad=TRUE" n'a pas été spécifiée, le gradient ne sera donc pas stocké pour cet objet. Cette distinction est explicitée lorsque l'on affiche les deux objets:
+- la matrice $X$ est aussi définie comme un tenseur, mais l'option "requires_grad=TRUE" n'a pas été spécifiée, le gradient ne sera donc pas stocké pour cet objet. Cette distinction est explicitée lorsque l'on affiche les deux objets:
 
 ```{python}
 Theta[:3]
@@ -414,7 +414,7 @@ correspondant à l'addition (AddBackward) des deux termes $$  n\times \log(\thet
 toto.grad_fn.next_functions
 ```
 
-L'étape suivante consiste à choisir la méthode d'optimisation à appliquer. L'intérêt d'utiliser le package \`{{torch}}\` est d'avoir accès à une large gamme de méthodes d'optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:
+L'étape suivante consiste à choisir la méthode d'optimisation à appliquer. L'intérêt d'utiliser le package `{torch}` est d'avoir accès à une large gamme de méthodes d'optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:
 
 ```{python}
 ## Specify the optimization parameters
