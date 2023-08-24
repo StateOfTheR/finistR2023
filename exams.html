@@ -6,15 +6,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Annaig De-Walsche">
-<meta name="author" content="Barbara Bricout">
-<meta name="author" content="Tristan Mary-Huard">
-<meta name="author" content="Armand Favrot">
-<meta name="author" content="Félix Cheysson">
-<meta name="author" content="Théodore Vanrenterghem">
-<meta name="dcterms.date" content="2024-08-08">
+<meta name="author" content="Pierre Barbillon">
+<meta name="author" content="Marie-Pierre Etienne">
+<meta name="author" content="Isabelle Sanchez">
+<meta name="dcterms.date" content="2024-12-08">
 
-<title>Finist’R 2023 - Torch &amp; Rcpp</title>
+<title>Finist’R 2023 - Nouveautés {learnr} et {exams}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,40 +23,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -227,12 +190,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#torch-on-r" id="toc-torch-on-r" class="nav-link active" data-scroll-target="#torch-on-r">Torch on R</a></li>
-  <li><a href="#rcpp" id="toc-rcpp" class="nav-link" data-scroll-target="#rcpp">Rcpp</a>
-  <ul class="collapse">
-  <li><a href="#exemple-1" id="toc-exemple-1" class="nav-link" data-scroll-target="#exemple-1">Exemple 1</a></li>
-  </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#exams" id="toc-exams" class="nav-link" data-scroll-target="#exams">exams</a></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références">Références</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Torch &amp; Rcpp</h1>
+<h1 class="title">Nouveautés {learnr} et {exams}</h1>
 </div>
 
 
@@ -251,19 +211,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
-             <p>Annaig De-Walsche </p>
-             <p>Barbara Bricout </p>
-             <p>Tristan Mary-Huard </p>
-             <p>Armand Favrot </p>
-             <p>Félix Cheysson </p>
-             <p>Théodore Vanrenterghem </p>
+             <p>Pierre Barbillon </p>
+             <p>Marie-Pierre Etienne </p>
+             <p>Isabelle Sanchez </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 8, 2024</p>
+      <p class="date">December 8, 2024</p>
     </div>
   </div>
   
@@ -273,107 +230,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcpp)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RcppArmadillo)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bench) <span class="co"># comparaison des vitesses</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="torch-on-r" class="level2">
-<h2 class="anchored" data-anchor-id="torch-on-r">Torch on R</h2>
-<p>La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d’évaluer numériquement le gradient d’une fonction et d’effectuer des descente de gradient.</p>
-<p><a href="https://stateofther.github.io/finistR2022/autodiff.html">Présentation finistR2022</a></p>
-<p><a href="https://stateofther.netlify.app/post/rentree2022/AutomatedDifferentiation.pdf">Torch and Automatic differentiation</a></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Nous allons ici discuter du package {exams} qui permet de créer des feuilles d’examens (papier ou en ligne).</p>
 </section>
-<section id="rcpp" class="level2">
-<h2 class="anchored" data-anchor-id="rcpp">Rcpp</h2>
-<p>L’utilisation de {Rcpp} permet d’exporter des fonction <code>C++</code> en R. Les fonctions seront alors directement utilisable dans un script et avec des arguments R. Ainsi on peu tirer parti de la compilation d’un code <code>C++</code>, et accélérer de nombreux calculs algébriques.</p>
-<p><a href="https://stateofther.netlify.app/post/bases-rcpp/">Présentation finistR2018</a></p>
-<section id="exemple-1" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-1">Exemple 1</h3>
-<p>Dans cet exemple nous allons calculer la loss d’une fonction logistique en R et en <code>C++</code>. Puis comparer les résultats avec le package {bench} de R.</p>
-<p>```{cpp, eval = FALSE, echo = TRUE} // [[Rcpp::depends(RcppArmadillo)]] #include &lt;RcppArmadillo.h&gt;</p>
-<p>// Logistic loss // [[Rcpp::export]] // const : pas de changement de valeur dans la fonction // arma:: : se sont les classes de Armadillo // using namespace arma to erase all arma:: // &amp; : appel sans copie donc plus rapide double loss_cpp( const arma::vec theta, const arma::vec&amp; y, const arma::mat&amp; x ) { arma::vec odds(x.n_rows); odds = x * theta; double log_lik; log_lik = arma::dot(y, odds) - arma::sum(arma::log(1 + arma::exp(odds))); return(-log_lik); }</p>
-<pre><code>
-
-
-::: {.cell}
-
-```{.cpp .cell-code}
-// [[Rcpp::depends(RcppArmadillo)]]
-#include &lt;RcppArmadillo.h&gt;
-
-// Logistic loss
-// [[Rcpp::export]]
-// const : pas de changement de valeur dans la fonction
-// arma:: : se sont les classes de Armadillo
-// using namespace arma to erase all arma::
-// &amp; :  appel sans copie donc plus rapide
-double loss_cpp( const arma::vec theta, const arma::vec&amp; y, const arma::mat&amp; x ) {
-  arma::vec odds(x.n_rows);
-  odds = x * theta;
-  double log_lik;
-  log_lik = arma::dot(y, odds) - arma::sum(arma::log(1 + arma::exp(odds)));
-  return(-log_lik);
-}</code></pre>
-<p>:::</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sourceCpp</span>(<span class="at">file =</span> <span class="st">"logisticloss.cpp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loss_R <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, y, x) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">&lt;-</span> x <span class="sc">%*%</span> theta</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  log_lik <span class="ot">&lt;-</span> <span class="fu">sum</span>(y <span class="sc">*</span> odds <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(odds)))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span><span class="fu">as.numeric</span>(log_lik))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_cpp</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fl">1.0</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6587596</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_R</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fl">1.0</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6587596</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n_covar &lt;- 30</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># size &lt;- 1000</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># theta &lt;- rnorm(n_covar)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- as.numeric(rbinom(size, 1, 0.3))</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># x &lt;- matrix(rnorm(size * n_covar), size, n_covar)</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># comp_tbl &lt;- bench::mark(</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   loss_cpp(theta, y, x),</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    loss_R(theta, y, x),</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   iterations = 1000</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># autoplot(comp_tbl, type = "boxplot")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="exams" class="level1">
+<h1>exams</h1>
+<p>{exams} est un package R disponible sur le CRAN. Il permet de construire des examens de manière automatique au format markdown ou LaTeX et incluant des chunks de code R dynamique. Comme pour learnr les exercices peuvent être à choix multiples ou simples, des problèmes arithmétiques, du code…</p>
+<p><a href="https://www.r-exams.org/" class="uri">https://www.r-exams.org/</a></p>
+<p>Un examen exams a plusieurs sorties possibles:</p>
 <ul>
-<li><a href="https://stateofther.netlify.app/post/variational-autoencoder-with-torch/">Cours state of the R (2023)</a></li>
-<li><a href="https://stateofther.github.io/finistR2022/autodiff.html">finistR2022 - Torch Auto Diff</a></li>
+<li>fichiers autonomes : PDF, HTML, Docx, ODT, …</li>
+<li>fichiers dynamiques: <strong>Moodle XML</strong>, QTI 1.2, QTI 2.1, Blackboard, Canvas, OpenOLAT, ARSnova, and TCExam</li>
 </ul>
+<p>Il est possible <strong>de scanner les feuilles d’examens imprimés</strong> et de les évaluer automatiquement avec l’outil <strong>NOPS</strong>.</p>
+<p>Une autre option intéressante, pour réduire le risque de triche, exams propose un mécanisme de variations aléatoires des exercices:</p>
+<ul>
+<li>mélange de l’ordre des questions</li>
+<li>mélange des réponses possibles pour les QCMs</li>
+<li>mélange des données des exercices</li>
+</ul>
+<p>Il est également possible de combiner {exams} avec un tutoriel {learnr}: <a href="https://www.r-exams.org/tutorials/exams2learnr/" class="uri">https://www.r-exams.org/tutorials/exams2learnr/</a>.</p>
+</section>
+<section id="références" class="level1">
+<h1>Références</h1>
+<ol type="1">
+<li>https://www.r-exams.org/</li>
+<li>https://www.r-exams.org/tutorials/</li>
+<li>https://www.r-exams.org/intro/dynamic/</li>
+</ol>
 
 
 </section>

@@ -130,8 +130,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
         <li>
-    <a class="dropdown-item" href="./teaching.qmd" rel="" target="">
+    <a class="dropdown-item" href="./learnr.html" rel="" target="">
  <span class="dropdown-text">Learnr</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exams.html" rel="" target="">
+ <span class="dropdown-text">exams</span></a>
   </li>  
     </ul>
   </li>
@@ -278,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  4.415   1.263   2.938 </code></pre>
+  4.819   1.671   3.544 </code></pre>
 </div>
 </div>
 </section>
@@ -410,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(myPLN<span class="sc">$</span><span class="fu">fit</span>(<span class="dv">1000</span>, <span class="at">lr =</span> <span class="fl">0.05</span>, <span class="at">tol =</span> <span class="fl">1e-9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.978   0.669   1.659 </code></pre>
+  2.114   0.768   1.727 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="sc">-</span>myPLN<span class="sc">$</span>ELBO_list, <span class="at">type=</span><span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -429,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  8.353   2.217   5.519 </code></pre>
+  7.396   1.753   4.757 </code></pre>
 </div>
 </div>
 <p>Les vraisemblances finales sont comparables</p>
@@ -440,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>myPLN_torch<span class="sc">$</span>loglik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -32169.21</code></pre>
+<pre><code>[1] -32176.33</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>myPLN<span class="sc">$</span>loglik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
