@@ -1,8 +1,8 @@
 ---
 title: "PLN version Python"
 date: "du 21 au 25 août 2023"
-execute:    
-  freeze: auto
+execute:
+  freeze: auto    
 output: 
   html_document:
    toc: true
@@ -11,9 +11,35 @@ output:
 
 ## PLN with Pytorch
 
-```{python}
-import torch
+Comme vous pourrez le constater, les syntaxtes {torch} et Pytorch sont très proches.
+
+### Préliminaires
+
+On charge le jeu de données `oaks` contenu dans le package python `pyPLNmodels`
+
+```{python load-plnmodels, messages=FALSE}
+import pyPLNmodels
 import numpy as np
+import matplotlib.pyplot as plt
+from pyPLNmodels.models import PlnPCAcollection, Pln
+from pyPLNmodels.oaks import load_oaks
+oaks = load_oaks()
+Y = oaks['counts']
+O = np.log(oaks['offsets'])
+X = np.ones([Y.shape[0],1])
+```
+
+Pour référence, on optimise avec le package dédié (qui utilise pytorch  et l'optimiseur Rprop. 
+
+```{python oaks-pyplnmodels}
+pln = Pln.from_formula("counts ~ 1 ", data = oaks, take_log_offsets = True)
+%timeit pln.fit()
+```
+
+### Implémentation simple en Pytorch
+
+
+```{python simple-plnclass}
 import math
 
 def _log_stirling(integer: torch.Tensor) -> torch.Tensor:
@@ -89,19 +115,14 @@ class PLN() :
           objective0 = objective
 ```
 
+### Évaluation du temps de calcul
 
-```{python}
-import pyPLNmodels
-import numpy as np
-import matplotlib.pyplot as plt
-from pyPLNmodels.models import PlnPCAcollection, Pln
-from pyPLNmodels.oaks import load_oaks
-oaks = load_oaks()
-Y = oaks['counts']
-O = np.log(oaks['offsets'])
-X = np.ones([Y.shape[0],1])
+Testons notre implémentation simple de PLN utilisant:
+
+```{python run-simplepln}
 myPLN = PLN(Y, O, X)
-myPLN.fit(50, lr = 0.1, tol = 1e-8)
+%timeit myPLN.fit(50, lr = 0.1, tol = 1e-8)
 plt.plot(np.log(-myPLN.ELBO))
 ```
 
+```
