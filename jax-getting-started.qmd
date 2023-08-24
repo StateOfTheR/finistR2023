@@ -109,16 +109,16 @@ key,subkey = random.split(key, 2)
 beta_true = random.normal(subkey, (p,1))
 ```
 
-Avant de les multipliers. On utilise la fonction `block_until_ready()` pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme {{future}} en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
+Avant de les multiplier. On utilise ici la fonction `block_until_ready()` uniquement pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme {{future}} en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
 
 ```{python}
-%time
-odds = jnp.dot(x, beta_true)  # runs on the CPU
+%timeit odds = jnp.dot(x, beta_true).block_until_ready()  # runs on the CPU
 ```
 
 On échantillonne ensuite des variables suivant une loi de Bernoulli. 
 
 ```{python}
+odds = jnp.dot(x, beta_true)
 key,subkey = random.split(key, 2)
 y = random.bernoulli(subkey, odds)
 ```
@@ -147,8 +147,47 @@ La version *normale* de notre fonction logistique est déjà rapide.
 %timeit logistic_loss(y, x, beta_true).block_until_ready()
 ```
 
-mais on peut l'accélerer d'un facteur 2 ou 3 en compilant la fonction via `jit()` de façon complètement transparente pour l'utilisateur. 
+mais on peut l'accélerer en compilant la fonction via `@jit` de façon complètement transparente pour l'utilisateur. 
 
 ```{python}
 logistic_loss_jit = jit(logistic_loss)
 %timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
+```
+
+La différence est assez importante dans cet example mais moins pour des échantillons plus gros parce que JAX va automatiquement mettre en cache 
+
+### grad: auto-différentiation
+
+JAX permet de calculer le gradient d'une fonction via `grad()`. La syntaxe est différente de torch et plus proche de ce qu'on ferait dans une fonction mathématique. 
+
+```{python}
+def loss(theta):
+  return logistic_loss(y, x, theta)
+```
+
+```{python}
+## random start for theta
+key,subkey = random.split(key, 2)
+theta = random.normal(key, (p, 1))
+grad_loss = grad(loss)
+print(grad_loss(theta))
+```
+
+`grad()` peut-être combiné à `jit()` dans tous les sens. 
+
+```{python}
+grad_loss = grad(loss)
+%timeit grad_loss(theta)
+```
+
+```{python}
+grad_loss = jit(grad(loss))
+%timeit grad_loss(theta)
+```
+
+```{python}
+grad_loss = jit(grad(jit(loss)))
+%timeit grad_loss(theta)
+```
+
+### Vectorisation
