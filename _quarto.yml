@@ -23,18 +23,21 @@ website:
         aria-label: GitHub
       - text: Analyse statistique
         menu:
-        - text: Inla
+        - text: INLA
           href: R_INLA.qmd
         - text: Tidymodels
           href: tidymodels_build_new_model.qmd
         aria-label: GitHub
-      - text: torch (R vs Py)
-        menu: 
+      - text: Programmation Efficace
+      menu: 
           - torch_test-brulee.qmd
           - torch_Python_R_ResNet.qmd
           - torch_Python_regression.qmd
           - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
+          - torch_Python-PLN.qmd
+          - Intel_MKL.qmd
+          - torch_and_rcpp.qmd
         aria-label: GitHub
 
 
