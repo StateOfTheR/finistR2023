@@ -11,10 +11,22 @@ website:
       - text: "Instructions"
         href: instructions.qmd
     right:
-      - text: workflow
+      - text: Enseignement
         menu:
-        - text: inla
+        - text: Learnr
+          href: teaching.qmd
+        aria-label: GitHub
+      - text: Workflow
+        menu:
+        - text: Issue - Reprex
+          href: issue_reprex.qmd
+        aria-label: GitHub
+      - text: Analyse statistique
+        menu:
+        - text: Inla
           href: R_INLA.qmd
+        - text: Tidymodels
+          href: tidymodels_build_new_model.qmd
         aria-label: GitHub
       - text: torch (R vs Py)
         menu: 
