@@ -12,5 +12,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Additional Packages
+        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench'))"
       - name: Generate slides
         run: "quarto render"
