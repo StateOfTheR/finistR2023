@@ -1,10 +1,16 @@
 ---
-title: "Régression logistique avec {tidymodels} et {torch}"
-format: html
-editor: visual
+title: "{torch} avec {tidymodels} et {brulee}"
+subtitle: "Résolution de la régression logistique"
+date: "du 21 au 25 août 2023"
+execute: 
+    freeze: auto
+output: 
+  html_document:
+   toc: true
+   toc_float: true
 ---
 
-## Intro
+## Introduction
 
 L'idée ici est d'explorer la régression logistique en utilisant `torch` à l'aide du package {brulee}.
 
@@ -16,7 +22,7 @@ library(brulee)
 
 ## Exemple
 
-Reprise de l'exemple proposé dans https://stateofther.github.io/finistR2022/autodiff.html.
+On reprend l'exemple détaillé l'an dernier pour la régression logistique, disponible à la page <https://stateofther.github.io/finistR2022/autodiff.html>.
 
 ```{r}
 set.seed(45)

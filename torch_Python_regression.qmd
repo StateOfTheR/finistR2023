@@ -1,6 +1,6 @@
 ---
-title: "FinistR : bootcamp R à Roscoff"
-subtitle: "Différentiation automatique: pytorch"
+title: "Introduction à Pytorch"
+subtitle: "Traduction de la version {torch} en pytorch"
 date: "du 21 au 25 août 2023"
 execute: 
     freeze: auto
