@@ -29,7 +29,7 @@ website:
           href: tidymodels_build_new_model.qmd
         aria-label: GitHub
       - text: Programmation Efficace
-      menu: 
+        menu: 
           - torch_test-brulee.qmd
           - torch_Python_R_ResNet.qmd
           - torch_Python_regression.qmd
