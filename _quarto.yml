@@ -14,7 +14,9 @@ website:
       - text: Enseignement
         menu:
         - text: Learnr
-          href: teaching.qmd
+          href: learnr.qmd
+        - text: exams
+          href: exams.qmd
         aria-label: GitHub
       - text: Workflow
         menu:
