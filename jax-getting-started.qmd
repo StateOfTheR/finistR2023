@@ -26,6 +26,8 @@ conda create -n jax
 conda activate jax
 ## Install the CPU version
 conda install jax -c conda-forge
+## Install packages necessary for the render
+conda install nbclient nbformat ipykernel
 ```
 
 Pour des instruction détaillées pour l'installation en mode GPU ou TPU, se référer à la [documentation officielle](https://github.com/google/jax#installation). 
@@ -44,7 +46,7 @@ Si vous préférez une installation via pip (pour une version cpu),
 
 ```{bash}
 #| eval: false
-pip3 install jax jaxlib
+pip3 install jax jaxlib jaxopt
 ```
 
 Pour une installation GPU (avec cuda 12 par exemple, on vous laisse gérer la compatibilité de vos driver Nvidia and Cie),
@@ -148,9 +150,20 @@ La version *normale* de notre fonction logistique est déjà rapide.
 %timeit logistic_loss(y, x, beta_true).block_until_ready()
 ```
 
-mais on peut l'accélerer en compilant la fonction via `@jit` de façon complètement transparente pour l'utilisateur. 
+mais on peut l'accélerer en compilant la fonction via le décorateur `@jit` ou la fonction `jit()` de façon complètement transparente pour l'utilisateur. 
 
 ```{python}
+#| eval: false
+## Utilisation du décorateur @jit
+@jit 
+def logistic_loss(y, x, theta):
+  odds = jnp.dot(x, theta)
+  return -jnp.vdot(y, odds) + jnp.sum(jnp.log(1.0 + jnp.exp(odds)))
+```
+
+
+```{python}
+## Utilisation de jit()
 logistic_loss_jit = jit(logistic_loss)
 %timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
 ```
@@ -170,6 +183,7 @@ def f(x):
 on ne peut la jitter facilement. 
 
 ```{python}
+#| error: true
 f_jit = jit(f)
 ## Renvoie une erreur
 f_jit(1)
@@ -273,10 +287,11 @@ A comparer à la version native jax qui est déjà nativement vectorisée pour c
 
 ### À la main 
 
-Contrairement à `torch`, on n'a pas d'optimiseur défini clé dans JAX. La dérivée est néanmoins une fonction *comme les autres* et on peut donc écrire très simplement un algorithme simple de descente de gradient. 
+Contrairement à `torch`, on n'a pas d'optimiseur défini clé en main dans JAX. La dérivée est néanmoins une fonction *comme les autres* et on peut donc écrire très simplement un algorithme simple de descente de gradient. 
 
 ```{python}
-num_iterations = 100
+%%time
+num_iterations = 50
 loss_vector = []
 ## Learning rate
 lr = 0.001
@@ -319,3 +334,5 @@ plt.show()
 ```
 
 ### Avec JAXOPT
+
+On peut néanmoins utiliser la librairie jaxopt pour définir des optimiseurs comme en torch
