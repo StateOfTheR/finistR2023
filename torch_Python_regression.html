@@ -316,7 +316,7 @@ quarto render my_document.qmd --to html</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>&lt;LogBackward0 at 0x7f637865a260&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f3a18aca3e0&gt;</code></pre>
 </div>
 </div>
 <p>qui indique comment calculer le gradient en utilisant la dérivée des fonctions composées:</p>
@@ -349,14 +349,14 @@ x = 2 \xrightarrow{x \mapsto x^2} z = 4 \mapsto \xrightarrow{x \mapsto \log(x)} 
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;LogBackward0 at 0x7f637865a260&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f3a18aca3e0&gt;</code></pre>
 </div>
 </div>
 <p>et les fonctions suivantes via <code>$next_functions</code></p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>((&lt;PowBackward0 at 0x7f637865bf70&gt;, 0),)</code></pre>
+<pre><code>((&lt;PowBackward0 at 0x7f3a18aca410&gt;, 0),)</code></pre>
 </div>
 </div>
 <p>Dans notre exemple, on a donc:</p>
@@ -540,8 +540,8 @@ Y_i \sim \mathcal{B}(\sigma(\theta^T x_i)) \quad \text{avec} \quad \sigma(x) = \
 <span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> optimizer.step(calc_loss).item()</span>
 <span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    loss_vector.append(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 49.1 ms, sys: 176 µs, total: 49.2 ms
-Wall time: 49 ms</code></pre>
+<pre><code>CPU times: user 64.4 ms, sys: 0 ns, total: 64.4 ms
+Wall time: 64.4 ms</code></pre>
 </div>
 </div>
 <p>On peut vérifier qu’on obtient des résultats identiques dans les deux cas d’utilisation:</p>
@@ -621,14 +621,14 @@ Wall time: 49 ms</code></pre>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>toto <span class="op">=</span> LogLik()</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>toto.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>&lt;AddBackward0 at 0x7f629ee214b0&gt;</code></pre>
+<pre><code>&lt;AddBackward0 at 0x7f394190cd30&gt;</code></pre>
 </div>
 </div>
 <p>correspondant à l’addition (AddBackward) des deux termes <span class="math display">\[  n\times \log(\theta[11]) \quad \text{et} \quad ||Y-X\theta[0:10]||^2/(2*\theta[11]^2)\]</span> dans le calcul de la perte. On peut afficher les opérations suivantes dans le graphe comme suit:</p>
 <div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>toto.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>((&lt;MulBackward0 at 0x7f6378658430&gt;, 0), (&lt;DivBackward0 at 0x7f637865a770&gt;, 0))</code></pre>
+<pre><code>((&lt;MulBackward0 at 0x7f3a18acb8e0&gt;, 0), (&lt;DivBackward0 at 0x7f393f277d30&gt;, 0))</code></pre>
 </div>
 </div>
 <p>L’étape suivante consiste à choisir la méthode d’optimisation à appliquer. L’intérêt d’utiliser le package <code>{torch}</code> est d’avoir accès à une large gamme de méthodes d’optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:</p>
@@ -684,8 +684,8 @@ Wall time: 49 ms</code></pre>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    loss_vector[i] <span class="op">=</span> calc_loss().item()</span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 62.1 ms, sys: 382 µs, total: 62.4 ms
-Wall time: 62.4 ms</code></pre>
+<pre><code>CPU times: user 77.5 ms, sys: 0 ns, total: 77.5 ms
+Wall time: 78.7 ms</code></pre>
 </div>
 </div>
 <p>On vérifie que l’optimisation s’est bien passée (ie que l’on a minimisé la fonction de perte)</p>

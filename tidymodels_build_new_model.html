@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
   <li><a href="#ressources" id="toc-ressources" class="nav-link" data-scroll-target="#ressources">Ressources</a></li>
-  <li><a href="#un-modèle-parnsip" id="toc-un-modèle-parnsip" class="nav-link" data-scroll-target="#un-modèle-parnsip">Un modèle <code>{parnsip}</code></a></li>
+  <li><a href="#un-modèle-parsnip" id="toc-un-modèle-parsnip" class="nav-link" data-scroll-target="#un-modèle-parsnip">Un modèle <code>{parsnip}</code></a></li>
   </ul></li>
   <li><a href="#intégration-de-la-régression-pln" id="toc-intégration-de-la-régression-pln" class="nav-link" data-scroll-target="#intégration-de-la-régression-pln">Intégration de la régression PLN</a>
   <ul class="collapse">
@@ -263,10 +263,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Intérêts : éliminer des dépendances, du code dupliqué, pouvoir profiter du cadre <code>{tidymodels}</code>.</p>
 <section id="ressources" class="level3">
 <h3 class="anchored" data-anchor-id="ressources">Ressources</h3>
-<p>https://www.tidymodels.org/learn/develop/models/</p>
+<ul>
+<li><p><a href="https://www.tidymodels.org/learn/develop/models/">https://www.tidymodels.org/learn/develop/models/</a></p></li>
+<li><p><a href="https://abichat.github.io/rr23-tuto-tidymodels">Tuto tidymodels - Rencontres R 2023</a></p></li>
+</ul>
 </section>
-<section id="un-modèle-parnsip" class="level3">
-<h3 class="anchored" data-anchor-id="un-modèle-parnsip">Un modèle <code>{parnsip}</code></h3>
+<section id="un-modèle-parsnip" class="level3">
+<h3 class="anchored" data-anchor-id="un-modèle-parsnip">Un modèle <code>{parsnip}</code></h3>
 <p>Il se définit par</p>
 <ul>
 <li><p>un <code>mode</code> (régression linéaire, logistique, …),</p></li>
@@ -308,7 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()            masks stats::lag()
 ✖ parsnip::prepare_data() masks PLNmodels::prepare_data()
 ✖ recipes::step()         masks stats::step()
-• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poissonreg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -328,7 +331,7 @@ Remarque
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Il existe une fonction <code>prepare_data</code> dans {parsnip} également.</p>
+<p>Il existe une fonction <code>prepare_data</code> dans <code>{parsnip}</code> également.</p>
 </div>
 </div>
 </section>
@@ -487,7 +490,7 @@ Remarque
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prep_trichoptera <span class="ot">&lt;-</span> PLNmodels<span class="sc">::</span><span class="fu">prepare_data</span>(trichoptera<span class="sc">$</span>Abundance, trichoptera<span class="sc">$</span>Covariate)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>myPLN <span class="ot">&lt;-</span> <span class="fu">PLN</span>(Abundance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>myPLN <span class="ot">&lt;-</span> <span class="fu">PLN</span>(Abundance <span class="sc">~</span> <span class="dv">1</span> , <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Initialization...
@@ -515,7 +518,7 @@ Remarque
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>resPLN <span class="ot">&lt;-</span> <span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Abundance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Abundance <span class="sc">~</span> <span class="dv">1</span> , <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Initialization...
@@ -580,74 +583,82 @@ PLNmodels::PLN(formula = missing_arg(), data = missing_arg(),
                   Hfo        Hsp       Hve       Sta
 (Intercept) -2.190792 -0.3070371 -2.758038 0.9621415</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour faire de la prediction</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>resPLN <span class="sc">%&gt;%</span> <span class="fu">predict</span>(<span class="at">new_data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">coef</span>(myPLN), <span class="fu">coef</span>(resPLN<span class="sc">$</span>fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 49 × 17
-   .pred_Che .pred_Hyc .pred_Hym .pred_Hys .pred_Psy .pred_Aga .pred_Glo
-       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 2    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 3    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 4    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 5    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 6    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 7    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 8    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
- 9    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
-10    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
-# ℹ 39 more rows
-# ℹ 10 more variables: .pred_Ath &lt;dbl&gt;, .pred_Cea &lt;dbl&gt;, .pred_Ced &lt;dbl&gt;,
-#   .pred_Set &lt;dbl&gt;, .pred_All &lt;dbl&gt;, .pred_Han &lt;dbl&gt;, .pred_Hfo &lt;dbl&gt;,
-#   .pred_Hsp &lt;dbl&gt;, .pred_Hve &lt;dbl&gt;, .pred_Sta &lt;dbl&gt;</code></pre>
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour faire de la prediction</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>pred_pln <span class="ot">&lt;-</span> <span class="fu">predict</span>(myPLN, <span class="at">newdata  =</span> prep_trichoptera, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># On peut appliquer les methodes </span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#pred_parsnipfit &lt;- predict(resPLN$fit, newdata  = prep_trichoptera)</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>pred_parsnip <span class="ot">&lt;-</span> <span class="fu">predict</span>(resPLN, <span class="at">new_data  =</span> trichoptera<span class="sc">$</span>Abundance)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(pred_pln, pred_parsnip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Modes: numeric, list"                                                             
+ [2] "Lengths: 833, 17"                                                                 
+ [3] "names for current but not for target"                                             
+ [4] "Attributes: &lt; Names: 2 string mismatches &gt;"                                       
+ [5] "Attributes: &lt; Length mismatch: comparison on first 2 components &gt;"                
+ [6] "Attributes: &lt; Component 1: Modes: numeric, character &gt;"                           
+ [7] "Attributes: &lt; Component 1: Lengths: 2, 3 &gt;"                                       
+ [8] "Attributes: &lt; Component 1: target is numeric, current is character &gt;"             
+ [9] "Attributes: &lt; Component 2: Modes: list, numeric &gt;"                                
+[10] "Attributes: &lt; Component 2: Length mismatch: comparison on first 2 components &gt;"   
+[11] "Attributes: &lt; Component 2: Component 1: Modes: character, numeric &gt;"              
+[12] "Attributes: &lt; Component 2: Component 1: Lengths: 49, 1 &gt;"                         
+[13] "Attributes: &lt; Component 2: Component 1: target is character, current is numeric &gt;"
+[14] "Attributes: &lt; Component 2: Component 2: Modes: character, numeric &gt;"              
+[15] "Attributes: &lt; Component 2: Component 2: Lengths: 17, 1 &gt;"                         
+[16] "Attributes: &lt; Component 2: Component 2: target is character, current is numeric &gt;"
+[17] "target is matrix, current is tbl_df"                                              </code></pre>
 </div>
 </div>
 </section>
 <section id="test-dun-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="test-dun-workflow">Test d’un workflow</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separation du jeu de donnees en test et apprentissage</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tri_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> prep_trichoptera, <span class="at">prop =</span> <span class="fl">0.9</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_train &lt;- training(tri_split)</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_test &lt;- testing(tri_split)</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>p_recipe <span class="ot">&lt;-</span> </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Abundance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Temperature, <span class="at">data =</span> <span class="fu">training</span>(tri_split))</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>pln_model <span class="ot">&lt;-</span> </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">poisson_reg</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>pln_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(p_recipe) <span class="sc">%&gt;%</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(pln_model)</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>fitted_workflow <span class="ot">&lt;-</span>  pln_workflow <span class="sc">%&gt;%</span></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="fu">training</span>(tri_split)) </span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicition sur le jeu d'entrainement</span></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> fitted_workflow <span class="sc">%&gt;%</span> <span class="fu">predict</span>(<span class="at">new_data =</span> <span class="fu">testing</span>(tri_split))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separation du jeu de donnees en test et apprentissage</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>tri_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> prep_trichoptera, <span class="at">prop =</span> <span class="fl">0.9</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_train &lt;- training(tri_split)</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_test &lt;- testing(tri_split)</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>p_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Abundance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Temperature, <span class="at">data =</span> <span class="fu">training</span>(tri_split))</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>pln_model <span class="ot">&lt;-</span> </span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">poisson_reg</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>pln_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(p_recipe) <span class="sc">%&gt;%</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(pln_model)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>fitted_workflow <span class="ot">&lt;-</span>  pln_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="fu">training</span>(tri_split)) </span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicition sur le jeu d'entrainement</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> fitted_workflow <span class="sc">%&gt;%</span> <span class="fu">predict</span>(<span class="at">new_data =</span> <span class="fu">testing</span>(tri_split))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pour la suite du workflow, calcul de performance sur des rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus ‘tidy’ ou réécrire le calcul de métrique sur des matrices.</p>
 </section>
 <section id="autre-jeu-de-données-exemple-en-régression-univariée" class="level3">
 <h3 class="anchored" data-anchor-id="autre-jeu-de-données-exemple-en-régression-univariée">Autre jeu de données, exemple en régression univariée</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/poisson_sim.csv"</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">within</span>(p, {</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  prog <span class="ot">&lt;-</span> <span class="fu">factor</span>(prog, <span class="at">levels=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"General"</span>, <span class="st">"Academic"</span>, </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">"Vocational"</span>))</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  id <span class="ot">&lt;-</span> <span class="fu">factor</span>(id)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/poisson_sim.csv"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">within</span>(p, {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  prog <span class="ot">&lt;-</span> <span class="fu">factor</span>(prog, <span class="at">levels=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"General"</span>, <span class="st">"Academic"</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">"Vocational"</span>))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  id <span class="ot">&lt;-</span> <span class="fu">factor</span>(id)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>On essaie maintenant en utilisant <code>{parsnip}</code></p>
+<p>On essaie maintenant en utilisant <code>{parsnip}</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">glm de base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">glm dans parsnip</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">PLN dans parsnip</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">glm de base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">glm dans parsnip</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">pln</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">PLN dans parsnip</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">family=</span><span class="st">"poisson"</span>, <span class="at">data=</span>p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">family=</span><span class="st">"poisson"</span>, <span class="at">data=</span>p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -674,11 +685,11 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p)  <span class="sc">%&gt;%</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p)  <span class="sc">%&gt;%</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 1
     .pred
@@ -699,11 +710,39 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(<span class="fu">as.matrix</span>(num_awards) <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mod_pln <span class="ot">&lt;-</span> <span class="fu">PLN</span>(<span class="fu">as.matrix</span>(num_awards) <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Initialization...
+ Adjusting a full covariance PLN model with nlopt optimizer
+ Post-treatments...
+ DONE!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>mod_pln <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p, <span class="at">type =</span> <span class="st">"response"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Y
+1  0.13408541
+2  0.09317098
+3  0.16585222
+4  0.14393335
+5  0.12491126
+6  0.10001395
+7  0.19110900
+8  0.12491126
+9  0.07605752
+10 0.19110900</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(<span class="fu">as.matrix</span>(num_awards) <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Initialization...
@@ -733,7 +772,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 <p>On peut vérifier la commande associée au modèle programmé.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">translate</span>(<span class="at">engine =</span> <span class="st">"PLN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">translate</span>(<span class="at">engine =</span> <span class="st">"PLN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Poisson Regression Model Specification (regression)
 
