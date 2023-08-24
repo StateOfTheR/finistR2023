@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
         <li>
     <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
- <span class="dropdown-text">Inla</span></a>
+ <span class="dropdown-text">INLA</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
@@ -162,10 +162,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-torch-(r-vs-py" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">torch (R vs Py)</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-programmation-efficace" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Programmation Efficace</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-programmation-efficace">    
         <li>
     <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
  <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
@@ -185,6 +185,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Intel_MKL.html" rel="" target="">
+ <span class="dropdown-text">Intel MKL &amp; Open Blas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_and_rcpp.html" rel="" target="">
+ <span class="dropdown-text">Torch &amp; Rcpp</span></a>
   </li>  
     </ul>
   </li>
@@ -593,21 +605,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 1    Loss: 2.4134
-Epoch: 2    Loss: 2.0816
-Epoch: 3    Loss: 1.8388
-Epoch: 4    Loss: 1.7199
-Epoch: 5    Loss: 1.6351
-Epoch: 6    Loss: 1.5243
-Epoch: 7    Loss: 1.5040
-Epoch: 8    Loss: 1.4148
-Epoch: 9    Loss: 1.3312
-Epoch: 10   Loss: 1.2016</code></pre>
+<pre><code>Epoch: 1    Loss: 2.4989
+Epoch: 2    Loss: 2.0163
+Epoch: 3    Loss: 1.8802
+Epoch: 4    Loss: 1.7658
+Epoch: 5    Loss: 1.6821
+Epoch: 6    Loss: 1.6696
+Epoch: 7    Loss: 1.5803
+Epoch: 8    Loss: 1.4861
+Epoch: 9    Loss: 1.4420
+Epoch: 10   Loss: 1.3478</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 45.837   2.884  32.240 </code></pre>
+ 43.010   2.922  30.045 </code></pre>
 </div>
 </div>
 <p>Sur mon ordinateurs : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
@@ -640,7 +652,7 @@ Epoch: 10   Loss: 1.2016</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Accuracy"</span>, n_tests_ok <span class="sc">/</span> n_tests, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy 0.411 </code></pre>
+<pre><code>Accuracy 0.383 </code></pre>
 </div>
 </div>
 <p>Les deux codes donnent des résultats semblables !</p>

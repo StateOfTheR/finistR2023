@@ -6,11 +6,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Julie Aubert">
-<meta name="author" content="Julien Chiquet">
-<meta name="author" content="Marie-Pierre Etienne">
+<meta name="author" content="Annaig De Walsche">
+<meta name="author" content="Barbara Bricout">
+<meta name="author" content="Tristan Mary-Huard">
+<meta name="author" content="Armand Favrot">
+<meta name="author" content="Félix Cheysson">
+<meta name="author" content="Théodore Vanrenterghem">
+<meta name="dcterms.date" content="2024-08-08">
 
-<title>Finist’R 2023 - Instructions pour le dépot sur le site web</title>
+<title>Finist’R 2023 - Intel MKL &amp; Open Blas</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./instructions.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./instructions.html" rel="" target="">
  <span class="menu-text">Instructions</span></a>
   </li>  
 </ul>
@@ -219,12 +223,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#processus-de-mise-en-commun-des-ateliers" id="toc-processus-de-mise-en-commun-des-ateliers" class="nav-link active" data-scroll-target="#processus-de-mise-en-commun-des-ateliers">Processus de mise en commun des ateliers</a></li>
-  <li><a href="#détails-du-fonctionnement" id="toc-détails-du-fonctionnement" class="nav-link" data-scroll-target="#détails-du-fonctionnement">Détails du fonctionnement</a>
-  <ul class="collapse">
-  <li><a href="#le-docker" id="toc-le-docker" class="nav-link" data-scroll-target="#le-docker">Le docker</a></li>
-  <li><a href="#les-actions" id="toc-les-actions" class="nav-link" data-scroll-target="#les-actions">Les actions</a></li>
-  </ul></li>
+  <li><a href="#installation-sur-windows-seulement-intel-mkl" id="toc-installation-sur-windows-seulement-intel-mkl" class="nav-link active" data-scroll-target="#installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</a></li>
+  <li><a href="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" id="toc-installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" class="nav-link" data-scroll-target="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas">Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)</a></li>
+  <li><a href="#test-de-la-librairie" id="toc-test-de-la-librairie" class="nav-link" data-scroll-target="#test-de-la-librairie">Test de la librairie</a></li>
   </ul>
 </nav>
     </div>
@@ -233,7 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Instructions pour le dépot sur le site web</h1>
+<h1 class="title">Intel MKL &amp; Open Blas</h1>
 </div>
 
 
@@ -243,16 +244,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
-             <p>Julie Aubert </p>
-             <p>Julien Chiquet </p>
-             <p>Marie-Pierre Etienne </p>
+             <p>Annaig De Walsche </p>
+             <p>Barbara Bricout </p>
+             <p>Tristan Mary-Huard </p>
+             <p>Armand Favrot </p>
+             <p>Félix Cheysson </p>
+             <p>Théodore Vanrenterghem </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">August 8, 2024</p>
     </div>
   </div>
   
@@ -262,125 +266,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="processus-de-mise-en-commun-des-ateliers" class="level2">
-<h2 class="anchored" data-anchor-id="processus-de-mise-en-commun-des-ateliers">Processus de mise en commun des ateliers</h2>
-<ul>
-<li>Créer une branche propre à l’atelier nommée explicitement <code>mon_nom_parlant</code> et basculer dessus</li>
-</ul>
-<p><code>git checkout -b mon_nom_parlant</code></p>
-<ul>
-<li>Créer un fichier Rmarkdown de restitution de votre atelier <code>fichier.Rmd</code> dans votre branche</li>
-</ul>
-<p><code>git add fichier.Rmd</code></p>
-<p><code>git commit -m "restitution atelier"</code></p>
-<ul>
-<li>Pousser vos modifications sur le serveur distant</li>
-</ul>
-<p><code>git  push --set-upstream origin mon_nom_parlant</code> ou</p>
-<p><code>git  push</code></p>
-<ul>
-<li><p>Faire une pull request (PR) sur github</p></li>
-<li><p>indiquer dans le message de la PR la liste des packages ou autres besoins</p></li>
-<li><p>Quand la PR passe les tests, demander le merge.</p></li>
-<li><p>corriger les erreurs éventuelles dans la compilation du Rmarkdown</p></li>
-<li><p>les admins peuvent avoir à mettre à jour l’image docker</p></li>
-</ul>
+<p>Nous allons d’abord installer les librairies <strong>Intel MKL</strong> (processeur Intel nécéssaire) &amp; <strong>Open Blas</strong>. Ces deux librairies d’algèbre linéaire permettent de d’optimiser et/ou de paralléliser un certains nombre d’opérations algébriques, notamment le calcul matriciel.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous les testons avec un produit matriciel de 10000 x 10000</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size<span class="sc">**</span><span class="dv">2</span>), size, size)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Avant l’installation les librairies utilisées pour du calcul matriciel en R sont <code>libblas.so.3.10.0</code> et <code>liblapack.so.3.10.0</code> (on peut les voir avec la ligne)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="installation-sur-windows-seulement-intel-mkl" class="level3">
+<h3 class="anchored" data-anchor-id="installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</h3>
+<p>Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois microsoft R open installé, il suffit d’aller récupérer dans le répertoire :</p>
+<p><code>C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64</code></p>
+<p>les trois fichiers nommés</p>
+<ol type="1">
+<li><p><code>Rblas.dll</code></p></li>
+<li><p><code>Rlapack.dll</code></p></li>
+<li><p><code>libiomp5md.dll</code></p></li>
+</ol>
+<p>et de les copier dans le répertoire</p>
+<p><code>C:\Program Files\R\R-4.1.2\bin\x64</code></p>
+<p>Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.</p>
 </section>
-<section id="détails-du-fonctionnement" class="level2">
-<h2 class="anchored" data-anchor-id="détails-du-fonctionnement">Détails du fonctionnement</h2>
-<section id="le-docker" class="level3">
-<h3 class="anchored" data-anchor-id="le-docker">Le docker</h3>
-<p>Lien vers la fiche pense-bête : [https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf]</p>
-<p>Pour créer des images Docker en local sur sa machine, voici une liste de commandes utiles</p>
-<ul>
-<li>Pour construire une image docker, il faut créer un fichier Dockerfile qui contient la recette du Docker. Pour ce site le ficher Dockerfile a la forme suivante</li>
-</ul>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-FROM rocker/geospatial:4
-RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
- &amp;&amp; apt-get install -y pandoc \
-    pandoc-citeproc
-RUN R -e "install.packages('remotes')"
-RUN R -e "install.packages('microbenchmark')"
-RUN R -e "install.packages('purrr')" # map function
-RUN R -e "install.packages('BiocManager')" # map function
-RUN R -e "BiocManager::install('BiocPkgTools')" 
-RUN R -e "install.packages('httr')" # GET function
-ENV R_CRAN_WEB="https://cran.rstudio.com/" 
-RUN R -e "install.packages('cowplot')" # GET function
-RUN R -e "install.packages('torch')"
-RUN R -e "torch::install_torch(type = 'cpu')"
-RUN R -e "install.packages('PLNmodels')"
-RUN R -e "install.packages('torchvision')"
-
-RUN apt-get update \
- &amp;&amp; apt-get install -y --no-install-recommends \
-  jags \
-  mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \ 
-  libc6-i386
-  
-  
-RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
-RUN R -e "install.packages('reticulate')"
-RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"
-RUN R -e "install.packages(c('tidymodels', 'brulee', 'reprex'))"
-RUN R -e "install.packages(c('poissonreg'))"
-RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv &amp;&amp; \
-    pip3 install jupyter jupyter-cache flatlatex matplotlib &amp;&amp; \
-    apt-get --purge -y remove texlive.\*-doc$ &amp;&amp; \
-    apt-get clean
-
-RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio 
-RUN pip3 install pyplnmodels
-
-    </code></pre>
-</div>
-</div>
-<p>puis demander la construction de l’image à l’aide de la commande</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a> docker build <span class="sc">-</span>t nom_depot_dockerhub<span class="sc">/</span>nom_du_repo<span class="sc">:</span>version  . <span class="do">## avec un nom</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>et enfin pousser sur Dockerhub</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> docker push nom_depot_dockerhub<span class="sc">/</span>nom_du_repo<span class="sc">:</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" class="level3">
+<h3 class="anchored" data-anchor-id="installation-sur-ubuntu-22.04-intel-mkl-et-open-blas">Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)</h3>
+<section id="intel-mkl" class="level4">
+<h4 class="anchored" data-anchor-id="intel-mkl">Intel MKL</h4>
+<p><code>sudo apt install intel-mkl</code></p>
 </section>
-<section id="les-actions" class="level3">
-<h3 class="anchored" data-anchor-id="les-actions">Les actions</h3>
-<p>Dans les action de Github, on peut spécifier un container docker à utiliser, c’est ce que fait la ligne container du fichier d’action suivant, utiliser pour créer ce site web</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>name: website
-on:
-  push:
-    branches:
-      - main
-
-jobs:   
-  build:
-    name: Build website with rmarkdown
-    runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.4
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Additional Packages
-        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench'))"
-      - name: Generate slides
-        run: "quarto render"
-      - name: GitHub Pages action
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site</code></pre>
-</div>
-</div>
-
-
+<section id="open-blas" class="level4">
+<h4 class="anchored" data-anchor-id="open-blas">Open Blas</h4>
+<p><code>sudo apt install libopenblas-base</code></p>
 </section>
+<section id="changement-de-librairie" class="level4">
+<h4 class="anchored" data-anchor-id="changement-de-librairie">Changement de librairie</h4>
+<p>Pour changer la librairie Blas</p>
+<p><code>sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu</code></p>
+<p>Pour changer la librairie Lapack</p>
+<p><code>sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu</code></p>
+<p>Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.</p>
+</section>
+</section>
+<section id="test-de-la-librairie" class="level3">
+<h3 class="anchored" data-anchor-id="test-de-la-librairie">Test de la librairie</h3>
+<p>Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 25%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Système d’exploitation</th>
+<th>Library</th>
+<th>CPU</th>
+<th>Base R</th>
+<th>Intel MKL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Windows 10</strong></td>
+<td><span style="color:red;">Intel MKL</span></td>
+<td>Intel Xeon - 16 processeur logiques</td>
+<td>15 min</td>
+<td><span style="color:red;">7 secondes</span></td>
+</tr>
+<tr class="even">
+<td>Ubuntu 22.04</td>
+<td>Intel MKL</td>
+<td>Intel i7 - 8 processeur logiques</td>
+<td>5 min</td>
+<td>Moins de 1 min</td>
+</tr>
+<tr class="odd">
+<td><strong>Ubuntu 22.04</strong></td>
+<td><span style="color:red;">Open Blas</span></td>
+<td>Intel i7 - 8 processeur logiques</td>
+<td>5 min</td>
+<td><span style="color:red;">9-14 secondes</span></td>
+</tr>
+</tbody>
+</table>
+
+
 </section>
 
 </main> <!-- /main -->
