@@ -12,4 +12,4 @@
 *.html
 /*_files/
 /.luarc.json
-
+/_freeze/

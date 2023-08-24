@@ -1,16 +1,19 @@
 ---
-title: "Comparaison {torch} (`R`) et {pytorch}"
-format: html
-editor: visual
+title: "_ResNet_ : comparaison `{torch}` et `pytorch`"
 execute:
   cache: true
+date: "du 21 au 25 août 2023"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
 ---
 
 ## Intro
 
-Le but est de comparer la syntaxe utilisée par les deux langages, seuls les exemples en `R` sont exécutés (difficultés de faire un quarto avec deux langages, voir [issue ici](https://github.com/quarto-dev/quarto-cli/discussions/4232) ou de faire tourner `pytorch` avec `reticulate`). L'exemple d'application est un _ResNet_.
+Le but est de comparer la syntaxe utilisée par les deux langages, seuls les exemples en `R` sont exécutés (difficultés de faire un quarto avec deux langages, voir [issue ici](https://github.com/quarto-dev/quarto-cli/discussions/4232) ou de faire tourner `pytorch` avec `{reticulate}`). L'exemple d'application est un _ResNet_.
 
-Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le [site web officiel](https://pytorch.org/get-started/locally/). Vous pouvez utiliser {pip} ou {conda}, avec ou sans {cuda}. Pour `R`, cela a déjà été fait à la session précédente de [finistR](https://stateofther.github.io/finistR2022/autodiff.html).
+Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le [site web officiel](https://pytorch.org/get-started/locally/). Vous pouvez utiliser `pip` ou `conda`, avec ou sans `cuda`. Pour `R`, cela a déjà été fait à la session précédente de [finistR](https://stateofther.github.io/finistR2022/autodiff.html).
 
 ```{r, eval = FALSE}
 install.packages(torch)
@@ -18,7 +21,7 @@ torch::install_torch() ## si vous avez un GPU compatible avec CUDA
 ## torch::install_torch(type = "cpu") ## sinon
 ```
 
-Un bon ouvrage pour démarrer : [Deep Learning and Scientific Computing with `R` {torch}](https://skeydan.github.io/Deep-Learning-and-Scientific-Computing-with-R-torch/).
+Un bon ouvrage pour démarrer : [Deep Learning and Scientific Computing with `R` `torch`](https://skeydan.github.io/Deep-Learning-and-Scientific-Computing-with-R-torch/).
 
 ## Appel des fonctions
 
@@ -55,9 +58,9 @@ transform = transforms.Compose([
 
 ```{r}
 transform <- function(img) {
-  # img <- torchvision::transform_pad(img, 4)
-  # img <- torchvision::transform_random_horizontal_flip(img)
-  # img <- torchvision::transform_random_crop(img, 32)
+  # img <- torchvision::transform_pad(img, 4) # pas implémenté
+  # img <- torchvision::transform_random_horizontal_flip(img) # pas implémenté
+  # img <- torchvision::transform_random_crop(img, 32) # bug sur la taille des images
   img <- torchvision::transform_to_tensor(img)
   return(img)
 }
@@ -70,7 +73,6 @@ num_samples = 1000
 trainData = torchvision.datasets.CIFAR10(root="./data",
                                          train=True,
                                          transform=transform,
-                                        #  transform=transforms.ToTensor(),
                                          download=True)
 
 testData = torchvision.datasets.CIFAR10(root="./data",
@@ -104,14 +106,14 @@ test_data <- torchvision::cifar10_dataset(
   transform = torchvision::transform_to_tensor
 )
 
-train_loader <- torch::dataloader(
-  dataset = torch::dataset_subset(train_data, 1:num_samples),
+train_loader <- dataloader(
+  dataset = dataset_subset(train_data, 1:num_samples),
   batch_size = 256,
   shuffle = TRUE
 )
 
-test_loader <- torch::dataloader(
-  dataset = torch::dataset_subset(test_data, 1:num_samples),
+test_loader <- dataloader(
+  dataset = dataset_subset(test_data, 1:num_samples),
   batch_size = 256,
   shuffle = FALSE
 )
@@ -157,37 +159,37 @@ class ResBlock(nn.Module):
         return o
 ```
 
-De la même manière, on peut créer un objet `torch::nn_module` en `R` et y spécifier `init` et `forward` :
+De la même manière, on peut créer un objet `nn_module` en `R` et y spécifier `init` et `forward` :
 ```{r}
 align <- function(num_in, num_out, stride) {
   if (num_in != num_out || stride > 1) {
-    return(torch::nn_sequential(
-      torch::nn_conv2d(
+    return(nn_sequential(
+      nn_conv2d(
         num_in, num_out,
         kernel_size = 3, stride = stride, padding = 1,
         bias = FALSE
       ),
-      torch::nn_batch_norm2d(num_out)
+      nn_batch_norm2d(num_out)
     ))
   } else {
     return(function(x) x)
   }
 }
 
-res_block <- torch::nn_module(
+res_block <- nn_module(
   initialize = function(num_in, num_out, stride) {
     self$align <- align(num_in, num_out, stride)
-    self$conv1 <- torch::nn_conv2d(num_in, num_out,
+    self$conv1 <- nn_conv2d(num_in, num_out,
       kernel_size = 3,
       stride = stride, padding = 1, bias = FALSE
     )
-    self$bn1 <- torch::nn_batch_norm2d(num_out)
-    self$relu <- torch::nn_relu(inplace = TRUE)
-    self$conv2 <- torch::nn_conv2d(num_out, num_out,
+    self$bn1 <- nn_batch_norm2d(num_out)
+    self$relu <- nn_relu(inplace = TRUE)
+    self$conv2 <- nn_conv2d(num_out, num_out,
       kernel_size = 3,
       stride = 1, padding = 1, bias = FALSE
     )
-    self$bn2 <- torch::nn_batch_norm2d(num_out)
+    self$bn2 <- nn_batch_norm2d(num_out)
   },
   forward = function(x) {
     o <- self$conv1(x)
@@ -249,13 +251,13 @@ build_res_blocks <- function(num_in, num_out, stride, num_blocks) {
   for (i in 2:num_blocks) {
     blocks[[i]] <- res_block(num_out, num_out, 1)
   }
-  return(do.call(torch::nn_sequential, blocks))
+  return(do.call(nn_sequential, blocks))
 }
 
-res_net <- torch::nn_module(
+res_net <- nn_module(
   initialize = function(num_classes) {
-    self$blocks0 <- torch::nn_sequential(
-      torch::nn_conv2d(
+    self$blocks0 <- nn_sequential(
+      nn_conv2d(
         3,
         16,
         kernel_size = 3,
@@ -263,14 +265,14 @@ res_net <- torch::nn_module(
         padding = 1,
         bias = FALSE
       ),
-      torch::nn_batch_norm2d(16),
-      torch::nn_relu(inplace = TRUE)
+      nn_batch_norm2d(16),
+      nn_relu(inplace = TRUE)
     )
     self$blocks1 <- build_res_blocks(16, 16, 1, 2)
     self$blocks2 <- build_res_blocks(16, 32, 2, 2)
     self$blocks3 <- build_res_blocks(32, 64, 2, 2)
-    self$avgpool <- torch::nn_avg_pool2d(kernel_size = 8)
-    self$fc <- torch::nn_linear(64, num_classes)
+    self$avgpool <- nn_avg_pool2d(kernel_size = 8)
+    self$fc <- nn_linear(64, num_classes)
   },
   forward = function(x) {
     n <- dim(x)[1]
@@ -279,7 +281,7 @@ res_net <- torch::nn_module(
     o <- self$blocks2(o)
     o <- self$blocks3(o)
     o <- self$avgpool(o)
-    o <- torch::torch_flatten(o, start_dim = 2)
+    o <- torch_flatten(o, start_dim = 2)
     o <- self$fc(o)
     return(o)
   }
@@ -303,7 +305,7 @@ model
 ```
 
 ```{r}
-optimizer <- torch::optim_adam(model$parameters, lr = 0.001)
+optimizer <- optim_adam(model$parameters, lr = 0.001)
 optimizer
 ```
 
@@ -332,7 +334,7 @@ train <- function() {
       x <- batch[[1]]
       y <- batch[[2]]
       o <- model(x)
-      loss <- torch::nnf_cross_entropy(o, y)
+      loss <- nnf_cross_entropy(o, y)
 
       optimizer$zero_grad()
       loss$backward()
@@ -384,16 +386,16 @@ with torch.no_grad():
 ```
 
 ```{r}
-torch::with_no_grad({
+with_no_grad({
   n_tests_ok <- 0
   n_tests <- 0
   coro::loop(for (batch in test_loader) {
     x <- batch[[1]]
     y <- batch[[2]]
     o <- model(x)
-    yest <- torch::torch_max(o, dim = 2)[[2]]
+    yest <- torch_max(o, dim = 2)[[2]]
     n_tests <- n_tests + y$shape
-    n_tests_ok <- n_tests_ok + torch::torch_sum(y == yest)$item()
+    n_tests_ok <- n_tests_ok + torch_sum(y == yest)$item()
   })
   cat("Accuracy", n_tests_ok / n_tests, "\n")
 })
