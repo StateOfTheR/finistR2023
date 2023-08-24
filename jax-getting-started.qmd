@@ -46,7 +46,7 @@ Si vous préférez une installation via pip (pour une version cpu),
 
 ```{bash}
 #| eval: false
-pip3 install jax jaxlib jaxopt
+pip3 install jax jaxlib
 ```
 
 Pour une installation GPU (avec cuda 12 par exemple, on vous laisse gérer la compatibilité de vos driver Nvidia and Cie),
@@ -57,6 +57,13 @@ pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-re
 ```
 
 L'utilisation de `venv` est recommandable (mais non obligatoire).
+
+On installe également JAXopt et FLAX pour avoir accès à des optimiseurs. 
+
+```{bash}
+#| eval: false
+pip3 install jaxopt flax optax
+```
 
 ## Premiers pas 
 
@@ -78,6 +85,7 @@ L'import complet/standard est le suivant:
 import jax.numpy as jnp
 from jax import grad, jit, vmap
 from jax import random
+import optax
 import matplotlib.pyplot as plt
 ```
 
@@ -333,6 +341,101 @@ plt.title('Estimated versus true parameter')
 plt.show()
 ```
 
-### Avec JAXOPT
+### Avec Optax
 
-On peut néanmoins utiliser la librairie jaxopt pour définir des optimiseurs comme en torch
+On peut néanmoins utiliser la librairie optax pour définir des optimiseurs comme en `torch`. On va utiliser ici Adam. 
+
+#### Fonction objective
+
+On commence par définir la fonction objective avec un ordre précis pour les arguments:
+
+- paramètres à optimiser (typiquement $\theta$, les coefficients de régression)
+- paramètres additionels (pénalités, etc) 
+- données (avec le mot clé `data`) 
+
+```{python}
+@jit 
+def logistic_loss(y, x, theta):
+  odds = jnp.dot(x, theta)
+  return -jnp.vdot(y, odds) + jnp.sum(jnp.log(1.0 + jnp.exp(odds)))
+@jit  
+def objective_and_grad(params, penalty, data):
+  x = data[:, :-1]
+  y = data[:, -1]
+  def loss(params):
+    return logistic_loss(y, x, params)
+  loss_value = loss(params)
+  loss_grad = grad(loss)(params)
+  return [loss_value, loss_grad]
+```
+
+#### Itérateur de données
+
+Adam est un algorithme d'optimisation stochastique. On définit donc un itérateur qui va échantillonner les données. 
+
+```{python}
+batch_size = 100
+n_iter = 1000
+# key, subkey = random.split(key, 2)
+def data_iterator(key):    
+    return random.choice(key, data, (batch_size, ), replace = False)
+```
+
+#### Optimisation
+
+On définit enfin une fonction de fit qui travaille sur des batchs. 
+
+```{python}
+def fit(params, optimizer, key):
+  opt_state = optimizer.init(params)
+  loss_vector = []
+
+  @jit
+  def step(params, opt_state, batch):
+    loss_value, grads = objective_and_grad(params, 0, batch)
+    updates, opt_state = optimizer.update(grads, opt_state, params)
+    params = optax.apply_updates(params, updates)
+    return params, opt_state, loss_value
+
+  for i in range(n_iter):
+    key, subkey = random.split(key, 2)
+    batch = data_iterator(subkey)
+    params, opt_state, loss_value = step(params, opt_state, batch)
+    loss_vector.append(loss_value.item())
+    if i % 100 == 0:
+      print(f'step {i}, loss: {loss_value}')
+
+  return [params, loss_vector]
+```
+
+Finally, we can fit our parametrized function using the Adam optimizer provided by optax.
+
+```{python}
+%%time 
+initial_params = jnp.zeros((x.shape[1], ))
+optimizer = optax.adam(learning_rate=1e-2)
+data = jnp.concatenate([x, y], axis = 1)
+params,loss_vector = fit(initial_params, optimizer, key)
+```
+
+
+On peut vérifier que la fonction objective converge sans décroître systématiquement
+
+```{python}
+plt.plot(range(1, n_iter+1), loss_vector)
+plt.xlabel('Iterations')
+plt.ylabel('Loss')
+plt.title('Loss vs. Iterations')
+plt.show()
+```
+
+et que les paramètres sont proches des bonnes valeurs
+
+```{python}
+plt.plot(beta_true, params, marker='o', linestyle="none")
+plt.plot([-3, 3], [-3, 3], color='r', linestyle='-', linewidth=2)
+plt.xlabel('True parameter')
+plt.ylabel('Estimated parameter')
+plt.title('Estimated versus true parameter')
+plt.show()
+```
