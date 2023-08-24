@@ -2,7 +2,8 @@
 title: "FinistR : bootcamp R à Roscoff"
 format: html
 toc: true
-date: "du 21 au 25 août 2023"
+date: last-modified
+date-format: "[Last Updated on] MMMM, YYYY"
 ---
 
 ```{r setup, include=FALSE}
