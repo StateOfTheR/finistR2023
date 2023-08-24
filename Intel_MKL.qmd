@@ -1,0 +1,102 @@
+---
+title: "Intel MKL & Open Blas"
+format: html
+toc: true
+author: 
+  - Annaig De Walsche
+  - Barbara Bricout
+  - Tristan Mary-Huard
+  - Armand Favrot
+  - Félix Cheysson
+  - Théodore Vanrenterghem
+date: 20/08/2023
+---
+
+Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
+
+```{r}
+library(tictoc)
+```
+
+Nous les testons avec un produit matriciel de 10000 x 10000
+
+```{r}
+#| eval: false
+size <- 10000
+mat <- matrix(rnorm(size**2), size, size)
+
+tic()
+get_res <- mat %*% mat
+toc()
+```
+
+Avant l'installation les librairies utilisées pour du calcul matriciel en R sont `libblas.so.3.10.0` et `liblapack.so.3.10.0` (on peut les voir avec la ligne)
+
+```{r}
+#| eval: false
+sessionInfo()
+```
+
+### Installation sur Windows (seulement Intel MKL)
+
+Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois microsoft R open installé, il suffit d'aller récupérer dans le répertoire :
+
+`C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64`
+
+les trois fichiers nommés
+
+1.  `Rblas.dll`
+
+2.  `Rlapack.dll`
+
+3.  `libiomp5md.dll`
+
+et de les copier dans le répertoire
+
+`C:\Program Files\R\R-4.1.2\bin\x64`
+
+Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.
+
+### Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)
+
+#### Intel MKL
+
+`sudo apt install intel-mkl`
+
+#### Open Blas
+
+`sudo apt install libopenblas-base`
+
+#### Changement de librairie
+
+Pour changer la librairie Blas
+
+`sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu`
+
+Pour changer la librairie Lapack
+
+`sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu`
+
+Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
+
+### Test de la librairie
+
+Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec
+
+```{r}
+#| eval: false
+sessionInfo()
+```
+
+```{r}
+#| eval: false
+tic()
+get_res <- mat %*% mat
+toc()
+```
+
+| Système d'exploitation | Library                         | CPU                                 | Base R | Intel MKL                           |
+|--------------|--------------|-------------------|--------------|--------------|
+| **Windows 10**         | [Intel MKL]{style="color:red;"} | Intel Xeon - 16 processeur logiques | 15 min | [7 secondes]{style="color:red;"}    |
+| Ubuntu 22.04           | Intel MKL                       | Intel i7 - 8 processeur logiques    | 5 min  | Moins de 1 min                      |
+| **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
