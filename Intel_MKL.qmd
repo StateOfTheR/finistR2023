@@ -88,11 +88,10 @@ Pour changer la librairie Lapack
 Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
 
 
-
 ### Comparaison produit matriciel (`BLAS`)
 
-
 Une fois installées, vérifier si les librairies sont bien référencées pour le calcul matriciel avec
+
 
 ```{r}
 #| eval: false
