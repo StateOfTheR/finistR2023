@@ -1,9 +1,8 @@
 ---
-title: "FinistR : bootcamp R à Roscoff"
-subtitle: "torch backend: Pytorch vs (R-)torch"
+title: "PLN version Python"
 date: "du 21 au 25 août 2023"
 execute:    
-    freeze: auto
+  freeze: auto
 output: 
   html_document:
    toc: true

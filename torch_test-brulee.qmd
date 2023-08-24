@@ -1,9 +1,9 @@
 ---
-title: "{torch} avec {tidymodels} et {brulee}"
+title: "`{torch}` avec `{tidymodels}` et `{brulee}`"
 subtitle: "Résolution de la régression logistique"
 date: "du 21 au 25 août 2023"
 execute: 
-    freeze: auto
+  freeze: auto
 output: 
   html_document:
    toc: true
@@ -12,7 +12,7 @@ output:
 
 ## Introduction
 
-L'idée ici est d'explorer la régression logistique en utilisant `torch` à l'aide du package {brulee}.
+L'idée ici est d'explorer la régression logistique en utilisant `{torch}` à l'aide du package `{brulee}`.
 
 ```{r, set-up}
 library(torch)
@@ -74,13 +74,13 @@ dplyr::tibble(
 
 ## Tidymodels
 
-Il est possible d'effectuer une régression logistique à l'aide de plusieurs `engine` dans {tidymodels} :
+Il est possible d'effectuer une régression logistique à l'aide de plusieurs `engine` dans `{tidymodels}` :
 
 ```{r}
 show_engines("logistic_reg")
 ```
 
-On vérifie qu'on retrouve bien les mêmes coefficient en utilisant le package {glm} dans {tidymodels} pour effectuer notre régression logistique :
+On vérifie qu'on retrouve bien les mêmes coefficient en utilisant le package `{glm}` dans `{tidymodels}` pour effectuer notre régression logistique :
 
 ```{r}
 set.seed(20)
@@ -91,7 +91,7 @@ logistic_reg(engine = "glm") %>%
   coef()
 ```
 
-Le package {brulee} de l'univers tidymodels propose différents modèles classiques (réseau de neurones, régression logistique, régression linéaire, régression multinomiale) via l'infrastructure `torch`. La liste des loss disponibles dans le package :
+Le package `{brulee}` de l'univers tidymodels propose différents modèles classiques (réseau de neurones, régression logistique, régression linéaire, régression multinomiale) via l'infrastructure `torch`. La liste des loss disponibles dans le package :
 
 ```{r}
 ls(pattern = "loss$", envir = asNamespace("torch"))
