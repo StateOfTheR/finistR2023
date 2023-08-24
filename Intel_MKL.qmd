@@ -1,5 +1,5 @@
 ---
-title: "Rcpp & Torch"
+title: "Intel MKL & Open Blas"
 format: html
 toc: true
 author: 
@@ -12,13 +12,10 @@ author:
 date: 20/08/2023
 ---
 
-## Intel MKL et Open Blas
-
 Nous allons d'abord intsaller les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairie d'algèbre linéaires permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébrique, notamment le calcul matriciel.
 
 ```{r}
 library(tictoc)
-library(bench) # comparaison des vitesses 
 ```
 
 Nous les testons avec un produit matriciel de 10000 x 10000
@@ -104,19 +101,3 @@ toc()
 | Ubuntu 22.04           | Intel MKL                       | Intel i7 - 8 processeur logiques    | 5 min  | Moins de 1 min                      |
 | **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
 
-## Torch on R
-
-La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d'évaluer numériquement le gradient d'une fonction et d'effectuer des descente de gradient.
-
-```{r}
-library(torch)
-```
-
-[Présentation finistR2022](https://stateofther.github.io/finistR2022/autodiff.html)
-
-[Cours state of the R (2023)](https://stateofther.netlify.app/post/variational-autoencoder-with-torch/)
-
-
-## References
-
--   [finistR2022 - Torch Auto Diff](https://stateofther.github.io/finistR2022/autodiff.html)
