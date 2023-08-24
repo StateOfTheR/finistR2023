@@ -1,0 +1,258 @@
+---
+title: "Construire un modèle parsnip"
+format: html
+editor: visual
+---
+
+## Introduction
+
+Notre objectif ici est de construire un nouveau modèle `{parsnip}` à partir d'une implémentation existente dans un package R. 
+
+Intérêts : éliminer des dépendances, du code dupliqué, pouvoir profiter du cadre `{tidymodels}`.
+
+
+### Ressources
+
+https://www.tidymodels.org/learn/develop/models/
+
+### Un modèle `{parnsip}`
+
+Il se définit par 
+
+- un `mode` (régression linéaire, logistique, ...), 
+
+- un `type` (régression, classification), 
+
+- un moteur de calcul `engine` (`lm`, `stan`, ...).
+
+Qunad on ajoute un modèle, on doit donc spécifier son `mode` et son `engine`. On peut aussi ajouter un nouveau modèle différent d'un pré-existant seulement par son `type` (ie même combinaison `engine` et `mode`).
+
+Il est possible de voir l'ensemble des modèles déjà disponibles [ici](https://www.tidymodels.org/find/parsnip/).
+
+## Intégration de la régression PLN
+
+```{r, set-up}
+library(PLNmodels)
+library(tidymodels)
+library(poissonreg)
+```
+
+### Données
+
+Nous utiliserons le jeu de données de la [vignette de PLN](https://pln-team.github.io/PLNmodels/articles/PLN.html)
+
+```{r}
+data(trichoptera)
+```
+
+::: {.callout-note title="Remarque"}
+Il existe une fonction `prepare_data` dans {parsnip} également.
+:::
+
+### Différentes étapes pour intégrer `PLNmodels::PLN` dans parsnip
+
+#### Etape 1 : Spécification du modèle et de ses arguments
+
+On va ajouter la fonction `PLNmodels::PLN` à la liste des fonctions utilisables pour faire de la régression de Poisson.
+
+```{r}
+show_model_info("poisson_reg")
+```
+
+```{r, set-model}
+set_model_mode(model = "poisson_reg", mode = "regression")
+set_model_engine(
+  "poisson_reg", 
+  mode = "regression", 
+  eng = "PLN"
+)
+set_dependency("poisson_reg", eng = "PLN", pkg = "PLNmodels")
+```
+
+On peut vérifier ce qu'on a ajouté.
+
+```{r}
+show_model_info("poisson_reg")
+```
+
+Si notre modèle a des arguments supplémentaires que ceux existants, on peut les ajouter.
+
+#### Etape 2 : Créer la fonction principale associée au modèle le cas échéant
+
+Ici comme nous avons seulement ajouté un moteur à un modèle préexistant ce n'est pas nécessaire.
+
+todo: regarder comment ajouter l'information possible d'utilisation de poids
+
+#### Etape 3 : Préciser le module d'ajustement (`fit`)
+
+-   L'argument `interface`, peut prendre les valeurs `formula`, `data` ou `matrices`.
+
+-   `protect` est une liste optionnelle d'arguments qui ne devraient pas être modifié par l'utilisateur.
+
+-   `func` est un vecteur précisant le package et la fonction qui sera appelé pour l'ajustement.
+
+-   `defaults` est une liste optionnelle d'arguments que l'utilisateur peut modifier mais pour laquelle on peut spécifier des valeurs par défaut.
+
+```{r, set-fit}
+set_fit(
+  model = "poisson_reg",
+  eng = "PLN",
+  mode = "regression",
+  value = list(
+    interface = "formula",
+    protect = c("formula", "data"),
+    func = c(pkg = "PLNmodels", fun = "PLN"),
+    defaults = list(control = PLN_param(), weights = NULL, subset = NULL)
+  )
+)
+```
+
+On peut ajouter des traitements par défaut pour les variables explicatives, tels que calculs de variables indicatrices, calcul d'une constante etc...
+
+```{r, set_encoding}
+set_encoding(
+  model = "poisson_reg",
+  eng = "PLN",
+  mode = "regression",
+  options = list(
+    predictor_indicators = "traditional",
+    compute_intercept = TRUE,
+    remove_intercept = TRUE,
+    allow_sparse_x = FALSE
+  )
+)
+```
+
+#### Etape 4 : Ajouter un module pour la prédiction (`predict`)
+
+```{r, set-pred}
+set_pred(
+  model = "poisson_reg",
+  eng = "PLN",
+  mode = "regression",
+  type = "numeric",
+  value = list(
+    pre = NULL,
+    post = NULL,
+    func = c(fun = "predict"),
+    args =
+      list(
+        object = expr(object$fit),
+        newdata = expr(new_data),
+        type = "response"
+      )
+  )
+)
+```
+
+### Application sur les données trichoptera
+
+::: {.panel-tabset}
+#### PLN dans PLNmodels
+```{r}
+prep_trichoptera <- PLNmodels::prepare_data(trichoptera$Abundance, trichoptera$Covariate)
+myPLN <- PLN(Abundance ~ 1, data = prep_trichoptera)
+myPLN
+```
+#### PLN dans parsnip
+
+```{r}
+resPLN <- poisson_reg() %>% 
+  set_engine("PLN") %>% 
+  fit(Abundance ~ 1, data = prep_trichoptera)
+resPLN
+```
+:::
+
+
+```{r}
+summary(resPLN)
+resPLN$spec
+# Pour recuperer les coefficients
+coef(resPLN$fit)
+# Pour faire de la prediction
+resPLN %>% predict(new_data = prep_trichoptera)
+```
+### Test d'un workflow
+
+```{r}
+#| eval: false
+# separation du jeu de donnees en test et apprentissage
+set.seed(123)
+tri_split <- initial_split(data = prep_trichoptera, prop = 0.9)
+#tri_train <- training(tri_split)
+#tri_test <- testing(tri_split)
+p_recipe <- 
+  recipe(Abundance ~ 1 + Temperature, data = training(tri_split))
+
+pln_model <- 
+  poisson_reg()%>%
+  set_engine("PLN") %>%
+  set_mode("regression")
+
+pln_workflow <- workflow() %>%
+  add_recipe(p_recipe) %>%
+  add_model(pln_model)
+
+fitted_workflow <-  pln_workflow %>%
+  fit(training(tri_split)) 
+
+# Predicition sur le jeu d'entrainement
+test_pred <- fitted_workflow %>% predict(new_data = testing(tri_split))
+```
+Pour la suite du workflow, calcul de performance sur des rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus 'tidy' ou réécrire le calcul de métrique sur des matrices.
+
+
+
+
+### Autre jeu de données, exemple en régression univariée
+
+```{r}
+p <- read.csv("https://stats.idre.ucla.edu/stat/data/poisson_sim.csv")
+p <- within(p, {
+  prog <- factor(prog, levels=1:3, labels=c("General", "Academic", 
+                                            "Vocational"))
+  id <- factor(id)
+})
+```
+
+On essaie maintenant en utilisant `{parsnip}`
+
+::: {.panel-tabset}
+#### glm de base
+
+```{r glm-p}
+summary(m1 <- glm(num_awards ~ prog + math, family="poisson", data=p))
+```
+
+#### glm dans parsnip
+
+```{r glm-parsnip}
+poisson_reg() %>% 
+     set_engine("glm") %>%
+     set_mode("regression") %>%
+     fit(num_awards ~ prog + math, data = p)  %>%
+     predict(p)
+```
+
+#### PLN dans parsnip
+
+```{r PLN-parsnip}
+poisson_reg() %>% 
+     set_engine("PLN") %>%
+     set_mode("regression") %>%
+     fit(as.matrix(num_awards) ~ prog + math, data = p) %>% 
+     predict(p)
+```
+:::
+
+On peut vérifier la commande associée au modèle programmé.
+```{r}
+poisson_reg() %>% translate(engine = "PLN")
+```
+
+## Pour aller plus loin
+
+Dans le cadre `tidymodels` tout est assez modulaire et personnalisable : on peut ajouter de nouvelles recettes de pré-traitement, personnaliser son rééchantillonnage, le calcul de métrique etc.
+
+Un peu de documentation sur le site de `{tidymodels]` dans la [section _Develop custom modeling tools_](https://www.tidymodels.org/learn/).
