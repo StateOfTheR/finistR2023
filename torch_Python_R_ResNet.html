@@ -125,13 +125,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enseignement" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Enseignement</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
+        <li>
+    <a class="dropdown-item" href="./teaching.qmd" rel="" target="">
+ <span class="dropdown-text">Learnr</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">workflow</span>
+ <span class="menu-text">Workflow</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
+ <span class="dropdown-text">Issue - Reprex</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analyse-statistique" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analyse statistique</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
+        <li>
     <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
- <span class="dropdown-text">inla</span></a>
+ <span class="dropdown-text">Inla</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
+ <span class="dropdown-text">Tidymodels</span></a>
   </li>  
     </ul>
   </li>
@@ -567,21 +593,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 1    Loss: 2.3493
-Epoch: 2    Loss: 1.9542
-Epoch: 3    Loss: 1.7580
-Epoch: 4    Loss: 1.7223
-Epoch: 5    Loss: 1.6033
-Epoch: 6    Loss: 1.4281
-Epoch: 7    Loss: 1.3020
-Epoch: 8    Loss: 1.2414
-Epoch: 9    Loss: 1.1268
-Epoch: 10   Loss: 1.0208</code></pre>
+<pre><code>Epoch: 1    Loss: 2.4134
+Epoch: 2    Loss: 2.0816
+Epoch: 3    Loss: 1.8388
+Epoch: 4    Loss: 1.7199
+Epoch: 5    Loss: 1.6351
+Epoch: 6    Loss: 1.5243
+Epoch: 7    Loss: 1.5040
+Epoch: 8    Loss: 1.4148
+Epoch: 9    Loss: 1.3312
+Epoch: 10   Loss: 1.2016</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 45.092   3.188  29.939 </code></pre>
+ 45.837   2.884  32.240 </code></pre>
 </div>
 </div>
 <p>Sur mon ordinateurs : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
@@ -614,7 +640,7 @@ Epoch: 10   Loss: 1.0208</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Accuracy"</span>, n_tests_ok <span class="sc">/</span> n_tests, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy 0.363 </code></pre>
+<pre><code>Accuracy 0.411 </code></pre>
 </div>
 </div>
 <p>Les deux codes donnent des résultats semblables !</p>

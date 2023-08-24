@@ -125,13 +125,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enseignement" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Enseignement</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
+        <li>
+    <a class="dropdown-item" href="./teaching.qmd" rel="" target="">
+ <span class="dropdown-text">Learnr</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">workflow</span>
+ <span class="menu-text">Workflow</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
+ <span class="dropdown-text">Issue - Reprex</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analyse-statistique" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analyse statistique</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
+        <li>
     <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
- <span class="dropdown-text">inla</span></a>
+ <span class="dropdown-text">Inla</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
+ <span class="dropdown-text">Tidymodels</span></a>
   </li>  
     </ul>
   </li>
@@ -266,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()            masks stats::lag()
 ✖ parsnip::prepare_data() masks PLNmodels::prepare_data()
 ✖ recipes::step()         masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poissonreg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

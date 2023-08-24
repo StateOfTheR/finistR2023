@@ -133,13 +133,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enseignement" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Enseignement</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
+        <li>
+    <a class="dropdown-item" href="./teaching.qmd" rel="" target="">
+ <span class="dropdown-text">Learnr</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">workflow</span>
+ <span class="menu-text">Workflow</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
+ <span class="dropdown-text">Issue - Reprex</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analyse-statistique" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analyse statistique</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
+        <li>
     <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
- <span class="dropdown-text">inla</span></a>
+ <span class="dropdown-text">Inla</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
+ <span class="dropdown-text">Tidymodels</span></a>
   </li>  
     </ul>
   </li>
@@ -325,7 +351,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.542, Running = 0.223, Post = 0.0235, Total = 0.789 
+    Pre = 0.685, Running = 0.326, Post = 0.0318, Total = 1.04 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -402,7 +428,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.346, Running = 0.201, Post = 0.0452, Total = 0.592 
+    Pre = 0.456, Running = 0.252, Post = 0.0593, Total = 0.767 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -414,7 +440,7 @@ Random effects:
 
 Model hyperparameters:
                            mean       sd 0.025quant 0.5quant 0.975quant   mode
-Precision for rand.eff 19903.65 19900.90     563.99 13861.13   74196.17 187.83
+Precision for rand.eff 19903.65 19900.90     564.00 13861.14   74196.27 187.83
 
 Deviance Information Criterion (DIC) ...............: 384.03
 Deviance Information Criterion (DIC, saturated) ....: 207.97
@@ -493,7 +519,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.33, Running = 0.209, Post = 0.0438, Total = 0.583 
+    Pre = 0.423, Running = 0.243, Post = 0.0588, Total = 0.725 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.090 0.012      0.067    0.089      0.113  0.089   0
@@ -651,9 +677,9 @@ Data attributes:
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>Lambda1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean       sd   q0.025     q0.5   q0.975   median mean.mc_std_err
-1 645.4468 25.50691 594.8384 646.1387 693.9337 646.1387        2.550691
+1 643.6769 26.27079 589.9858 643.7041 690.8029 643.7041        2.627079
   sd.mc_std_err
-1      1.789979</code></pre>
+1      1.784481</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -716,9 +742,9 @@ Data attributes:
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Lambda2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       mean       sd      q0.025      q0.5   q0.975    median mean.mc_std_err
-1 0.6794941 1.417217 0.005625042 0.1851551 4.927774 0.1851551       0.1417217
+1 0.5806343 1.435787 0.004012686 0.1833715 3.443083 0.1833715       0.1435787
   sd.mc_std_err
-1     0.3105868</code></pre>
+1     0.5429655</code></pre>
 </div>
 </div>
 <p>Look at the contributions to the linear predictor from the SPDE and from vegetation.</p>
@@ -867,15 +893,15 @@ Likelihoods:
     Data class: 'SpatialPointsDataFrame'
     Predictor: pos ~ .
 Time used:
-    Pre = 0.707, Running = 1.21, Post = 0.081, Total = 2 
+    Pre = 0.873, Running = 1.66, Post = 0.107, Total = 2.64 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-Intercept -1.311 1.277     -3.741   -1.342      1.283 -1.412   0
-treated   -0.388 0.201     -0.782   -0.388      0.006 -0.387   0
-netuse    -0.347 0.157     -0.655   -0.348     -0.039 -0.348   0
+Intercept -1.295 1.281     -3.733   -1.327      1.312 -1.398   0
+treated   -0.387 0.201     -0.782   -0.387      0.006 -0.387   0
+netuse    -0.347 0.157     -0.655   -0.347     -0.039 -0.347   0
 age        0.246 0.044      0.159    0.246      0.332  0.246   0
-green      0.012 0.025     -0.038    0.013      0.060  0.014   0
-phc       -0.323 0.227     -0.771   -0.322      0.122 -0.321   0
+green      0.012 0.025     -0.038    0.012      0.060  0.014   0
+phc       -0.323 0.227     -0.772   -0.322      0.122 -0.321   0
 
 Random effects:
   Name    Model
@@ -883,17 +909,17 @@ Random effects:
    village IID model
 
 Model hyperparameters:
-                          mean    sd 0.025quant 0.5quant 0.975quant   mode
-Theta1 for spatial_field  1.25 0.839     -0.233     1.19       3.05  0.961
-Theta2 for spatial_field -2.44 0.703     -3.947    -2.39      -1.20 -2.203
-Precision for village     5.04 2.483      1.844     4.51      11.36  3.629
+                          mean    sd 0.025quant 0.5quant 0.975quant  mode
+Theta1 for spatial_field  1.32 0.836     -0.172     1.26       3.10  1.04
+Theta2 for spatial_field -2.50 0.708     -4.006    -2.45      -1.24 -2.27
+Precision for village     4.83 2.423      1.683     4.32      10.97  3.45
 
-Deviance Information Criterion (DIC) ...............: 2326.49
-Deviance Information Criterion (DIC, saturated) ....: 2326.49
-Effective number of parameters .....................: 48.77
+Deviance Information Criterion (DIC) ...............: 2326.24
+Deviance Information Criterion (DIC, saturated) ....: 2326.24
+Effective number of parameters .....................: 48.46
 
-Watanabe-Akaike information criterion (WAIC) ...: 2325.38
-Effective number of parameters .................: 46.45
+Watanabe-Akaike information criterion (WAIC) ...: 2325.39
+Effective number of parameters .................: 46.41
 
 Marginal log-Likelihood:  -1227.34 
  is computed 
