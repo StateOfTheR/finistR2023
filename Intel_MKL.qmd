@@ -38,7 +38,9 @@ sessionInfo()
 
 ### Installation sur Windows (seulement Intel MKL)
 
+
 Le plus simple est de télécharger les librairies Intel - MKL sur le [seafile d'Agroparistech](https://seafile.agroparistech.fr/d/696def33ceb848508cb0/). 
+
 
 #### 1 - Faire une copie de la version actuelle de `BLAS` et  `LAPACK`:
 

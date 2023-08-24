@@ -43,6 +43,8 @@ L'utilisation de {Rcpp} permet d'exporter des fonctions `C++` en R. Les fonction
 
 Pour le calcul algébrique il est utile d'intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de `C++` lorsque l'on appel une fonction {Rcpp} dans R.
 
+Pour le calcul algébrique il est utile d'intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de `C++` lorsque l'on appel une fonction {Rcpp} dans R
+
 [Présentation finistR2018](https://stateofther.netlify.app/post/bases-rcpp/)
 
 ### Example
@@ -118,7 +120,9 @@ Comme on peut le voir sur le graphique plus haut la fonction `loss_cpp()` est en
 La librairie `BLAS` de `OpenBlas` présentée lors de cette même session ne fonctionne pas correctement avec {Rcpp}. On observe une baisse de fonctionnement **très quantitative** (facteur 100). La librairie `BLAS` de `Intel MKL` reste quant à elle plus efficace.
 
 
+
 ## Références
+
 
 - [Cours state of the R (2023)](https://stateofther.netlify.app/post/variational-autoencoder-with-torch/)
 - [finistR2022 - Torch Auto Diff](https://stateofther.github.io/finistR2022/autodiff.html)
