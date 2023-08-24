@@ -22,6 +22,7 @@ Nous les testons avec un produit matriciel de 10000 x 10000
 #| eval: false
 size <- 10000
 mat <- matrix(rnorm(size**2), size, size)
+
 tic()
 get_res <- mat %*% mat
 toc()
@@ -84,7 +85,9 @@ Pour changer la librairie Lapack
 
 Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
 
+
 ### Comparaison produit matriciel (`BLAS`)
+
 
 Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec
 
