@@ -6,24 +6,25 @@ editor: visual
 
 ## Introduction
 
-Notre objectif ici est de construire un nouveau modèle `{parsnip}` à partir d'une implémentation existente dans un package R. 
+Notre objectif ici est de construire un nouveau modèle `{parsnip}` à partir d'une implémentation existente dans un package R.
 
 Intérêts : éliminer des dépendances, du code dupliqué, pouvoir profiter du cadre `{tidymodels}`.
 
-
 ### Ressources
 
-https://www.tidymodels.org/learn/develop/models/
+-   [https://www.tidymodels.org/learn/develop/models/](https://www.tidymodels.org/learn/develop/models/)
 
-### Un modèle `{parnsip}`
+-   [Tuto tidymodels - Rencontres R 2023](https://abichat.github.io/rr23-tuto-tidymodels)
 
-Il se définit par 
+### Un modèle `{parsnip}`
 
-- un `mode` (régression linéaire, logistique, ...), 
+Il se définit par
 
-- un `type` (régression, classification), 
+-   un `mode` (régression linéaire, logistique, ...),
 
-- un moteur de calcul `engine` (`lm`, `stan`, ...).
+-   un `type` (régression, classification),
+
+-   un moteur de calcul `engine` (`lm`, `stan`, ...).
 
 Qunad on ajoute un modèle, on doit donc spécifier son `mode` et son `engine`. On peut aussi ajouter un nouveau modèle différent d'un pré-existant seulement par son `type` (ie même combinaison `engine` et `mode`).
 
@@ -46,7 +47,7 @@ data(trichoptera)
 ```
 
 ::: {.callout-note title="Remarque"}
-Il existe une fonction `prepare_data` dans {parsnip} également.
+Il existe une fonction `prepare_data` dans `{parsnip}` également.
 :::
 
 ### Différentes étapes pour intégrer `PLNmodels::PLN` dans parsnip
@@ -147,32 +148,40 @@ set_pred(
 
 ### Application sur les données trichoptera
 
-::: {.panel-tabset}
+::: panel-tabset
 #### PLN dans PLNmodels
+
 ```{r}
 prep_trichoptera <- PLNmodels::prepare_data(trichoptera$Abundance, trichoptera$Covariate)
-myPLN <- PLN(Abundance ~ 1, data = prep_trichoptera)
+myPLN <- PLN(Abundance ~ 1 , data = prep_trichoptera)
 myPLN
 ```
+
 #### PLN dans parsnip
 
 ```{r}
 resPLN <- poisson_reg() %>% 
   set_engine("PLN") %>% 
-  fit(Abundance ~ 1, data = prep_trichoptera)
+  fit(Abundance ~ 1 , data = prep_trichoptera)
 resPLN
 ```
 :::
-
 
 ```{r}
 summary(resPLN)
 resPLN$spec
 # Pour recuperer les coefficients
 coef(resPLN$fit)
+all.equal(coef(myPLN), coef(resPLN$fit))
 # Pour faire de la prediction
-resPLN %>% predict(new_data = prep_trichoptera)
+pred_pln <- predict(myPLN, newdata  = prep_trichoptera, type = "response")
+# On peut appliquer les methodes 
+#pred_parsnipfit <- predict(resPLN$fit, newdata  = prep_trichoptera)
+pred_parsnip <- predict(resPLN, new_data  = trichoptera$Abundance)
+all.equal(pred_pln, pred_parsnip)
 ```
+
+
 ### Test d'un workflow
 
 ```{r}
@@ -200,10 +209,8 @@ fitted_workflow <-  pln_workflow %>%
 # Predicition sur le jeu d'entrainement
 test_pred <- fitted_workflow %>% predict(new_data = testing(tri_split))
 ```
+
 Pour la suite du workflow, calcul de performance sur des rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus 'tidy' ou réécrire le calcul de métrique sur des matrices.
-
-
-
 
 ### Autre jeu de données, exemple en régression univariée
 
@@ -216,9 +223,9 @@ p <- within(p, {
 })
 ```
 
-On essaie maintenant en utilisant `{parsnip}`
+On essaie maintenant en utilisant `{parsnip}`.
 
-::: {.panel-tabset}
+::: panel-tabset
 #### glm de base
 
 ```{r glm-p}
@@ -235,6 +242,15 @@ poisson_reg() %>%
      predict(p)
 ```
 
+#### pln
+
+```{r PLN}
+mod_pln <- PLN(as.matrix(num_awards) ~ prog + math, data = p)  
+mod_pln %>%
+     predict(p, type = "response") %>%
+     head(n = 10)
+```
+
 #### PLN dans parsnip
 
 ```{r PLN-parsnip}
@@ -247,6 +263,7 @@ poisson_reg() %>%
 :::
 
 On peut vérifier la commande associée au modèle programmé.
+
 ```{r}
 poisson_reg() %>% translate(engine = "PLN")
 ```
@@ -255,4 +272,4 @@ poisson_reg() %>% translate(engine = "PLN")
 
 Dans le cadre `tidymodels` tout est assez modulaire et personnalisable : on peut ajouter de nouvelles recettes de pré-traitement, personnaliser son rééchantillonnage, le calcul de métrique etc.
 
-Un peu de documentation sur le site de `{tidymodels]` dans la [section _Develop custom modeling tools_](https://www.tidymodels.org/learn/).
+Un peu de documentation sur le site de `{tidymodels]` dans la [section *Develop custom modeling tools*](https://www.tidymodels.org/learn/).
