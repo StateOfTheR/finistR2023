@@ -24,7 +24,7 @@ Nous les testons avec un produit matriciel de 10000 x 10000
 #| eval: false
 size <- 10000
 mat <- matrix(rnorm(size**2), size, size)
-
+Sys.setenv(OMP_NUM_THREADS = 1)
 tic()
 get_res <- mat %*% mat
 toc()
@@ -39,7 +39,7 @@ sessionInfo()
 
 ### Installation sur Windows (seulement Intel MKL)
 
-Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois microsoft R open installé, il suffit d'aller récupérer dans le répertoire :
+Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut) via [ce lien](https://www.microsoft.com/en-US/download/details.aspx?id=51205). Une fois microsoft R open installé, il suffit d'aller récupérer dans le répertoire :
 
 `C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64`
 
@@ -55,7 +55,7 @@ et de les copier dans le répertoire
 
 `C:\Program Files\R\R-4.1.2\bin\x64`
 
-Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.
+Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.
 
 ### Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)
 
@@ -79,7 +79,7 @@ Pour changer la librairie Lapack
 
 Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
 
-### Test de la librairie
+### Test 1
 
 Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec
 
