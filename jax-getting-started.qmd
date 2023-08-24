@@ -43,12 +43,14 @@ quarto render my_document.qmd --to html
 Si vous préférez une installation via pip (pour une version cpu), 
 
 ```{bash}
+#| eval: false
 pip3 install jax jaxlib
 ```
 
 Pour une installation GPU (avec cuda 12 par exemple, on vous laisse gérer la compatibilité de vos driver Nvidia and Cie),
 
 ```{bash}
+#| eval: false
 pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ```
 
@@ -62,7 +64,7 @@ L'utilisation de `venv` est recommandable (mais non obligatoire).
 En quelques mots, JAX est une bibliothèque Python développé par Google et itinitalement utilisé dans TensorFLow. Elle permet de faire de l'algèbre linéaire à la `numpy`, avec 2 propriétés clés le rendant extrêment performant:
 
 1. un *autograd* permettant la différention automatique de calcul Python/Numpy
-2. un *compileur* pour GPU et autres ([XLA](https://www.tensorflow.org/xla)), dédié à l'algèbre linéaire qui permet d'optimiser les temps d'exécution grace à une approche *JIT* (Just-in Time, c'est-à-dire une optimsiation du code à l'exécution et non pas avant l'appel come avec un compileur classique).
+2. un *compileur* pour GPU et autres ([XLA](https://www.tensorflow.org/xla)), dédié à l'algèbre linéaire qui permet d'optimiser les temps d'exécution grace à une approche *JIT* (Just-in Time, c'est-à-dire une optimisation du code à l'exécution et non pas avant l'appel comme avec un compileur classique).
 
 L'objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la `Numpy`, notamment à l'aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certains nombres de contraintes d'écriture des programmes s'appliquent, que nous allons essayer de présenter pas à pas. 
 
@@ -86,14 +88,76 @@ On peut détailler les fonctionnalité des modules comme suit:
 
 ### Jax.numpy: interface Algèbre linéaire haut-niveau
 
-```{python}
+On commence par simuler des données aléatoires via les outils de jax. Attention la gestion de la clé aléatoire est **explicite**. Après avoir créé une clé et avant chaque appel à une fonction aléatoire, il faut faire 
 
+```{python}
+#| eval: false
+key,subkey = random.split(key, 2)
+```
+
+et utiliser `subkey` dans l'appel à la fonction aléatoire comme écrit ci-dessous. 
+
+```{python}
+n = 10000
+p = 100
+key = random.PRNGKey(0)
+key,subkey = random.split(key, 2)
+ones = jnp.ones((n, 1))
+x = random.normal(subkey, (n, p-1))
+x = jnp.concatenate([ones, x], axis = 1)
+key,subkey = random.split(key, 2)
+beta_true = random.normal(subkey, (p,1))
+```
+
+Avant de les multipliers. On utilise la fonction `block_until_ready()` pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme {{future}} en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
+
+```{python}
+%time
+odds = jnp.dot(x, beta_true)  # runs on the CPU
+```
+
+On échantillonne ensuite des variables suivant une loi de Bernoulli. 
+
+```{python}
+key,subkey = random.split(key, 2)
+y = random.bernoulli(subkey, odds)
+```
+
+et une perte logistique
+
+$$\ell(y, x, \theta) = -\log p(y; \sigma(x^{\top}\theta)) = -y (x^\top \theta) - \log(1 + e^{x^\top \theta})$$
+
+```{python}
+def logistic_loss(y, x, theta):
+  odds = jnp.dot(x, theta)
+  return -jnp.vdot(y, odds) + jnp.sum(jnp.log(1.0 + jnp.exp(odds)))
+```
+
+Qu'on peut tester sur un example simple
+
+```{python}
+logistic_loss(True, 1.0, 0)
+```
+
+### Just-in-time compilation
+
+La version *normale* de notre fonction logistique est déjà rapide. 
+
+```{python}
+%timeit logistic_loss(y, x, beta_true).block_until_ready()
+```
+
+mais on peut l'accélerer d'un facteur 2 ou 3 en compilant la fonction via `jit()` de façon complètement transparente pour l'utilisateur. 
+
+```{python}
+logistic_loss_jit = jit(logistic_loss)
+%timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
 ```
 
 ### grad: auto-différentiation
 
 
-### Just-in-time compilation
+
 
 
 ### Vectorisation
