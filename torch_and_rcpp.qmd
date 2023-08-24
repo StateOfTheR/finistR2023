@@ -14,6 +14,7 @@ date: 20/08/2023
 
 
 ```{r}
+library(torch)
 library(tictoc)
 library(bench) # comparaison des vitesses 
 ```
@@ -23,15 +24,16 @@ library(bench) # comparaison des vitesses
 
 La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d'évaluer numériquement le gradient d'une fonction et d'effectuer des descente de gradient.
 
-```{r}
-library(torch)
-```
-
 [Présentation finistR2022](https://stateofther.github.io/finistR2022/autodiff.html)
 
-[Cours state of the R (2023)](https://stateofther.netlify.app/post/variational-autoencoder-with-torch/)
+[Torch and Automatic differentiation](https://stateofther.netlify.app/post/rentree2022/AutomatedDifferentiation.pdf)
+
+
+## Rcpp
+
 
 
 ## References
 
--   [finistR2022 - Torch Auto Diff](https://stateofther.github.io/finistR2022/autodiff.html)
+- [Cours state of the R (2023)](https://stateofther.netlify.app/post/variational-autoencoder-with-torch/)
+- [finistR2022 - Torch Auto Diff](https://stateofther.github.io/finistR2022/autodiff.html)
