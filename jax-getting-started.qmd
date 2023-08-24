@@ -58,12 +58,14 @@ pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-re
 
 L'utilisation de `venv` est recommandable (mais non obligatoire).
 
-On installe également JAXopt et FLAX pour avoir accès à des optimiseurs. 
+On installe également optax pour avoir accès à des optimiseurs. 
 
 ```{bash}
 #| eval: false
-pip3 install jaxopt flax optax
+pip3 install optax
 ```
+
+**Important** Pour utiliser `optax`, il vaut mieux utiliser pip pour installer `jax` et `jaxlib`, les versions disponibles dans les dépôts conda sont en effet trop anciennes pour optax.  
 
 ## Premiers pas 
 
