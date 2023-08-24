@@ -152,12 +152,3 @@ mais on peut l'accélerer d'un facteur 2 ou 3 en compilant la fonction via `jit(
 ```{python}
 logistic_loss_jit = jit(logistic_loss)
 %timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
-```
-
-### grad: auto-différentiation
-
-
-
-
-
-### Vectorisation
