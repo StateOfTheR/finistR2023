@@ -12,17 +12,16 @@ website:
         href: instructions.qmd
     right:
       - text: workflow
-        href: https://github.com/StateOfTheR/finistR2023
-        aria-label: GitHub
-      - text: inla
-        href: R_INLA.qmd
+        menu:
+        - text: inla
+          href: R_INLA.qmd
         aria-label: GitHub
       - text: torch (R vs Py)
         menu: 
           - torch_test-brulee.qmd
           - torch_Python_R_ResNet.qmd
-          - torch_Python-regression.qmd
-          - torch_R-PLN.qmd
+          - torch_Python_regression.qmd
+          - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
         aria-label: GitHub
 

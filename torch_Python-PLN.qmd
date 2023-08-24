@@ -9,7 +9,6 @@ output:
    toc_float: true
 ---
 
-## PLN with Pytorch
 
 ```{python}
 import torch
