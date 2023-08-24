@@ -38,6 +38,7 @@ sessionInfo()
 
 Le plus simple est de télécharger les librairies Intel - MKL sur le [seafile d'Agroparistech](https://seafile.agroparistech.fr/d/696def33ceb848508cb0/). 
 
+
 #### 1 - Faire une copie de la version actuelle de `BLAS` et  `LAPACK`:
 
 Dans le dossier `C:\Program Files\R\Your_R_Version\bin\x64`, copier `Rblas.dll` et `Rlapack.dll` dans un autre dossier à **conserver** pour pouvoir revenir aux librairies de la base `R`.
@@ -61,6 +62,7 @@ Vérifiez si vous avez gagné en efficacité sur votre ordinateur. Attention, le
 Concrètement on remplace les deux fichiers faisant appel au librairies `BLAS` et `LAPCK` par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.
 
 Pour retourner à la base `R` il suffit d'opérer à l'opération inverse, copie des fichiers `Rblas.dll`, `Rlapack.dll` et `libiomp5md.dll` du dossier `C:\Program Files\R\Your_R_Version\bin\x64`. Les mettre en sécurité puis copier les librairies des `Rblas.dll` et `Rlapack.dll` depuis votre sauvegarde ou <https://seafile.agroparistech.fr/d/696def33ceb848508cb0/>.
+
 
 ### Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)
 
