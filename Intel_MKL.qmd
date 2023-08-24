@@ -3,7 +3,7 @@ title: "Intel MKL & Open Blas"
 format: html
 toc: true
 author: 
-  - Annaig De-Walsche
+  - Annaig De Walsche
   - Barbara Bricout
   - Tristan Mary-Huard
   - Armand Favrot
@@ -39,7 +39,7 @@ sessionInfo()
 
 ### Installation sur Windows (seulement Intel MKL)
 
-Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois mixrosoft R open installé, il suffit d'aller récupérer dans le répertoire :
+Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois microsoft R open installé, il suffit d'aller récupérer dans le répertoire :
 
 `C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64`
 
