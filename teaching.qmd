@@ -19,7 +19,7 @@ Nous allons ici discuter de nouveautés dans les packages {learnr} et {exams} qu
 
 # Learnr
 
-{learnr} permet de créer de tutoriaux interactifs en s'appuyant sur shiny. Le tutoriel est construit à partir d'un fichier Rmarkdown et peut être soit executé en local via le bouton `run app` soit en déployant le fichier sur un serveur Shiny.
+{learnr} permet de créer de tutoriaux intéractifs en s'appuyant sur shiny. Le tutoriel est construit à partir d'un fichier Rmarkdown et peut être soit executer en local via le bouton `run app` soit en déployant le fichier sur un serveur Shiny.
 
 Depuis 2020 environ, il est possible d'intégrer un tutoriel learnr dans un package, ce qui rend interactif les classiques vignettes. Les nouvelles versions de Rstudio ont de plus inclus un bouton `tutorial` disponible dans le panel "Environnement, Git etc...".
 
