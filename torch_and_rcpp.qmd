@@ -14,9 +14,13 @@ date: 20/08/2023
 
 
 ```{r}
+library(Rcpp)
+library(RcppArmadillo)
 library(torch)
 library(tictoc)
-library(bench) # comparaison des vitesses 
+library(bench) # comparaison des vitesses
+library(ggplot2)
+library(ggbeeswarm)
 ```
 
 
@@ -31,6 +35,87 @@ La librairie torch de R permet la manipulation de tenseur en R. Elle permet nota
 
 ## Rcpp
 
+L'utilisation de {Rcpp} permet d'exporter des fonction `C++` en R. Les fonctions seront alors directement utilisable dans un script et avec des arguments R. Ainsi on peu tirer parti de la compilation d'un code `C++`, et accélérer de nombreux calculs algébriques.
+
+[Présentation finistR2018](https://stateofther.netlify.app/post/bases-rcpp/)
+
+### Exemple 1
+
+Dans cet exemple nous allons calculer la loss d'une fonction logistique en R et en `C++`. Puis comparer les résultats avec le package {bench} de R. 
+
+```{r}
+#| echo: false
+sep = "\n"
+code_cpp <- paste(readLines("logisticloss.cpp"),collapse = sep)
+code_cpp <- paste("```{cpp, eval = FALSE, echo = TRUE}",code_cpp,"```",sep = sep)
+```
+`r code_cpp`
+
+```{cpp, eval = FALSE, echo = TRUE}
+// [[Rcpp::depends(RcppArmadillo)]]
+#include <RcppArmadillo.h>
+
+// Logistic loss
+// [[Rcpp::export]]
+// const : pas de changement de valeur dans la fonction
+// arma:: : se sont les classes de Armadillo
+// using namespace arma to erase all arma::
+// & :  appel sans copie donc plus rapide
+double loss_cpp( const arma::vec theta, const arma::vec& y, const arma::mat& x ) {
+  arma::vec odds(x.n_rows);
+  odds = x * theta;
+  double log_lik;
+  log_lik = arma::dot(y, odds) - arma::sum(arma::log(1 + arma::exp(odds)));
+  return(-log_lik);
+}
+```
+
+
+```{r}
+sourceCpp(file = "logisticloss.cpp")
+```
+
+```{r}
+loss_R <- function(theta, y, x) {
+  odds <- x %*% theta
+  log_lik <- sum(y * odds - log(1 + exp(odds)))
+  return(-as.numeric(log_lik))
+}
+```
+
+```{r}
+loss_cpp(
+  theta = c(0.5, 0.1),
+  y = 1.0,
+  x = matrix(c(0.1, 0.2), 1, 2)
+)
+```
+
+```{r}
+loss_R(
+  theta = c(0.5, 0.1),
+  y = 1.0,
+  x = matrix(c(0.1, 0.2), 1, 2)
+)
+```
+
+
+```{r}
+# n_covar <- 30
+# size <- 1000
+# 
+# theta <- rnorm(n_covar)
+# y <- as.numeric(rbinom(size, 1, 0.3))
+# x <- matrix(rnorm(size * n_covar), size, n_covar)
+# 
+# comp_tbl <- bench::mark(
+#   loss_cpp(theta, y, x),
+#    loss_R(theta, y, x),
+#   iterations = 1000
+# )
+# 
+# autoplot(comp_tbl, type = "boxplot")
+```
 
 
 ## References
