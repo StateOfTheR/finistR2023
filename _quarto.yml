@@ -20,10 +20,10 @@ website:
       - text: torch (R vs Py)
         menu: 
           - torch_test-brulee.qmd
+          - torch_Python_R_ResNet.qmd
           - torch_Python-regression.qmd
           - torch_R-PLN.qmd
           - torch_Python-PLN.qmd
-          - torch_Python_R_ResNet.qmd
         aria-label: GitHub
 
 
