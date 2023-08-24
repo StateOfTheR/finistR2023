@@ -274,7 +274,7 @@ quarto render my_document.qmd --to html</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>&lt;LogBackward0 at 0x7f789cf47b50&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f2310996950&gt;</code></pre>
 </div>
 </div>
 <p>qui indique comment calculer le gradient en utilisant la dérivée des fonctions composées:</p>
@@ -307,14 +307,14 @@ x = 2 \xrightarrow{x \mapsto x^2} z = 4 \mapsto \xrightarrow{x \mapsto \log(x)} 
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;LogBackward0 at 0x7f789cf47b50&gt;</code></pre>
+<pre><code>&lt;LogBackward0 at 0x7f2310996950&gt;</code></pre>
 </div>
 </div>
 <p>et les fonctions suivantes via <code>$next_functions</code></p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>y.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>((&lt;PowBackward0 at 0x7f77cc4420b0&gt;, 0),)</code></pre>
+<pre><code>((&lt;PowBackward0 at 0x7f23109968c0&gt;, 0),)</code></pre>
 </div>
 </div>
 <p>Dans notre exemple, on a donc:</p>
@@ -472,8 +472,8 @@ Y_i \sim \mathcal{B}(\sigma(\theta^T x_i)) \quad \text{avec} \quad \sigma(x) = \
 <div class="cell-output cell-output-stdout">
 <pre><code>      torch   sklearn
 0  0.125890  0.125891
-1  0.423913  0.423912
-2 -0.341100 -0.341100</code></pre>
+1  0.423915  0.423912
+2 -0.341099 -0.341100</code></pre>
 </div>
 </div>
 <p><strong>Attention</strong> la mécanique présentée ci-dessus avec <code>.step()</code> ne fonctionne pas pour certaines routines d’optimisation (BFGS, gradient conjugué) qui nécessite de calculer plusieurs fois la fonction objective. Dans ce cas, il faut définir une <em>closure</em>, qui renvoie la fonction objective, et la passer en argument à <code>.step()</code>.</p>
@@ -498,8 +498,8 @@ Y_i \sim \mathcal{B}(\sigma(\theta^T x_i)) \quad \text{avec} \quad \sigma(x) = \
 <span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> optimizer.step(calc_loss).item()</span>
 <span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    loss_vector.append(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 60 ms, sys: 244 µs, total: 60.3 ms
-Wall time: 60 ms</code></pre>
+<pre><code>CPU times: user 33.2 ms, sys: 0 ns, total: 33.2 ms
+Wall time: 33.3 ms</code></pre>
 </div>
 </div>
 <p>On peut vérifier qu’on obtient des résultats identiques dans les deux cas d’utilisation:</p>
@@ -579,14 +579,14 @@ Wall time: 60 ms</code></pre>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>toto <span class="op">=</span> LogLik()</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>toto.grad_fn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
-<pre><code>&lt;AddBackward0 at 0x7f77c97ded40&gt;</code></pre>
+<pre><code>&lt;AddBackward0 at 0x7f2310994430&gt;</code></pre>
 </div>
 </div>
 <p>correspondant à l’addition (AddBackward) des deux termes <span class="math display">\[  n\times \log(\theta[11]) \quad \text{et} \quad ||Y-X\theta[0:10]||^2/(2*\theta[11]^2)\]</span> dans le calcul de la perte. On peut afficher les opérations suivantes dans le graphe comme suit:</p>
 <div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>toto.grad_fn.next_functions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>((&lt;MulBackward0 at 0x7f77cbe4cc10&gt;, 0), (&lt;DivBackward0 at 0x7f77cbe4cac0&gt;, 0))</code></pre>
+<pre><code>((&lt;MulBackward0 at 0x7f22397fcdf0&gt;, 0), (&lt;DivBackward0 at 0x7f22397fc8e0&gt;, 0))</code></pre>
 </div>
 </div>
 <p>L’étape suivante consiste à choisir la méthode d’optimisation à appliquer. L’intérêt d’utiliser le package <code>{torch}</code> est d’avoir accès à une large gamme de méthodes d’optimisation, on considère ici la méthode rprop qui réalise une descente de gradient à pas adaptatif et spécifique à chaque coordonnée:</p>
@@ -642,8 +642,8 @@ Wall time: 60 ms</code></pre>
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    loss_vector[i] <span class="op">=</span> calc_loss().item()</span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 83 ms, sys: 120 µs, total: 83.2 ms
-Wall time: 83.1 ms</code></pre>
+<pre><code>CPU times: user 48.1 ms, sys: 74 µs, total: 48.2 ms
+Wall time: 48.2 ms</code></pre>
 </div>
 </div>
 <p>On vérifie que l’optimisation s’est bien passée (ie que l’on a minimisé la fonction de perte)</p>
@@ -661,9 +661,9 @@ Wall time: 83.1 ms</code></pre>
 <p><img src="torch_Python_regression_files/figure-html/cell-43-output-1.png" width="593" height="449"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>tensor([ 3.7193e-05,  4.4323e-05, -2.5496e-05, -6.4963e-05, -6.7316e-05,
-         9.8318e-05,  6.5755e-06, -2.4864e-05,  2.1660e-05, -5.0762e-05,
-         5.5040e-06,  5.3406e-05])</code></pre>
+<pre><code>tensor([-7.5638e-05, -8.4504e-05,  3.2596e-05, -4.3469e-05, -8.8593e-05,
+         9.8785e-05,  3.1149e-05, -7.0865e-05, -1.0586e-04,  8.9571e-05,
+         4.5321e-05,  5.3406e-05])</code></pre>
 </div>
 </div>
 <p>et que le résultat est comparable à la solution classique obtenue par OLS :</p>
@@ -696,10 +696,10 @@ Wall time: 83.1 ms</code></pre>
 <span id="cb67-26"><a href="#cb67-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Variance de Theta[12] :"</span>, sigma_squared_theta.item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coefficients du modèle de régression linéaire :
- [ 1.7637296  -0.32114202  1.4978627  -0.11171199  0.4011397  -0.06434376
-  0.20324951 -0.2590317   0.98098207 -0.7663114  -0.64790714]
+ [ 1.7637295  -0.32114246  1.4978632  -0.11171225  0.40113908 -0.06434418
+  0.2032495  -0.25903088  0.9809813  -0.7663111  -0.6479076 ]
 Coefficients de Theta :
- [1.7637280225753784, -0.32114285230636597, 1.4978631734848022, -0.1117125004529953, 0.40113937854766846, -0.06434360891580582, 0.20324911177158356, -0.25903084874153137, 0.9809806942939758, -0.7663116455078125, -0.6479087471961975]
+ [1.763728141784668, -0.3211430013179779, 1.4978625774383545, -0.11171171814203262, 0.40113818645477295, -0.06434360891580582, 0.20324911177158356, -0.2590320408344269, 0.9809804558753967, -0.7663102149963379, -0.6479072570800781]
 Variance du modèle de régression linéaire : 1.2505516
 Variance de Theta[12] : 1.1182799339294434</code></pre>
 </div>

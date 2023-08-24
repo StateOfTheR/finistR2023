@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Finist’R 2023 - Construire un modèle parsnip</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Finist’R 2023</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023" rel="" target=""><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./instructions.html" rel="" target="">
+ <span class="menu-text">Instructions</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">workflow</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
+        <li>
+    <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
+ <span class="dropdown-text">inla</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-torch-(r-vs-py" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">torch (R vs Py)</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-torch-(r-vs-py">    
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#ressources" id="toc-ressources" class="nav-link" data-scroll-target="#ressources">Ressources</a></li>
+  <li><a href="#un-modèle-parnsip" id="toc-un-modèle-parnsip" class="nav-link" data-scroll-target="#un-modèle-parnsip">Un modèle <code>{parnsip}</code></a></li>
+  </ul></li>
+  <li><a href="#intégration-de-la-régression-pln" id="toc-intégration-de-la-régression-pln" class="nav-link" data-scroll-target="#intégration-de-la-régression-pln">Intégration de la régression PLN</a>
+  <ul class="collapse">
+  <li><a href="#données" id="toc-données" class="nav-link" data-scroll-target="#données">Données</a></li>
+  <li><a href="#différentes-étapes-pour-intégrer-plnmodelspln-dans-parsnip" id="toc-différentes-étapes-pour-intégrer-plnmodelspln-dans-parsnip" class="nav-link" data-scroll-target="#différentes-étapes-pour-intégrer-plnmodelspln-dans-parsnip">Différentes étapes pour intégrer <code>PLNmodels::PLN</code> dans parsnip</a></li>
+  <li><a href="#application-sur-les-données-trichoptera" id="toc-application-sur-les-données-trichoptera" class="nav-link" data-scroll-target="#application-sur-les-données-trichoptera">Application sur les données trichoptera</a></li>
+  <li><a href="#test-dun-workflow" id="toc-test-dun-workflow" class="nav-link" data-scroll-target="#test-dun-workflow">Test d’un workflow</a></li>
+  <li><a href="#autre-jeu-de-données-exemple-en-régression-univariée" id="toc-autre-jeu-de-données-exemple-en-régression-univariée" class="nav-link" data-scroll-target="#autre-jeu-de-données-exemple-en-régression-univariée">Autre jeu de données, exemple en régression univariée</a></li>
+  </ul></li>
+  <li><a href="#pour-aller-plus-loin" id="toc-pour-aller-plus-loin" class="nav-link" data-scroll-target="#pour-aller-plus-loin">Pour aller plus loin</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Construire un modèle parsnip</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Notre objectif ici est de construire un nouveau modèle <code>{parsnip}</code> à partir d’une implémentation existente dans un package R.</p>
+<p>Intérêts : éliminer des dépendances, du code dupliqué, pouvoir profiter du cadre <code>{tidymodels}</code>.</p>
+<section id="ressources" class="level3">
+<h3 class="anchored" data-anchor-id="ressources">Ressources</h3>
+<p>https://www.tidymodels.org/learn/develop/models/</p>
+</section>
+<section id="un-modèle-parnsip" class="level3">
+<h3 class="anchored" data-anchor-id="un-modèle-parnsip">Un modèle <code>{parnsip}</code></h3>
+<p>Il se définit par</p>
+<ul>
+<li><p>un <code>mode</code> (régression linéaire, logistique, …),</p></li>
+<li><p>un <code>type</code> (régression, classification),</p></li>
+<li><p>un moteur de calcul <code>engine</code> (<code>lm</code>, <code>stan</code>, …).</p></li>
+</ul>
+<p>Qunad on ajoute un modèle, on doit donc spécifier son <code>mode</code> et son <code>engine</code>. On peut aussi ajouter un nouveau modèle différent d’un pré-existant seulement par son <code>type</code> (ie même combinaison <code>engine</code> et <code>mode</code>).</p>
+<p>Il est possible de voir l’ensemble des modèles déjà disponibles <a href="https://www.tidymodels.org/find/parsnip/">ici</a>.</p>
+</section>
+</section>
+<section id="intégration-de-la-régression-pln" class="level2">
+<h2 class="anchored" data-anchor-id="intégration-de-la-régression-pln">Intégration de la régression PLN</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PLNmodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is packages 'PLNmodels' version 1.0.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Use future::plan(multicore/multisession) to speed up PLNPCA/PLNmixture/stability_selection.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.1.0 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ broom        1.0.5     ✔ recipes      1.0.7
+✔ dials        1.2.0     ✔ rsample      1.1.1
+✔ dplyr        1.1.2     ✔ tibble       3.2.1
+✔ ggplot2      3.4.2     ✔ tidyr        1.3.0
+✔ infer        1.0.4     ✔ tune         1.1.1
+✔ modeldata    1.2.0     ✔ workflows    1.1.3
+✔ parsnip      1.1.1     ✔ workflowsets 1.0.1
+✔ purrr        1.0.2     ✔ yardstick    1.2.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ purrr::discard()        masks scales::discard()
+✖ dplyr::filter()         masks stats::filter()
+✖ dplyr::lag()            masks stats::lag()
+✖ parsnip::prepare_data() masks PLNmodels::prepare_data()
+✖ recipes::step()         masks stats::step()
+• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poissonreg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="données" class="level3">
+<h3 class="anchored" data-anchor-id="données">Données</h3>
+<p>Nous utiliserons le jeu de données de la <a href="https://pln-team.github.io/PLNmodels/articles/PLN.html">vignette de PLN</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Remarque">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il existe une fonction <code>prepare_data</code> dans {parsnip} également.</p>
+</div>
+</div>
+</section>
+<section id="différentes-étapes-pour-intégrer-plnmodelspln-dans-parsnip" class="level3">
+<h3 class="anchored" data-anchor-id="différentes-étapes-pour-intégrer-plnmodelspln-dans-parsnip">Différentes étapes pour intégrer <code>PLNmodels::PLN</code> dans parsnip</h3>
+<section id="etape-1-spécification-du-modèle-et-de-ses-arguments" class="level4">
+<h4 class="anchored" data-anchor-id="etape-1-spécification-du-modèle-et-de-ses-arguments">Etape 1 : Spécification du modèle et de ses arguments</h4>
+<p>On va ajouter la fonction <code>PLNmodels::PLN</code> à la liste des fonctions utilisables pour faire de la régression de Poisson.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_model_info</span>(<span class="st">"poisson_reg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Information for `poisson_reg`
+ modes: unknown, regression 
+
+ engines: 
+   regression: glm¹, glmnet¹, hurdle¹, stan¹, zeroinfl¹
+
+¹The model can use case weights.
+
+ arguments: 
+   glmnet: 
+      penalty --&gt; lambda
+      mixture --&gt; alpha
+
+ fit modules:
+     engine       mode
+        glm regression
+     hurdle regression
+   zeroinfl regression
+     glmnet regression
+       stan regression
+
+ prediction modules:
+         mode   engine                          methods
+   regression      glm                     numeric, raw
+   regression   glmnet                     numeric, raw
+   regression   hurdle                     numeric, raw
+   regression     stan conf_int, numeric, pred_int, raw
+   regression zeroinfl                     numeric, raw</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_model_mode</span>(<span class="at">model =</span> <span class="st">"poisson_reg"</span>, <span class="at">mode =</span> <span class="st">"regression"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set_model_engine</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"poisson_reg"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"regression"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">eng =</span> <span class="st">"PLN"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set_dependency</span>(<span class="st">"poisson_reg"</span>, <span class="at">eng =</span> <span class="st">"PLN"</span>, <span class="at">pkg =</span> <span class="st">"PLNmodels"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On peut vérifier ce qu’on a ajouté.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show_model_info</span>(<span class="st">"poisson_reg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Information for `poisson_reg`
+ modes: unknown, regression 
+
+ engines: 
+   regression: glm¹, glmnet¹, hurdle¹, PLNNA, stan¹, zeroinfl¹
+
+¹The model can use case weights.
+
+ arguments: 
+   glmnet: 
+      penalty --&gt; lambda
+      mixture --&gt; alpha
+
+ fit modules:
+     engine       mode
+        glm regression
+     hurdle regression
+   zeroinfl regression
+     glmnet regression
+       stan regression
+
+ prediction modules:
+         mode   engine                          methods
+   regression      glm                     numeric, raw
+   regression   glmnet                     numeric, raw
+   regression   hurdle                     numeric, raw
+   regression     stan conf_int, numeric, pred_int, raw
+   regression zeroinfl                     numeric, raw</code></pre>
+</div>
+</div>
+<p>Si notre modèle a des arguments supplémentaires que ceux existants, on peut les ajouter.</p>
+</section>
+<section id="etape-2-créer-la-fonction-principale-associée-au-modèle-le-cas-échéant" class="level4">
+<h4 class="anchored" data-anchor-id="etape-2-créer-la-fonction-principale-associée-au-modèle-le-cas-échéant">Etape 2 : Créer la fonction principale associée au modèle le cas échéant</h4>
+<p>Ici comme nous avons seulement ajouté un moteur à un modèle préexistant ce n’est pas nécessaire.</p>
+<p>todo: regarder comment ajouter l’information possible d’utilisation de poids</p>
+</section>
+<section id="etape-3-préciser-le-module-dajustement-fit" class="level4">
+<h4 class="anchored" data-anchor-id="etape-3-préciser-le-module-dajustement-fit">Etape 3 : Préciser le module d’ajustement (<code>fit</code>)</h4>
+<ul>
+<li><p>L’argument <code>interface</code>, peut prendre les valeurs <code>formula</code>, <code>data</code> ou <code>matrices</code>.</p></li>
+<li><p><code>protect</code> est une liste optionnelle d’arguments qui ne devraient pas être modifié par l’utilisateur.</p></li>
+<li><p><code>func</code> est un vecteur précisant le package et la fonction qui sera appelé pour l’ajustement.</p></li>
+<li><p><code>defaults</code> est une liste optionnelle d’arguments que l’utilisateur peut modifier mais pour laquelle on peut spécifier des valeurs par défaut.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_fit</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"poisson_reg"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eng =</span> <span class="st">"PLN"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"regression"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">list</span>(</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">interface =</span> <span class="st">"formula"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">protect =</span> <span class="fu">c</span>(<span class="st">"formula"</span>, <span class="st">"data"</span>),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">func =</span> <span class="fu">c</span>(<span class="at">pkg =</span> <span class="st">"PLNmodels"</span>, <span class="at">fun =</span> <span class="st">"PLN"</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaults =</span> <span class="fu">list</span>(<span class="at">control =</span> <span class="fu">PLN_param</span>(), <span class="at">weights =</span> <span class="cn">NULL</span>, <span class="at">subset =</span> <span class="cn">NULL</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On peut ajouter des traitements par défaut pour les variables explicatives, tels que calculs de variables indicatrices, calcul d’une constante etc…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_encoding</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"poisson_reg"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eng =</span> <span class="st">"PLN"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"regression"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">predictor_indicators =</span> <span class="st">"traditional"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">compute_intercept =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_intercept =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">allow_sparse_x =</span> <span class="cn">FALSE</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="etape-4-ajouter-un-module-pour-la-prédiction-predict" class="level4">
+<h4 class="anchored" data-anchor-id="etape-4-ajouter-un-module-pour-la-prédiction-predict">Etape 4 : Ajouter un module pour la prédiction (<code>predict</code>)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_pred</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"poisson_reg"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eng =</span> <span class="st">"PLN"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">"regression"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"numeric"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">list</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pre =</span> <span class="cn">NULL</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">post =</span> <span class="cn">NULL</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">func =</span> <span class="fu">c</span>(<span class="at">fun =</span> <span class="st">"predict"</span>),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">args =</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">object =</span> <span class="fu">expr</span>(object<span class="sc">$</span>fit),</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">newdata =</span> <span class="fu">expr</span>(new_data),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"response"</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="application-sur-les-données-trichoptera" class="level3">
+<h3 class="anchored" data-anchor-id="application-sur-les-données-trichoptera">Application sur les données trichoptera</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">PLN dans PLNmodels</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">PLN dans parsnip</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prep_trichoptera <span class="ot">&lt;-</span> PLNmodels<span class="sc">::</span><span class="fu">prepare_data</span>(trichoptera<span class="sc">$</span>Abundance, trichoptera<span class="sc">$</span>Covariate)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>myPLN <span class="ot">&lt;-</span> <span class="fu">PLN</span>(Abundance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Initialization...
+ Adjusting a full covariance PLN model with nlopt optimizer
+ Post-treatments...
+ DONE!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>myPLN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A multivariate Poisson Lognormal fit with full covariance model.
+==================================================================
+ nb_param    loglik       BIC       ICL
+      170 -1129.909 -1460.714 -2230.658
+==================================================================
+* Useful fields
+    $model_par, $latent, $latent_pos, $var_par, $optim_par
+    $loglik, $BIC, $ICL, $loglik_vec, $nb_param, $criteria
+* Useful S3 methods
+    print(), coef(), sigma(), vcov(), fitted()
+    predict(), predict_cond(), standard_error()</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>resPLN <span class="ot">&lt;-</span> <span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Abundance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Initialization...
+ Adjusting a full covariance PLN model with nlopt optimizer
+ Post-treatments...
+ DONE!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>resPLN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+A multivariate Poisson Lognormal fit with full covariance model.
+==================================================================
+ nb_param    loglik       BIC       ICL
+      170 -1129.909 -1460.714 -2230.658
+==================================================================
+* Useful fields
+    $model_par, $latent, $latent_pos, $var_par, $optim_par
+    $loglik, $BIC, $ICL, $loglik_vec, $nb_param, $criteria
+* Useful S3 methods
+    print(), coef(), sigma(), vcov(), fitted()
+    predict(), predict_cond(), standard_error()</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resPLN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Length Class       Mode       
+lvl           0     -none-      NULL       
+spec          8     poisson_reg list       
+fit          32     PLNfit      environment
+preproc       1     -none-      list       
+elapsed       1     -none-      list       
+censor_probs  0     -none-      list       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>resPLN<span class="sc">$</span>spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poisson Regression Model Specification (regression)
+
+Computational engine: PLN 
+
+Model fit template:
+PLNmodels::PLN(formula = missing_arg(), data = missing_arg(), 
+    control = list(backend = "nlopt", trace = 1, covariance = "full", 
+        Omega = NULL, config_post = list(jackknife = FALSE, bootstrap = 0L, 
+            rsquared = TRUE, variational_var = FALSE, sandwich_var = FALSE, 
+            trace = 1), config_optim = list(algorithm = "CCSAQ", 
+            maxeval = 10000, ftol_rel = 1e-08, xtol_rel = 1e-06, 
+            ftol_abs = 0, xtol_abs = 0, maxtime = -1, trace = 1), 
+        inception = NULL), weights = NULL, subset = NULL)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour recuperer les coefficients</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(resPLN<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Che       Hyc      Hym      Hys      Psy        Aga       Glo
+(Intercept) -2.833822 -4.049306 1.051399 -2.17906 3.291263 -0.3560404 -2.217591
+                  Ath      Cea       Ced        Set        All       Han
+(Intercept) -1.661659 -3.36122 0.3593471 -0.6285713 -0.8500234 -1.351443
+                  Hfo        Hsp       Hve       Sta
+(Intercept) -2.190792 -0.3070371 -2.758038 0.9621415</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour faire de la prediction</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>resPLN <span class="sc">%&gt;%</span> <span class="fu">predict</span>(<span class="at">new_data =</span> prep_trichoptera)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 49 × 17
+   .pred_Che .pred_Hyc .pred_Hym .pred_Hys .pred_Psy .pred_Aga .pred_Glo
+       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 2    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 3    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 4    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 5    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 6    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 7    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 8    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+ 9    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+10    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+# ℹ 39 more rows
+# ℹ 10 more variables: .pred_Ath &lt;dbl&gt;, .pred_Cea &lt;dbl&gt;, .pred_Ced &lt;dbl&gt;,
+#   .pred_Set &lt;dbl&gt;, .pred_All &lt;dbl&gt;, .pred_Han &lt;dbl&gt;, .pred_Hfo &lt;dbl&gt;,
+#   .pred_Hsp &lt;dbl&gt;, .pred_Hve &lt;dbl&gt;, .pred_Sta &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="test-dun-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="test-dun-workflow">Test d’un workflow</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separation du jeu de donnees en test et apprentissage</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tri_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> prep_trichoptera, <span class="at">prop =</span> <span class="fl">0.9</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_train &lt;- training(tri_split)</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#tri_test &lt;- testing(tri_split)</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>p_recipe <span class="ot">&lt;-</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(Abundance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Temperature, <span class="at">data =</span> <span class="fu">training</span>(tri_split))</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>pln_model <span class="ot">&lt;-</span> </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">poisson_reg</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>pln_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(p_recipe) <span class="sc">%&gt;%</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(pln_model)</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>fitted_workflow <span class="ot">&lt;-</span>  pln_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="fu">training</span>(tri_split)) </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicition sur le jeu d'entrainement</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>test_pred <span class="ot">&lt;-</span> fitted_workflow <span class="sc">%&gt;%</span> <span class="fu">predict</span>(<span class="at">new_data =</span> <span class="fu">testing</span>(tri_split))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Pour la suite du workflow, calcul de performance sur des rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus ‘tidy’ ou réécrire le calcul de métrique sur des matrices.</p>
+</section>
+<section id="autre-jeu-de-données-exemple-en-régression-univariée" class="level3">
+<h3 class="anchored" data-anchor-id="autre-jeu-de-données-exemple-en-régression-univariée">Autre jeu de données, exemple en régression univariée</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://stats.idre.ucla.edu/stat/data/poisson_sim.csv"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">within</span>(p, {</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  prog <span class="ot">&lt;-</span> <span class="fu">factor</span>(prog, <span class="at">levels=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"General"</span>, <span class="st">"Academic"</span>, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="st">"Vocational"</span>))</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  id <span class="ot">&lt;-</span> <span class="fu">factor</span>(id)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On essaie maintenant en utilisant <code>{parsnip}</code></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">glm de base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">glm dans parsnip</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">PLN dans parsnip</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">family=</span><span class="st">"poisson"</span>, <span class="at">data=</span>p))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = num_awards ~ prog + math, family = "poisson", data = p)
+
+Coefficients:
+               Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)    -5.24712    0.65845  -7.969 1.60e-15 ***
+progAcademic    1.08386    0.35825   3.025  0.00248 ** 
+progVocational  0.36981    0.44107   0.838  0.40179    
+math            0.07015    0.01060   6.619 3.63e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 287.67  on 199  degrees of freedom
+Residual deviance: 189.45  on 196  degrees of freedom
+AIC: 373.5
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(num_awards <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p)  <span class="sc">%&gt;%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 200 × 1
+    .pred
+    &lt;dbl&gt;
+ 1 0.135 
+ 2 0.0934
+ 3 0.167 
+ 4 0.145 
+ 5 0.126 
+ 6 0.100 
+ 7 0.192 
+ 8 0.126 
+ 9 0.0771
+10 0.192 
+# ℹ 190 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_engine</span>(<span class="st">"PLN"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">fit</span>(<span class="fu">as.matrix</span>(num_awards) <span class="sc">~</span> prog <span class="sc">+</span> math, <span class="at">data =</span> p) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Initialization...
+ Adjusting a full covariance PLN model with nlopt optimizer
+ Post-treatments...
+ DONE!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 200 × 1
+   .pred_Y
+     &lt;dbl&gt;
+ 1  0.134 
+ 2  0.0932
+ 3  0.166 
+ 4  0.144 
+ 5  0.125 
+ 6  0.100 
+ 7  0.191 
+ 8  0.125 
+ 9  0.0761
+10  0.191 
+# ℹ 190 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>On peut vérifier la commande associée au modèle programmé.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">poisson_reg</span>() <span class="sc">%&gt;%</span> <span class="fu">translate</span>(<span class="at">engine =</span> <span class="st">"PLN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poisson Regression Model Specification (regression)
+
+Computational engine: PLN 
+
+Model fit template:
+PLNmodels::PLN(formula = missing_arg(), data = missing_arg(), 
+    control = list(backend = "nlopt", trace = 1, covariance = "full", 
+        Omega = NULL, config_post = list(jackknife = FALSE, bootstrap = 0L, 
+            rsquared = TRUE, variational_var = FALSE, sandwich_var = FALSE, 
+            trace = 1), config_optim = list(algorithm = "CCSAQ", 
+            maxeval = 10000, ftol_rel = 1e-08, xtol_rel = 1e-06, 
+            ftol_abs = 0, xtol_abs = 0, maxtime = -1, trace = 1), 
+        inception = NULL), weights = NULL, subset = NULL)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="pour-aller-plus-loin" class="level2">
+<h2 class="anchored" data-anchor-id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<p>Dans le cadre <code>tidymodels</code> tout est assez modulaire et personnalisable : on peut ajouter de nouvelles recettes de pré-traitement, personnaliser son rééchantillonnage, le calcul de métrique etc.</p>
+<p>Un peu de documentation sur le site de <code>{tidymodels]</code> dans la <a href="https://www.tidymodels.org/learn/">section <em>Develop custom modeling tools</em></a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

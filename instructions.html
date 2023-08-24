@@ -288,6 +288,7 @@ RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.
 RUN R -e "install.packages('reticulate')"
 RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"
 RUN R -e "install.packages(c('tidymodels', 'brulee', 'reprex'))"
+RUN R -e "install.packages(c('poissonreg'))"
 RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv &amp;&amp; \
     pip3 install jupyter jupyter-cache flatlatex matplotlib &amp;&amp; \
     apt-get --purge -y remove texlive.\*-doc$ &amp;&amp; \
@@ -323,7 +324,7 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.3
+    container: stateofther/r-finistr2023:0.4
 
     steps:
       - name: Checkout repository
