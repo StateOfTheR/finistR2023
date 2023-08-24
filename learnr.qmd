@@ -71,6 +71,83 @@ devtools::install_gitlab("<your-repo>/<package-name>")
 7.  Lorsque le package est installé, aller dans le panel `Tutorial` dans Rstudio et c'est parti...
 
 
+8. Quelques outils utiles.
+
+Il est possible de chaîner des chunks en utilisant la fonctionnalité `exercise.setup` dans les chunk.
+Par exemple, nous pouvons effectuer
+
+````markdown
+`r ''````{r exo1,exercise=TRUE}
+
+```
+````
+
+
+````markdown
+`r ''````{r exo1-solution}
+x = 2+1
+```
+````
+
+````markdown
+`r ''````{r exo2,exercise=TRUE,exercise.setup="exo1-solution"}
+
+```
+````
+
+
+
+````markdown
+`r ''````{r exo2-solution,exercise.setup="exo1-solution"}
+y = x *3
+```
+````
+
+````markdown
+`r ''````{r exo3,exercise=TRUE,exercise.setup="exo2-solution"}
+
+```
+````
+ etc.
+ 
+ 
+ Le package {gradethis} permet de vérifier les solutions proposées à un exercice. Par exemple,
+ 
+ 
+L'exercice consiste à faire 2+3 
+````markdown
+`r ''````{r exo3}
+
+```
+````
+
+````markdown
+`r ''````{r exo3-solution}
+2+3
+```
+````
+
+on ajoute un chunk pour vérifier que le code est le bon (mais cela demande que la solution proposée contienne le même code que dans la solution)
+````markdown
+`r ''````{r exo3-code-check}
+grade_this_code()
+```
+````
+
+sinon on peut simplement vérifier la sortie du code proposé par l'utilisateur :
+````markdown
+`r ''````{r exo3-check}
+grade_result(
+  pass_if(~identical(.result, 5))
+)
+```
+````
+
+
+
+
+
+
 
 # Références
 
