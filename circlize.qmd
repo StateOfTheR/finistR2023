@@ -54,6 +54,7 @@ Le but de ce tutoriel est d'apprendre à comprendre comment fonctionne l'objet `
 ```{r}
 # Upload library
 library(circlize)
+library(tidyverse)
  
 # Create data
 data = data.frame(
@@ -285,3 +286,102 @@ couleur[value>0.5] = "red"
 ```
 
 Vous savez désormais comment fonctionne l'objet `circos` ! Il reste cependant beaucoup de fonctionnalités, qui sont disponibles sur le lien <https://jokergoo.github.io/circlize_book/book/introduction.html>.
+
+
+# Application in Genomics: Manhattan plot
+
+Pour faciliter l'analyse de données génomique, la librairie circlize propose des fonctions particulières. Ces fonctions sont les mêmes que les fonctions graphiques de base, mais exigent un format spécial des données d'entrée : 
+  *  circos.genomicTrack()
+  * circos.genomicPoints()
+  * circos.genomicLines()
+  * ...
+  
+Les données d'entrées doivent comporter trois colonnes définissant les régions génomiques : la catégorie génomique (dans la plupart des cas, les chromosomes), la position de départ sur la catégorie génomique et la position finale. Dans le cas où on dispose uniquement d'une valeur position en non un intervalle, il suffit de dupliquer cette position. 
+
+
+Dans cette partie, nous présentons comment réaliser un manhattan plot avec circlize. Nous utilisons un jeu de données simulé.  
+
+
+```{r}
+load("df_geno.RData")
+```
+
+## Initialisation du circos
+
+On initialise le circos à l'aide de données cytoband contenant la longueur des chromosomes, et optionnellement l'annotation dite "bande chromosomique" qui permet d'identifier les positions sur les chromosomes.
+
+```{r}
+cytoband_data <- data.frame(chr=unique(df_geno$CHR),
+                                   start = map_int(unique(df_geno$CHR),~df_geno%>% filter(CHR==.x) %>% pull(POS)  %>% min()),
+                                   end=map_int(unique(df_geno$CHR),~df_geno%>% filter(CHR==.x) %>% pull(POS)  %>% max())) 
+cytoband_data
+```
+
+
+```{r}
+## plotType = c("axis", "labels")- pour afficher les axes et les noms des chr
+## et pas les annotations (ici on en a pas)
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+circos.clear()
+```
+
+## Quelques paramètres utiles
+
+On peut afficher un sous-ensemble de chromosomes sur le circos à l'aide de l'argument chromosome.index à l'initialisation.  
+
+```{r}
+circos.initializeWithIdeogram(cytoband_data,chromosome.index = c(3,5,2),plotType = c("axis", "labels"))
+circos.clear()
+```
+
+La fonction circos.par définit les paramètres générales du graphe.
+On peut définir à quel degré du cercle commence la premier chromosome en le spécifiant dans l'argument start.degree. On peut également choisir l'espace entre les chromosomes à l'aide de l'argument gap.degree.
+
+```{r}
+circos.par("start.degree" = 90,"gap.degree" = rep(3, nrow(cytoband_data)))
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+circos.clear()
+```
+
+## Tracer le manhattan plot
+
+```{r}
+df_geno1 <- df_geno %>% mutate(log10PVAL.1 = -log10(PVAL.1)) %>%  select(CHR, POS, POS2, log10PVAL.1)
+
+# seuils de significativité
+pvalth <- 4
+pvalth2 <- 6
+
+# palette
+col_palette <-  RColorBrewer::brewer.pal(5, "Set2")
+
+# parametres du circos
+circos.par("start.degree" = 90,
+           "gap.degree" = rep(3, nrow(cytoband_data)),
+           "points.overflow.warning" = FALSE)
+
+# initialisation
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+
+# manhattan plot
+circos.genomicTrack(df_geno1,
+                    ylim=c(8,0), #inverser l'axe des abcisses
+      panel.fun = function(region, value, ...) {
+        
+        # colorier les points significatifs
+        col_value <- rep(col_palette[get.current.chromosome() %>% as.numeric()],nrow(value))
+        col_value[value>pvalth] <- "blue"
+        col_value[value>pvalth2] <- "red"
+        
+        # ajout des points -log10(pval)
+        circos.genomicPoints(region, value, 
+                             pch = 16, cex =0.2,
+                             col=col_value)
+        ## ajout des seuils
+        circos.segments(CELL_META$cell.xlim[1], pvalth, CELL_META$cell.xlim[2], pvalth,lty = 2)
+        circos.segments(CELL_META$cell.xlim[1], pvalth2, CELL_META$cell.xlim[2],pvalth2)
+      
+})
+circos.clear()
+```
+
