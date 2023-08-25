@@ -1,0 +1,537 @@
+---
+title: "R-Julia-Geostats"
+format:
+  html:
+    code-fold: false
+    warning: false
+    error: false
+    toc: true
+editor: source
+execute:
+  enabled: true
+---
+
+L'objectif est de comparer des packages R, et Julia pour du krigeage.
+
+On va utiliser :
+
+\- R : gstat
+
+\- R : GeoModels
+
+\- Julia : GeoStats
+
+On compare les points suivant :
+
+\- simplicité des données d'entrée
+
+\- concision du code
+
+\- vitesse d'exécution
+
+\- type d'estimation
+
+Pour chaque package, on calculera pour les mêmes données le variogramme empirique, puis on ajustera un variogramme théorique et on fera un krigeage.
+
+## Données
+
+```{r}
+library(dplyr)
+library(sp)
+library(terra)
+data(meuse)
+data(meuse.grid)
+
+library(tidyverse)
+library(gstat)
+library(sf)
+library(ggplot2)
+
+```
+
+On utilise les données meuse du package sp. Celles-ci contiennent des données de concentration en métaux près de la meuse, avec des coordonnées cartésiennes en m.
+
+Pour travailler sur ces concentrations, on passera tout au log afin de les normaliser.
+
+Pour la visualisation en R, on utilise le package terra.
+
+# 0 - Le package terra
+
+-   dernière version : 1.7-39 du 22/06/2023
+
+-   Travail des données spatiales sous 2 formes : raster et vector.
+
+    -   raster = grilles rectangulaires, adapté aux données continues -\> Classe SpatRaster
+
+    -   vector = points, lignes, polygones = données discrètes. -\> classe SpatVector
+
+-   Début de la doc = récap des méthodes importantes (il faut bien, la doc fait 300 pages)
+
+-   Sert à manipuler, visualiser des objets spatiaux, notamment après les calculs pour simplifier le travail sur les résultats.
+
+Méthode rast = créer un objet de classe SpatRaster. Le type de la 1ere entrée peut varier.
+
+```{r}
+meuseRast = rast(meuse.grid,type="xyz",crs = "EPSG:2154")
+meuseVect = vect(meuse,geom=(c('x','y')))
+```
+
+```{r}
+meuseRastCd = rast(select(meuse,x,y,zinc),type="xyz")
+log(meuseRastCd)
+meuseRastCu = rast(select(meuse,x,y,copper),type="xyz")
+meuseRastCuCd = c(meuseRastCd,meuseRastCd) #methode c() = combinaison de layers
+
+
+```
+
+# 1 - Package R gstat
+
+gstat est disponible sur le CRAN : https://CRAN.R-project.org/package=gstat
+
+On peut y trouver également un tutoriel sur le dataset "meuse" utilisé ici, qui présentent le type de données spatiales utilisées par le package (spatial dataframe, données grillées) et les méthodes permettant de travailler avec (méthodes de visualisation du package sp, ajustement de variogrammes, directionnels ou non, krigeage, simulation conditionnelle).
+
+La version la plus ancienne sur les archives du CRAN date de 2003.
+
+Au départ, les données spatiales supportées étaient celles du package sp, mais les données de type sf le sont également.
+
+INSERER AU BON ENDROIT LES CELLULES
+
+## Transformation au format sf
+
+```{r}
+df = select(meuse,x,y,cadmium,zinc)
+df_grid = select(meuse.grid,x,y)
+df_sf <- df %>% 
+  sf::st_as_sf( coords = c('x','y'))
+
+df_sf <- sf::st_make_valid(df_sf)
+df_grid_sf = df_grid%>% sf::st_as_sf(coords = c('x','y'))%>%sf::st_make_valid()
+ggplot(df, aes(y=log(zinc))) + 
+  geom_boxplot(notch=FALSE) +
+  labs(y = "Log(Zn concentration)") +
+  theme_minimal() +                                   
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank()
+  )
+```
+
+## Variogramme empirique
+
+Pour simplifier la comparaison avec le package Julia, on va se contenter d'une moyenne constante sans introduire de prédicteurs : on demande donc log(zinc)\~1. Si on avait voulu, comme dans le tutoriel du package, expliquer la moyenne par la distance à la rivière, il faudrait modifier cette formule en log(zinc)\~distance après avoir rajouté une colonne distance au sf dataframe.
+
+Appeler plot sur un objet issu de variogram permet d'en obtenir un tracé.
+
+```{r}
+start_time <- Sys.time()
+test <- variogram(log(zinc)~1  , df_sf,cutoff = 2000)
+end_time <- Sys.time()
+end_time - start_time
+plot(test)
+
+```
+
+## Le type vgm
+
+Plusieurs modèles de variogrammes spatiaux sont disponibles dans la librairie.
+
+```{r}
+show.vgms()
+(vgm())
+```
+
+Un variogramme théorique est un objet de type vgm, qui doit être initialisé avec des paramètres avant de l'insérer dans la fonction d'estimation.
+
+Un inconvénient dans la création d'un objet vgm est l'absence de nom pour certains paramètres, il faut se référer à la documentation pour savoir à quel place il faut rentrer quel argument lorsque'on appelle vgm(). Ne pas renseigner un argument initialise celui-ci à NA. Utiliser fit.variogram sur un objet avec des NA fait appel à une étape supplémentaire qui initialise avec des paramètres issus du variogramme empirique. Cela empêche de contrôler les valeurs initiales de l'estimation.
+
+## Estimation du variogramme théorique
+
+Les paramètres du variogramme théorique sont ajustés par moindres carrés sur le variogramme empirique.
+
+vgmModelwav \<- fit.variogram(test,vgm('Wav'))
+
+```{r}
+vgmModelexp <- fit.variogram(test, vgm(2, "Exp", 1000))
+vgmModelexp
+vgmModelmat <- fit.variogram(test, vgm(10, "Mat", 300, 4.5, kappa = 0.7))
+vgmModelmat
+vgmModelNA <- fit.variogram(test,vgm('Mat'))
+vgmModelNA
+
+start_time <- Sys.time()
+vgmModelwav <- fit.variogram(test,vgm('Wav'))
+end_time <- Sys.time()
+end_time - start_time
+
+vgmModelwav
+
+```
+
+La fonction plot() appelée sur un modèle estimé trace en continu le variogramme théorique et en points le variogramme empirique.
+
+```{r}
+plot(test, vgmModelmat)
+plot(test, vgmModelwav)
+
+
+```
+
+## Krigeage
+
+```{r}
+start_time <- Sys.time()
+krig <- krige(log(zinc)~1 , df_sf, df_grid_sf, model = vgmModelwav)
+end_time <- Sys.time()
+end_time - start_time
+
+
+Kres_pred = data.frame(x=meuse.grid$x,y=meuse.grid$y,pred=krig$var1.pred)
+krig_res<- terra::rast(Kres_pred, type="xyz", crs="EPSG:2154")
+
+
+Kres_var = data.frame(x=meuse.grid$x,y=meuse.grid$y,pred=krig$var1.var)
+krig_var<- terra::rast(Kres_var, type="xyz", crs="EPSG:2154")
+
+plot((krig_res), main = 'Krigeage de log(zinc) - gstat')
+plot(krig_var,main = 'Erreur de krigeage pour log(zinc) - gstat')
+```
+
+# 2 - Package R GeoModels
+
+GeoModels est un package relativement récent (2022), il prend la suite de CompRandFld suite à une mise à jour majeure de R.
+
+Il est disponible sur le CRAN :
+
+https://CRAN.R-project.org/package=GeoModels
+
+Le package propose des fonctions pour de la simulation, de l'inférence et de la prédiction de champs spatiaux et spatio-temporels, univarié ou multivarié. Il contient des méthode spour des champs Gaussiens et non Gaussiens.
+
+On peut travailler en coordonnées euclidiennes et sphériques.
+
+GeoModels propose de faire des modèles spatiaux et spatiotemporels.
+
+Les estimations se font par maximisation de vraisemblance composite.
+
+Du fait de la variété de modèles et de données possibles en entrée (spatial, spatiotemporel, 1 ou plusieurs variables ...), chaque fonction est définie généralement pour prendre en entrée des données (notamment data et coordonnées) sous plusieurs types. Dans tous les cas, on ne dépend pas de structures "évoluées", on n'a besoin que de vecteurs et de matrices. En contrepartie, on est probablement moins libres sur les systèmes de coordonnées.
+
+Les données en entrée doivent être, si on fait du spatial uniquement :
+
+\- data : un vecteur de taille $d$
+
+\- coordx : une matrice $d \times 2$ si on met directement les coordonnées, ou un vecteur de taille $d$ si on sépare les coordonnées
+
+\- coordy : NULL si on a déjà mis les 2 coordonnées dans coordx, vecteur de taille $d$ sinon.
+
+Il n'y a donc pas besoin de gérer des types de données spatiales comme dans gstat.
+
+```{r}
+library(GeoModels)
+
+data =log(df$zinc)
+
+coordx = df$x
+
+coordy = df$y
+```
+
+## Variogramme empirique
+
+```{r}
+
+
+# Variogramme empirique : 
+start_time <- Sys.time()
+emp_vario = GeoVariogram(data, coordx, coordy=coordy,numbins = 16,maxdist = 2000)
+
+end_time <- Sys.time()
+end_time - start_time
+
+plot(emp_vario,main = "Variogramme empirique Zinc - GeoModels")
+
+
+```
+
+## Modèles supportés
+
+Voir documentation, fonction "GeoCovMatrix"
+
+CorrParam, et NuisParam permettent d'obtenir la listes des paramètres requis pour les modèles.
+
+```{r}
+NuisParam('Gaussian')
+CorrParam("Exp")
+CorrParam('Matern')
+
+```
+
+## Estimation du variogramme théorique
+
+L'estimation nécessite de donner en entrée deux listes, fixed et start, correspondant aux paramètres fixés et libres dans l'ajustement.
+
+ATTENTION : si on ne fixe rien, il ne faut pas une liste vide mais un NULL, ou alors ne pas renseigner l'argument (NULL est la valeur par défaut)
+
+L'algorithme vérifiera automatiquement que tous les paramètres nécessaires sont remplis. Il n'y a pas comme dans gstat de méthode qui rempli automatiquement des oublis, il faut vérifier avec les fonctions précédentes qu'on a bien tout initialisé.
+
+```{r}
+
+fixed = NULL
+
+start = list( mean = 0 , sill=0.5,smooth=0.7,scale = 300,nugget = 0.044)
+
+modelemat = GeoFit(data, coordx=coordx, coordy=coordy, fixed = fixed, start=start, 
+
+corrmodel="Matern",distance="Eucl",maxdist = 2000)
+
+modelemat
+
+# Vario fit : il faut mettre en entrée des valeurs de départ et des valeurs qu'on fixe pour les paramètres
+
+fixed = list(nugget = 0.044) #fixe la valeur obtenue avec gstat
+
+start = list( mean = 0 , sill=0.5,smooth=0.7,scale = 300)
+
+modelemat2 = GeoFit(data, coordx=coordx, coordy=coordy, fixed = fixed, start=start, 
+
+corrmodel="Matern",distance="Eucl",maxdist = 2000)
+
+modelemat2
+
+
+
+```
+
+```{r}
+fixed = NULL
+
+start = list( mean = 0 , sill=0.5,scale = 300,nugget = 0.044)
+
+start_time <- Sys.time()
+modelewav = GeoFit(data, coordx=coordx, coordy=coordy, fixed = fixed, start=start, 
+
+corrmodel="Wave",distance="Eucl",maxdist = 2000)
+
+end_time <- Sys.time()
+end_time - start_time
+
+modelewav
+
+
+```
+
+On peut comparer les modèles que l'on vient de faire avec le variogramme empirique :
+
+```{r}
+
+# Comparaison avec l'empirique matern :
+
+GeoCovariogram(modelemat, distance="Eucl",show.vario= TRUE,vario = emp_vario)
+GeoCovariogram(modelemat2, distance="Eucl",show.vario= TRUE,vario = emp_vario)
+
+
+
+# Comparaison avec l'empirique Wave :
+
+GeoCovariogram(modelewav, distance="Eucl",show.vario= TRUE,vario = emp_vario)
+
+
+```
+
+## Krigeage
+
+```{r}
+locskrig = data.frame (x =meuse.grid$x,y= meuse.grid$y)
+
+start_time <- Sys.time()
+krig_geomodels = GeoKrig(loc= locskrig,coordx=coordx, coordy=coordy,corrmodel = 'Wave',param = c(modelewav$fixed,modelewav$param),mse =TRUE,data=data)
+
+end_time <- Sys.time()
+end_time - start_time
+
+coords  = cbind(coordx,coordy)
+
+Kres_pred_geo = data.frame(x=meuse.grid$x,y=meuse.grid$y,pred=krig_geomodels$pred)
+
+krig_res_geo<- terra::rast(Kres_pred_geo, type="xyz", crs="EPSG:2154")
+
+Kres_var_geo = data.frame(x=meuse.grid$x,y=meuse.grid$y,pred=krig_geomodels$mse)
+
+krig_var_geo<- terra::rast(Kres_var_geo, type="xyz", crs="EPSG:2154")
+
+plot((krig_res_geo), main = 'Krigeage de log(zinc) - GeoModels')
+
+plot(krig_var_geo,main = 'Erreur de krigeage pour log(zinc) - GeoModels')
+
+```
+
+# 3 - Package Julia GeoStats
+
+
+```{julia}
+# Import package
+using GeoDataFrames,Distributed, StatsAPI, Meshes, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables; const GDF=GeoDataFrames;import WGLMakie as Mke
+
+
+```
+
+```{julia}
+
+#import data
+meuse = CSV.read("C:/Users/flo28/Downloads/meuse.txt", delim="," ,DataFrame)
+meuse_grid = CSV.read("C:/Users/flo28/Downloads/meuse.grid.txt", delim="," ,DataFrame)
+meuse_geom = georef(CSV.File("C:/Users/flo28/Downloads/meuse.txt"),(:x,:y,:cadmium))
+
+
+
+#describe data
+describe(meuse)
+describe(meuse_grid)
+
+```
+
+
+```{julia}
+
+
+#add log zinc to the data
+logmeuse = log.(meuse.zinc)
+meuse.logzinc = logmeuse
+
+#create coord of data meuse
+coord = [(x, y) for (x, y) in zip(meuse.x, meuse.y)]
+#create spatial object of meuse
+meuselog = georef(meuse[:,["x","y","logzinc"]],coord)
+
+# list of properties with coordinates
+props = (logzinc=meuse.logzinc,)
+𝒟 = georef(props, coord)
+
+
+```
+
+```{julia}
+
+#empirical variogram
+empvario = EmpiricalVariogram(meuselog, :logzinc, maxlag = 2000.)
+
+#plot og empirical variogram
+Mke.plot(empvario)
+
+#plot theorical variogram
+Mke.plot(MaternVariogram(range=691, nugget=0.04))
+Mke.plot(SineHoleVariogram(range=691, nugget=0.25))
+
+#fit theorical and empirical variogramand 
+@time begin
+  fitvario = fit(Variogram, empvario)
+end
+
+# fitvario = fit(Variogram, empvario)
+
+
+Mke.plot(empvario)
+Mke.plot!(fitvario, maxlag = 2000.)
+Mke.current_figure()
+
+```
+
+```{julia}
+#grid creation
+
+# Convert the x and y coordinates to numeric arrays
+x_coords = Float64.(meuse.x)
+y_coords = Float64.(meuse.y)# Create the Cartesian grid dimensions, origin, and spacing
+dims = (100, 100)  # Number of grid points in x and y directions
+origin = (minimum(x_coords), minimum(y_coords))  # Lower left corner of the grid
+spacing = ((maximum(x_coords) - minimum(x_coords)) / (dims[1] - 1),
+           (maximum(y_coords) - minimum(y_coords)) / (dims[2] - 1)) 
+           
+ # Cell spacing in x and y directions# Create the CartesianGrid
+𝒢 = CartesianGrid(dims, origin, spacing)
+```
+
+```{julia}
+
+𝒫 = EstimationProblem(𝒟, 𝒢, :logzinc)
+
+
+𝒮 = Kriging(:logzinc => (variogram=MaternVariogram(nugget = 0.21, sill= 0.59, range = 706.78),))
+# @time begin
+#   𝒮 = Kriging(:logzinc => (variogram=MaternVariogram(range=700.),))
+# end
+
+
+
+
+# perform estimation
+@time begin
+    Ω = solve(𝒫, 𝒮)
+end
+
+Mke.plot(Ω.geometry, color = Ω.logzinc)
+viz(Ω)
+# plot estimate and conditional variance
+fig = Mke.Figure(resolution = (800, 400))
+viz(fig[1,1], Ω.geometry, color = Ω.logzinc)
+viz(fig[1,2], Ω.geometry, color = Ω.logzinc_variance)
+fig
+
+```
+
+```{julia}
+#Export Kriging
+
+GeoTables.save("C:/Users/flo28/Downloads/Kriging2.shp", Ω,force=true )
+
+#read kriging
+shape =  Shapefile.Handle("C:/Users/flo28/Downloads/Kriging2.shp").shapes
+# read grid 
+grid_shp =  Shapefile.Handle("C:/Users/flo28/Downloads/boundary1.shp").shapes
+
+
+
+
+# Define a reducer function (e.g., to sum values within each cell)
+reducer(cell_values) = sum(cell_values)
+
+rasterized_krig = rasterize(shape, fill=Ω.logzinc, reducer = reducer, size=(100, 100))
+plot(rasterized_krig)
+
+
+#Crop 
+masked = mask(rasterized_krig,with=grid_shp)
+Mke.plot(masked)
+
+
+
+
+```
+
+
+
+# 4 - Comparaison
+
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
+| Package                                 | R : gstat                                 | R : GeoModels                              | Julia : GeoStats                             |
++=========================================+===========================================+============================================+==============================================+
+| Type de données d'entrée                | sp, sf                                    | matrices, vecteurs                         | dataframes                                   |
+|                                         |                                           |                                            |                                              |
+|                                         |                                           |                                            | Coordonées de type CartesianGrid             |
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
+| Documentation                           | CRAN                                      | CRAN                                       | GitHub                                       |
+|                                         |                                           |                                            |                                              |
+|                                         |                                           |                                            | Pas entièrement à jour                       |
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
+| Tutoriel ?                              | CRAN                                      | https://vmoprojs.github.io/GeoModels-page/ | OUI ( vidéo uniquement)                      |
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
+| Estimation de paramètres du variogramme | Moindres carrés sur variogramme empirique | Vraisemblance composite sur les données    | Moindres carrés sur le variogramme empirique |
+|                                         |                                           |                                            |                                              |
+|                                         | 1 modèle à la fois au choix               | 1 modèle à la fois                         | Tous les modèles disponibles à la fois       |
+|                                         |                                           |                                            |                                              |
+|                                         |                                           | Paramètres fixes ou variables au choix     |                                              |
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
+| Vitesse d'exécution                     | ??                                        | ??                                         | ??                                           |
+|                                         |                                           |                                            |                                              |
+|                                         |                                           | Potentiellement plus intéressabt           |                                              |
++-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
