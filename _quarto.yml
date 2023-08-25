@@ -40,6 +40,8 @@ website:
           - torch_Python-PLN.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
+          - text: Introduction à JAX
+            href: jax-getting-started.qmd
         aria-label: GitHub
 
 
