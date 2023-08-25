@@ -7,15 +7,14 @@ output:
    toc_float: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
-library(tidyverse)
-```
 
 # Introduction
 
 L'objectif de cet atelier est de progresser dans notre utilisation de git. En particulier pour ce bootcamp, on veut voir comment intéragir avec le dépot finisR2023 (pull request, proposer un fichier markdown, ...) 
 
+# Commandes utilisées dans ce tutoriel
+
+git clone, git branch, git checkout, ...
 
 # Historique
 
