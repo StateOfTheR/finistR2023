@@ -303,7 +303,7 @@ Dans cette partie, nous présentons comment réaliser un manhattan plot avec cir
 
 
 ```{r}
-load("df_geno.RData")
+load("data/df_geno.RData")
 ```
 
 ## Initialisation du circos
