@@ -42,6 +42,7 @@ website:
           - torch_and_rcpp.qmd
           - text: Introduction à JAX
             href: jax-getting-started.qmd
+          - jit-example-pln.md
         aria-label: GitHub
 
 
