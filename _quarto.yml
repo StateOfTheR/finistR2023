@@ -40,6 +40,7 @@ website:
           - torch_Python-PLN.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
+          - jit-example-pln.md
         aria-label: GitHub
 
 
