@@ -39,6 +39,7 @@ Pour chaque package, on calculera pour les mêmes données le variogramme empiri
 library(dplyr)
 library(sp)
 library(terra)
+library(JuliaCall)
 data(meuse)
 data(meuse.grid)
 
@@ -174,15 +175,13 @@ La fonction plot() appelée sur un modèle estimé trace en continu le variogram
 ```{r}
 plot(test, vgmModelmat)
 plot(test, vgmModelwav)
-
-
 ```
 
 ## Krigeage
 
 ```{r}
 start_time <- Sys.time()
-krig <- krige(log(zinc)~1 , df_sf, df_grid_sf, model = vgmModelwav)
+krig <- krige(log(zinc)~1 , df_sf, df_grid_sf, model = vgmModelmat)
 end_time <- Sys.time()
 end_time - start_time
 
@@ -344,7 +343,7 @@ GeoCovariogram(modelewav, distance="Eucl",show.vario= TRUE,vario = emp_vario)
 locskrig = data.frame (x =meuse.grid$x,y= meuse.grid$y)
 
 start_time <- Sys.time()
-krig_geomodels = GeoKrig(loc= locskrig,coordx=coordx, coordy=coordy,corrmodel = 'Wave',param = c(modelewav$fixed,modelewav$param),mse =TRUE,data=data)
+krig_geomodels = GeoKrig(loc= locskrig,coordx=coordx, coordy=coordy,corrmodel = 'Wave',param = c(modelemat$fixed,modelewav$param),mse =TRUE,data=data)
 
 end_time <- Sys.time()
 end_time - start_time
@@ -362,38 +361,55 @@ krig_var_geo<- terra::rast(Kres_var_geo, type="xyz", crs="EPSG:2154")
 plot((krig_res_geo), main = 'Krigeage de log(zinc) - GeoModels')
 
 plot(krig_var_geo,main = 'Erreur de krigeage pour log(zinc) - GeoModels')
-
 ```
 
 # 3 - Package Julia GeoStats
 
+Julia est un langage de programmation de haut niveau, performant et dynamique pour le calcul scientifique, avec une syntaxe familière aux utilisateurs d'autres environnements de développement similaires (Matlab, R, Scilab, Python, etc.). Il fournit un compilateur sophistiqué, un système de types dynamiques avec polymorphisme paramétré, une exécution parallèle distribuée, des appels directs de fonctions C, Fortran et Python. (source Wikipedia)
 
+Un avantage de Julia est la possibilité d'écrire en LaTeX dans les lignes de code. 
+
+GeoStats est un package récent (avril 2015), sa dernière mise à jour date de 3 mois, c'est le package majeur en statistiques spatiales de Julia.
+
+Il est disponible sur le :
+
+https://juliaearth.github.io/GeoStats.jl/stable/
+
+Pour l'installer faire la commande suivante dans le terminal de votre IDE : ]add GeoStats
+
+Le package propose des fonctions pour de la simulation, de l'inférence et de la prédiction de champs spatiaux
+
+On peut travailler en coordonnées euclidiennes et sphériques.
+
+GeoStats propose de faire des modèles spatiaux. Sa particularité va être de tester tous les variogrammes disponibles (dans une même exécution) dans le package pour obtenir le plus optimisé avec les paramètres qui fonctionnent le mieux.
+
+## Bibliothèques Julia
 ```{julia}
+#| output: false
 # Import package
-using GeoDataFrames,Distributed, StatsAPI, Meshes, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables; const GDF=GeoDataFrames;import WGLMakie as Mke
-
-
+using GeoDataFrames,Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF=GeoDataFrames;import WGLMakie as Mke
 ```
 
+## Importer les données
 ```{julia}
+#| output: false
+
+# Get the current working directory
+current_directory = pwd()
 
 #import data
-meuse = CSV.read("meuse.txt", delim="," ,DataFrame)
-meuse_grid = CSV.read("meuse.grid.txt", delim="," ,DataFrame)
-meuse_geom = georef(CSV.File("meuse.txt"),(:x,:y,:cadmium))
-
-
+meuse = CSV.read(joinpath(current_directory,"meuse.txt"), delim="," ,DataFrame)
+meuse_grid = CSV.read(joinpath(current_directory, "meuse.grid.txt"), delim="," ,DataFrame)
+meuse_geom = georef(CSV.File(joinpath(current_directory,"meuse.txt"),(:x,:y,:cadmium)))
 
 #describe data
 describe(meuse)
 describe(meuse_grid)
-
 ```
 
-
+## Transformation en données spatiale
 ```{julia}
-
-
+#| output: false
 #add log zinc to the data
 logmeuse = log.(meuse.zinc)
 meuse.logzinc = logmeuse
@@ -406,132 +422,109 @@ meuselog = georef(meuse[:,["x","y","logzinc"]],coord)
 # list of properties with coordinates
 props = (logzinc=meuse.logzinc,)
 𝒟 = georef(props, coord)
-
-
 ```
 
-```{julia}
+## Variogramme
 
-#empirical variogram
-empvario = EmpiricalVariogram(meuselog, :logzinc, maxlag = 2000.)
+Le fit pour tester les différents variogramme va nous donner le SineHoleVariogram avec tous les paramètres optimisé. On décide à la base d'utiliser ce dernier mais il s'avère qu'il ne donne pas de bon résultat pour le Krigeage. On utilisera donc un variogramme de Matérn. Si vous voulez observer ce dernier dans le krigeage il suffira de mettre dans la fonction kriging, le variogramme désiré.
+```{julia}
+#| output: false
+#empirical variogram*
+
+@time empvario = EmpiricalVariogram(meuselog, :logzinc, maxlag = 2000.)
 
 #plot og empirical variogram
-Mke.plot(empvario)
-
+#Mke.plot(empvario) plot interactive
+CairoMakie.plot(empvario) #plot sans interaction
 #plot theorical variogram
-Mke.plot(MaternVariogram(range=691, nugget=0.04))
-Mke.plot(SineHoleVariogram(range=691, nugget=0.25))
+CairoMakie.plot(MaternVariogram(range=691, nugget=0.04))
+CairoMakie.plot(SineHoleVariogram(range=691, nugget=0.25))
 
 #fit theorical and empirical variogramand 
-@time begin
-  fitvario = fit(Variogram, empvario)
-end
+@time fitvario = fit(Variogram, empvario)
 
-# fitvario = fit(Variogram, empvario)
-
-
-Mke.plot(empvario)
-Mke.plot!(fitvario, maxlag = 2000.)
-Mke.current_figure()
-
+# CairoMakie.plot(empvario)
+# CairoMakie.plot!(fitvario, maxlag = 2000.)
+# CairoMakie.current_figure()
 ```
 
+## Création de la grille
 ```{julia}
-#grid creation
-
+#| output: false
+# grid creation
 # Convert the x and y coordinates to numeric arrays
 x_coords = Float64.(meuse.x)
 y_coords = Float64.(meuse.y)# Create the Cartesian grid dimensions, origin, and spacing
 dims = (100, 100)  # Number of grid points in x and y directions
-origin = (minimum(x_coords), minimum(y_coords))  # Lower left corner of the grid
+origin = (minimum(x_coords), minimum(y_coords)) # Lower left corner of the grid
 spacing = ((maximum(x_coords) - minimum(x_coords)) / (dims[1] - 1),
            (maximum(y_coords) - minimum(y_coords)) / (dims[2] - 1)) 
-           
  # Cell spacing in x and y directions# Create the CartesianGrid
 𝒢 = CartesianGrid(dims, origin, spacing)
 ```
 
+## Krigeage
 ```{julia}
-
+#| output: false
 𝒫 = EstimationProblem(𝒟, 𝒢, :logzinc)
 
-
-𝒮 = Kriging(:logzinc => (variogram=MaternVariogram(nugget = 0.21, sill= 0.59, range = 706.78),))
-# @time begin
-#   𝒮 = Kriging(:logzinc => (variogram=MaternVariogram(range=700.),))
-# end
-
-
-
+@time 𝒮 = Kriging(:logzinc => (variogram=MaternVariogram(nugget = 0.21,sill = 0.59,range=706.78),))
 
 # perform estimation
-@time begin
-    Ω = solve(𝒫, 𝒮)
-end
+@time Ω = solve(𝒫, 𝒮)
 
-Mke.plot(Ω.geometry, color = Ω.logzinc)
-viz(Ω)
-# plot estimate and conditional variance
-fig = Mke.Figure(resolution = (800, 400))
-viz(fig[1,1], Ω.geometry, color = Ω.logzinc)
-viz(fig[1,2], Ω.geometry, color = Ω.logzinc_variance)
-fig
-
+CairoMakie.plot(Ω.geometry, color = Ω.logzinc_variance)
 ```
 
+## Affichage du Krigeage
 ```{julia}
 #Export Kriging
-
-GeoTables.save("Kriging2.shp", Ω,force=true )
+GeoTables.save(joinpath(current_directory,"Kriging2.shp"), Ω,force=true )
 
 #read kriging
-shape =  Shapefile.Handle("Kriging2.shp").shapes
+shape =  Shapefile.Handle(joinpath(current_directory,"Kriging2.shp")).shapes
 # read grid 
-grid_shp =  Shapefile.Handle("boundary1.shp").shapes
-
-
-
+grid_shp =  Shapefile.Handle(joinpath(current_directory,"boundary1.shp")).shapes
 
 # Define a reducer function (e.g., to sum values within each cell)
 reducer(cell_values) = sum(cell_values)
 
 rasterized_krig = rasterize(shape, fill=Ω.logzinc, reducer = reducer, size=(100, 100))
-plot(rasterized_krig)
-
+Plots.plot(rasterized_krig)
 
 #Crop 
 masked = mask(rasterized_krig,with=grid_shp)
-Mke.plot(masked)
-
-
-
-
+Plots.plot(masked, title = "Krigeage logzinc")
 ```
 
 
 
 # 4 - Comparaison
 
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
-| Package                                 | R : gstat                                 | R : GeoModels                              | Julia : GeoStats                             |
-+=========================================+===========================================+============================================+==============================================+
-| Type de données d'entrée                | sp, sf                                    | matrices, vecteurs                         | dataframes                                   |
-|                                         |                                           |                                            |                                              |
-|                                         |                                           |                                            | Coordonées de type CartesianGrid             |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
-| Documentation                           | CRAN                                      | CRAN                                       | GitHub                                       |
-|                                         |                                           |                                            |                                              |
-|                                         |                                           |                                            | Pas entièrement à jour                       |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
-| Tutoriel ?                              | CRAN                                      | https://vmoprojs.github.io/GeoModels-page/ | OUI ( vidéo uniquement)                      |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
-| Estimation de paramètres du variogramme | Moindres carrés sur variogramme empirique | Vraisemblance composite sur les données    | Moindres carrés sur le variogramme empirique |
-|                                         |                                           |                                            |                                              |
-|                                         | 1 modèle à la fois au choix               | 1 modèle à la fois                         | Tous les modèles disponibles à la fois       |
-|                                         |                                           |                                            |                                              |
-|                                         |                                           | Paramètres fixes ou variables au choix     |                                              |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
-| Vitesse d'exécution                     | ??                                        | ??                                         | ??                                           |
-|                                         |                                           |                                            |                                              |
-|                                         |                                           | Potentiellement plus intéressabt           |                                              |
-+-----------------------------------------+-------------------------------------------+--------------------------------------------+----------------------------------------------+
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Package                                                   | R : gstat                                 | R : GeoModels                              | Julia : GeoStats                                                  |
++===========================================================+===========================================+============================================+===================================================================+
+| Type de données d'entrée                                  | sp, sf                                    | matrices, vecteurs                         | dataframes                                                        |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           |                                           |                                            | Coordonées de type CartesianGrid                                  |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           |                                           |                                            | Inconvénient : peu de documentation - difficile à prendre en main |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Documentation                                             | CRAN                                      | CRAN                                       | <https://github.com/JuliaEarth/GeoStats.jl>                       |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           |                                           | https://vmoprojs.github.io/GeoModels-page/ | https://juliapackages.com/p/geostats                              |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Estimation de paramètres du variogramme                   | Moindres carrés sur variogramme empirique | Vraisemblance composite sur les données    | Moindres carrés sur le variogramme empirique                      |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           | 1 modèle à la fois au choix               | 1 modèle à la fois                         | Tous les modèles disponibles à la fois                            |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           |                                           | Paramètres fixes ou variables au choix     |                                                                   |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Vitesse d'exécution - estimation du variogramme empirique | 0.05s                                     | 0.07s                                      | 0.012s                                                            |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Vitesse d'exécution - estimation du variogramme théorique | 0.04s                                     | 1.15s                                      | 0.05s (TOUS LES MODELES)                                          |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
+| Vitesse d'exécution - krigeage                            | 0.42s                                     | 0.87s                                      | 0.08s (Kriging)                                                   |
+|                                                           |                                           |                                            |                                                                   |
+|                                                           |                                           |                                            | 10.6s (solve)                                                     |
++-----------------------------------------------------------+-------------------------------------------+--------------------------------------------+-------------------------------------------------------------------+
