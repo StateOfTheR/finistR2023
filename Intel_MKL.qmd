@@ -15,6 +15,7 @@ date: 20/08/2023
 Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécessaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
 
+
 Nous les testons avec un produit matriciel de 10000 x 10000
 
 ```{r}
@@ -85,6 +86,7 @@ Pour changer la librairie Lapack
 `sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu`
 
 Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.
+
 
 
 ### Comparaison produit matriciel (`BLAS`)
@@ -216,10 +218,29 @@ On peut voir dans ces graph que dans l'ensemble **OpenBlas** et **Intel-MKL** so
 
 
 ```{r}
+types <- c("base","openblas","intel_mkl","lasy_intel_mkl")
+seeds <- 1:20
+```
+
+```{r}
+type <- types[[4]]
+res <- compare(seeds,type)
+
+saveRDS(res, file = paste0('res_',type,'.RDS'))
+```
+
+```{r}
+list_of_results <- grep("^res_.*.RDS$",dir(),value=T)
+res_table <- map_dfr(list_of_results,readRDS)
+```
+
+```{r}
 my_multiplot(res_table)
 ```
 
+
 ##### Sans la base `R` 
+
 
 ```{r}
 res_table %>% 
