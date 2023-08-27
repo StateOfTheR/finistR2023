@@ -15,6 +15,44 @@ date: 20/08/2023
 Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
 
+```{r}
+test_type <- function(seed, type = 'type'){
+  res <- data.frame(seed = rep(0,2), 
+                    time = rep(0,2), 
+                    type = rep(0,2),
+                    matrix_size = rep(0,2))
+  matrix_size <- c(200, 2000)
+  for(j in 1:2){
+      set.seed(seed)
+      mat = matrix(rnorm(matrix_size[[j]] ^ 2), ncol = matrix_size[[j]])
+      T1 = Sys.time()
+      res_tmp = mat %*% mat
+      T2 = Sys.time()
+      res$seed[[j]] <- seed
+      res$time[[j]] <- difftime(T2, T1)
+      res$type[[j]] <- type
+      res$matrix_size[[j]] <- matrix_size[[j]]
+  }
+  return(res)
+}
+
+compare <- function(seeds,type = 'type'){
+  if(type == "base"){
+    plan(multisession, workers = availableCores())
+    future_map_dfr(seeds,~test_type(.x,type = type))
+  }else{
+    map_dfr(seeds,~test_type(.x,type = type))
+  }
+}
+
+my_multiplot <- function(data){
+  ggplot(data = data,
+       aes(x = time, y = type, fill = type,col = type)) +
+  geom_boxplot(alpha = 0.5,show.legend = F) +  
+  facet_wrap("matrix_size",scales = "free_x",labeller = label_both)
+}
+```
+
 
 Nous les testons avec un produit matriciel de 10000 x 10000
 
@@ -110,6 +148,7 @@ toc()
 | **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
 
 ### Bench mark approfondie
+
 
 Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec un ordinateur à 8 coeurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.
 
@@ -211,6 +250,7 @@ On peut voir dans ces graph que dans l'ensemble **OpenBlas** et **Intel-MKL** so
 ```{r}
 my_multiplot(res_table)
 ```
+
 
 ##### Sans la base `R` 
 
