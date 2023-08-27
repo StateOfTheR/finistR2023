@@ -1,9 +1,0 @@
-
-justifier le texte
-
-
-A ce stade, nous nous sommes dits que nous avions mal géré le problème et que nous aurions dû utiliser la stratégie par défaut proposée dans le premier message d'erreur. Dans la suite, nous avons donc reconfiguré le pull (`git config pull.rebase false`) et nous avons recommencé ces ajouts de textes en parallèle avec les deux ordinateurs pour voir si c'était la bonne solution. Mais malgré cette reconfiguration du pull, git tentait toujours de le faire en fast forward. Cela venait de la commande `git config pull.ff only` exécutée précédemment et nous nous en sommes rendu compte en utilisant la commande `git config -l` qui permet de voir la configuration de certaines commandes git. Nous avons donc reconfiguré pull.ff :
-
-`git config pull.ff false`
-
-Et le merge des deux fichiers a bien fonctionné.

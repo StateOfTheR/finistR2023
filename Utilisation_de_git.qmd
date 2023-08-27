@@ -1,9 +1,15 @@
 ---
 title: "FinistR : Utilisation de git"
-date: "du 21 au 25 août 2023"
-format: 
-  html:
-    toc: true
+format: html
+toc: true
+author: 
+  - Armand Favrot
+  - Annaïg De Walsche
+  - Emre Anakök
+  - Caroline Cognot
+  - Florian Teste
+  - Barbara Bricout
+date: 2023-08-21
 ---
 
 
@@ -38,29 +44,32 @@ nvim Utilisation_de_git.qmd
 
 On commit les modification et on les push dans le dépôt.
 
-    git add .
-    git commit -m "création d'une branche pour l'atelier sur git"
-    git push --set-upstream origin Utilisation_de_git 
+```{r, eval = FALSE}
+git add .
+git commit -m "création d'une branche pour l'atelier sur git"
+git push --set-upstream origin Utilisation_de_git 
+```
+
 
 La partie `--set-upstream origin Utilisation_de_git` de la troisième commande n'est utile que parce que la branche n'existe pas encore dans le dépôt. Les prochains push se feront simplement avec la commande `git push`.
 
 A ce stade, le fichier Utilisation_de_git.qmd est comme suit : 
 
-![](rmd_1.png "fichier Rmd")
+![](resources/Utilisation_de_git/rmd_1.png "fichier Rmd")
 **-------------------------------------------------------------------------------------------------------------------------------------**
 
 **Ordinateur 2**
 
 Avec le deuxième ordinateur, nous avons cloné le dépôt, nous nous sommes placés sur la branche crée précédemment, nous avons ajouté du texte au fichier qmd sans modifier le texte déjà présent, puis nous avons pushé ces modifications sur le dépôt. Le fichier Utilisation_de_git.qmd était comme suit au moment du push :   
 
-![](rmd_2.png)
+![](resources/Utilisation_de_git/rmd_2.png)
 **-------------------------------------------------------------------------------------------------------------------------------------**
 
 **Ordinateur 1**
 
 En parallèle de cette opération, nous avons aussi fait un ajout de texte avec le premier ordinateur : 
 
-![](rmd_3.png)
+![](resources/Utilisation_de_git/rmd_3.png)
 
 Après avoir commité cette ajout de texte, nous avons fait un git pull et nous avons eu un conflit auquel nous ne nous attendions pas étant donné la nature des différences entre le fichier sur le dépôt et le fichier en local. Le message d'erreur était le suivant :  
 
@@ -109,9 +118,9 @@ A ce stade, nous nous sommes dits que nous avions mal géré le problème et que
 
 Et le merge des deux fichiers a bien fonctionné. 
 
-Au cours de ce travail, nous avons utilisé l'application gitk (installée avec `sudo apt install gitk`) qui permet de visualiser l'arbre des commits d'un répertoire git. Cette application s'utilise simplement en exécutant la commande `gitk` depuis le répertoire git désiré. Des options sont disponible pour customiser la vue et en particulier pour filtrer certaines branches de l'arbre (aller dans View > New view). La figure ci-dessous représente l'arbre de notre branche à la fin des différents tests que l'on a effectués. 
+Au cours de ce travail, nous avons utilisé l'application **gitk** (installée avec `sudo apt install gitk`) qui permet de visualiser l'arbre des commits d'un répertoire git. Cette application s'utilise simplement en exécutant la commande `gitk` depuis le répertoire git désiré. Des options sont disponible pour customiser la vue et en particulier pour filtrer certaines branches de l'arbre (aller dans View > New view). La figure ci-dessous représente l'arbre de notre branche à la fin des différents tests que l'on a effectués. 
 
-![](arbre_git_1.png)
+![](resources/Utilisation_de_git/arbre_git_1.png)
 
 Par ailleurs, un point important à mentionner est le recours à la commande `history` de bash pour accéder à l'historique de ce dernier (aussi accessible dans le fichier ~/.bash_history (pour les linuxiens)). En effet, cela nous a permis de retracer ce qui s'était passé et de mieux comprendre certaines choses. Nous avons cependant regrété que les log des commandes git ne soient pas automatiquement sauvegardés. Cela nous aurait beaucoup aidé.
 
@@ -146,7 +155,7 @@ Par ailleurs, un point important à mentionner est le recours à la commande `hi
 
 Au cours de cet atelier, nous avons pu voir l'intérêt de git pour un projet collaboratif comme celui de la réalisation d'un site web. Néanmoins, n'étant pour la plupart d'entre nous que des utilisateurs novices de git dont l'utilisation se résume parfois à celle d'un simple drive, nous nous sommes demandés quels bénéfices nous pouvions en tirer pour une utilisation solitaire. En particulier pour en finir avec les répertoires remplis de fichiers comme analyse.ipynb, analyse_V2.ipynb, ..., analyse_Vn.ipynb, dont l'un des intérêts est que cela permet de travailler simultanément sur plusieurs fichiers à la fois. 
 
-Une solution basée sur la création de différentes branches et des commandes `git stash` et `git pop`a émergé au moment de la restitution orale et sera testé dans un futur proche.
+Une solution basée sur la création de différentes branches et des commandes `git stash` et `git pop`a émergé au moment de la restitution et sera testée dans un futur proche.
 
 # Liens utiles 
 
