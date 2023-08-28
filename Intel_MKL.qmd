@@ -39,7 +39,6 @@ sessionInfo()
 
 Le plus simple est de télécharger les librairies Intel - MKL sur le [seafile d'Agroparistech](https://seafile.agroparistech.fr/d/696def33ceb848508cb0/). 
 
-
 #### 1 - Faire une copie de la version actuelle de `BLAS` et  `LAPACK`:
 
 Dans le dossier `C:\Program Files\R\Your_R_Version\bin\x64`, copier `Rblas.dll` et `Rlapack.dll` dans un autre dossier à **conserver** pour pouvoir revenir aux librairies de la base `R`.
@@ -115,6 +114,7 @@ toc()
 ### Bench mark approfondie
 
 Nous allons comparer les performances de toutes ces librairies sur Ubuntu avec un ordinateur à 8 cœurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.
+
 
 #### Set-up
 
@@ -234,13 +234,12 @@ list_of_results <- grep("^res_.*.RDS$",dir(),value=T)
 res_table <- map_dfr(list_of_results,readRDS)
 ```
 
+
 ```{r}
 my_multiplot(res_table)
 ```
 
-
 ##### Sans la base `R` 
-
 
 ```{r}
 res_table %>% 
