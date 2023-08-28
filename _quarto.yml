@@ -37,7 +37,6 @@ website:
           - torch_Python_regression.qmd
           - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
-          - torch_Python-PLN.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
           - text: Introduction à JAX
