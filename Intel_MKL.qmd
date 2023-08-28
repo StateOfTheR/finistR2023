@@ -117,7 +117,8 @@ Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec u
 ```{r}
 #| message: false
 library(ggplot2)
-library(tidyverse)
+library(purrr)
+library(dplyr)
 library(furrr)
 library(future)
 library(tictoc)
