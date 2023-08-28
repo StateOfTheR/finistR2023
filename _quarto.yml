@@ -36,8 +36,7 @@ website:
           - torch_Python_regression.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
-          - text: Introduction à JAX
-            href: jax-getting-started.qmd
+          - jax-getting-started.qmd
           - jit-example-pln.md
       - text: Autour de PLN
         menu: 
