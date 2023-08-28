@@ -173,28 +173,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-programmation-efficace">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
  <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
  <span class="dropdown-text">Introduction à Pytorch</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
- <span class="dropdown-text">PLN version R</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN version Python</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
- <span class="dropdown-text">PLN version Python</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./Intel_MKL.html" rel="" target="">
@@ -211,6 +195,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
  <span class="dropdown-text"></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-autour-de-pln" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Autour de PLN</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
   </li>  
     </ul>
   </li>
@@ -369,7 +372,7 @@ pip3 install optax</code></pre>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit odds <span class="op">=</span> jnp.dot(x, beta_true).block_until_ready()  <span class="co"># runs on the CPU</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>169 µs ± 1.39 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
+<pre><code>176 µs ± 151 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
 </div>
 </div>
 <p>On échantillonne ensuite des variables suivant une loi de Bernoulli.</p>
@@ -400,7 +403,7 @@ pip3 install optax</code></pre>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>244 µs ± 266 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>263 µs ± 384 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>mais on peut l’accélerer en compilant la fonction via le décorateur <code>@jit</code> ou la fonction <code>jit()</code> de façon complètement transparente pour l’utilisateur.</p>
@@ -416,7 +419,7 @@ pip3 install optax</code></pre>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>logistic_loss_jit <span class="op">=</span> jit(logistic_loss)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss_jit(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>202 µs ± 315 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>220 µs ± 2.04 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>La différence n’est pas très importante dans cet exemple. <code>jit()</code> permet des gains d’autant plus importants qu’on travaille sur des fonctions complexes.</p>
@@ -435,7 +438,7 @@ pip3 install optax</code></pre>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>f_jit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[]..
-The error occurred while tracing the function f at /tmp/ipykernel_6204/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
+The error occurred while tracing the function f at /tmp/ipykernel_6333/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
 See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConversionError</code></pre>
 </div>
 </div>
@@ -459,7 +462,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grad_loss <span class="op">=</span> grad(loss)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>6.81 ms ± 365 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<pre><code>8.81 ms ± 499 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
 <p><code>grad()</code> peut-être combiné à <code>jit()</code> dans tous les sens <em>à condition que les fonctions s’y prêtent</em>.</p>
@@ -470,7 +473,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>314 µs ± 637 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>349 µs ± 295 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>Mais ce n’est pas toujours intéressant.</p>
@@ -481,7 +484,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>338 µs ± 187 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>351 µs ± 1.42 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 </section>
@@ -503,14 +506,14 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X[:<span class="dv">1</span>,:, :], beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2.32 ms ± 10.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>2.67 ms ± 24 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée manuellement.</p>
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>12.7 ms ± 130 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>15.3 ms ± 289 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée via <code>vmap()</code>.</p>
@@ -529,14 +532,14 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched_vmap(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>10.7 ms ± 57 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>12.7 ms ± 61.7 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>À comparer à la version native jax qui est déjà nativement vectorisée pour cette opération</p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>9.85 ms ± 24.2 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>11.6 ms ± 65.2 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Le gain n’est pas très important dans cette example précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle.</p>
@@ -569,8 +572,8 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mise à jour du paramètre</span></span>
 <span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> theta <span class="op">-</span> lr <span class="op">*</span> grad_loss(theta) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 260 ms, sys: 20 ms, total: 280 ms
-Wall time: 281 ms</code></pre>
+<pre><code>CPU times: user 302 ms, sys: 8.16 ms, total: 310 ms
+Wall time: 310 ms</code></pre>
 </div>
 </div>
 <p>Et on peut vérifier que la fonction de perte décroit au cours du temps.</p>
@@ -676,8 +679,8 @@ step 600, loss: 8.130218505859375
 step 700, loss: 8.6331787109375
 step 800, loss: 8.014801025390625
 step 900, loss: 5.246734619140625
-CPU times: user 8.5 s, sys: 239 ms, total: 8.74 s
-Wall time: 8.35 s</code></pre>
+CPU times: user 8.59 s, sys: 216 ms, total: 8.81 s
+Wall time: 8.37 s</code></pre>
 </div>
 </div>
 <p>On peut vérifier que la fonction objective converge sans décroître systématiquement</p>
