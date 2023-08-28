@@ -14,52 +14,6 @@ date: 20/08/2023
 
 Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécéssaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent de d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
-```{r}
-#| message: false
-library(ggplot2)
-library(tidyverse)
-library(furrr)
-library(future)
-library(tictoc)
-```
-
-```{r}
-test_type <- function(seed, type = 'type'){
-  res <- data.frame(seed = rep(0,2), 
-                    time = rep(0,2), 
-                    type = rep(0,2),
-                    matrix_size = rep(0,2))
-  matrix_size <- c(200, 2000)
-  for(j in 1:2){
-      set.seed(seed)
-      mat = matrix(rnorm(matrix_size[[j]] ^ 2), ncol = matrix_size[[j]])
-      T1 = Sys.time()
-      res_tmp = mat %*% mat
-      T2 = Sys.time()
-      res$seed[[j]] <- seed
-      res$time[[j]] <- difftime(T2, T1)
-      res$type[[j]] <- type
-      res$matrix_size[[j]] <- matrix_size[[j]]
-  }
-  return(res)
-}
-
-compare <- function(seeds,type = 'type'){
-  if(type == "base"){
-    plan(multisession, workers = availableCores())
-    future_map_dfr(seeds,~test_type(.x,type = type))
-  }else{
-    map_dfr(seeds,~test_type(.x,type = type))
-  }
-}
-
-my_multiplot <- function(data){
-  ggplot(data = data,
-       aes(x = time, y = type, fill = type,col = type)) +
-  geom_boxplot(alpha = 0.5,show.legend = F) +  
-  facet_wrap("matrix_size",scales = "free_x",labeller = label_both)
-}
-```
 
 
 Nous les testons avec un produit matriciel de 10000 x 10000
@@ -82,23 +36,31 @@ sessionInfo()
 
 ### Installation sur Windows (seulement Intel MKL)
 
-Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut) via [ce lien](https://www.microsoft.com/en-US/download/details.aspx?id=51205). Une fois microsoft R open installé, il suffit d'aller récupérer dans le répertoire :
+Le plus simple est de télécharger les librairies Intel - MKL sur le [seafile d'Agroparistech](https://seafile.agroparistech.fr/d/696def33ceb848508cb0/). 
 
-`C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64`
+#### 1 - Faire une copie de la version actuelle de `BLAS` et  `LAPACK`:
 
-les trois fichiers nommés
+Dans le dossier `C:\Program Files\R\Your_R_Version\bin\x64`, copier `Rblas.dll` et `Rlapack.dll` dans un autre dossier à **conserver** pour pouvoir revenir aux librairies de la base `R`.
 
-1.  `Rblas.dll`
+#### 2 - Télécharger les librairies **Intel-MKL**
 
-2.  `Rlapack.dll`
+En allant sur <https://seafile.agroparistech.fr/d/696def33ceb848508cb0/> et en cliquant sur le boutton vert `ZIP` en haut à droite, vous pouvez télécharger le dossier. Puis le déziper.
 
-3.  `libiomp5md.dll`
+![](images/image_du_zip.jpg)
 
-et de les copier dans le répertoire
+#### 3 - Copier les bibliothèques
 
-`C:\Program Files\R\R-4.1.2\bin\x64`
+Lorsque le dossier est décompressé, allez dans `\Intel-MKL-Libs\Intel_MKL` et copiez tous les fichiers dans votre  `C:\Program Files\R\Your_R_Version\bin\x64`.
 
-Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.
+#### 4 - Réouverture de `R`
+
+Vous pouvez fermer votre session `R` et la rouvrir. Maintenant votre session `R` devrait fonctionner avec `Intel-MKL`.
+Vérifiez si vous avez gagné en efficacité sur votre ordinateur. Attention, le code déjà parallélisé pourrait être moins efficace car ces bibliothèques parallélisent déjà l'algèbre linéaire. 
+
+
+Concrètement on remplace les deux fichiers faisant appel au librairies `BLAS` et `LAPCK` par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.
+
+Pour retourner à la base `R` il suffit d'opérer à l'opération inverse, copie des fichiers `Rblas.dll`, `Rlapack.dll` et `libiomp5md.dll` du dossier `C:\Program Files\R\Your_R_Version\bin\x64`. Les mettre en sécurité puis copier les librairies des `Rblas.dll` et `Rlapack.dll` depuis votre sauvegarde ou <https://seafile.agroparistech.fr/d/696def33ceb848508cb0/>.
 
 ### Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)
 
@@ -146,28 +108,105 @@ toc()
 
 ### Bench mark approfondie
 
+Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec un ordinateur à 8 coeurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.
+
+#### Set-up
+
+##### Packages
 
 ```{r}
-types <- c("base","openblas","intel_mkl","lasy_intel_mkl")
+#| message: false
+library(ggplot2)
+library(tidyverse)
+library(furrr)
+library(future)
+library(tictoc)
+```
+
+##### Fonctions de test
+
+```{r}
+test_type <- function(seed, type = 'type'){
+  res <- data.frame(seed = rep(0,2), 
+                    time = rep(0,2), 
+                    type = rep(0,2),
+                    matrix_size = rep(0,2))
+  matrix_size <- c(200, 2000)
+  for(j in 1:2){
+      set.seed(seed)
+      mat = matrix(rnorm(matrix_size[[j]] ^ 2), ncol = matrix_size[[j]])
+      T1 = Sys.time()
+      res_tmp = mat %*% mat
+      T2 = Sys.time()
+      res$seed[[j]] <- seed
+      res$time[[j]] <- difftime(T2, T1)
+      res$type[[j]] <- type
+      res$matrix_size[[j]] <- matrix_size[[j]]
+  }
+  return(res)
+}
+
+compare <- function(seeds,type = 'type'){
+  if(type == "base"){
+    plan(multisession, workers = availableCores())
+    future_map_dfr(seeds,~test_type(.x,type = type))
+  }else{
+    map_dfr(seeds,~test_type(.x,type = type))
+  }
+}
+
+my_multiplot <- function(data){
+  ggplot(data = data,
+       aes(x = time, y = type, fill = type,col = type)) +
+  geom_boxplot(alpha = 0.5,show.legend = F) +  
+  facet_wrap("matrix_size",scales = "free_x",labeller = label_both)
+}
+```
+
+##### Paramètres
+
+```{r}
+#| eval: false
+types <- c("base","openblas","lasy_intel_mkl","intel_mkl_high_perf")
 seeds <- 1:20
 ```
 
+##### Selection de la librarie active
+
 ```{r}
-type <- types[[4]]
+#| eval: false
+type <- types[[1]]
+```
+
+##### Calculs et sauvegarde
+
+```{r}
+#| eval: false
 res <- compare(seeds,type)
 
 saveRDS(res, file = paste0('res_',type,'.RDS'))
 ```
+
+##### Chargement des résulats
 
 ```{r}
 list_of_results <- grep("^res_.*.RDS$",dir(),value=T)
 res_table <- map_dfr(list_of_results,readRDS)
 ```
 
+##### Graph des resultats complets
+
+On peut voir dans ces graph que dans l'ensemble **OpenBlas** et **Intel-MKL** sont plus efficaces que la base de R. Cependant d'autres remarques sont à faire : 
+
+1. **OpenBlas** est utilise constament l'ensembles des coeurs disponibles, ce comportement extreme peu devenir un problème lors des longs calculs où lorsque l'on utilise des librairies plus complexes comme par exemple `Rcpp` avec laquelle il obtiens des performances largement plus faible que la base.
+1. Nous avons aussi remarqué une certaine variations dans les performances de **Intel-MKL** sur Ubuntu seulement. Bien que tourjours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu'à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons "lasy intel mkl" les sessions de faible performances.
+
 
 ```{r}
 my_multiplot(res_table)
 ```
+
+##### Sans la base `R` 
 
 ```{r}
 res_table %>% 
@@ -176,5 +215,3 @@ res_table %>%
 ```
 
 
-## seafile link
-<https://seafile.agroparistech.fr/d/696def33ceb848508cb0/>
