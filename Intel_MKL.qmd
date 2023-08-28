@@ -185,13 +185,15 @@ type <- types[[1]]
 #| eval: false
 res <- compare(seeds,type)
 
-saveRDS(res, file = paste0('res_',type,'.RDS'))
+saveRDS(res, file = paste0('res_algebrica_calculations/res_',type,'.RDS'))
 ```
 
 ##### Chargement des résulats
 
 ```{r}
-list_of_results <- grep("^res_.*.RDS$",dir(),value=T)
+list_of_results <- grep("^res_algebrica_calculations/res_.*.RDS$",
+                        dir(recursive = T),
+                        value=T)
 res_table <- map_dfr(list_of_results,readRDS)
 ```
 
