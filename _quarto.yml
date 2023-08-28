@@ -1,0 +1,55 @@
+project:
+  type: website
+
+website:
+  title: "Finist'R 2023"
+  navbar:
+    left:
+      - icon: github
+        href: https://github.com/StateOfTheR/finistR2023
+        aria-label: GitHub
+      - text: "Instructions"
+        href: instructions.qmd
+    right:
+      - text: Enseignement
+        menu:
+        - text: Learnr
+          href: learnr.qmd
+        - text: exams
+          href: exams.qmd
+        aria-label: GitHub
+      - text: Workflow
+        menu:
+        - text: Issue - Reprex
+          href: issue_reprex.qmd
+        aria-label: GitHub
+      - text: Analyse statistique
+        menu:
+        - text: INLA
+          href: R_INLA.qmd
+        - text: Tidymodels
+          href: tidymodels_build_new_model.qmd
+        aria-label: GitHub
+      - text: Programmation Efficace
+        menu: 
+          - torch_test-brulee.qmd
+          - torch_Python_R_ResNet.qmd
+          - torch_Python_regression.qmd
+          - torch_R_PLN.qmd
+          - torch_Python-PLN.qmd
+          - torch_Python-PLN.qmd
+          - Intel_MKL.qmd
+          - torch_and_rcpp.qmd
+          - text: Introduction à JAX
+            href: jax-getting-started.qmd
+          - jit-example-pln.md
+        aria-label: GitHub
+
+
+
+format:
+  html:
+    theme: flatly
+    highlight: tango
+    toc: true
+    
