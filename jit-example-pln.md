@@ -453,9 +453,7 @@ plt.legend()
 plt.show()
 ```
 
-![](jit-example-pln_files/figure-markdown_strict/cell-15-output-1.png)
-
-## Conclusion
+![](resources/jit-example-pln_files/figure-markdown_strict/cell-15-output-1.png)
 
 We see that jit script and jit trace reduce computation time by a few
 second over the non jitted code. Hence, jit compilation in pytorch can
