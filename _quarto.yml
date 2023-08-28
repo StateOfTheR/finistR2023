@@ -32,16 +32,18 @@ website:
         aria-label: GitHub
       - text: Programmation Efficace
         menu: 
-          - torch_test-brulee.qmd
           - torch_Python_R_ResNet.qmd
           - torch_Python_regression.qmd
-          - torch_R_PLN.qmd
-          - torch_Python-PLN.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
           - text: Introduction à JAX
             href: jax-getting-started.qmd
           - jit-example-pln.md
+      - text: Autour de PLN
+        menu: 
+          - torch_test-brulee.qmd
+          - torch_R_PLN.qmd
+          - torch_Python-PLN.qmd
         aria-label: GitHub
 
 
