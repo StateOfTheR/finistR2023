@@ -370,7 +370,7 @@ pip3 install optax</code></pre>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit odds <span class="op">=</span> jnp.dot(x, beta_true).block_until_ready()  <span class="co"># runs on the CPU</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>194 µs ± 1.76 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
+<pre><code>163 µs ± 511 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
 </div>
 </div>
 <p>On échantillonne ensuite des variables suivant une loi de Bernoulli.</p>
@@ -400,7 +400,7 @@ pip3 install optax</code></pre>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>292 µs ± 4.2 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>250 µs ± 239 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>mais on peut l’accélerer en compilant la fonction via le décorateur <code>@jit</code> ou la fonction <code>jit()</code> de façon complètement transparente pour l’utilisateur.</p>
@@ -416,7 +416,7 @@ pip3 install optax</code></pre>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>logistic_loss_jit <span class="op">=</span> jit(logistic_loss)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss_jit(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>236 µs ± 21.6 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>207 µs ± 141 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>La différence est assez importante dans cet exemple mais il n’est pas toujours intéressant ni même possible de jitter une fonction.</p>
@@ -435,7 +435,7 @@ pip3 install optax</code></pre>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>f_jit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[]..
-The error occurred while tracing the function f at /tmp/ipykernel_6122/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
+The error occurred while tracing the function f at /tmp/ipykernel_6332/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
 See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConversionError</code></pre>
 </div>
 </div>
@@ -458,7 +458,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>grad_loss <span class="op">=</span> grad(loss)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>7.39 ms ± 491 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<pre><code>6.91 ms ± 301 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="16">
@@ -468,7 +468,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>368 µs ± 5.33 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>328 µs ± 58.1 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>Mais ce n’est pas toujours intéressant.</p>
@@ -479,7 +479,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>375 µs ± 3.49 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>328 µs ± 102 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 </section>
@@ -502,7 +502,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>compute_odds(X[:<span class="dv">1</span>,:, :], beta_true).shape</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X[:<span class="dv">1</span>,:, :], beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>2.85 ms ± 79.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>2.29 ms ± 14.6 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée manuellement.</p>
@@ -510,7 +510,7 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>compute_odds_batched(X, beta_true).shape</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>13.5 ms ± 182 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>11.1 ms ± 36.8 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée via <code>vmap()</code>.</p>
@@ -529,14 +529,14 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched_vmap(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>11.9 ms ± 279 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>10.5 ms ± 60.9 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>A comparer à la version native jax qui est déjà nativement vectorisée pour cette opération</p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>11.1 ms ± 210 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>9.71 ms ± 22.7 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 </section>
@@ -568,8 +568,8 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mise à jour du paramètre</span></span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> theta <span class="op">-</span> lr <span class="op">*</span> grad_loss(theta) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 318 ms, sys: 24.2 ms, total: 342 ms
-Wall time: 341 ms</code></pre>
+<pre><code>CPU times: user 269 ms, sys: 8.1 ms, total: 277 ms
+Wall time: 277 ms</code></pre>
 </div>
 </div>
 <p>Et on peut vérifier que la fonction de perte décroit au cours du temps.</p>
@@ -677,7 +677,7 @@ step 600, loss: 11.057373046875
 step 700, loss: 7.914306640625
 step 800, loss: 10.06451416015625
 step 900, loss: 8.030914306640625
-CPU times: user 8.33 s, sys: 210 ms, total: 8.54 s
+CPU times: user 8.48 s, sys: 182 ms, total: 8.66 s
 Wall time: 8.27 s</code></pre>
 </div>
 </div>
