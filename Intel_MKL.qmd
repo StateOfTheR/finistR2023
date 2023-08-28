@@ -14,12 +14,8 @@ date: 20/08/2023
 ---
 
 
-<<<<<<< HEAD
 Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécessaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
-
-=======
->>>>>>> fb5245e (work in progress)
 Nous les testons avec un produit matriciel de 10000 x 10000.
 
 ```{r}
@@ -127,11 +123,6 @@ Nous allons comparer les performances de toutes ces librairies sur Ubuntu avec u
 
 ##### Packages
 
-Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec un ordinateur à 8 coeurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.
-
-#### Set-up
-
-##### Packages
 
 ```{r}
 #| message: false
@@ -183,6 +174,7 @@ my_multiplot <- function(data){
 }
 ```
 
+
 ##### Paramètres
 
 ```{r}
@@ -191,6 +183,7 @@ types <- c("base","openblas","lasy_intel_mkl","intel_mkl_high_perf")
 seeds <- 1:20
 ```
 
+
 ##### Sélection de la librarie active
 
 ```{r}
@@ -198,7 +191,9 @@ seeds <- 1:20
 type <- types[[1]]
 ```
 
+
 ##### Calculs et sauvegarde
+
 
 ```{r}
 #| eval: false
@@ -220,13 +215,10 @@ res_table <- map_dfr(list_of_results,readRDS)
 
 On peut voir dans ces graphiques que dans l'ensemble **OpenBlas** et **Intel-MKL** sont plus efficaces que la base de R. Cependant d'autres remarques sont à faire : 
 
-<<<<<<< HEAD
 1. **OpenBlas** est utilise constamment l'ensemble des cœurs disponibles, ce comportement extrême peu devenir un problème lors des longs calculs où lorsque l'on utilise des librairies plus complexes comme par exemple `Rcpp` avec laquelle il obtiens des performances largement plus faible que la base.
 1. Nous avons aussi remarqué une certaine variations dans les performances de **Intel-MKL** sur Ubuntu seulement. Bien que toujours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu'à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons "lasy intel mkl" les sessions de faible performances.
-=======
-1. **OpenBlas** utilise constamment l'ensemble des coeurs disponibles, ce comportement extrême peut devenir un problème lors des longs calculs où lorsque l'on utilise des librairies plus complexes comme par exemple `Rcpp` avec laquelle il obtient des performances largement plus faible que la base.
-1. Nous avons aussi remarqué une certaine variation dans les performances de **Intel-MKL** sur Ubuntu seulement. Bien que toujours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu'à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graphiques, nous appelons "lasy intel mkl" les sessions de faibles performances.
->>>>>>> fb5245e (work in progress)
+
+
 
 
 ```{r}
@@ -251,7 +243,6 @@ res_table <- map_dfr(list_of_results,readRDS)
 my_multiplot(res_table)
 ```
 
-
 ##### Sans la base `R` 
 
 ```{r}
@@ -259,8 +250,6 @@ res_table %>%
   filter(type != "base") %>% 
   my_multiplot()
 ```
-<<<<<<< HEAD
-
 
 ### Références
 
@@ -268,9 +257,3 @@ res_table %>%
 - <https://www.openblas.net/>
 - <https://github.com/xianyi/OpenBLAS/wiki/faq>
 
-
-
-
-
-=======
->>>>>>> fb5245e (work in progress)
