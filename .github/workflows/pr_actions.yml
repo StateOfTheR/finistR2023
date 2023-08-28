@@ -2,8 +2,8 @@ name: pr_website
 on:
   pull_request:
     branches: main
-    
-jobs:   
+
+jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
@@ -13,6 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Additional Packages
-        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize'))"
+        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall'))"
       - name: Generate slides
         run: "quarto render"
