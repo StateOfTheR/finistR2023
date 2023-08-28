@@ -1,5 +1,5 @@
 ---
-title: "jit with pytorch"
+title: "JIT with pytorch"
 format: html
 toc: true
 author: 
@@ -7,9 +7,15 @@ author:
 date: 25/08/2023
 ---
 
+# FinistR : bootcamp R à Roscoff
+
+## JIT compilation with pytorch
+
+We study Just In Time (JIT) compilation with pytorch. This tutorial is to be compared with [JIT compilation in pytorch](https://stateofther.github.io/finistR2023/jit-example-pln-jax.html) where much more explanations are given.
+
 ## Set-up
 
-References to pytorch jit, by order of difficulty:
+References to pytorch JIT compilation, by order of difficulty:
 
 -   [pytorch jit official
     documentation](https://pytorch.org/docs/stable/jit.html)
@@ -26,7 +32,8 @@ References to pytorch jit, by order of difficulty:
 
 Make necessary imports
 
-``` python
+
+```python
 import torch
 import numpy as np
 import math
@@ -39,13 +46,11 @@ from pyPLNmodels.oaks import load_oaks
 
     Using a GPU.
 
-**NOTE**: **We use pytorch GPU !** JIT compilation is particularly
-efficient on GPU. On this particular example, we were not able to see
-any speed up on CPU between jitted code and non-jitted code. We suppose
-it might be possible to get a CPU speed up on other case study,
-considering neural networks for example..
 
-``` python
+**Note**: **We use pytorch GPU !** JIT compilation is particularly efficient on GPU. On this particular example, we were not able to see any speed up on CPU between jitted code and non-jitted code. We suppose it might be possible to get a CPU speed up on other case study, considering neural networks for example..
+
+
+```python
 device =  torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 torch.set_default_dtype(torch.float32)
@@ -54,7 +59,9 @@ myfloat = np.float32
 
     cuda
 
-``` python
+
+
+```python
 oaks = load_oaks()
 Y = np.asarray(oaks['counts']).astype(myfloat)
 Y = np.repeat(Y, 100, axis=0) # make data bigger to feel the speed up
@@ -68,9 +75,10 @@ lr = 1e-2
 
 ## Original non-jitted version
 
-We reuse the code from *torch for R versus pytorch*.
+We reuse the code from [PLN in pytorch](https://stateofther.github.io/finistR2023/torch_Python-PLN.html).
 
-``` python
+
+```python
 def _log_stirling(integer: torch.Tensor) -> torch.Tensor:
     integer_ = integer + (integer == 0)  # Replace 0 with 1 since 0! = 1!
     return torch.log(torch.sqrt(2 * np.pi * integer_)) + integer_ * torch.log(integer_ / math.exp(1))
@@ -149,36 +157,39 @@ class PLN:
 
 Let’s create the PLN object:
 
-``` python
+
+```python
 %%time
 myPLN = PLN(Y, O, X, device)
 ```
 
-    CPU times: user 281 ms, sys: 48.8 ms, total: 330 ms
-    Wall time: 85.5 ms
+    CPU times: user 523 ms, sys: 67 ms, total: 590 ms
+    Wall time: 134 ms
+
 
 and run the learning process:
 
-``` python
+
+```python
 %%time
 myPLN.fit(N_iter, lr = lr, tol=1e-8)
 ```
 
-    CPU times: user 34.3 s, sys: 168 ms, total: 34.5 s
-    Wall time: 34.8 s
+    CPU times: user 34.5 s, sys: 193 ms, total: 34.7 s
+    Wall time: 35.3 s
+
 
 ## Eager graph mode
 
 There are two ways to create the computational graph: **eager
-execution** and **graph execution**. The default mode in Pytorch is
+execution** and **graph execution**. The default mode in pytorch is
 **eager**, this means the computational graph is created at each forward
 pass in the graph. On the other hand, the **graph** mode adds an
 additional compilation step which builds the graph only once and lets
 the computations be done at a lower level.
 
 JIT (Just In Time) compilation is the process that builds an
-Intermediate Representation (IR) of the graph. This is the additional
-compilation step mentioned above.
+Intermediate Representation (IR) of the graph. This is the additional compilation step mentioned above.
 
 Using **graph mode**, we gain:
 
@@ -191,21 +202,19 @@ However, we lose:
 -   flexibility since we are tied to fixed array sizes, we cannot easily
     use control flows, …
 
-There are two ways in Pytorch to JIT our code, hence, there are two ways
-to use require the **graph mode**. We study these two ways in the next
-sections.
+There are two ways in pytorch to JIT our code, hence, there are two ways to use require the **graph mode**. We study these two ways in the next sections.
 
 ## JIT with `torch.jit.script`
 
 By reading the above mentioned references, we get that we cannot jit the
 `fit` function. Some reasons are:
 
--   `N_iter` is variable at compilation time (shape might change
-    depending on input).
--   the torch optimizer’s operations cannot be jitted.
--   the jit script cannot handle control flow or loops.
+-   `N_iter` is variable at compilation time (shape might change depending on input).
+-   the pytorch optimizer’s operations cannot be jitted.
+-   `torch.jit.script` cannot handle control flow or loops.
 
-``` python
+
+```python
 class jitPLN(torch.jit.ScriptModule) :
     Y : torch.Tensor
     O : torch.Tensor
@@ -294,17 +303,20 @@ def fit(pln, N_iter, lr, tol = 1e-8) :
 
 Let’s create the jitted PLN object:
 
-``` python
+
+```python
 %%time
 myjitPLN = jitPLN(Y, O, X, device)
 ```
 
-    CPU times: user 206 ms, sys: 0 ns, total: 206 ms
-    Wall time: 16.4 ms
+    CPU times: user 194 ms, sys: 4.8 ms, total: 199 ms
+    Wall time: 19.4 ms
+
 
 and run the learning process:
 
-``` python
+
+```python
 %%time
 scriptELBO = fit(myjitPLN, N_iter, lr = lr, tol = 1e-8)
 ```
@@ -313,16 +325,18 @@ scriptELBO = fit(myjitPLN, N_iter, lr = lr, tol = 1e-8)
      does not have profile information (Triggered internally at ../third_party/nvfuser/csrc/graph_fuser.cpp:104.)
       Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
 
-    CPU times: user 26.1 s, sys: 177 ms, total: 26.2 s
-    Wall time: 26.8 s
+
+    CPU times: user 27.3 s, sys: 164 ms, total: 27.4 s
+    Wall time: 28.2 s
+
 
 ## JIT with `torch.jit.trace`
 
-Here we jit trace each of the computational functions, the PLN class is
-just a container for the objects. The previous limitations from jit
-script are still present, notably, we cannot jit the main `for` loop.
+Here we use `torch.jit.trace` over each of the computational functions, the PLN class is
+just a container for the objects. The previous limitations from `torch.jit.script` are still present, notably, we cannot jit the main `for` loop.
 
-``` python
+
+```python
 class tracejitPLN:
     Y : torch.Tensor
     O : torch.Tensor
@@ -362,7 +376,8 @@ class tracejitPLN:
 
 Let’s create the PLN object and the jitted functions:
 
-``` python
+
+```python
 %%time
 mytracePLN = tracejitPLN(Y, O, X, device)
 
@@ -397,13 +412,16 @@ def get_inv(S):
 traced_getInv = torch.jit.trace(get_inv, get_Sigma(mytracePLN.n, mytracePLN.M, mytracePLN.S))
 ```
 
-    CPU times: user 233 ms, sys: 9.87 ms, total: 242 ms
-    Wall time: 43.5 ms
+    CPU times: user 401 ms, sys: 4.63 ms, total: 406 ms
+    Wall time: 56 ms
+
 
     /home/hugo/anaconda3/envs/finistR2023/lib/python3.9/site-packages/torch/jit/_trace.py:154: UserWarning: The .grad attribute of a Tensor that is not a leaf Tensor is being accessed. Its .grad attribute won't be populated during autograd.backward(). If you indeed want the .grad field to be populated for a non-leaf Tensor, use .retain_grad() on the non-leaf Tensor. If you access the non-leaf Tensor by mistake, make sure you access the leaf Tensor instead. See github.com/pytorch/pytorch/pull/30531 for more informations. (Triggered internally at aten/src/ATen/core/TensorBody.h:486.)
       if a.grad is not None:
 
-``` python
+
+
+```python
 def tracefit(pln, N_iter, lr, tol = 1e-8) :
 
     ELBO = np.zeros(N_iter, dtype=myfloat)
@@ -433,19 +451,22 @@ def tracefit(pln, N_iter, lr, tol = 1e-8) :
 
 and run the learning process:
 
-``` python
+
+```python
 %%time
 traceELBO = tracefit(mytracePLN, N_iter, lr = lr, tol = 1e-8)
 ```
 
-    CPU times: user 25.5 s, sys: 142 ms, total: 25.6 s
-    Wall time: 26.4 s
+    CPU times: user 25.6 s, sys: 171 ms, total: 25.8 s
+    Wall time: 26.5 s
+
 
 ## Conclusion
 
 We check that we get the same results with each method:
 
-``` python
+
+```python
 plt.plot(np.log(-myPLN.ELBO), label='NO jit')
 plt.plot(np.log(-scriptELBO), label='jit script')
 plt.plot(np.log(-traceELBO), label='jit trace')
@@ -453,12 +474,16 @@ plt.legend()
 plt.show()
 ```
 
-![](resources/jit-example-pln_files/figure-markdown_strict/cell-15-output-1.png)
 
-We see that jit script and jit trace reduce computation time by a few
-second over the non jitted code. Hence, jit compilation in pytorch can
-be interesting but induces strict limitations that the user must be
-aware of.
+    
+![elbo_graph.png](resources/jit-example-pln_files/elbo_graph.png)
+    
 
-Also, we should try to consider a more involved problem computationally
+
+- We see that jit script and jit trace reduce computation time by a few second over the
+non jitted code. Hence, jit compilation in
+pytorch can be interesting but induces strict limitations that the user
+must be aware of.
+
+- We should try to consider a more involved problem computationally
 speaking (bigger input data, computations involving neural networks, …)
