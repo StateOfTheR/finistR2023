@@ -37,12 +37,13 @@ website:
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
           - jax-getting-started.qmd
-          - jit-example-pln.md
       - text: Autour de PLN
         menu: 
           - torch_test-brulee.qmd
           - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
+          - jit-example-pln.html
+          - jit-example-pln-jax.md
         aria-label: GitHub
 
 
