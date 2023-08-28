@@ -42,7 +42,7 @@ website:
           - torch_test-brulee.qmd
           - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
-          - jit-example-pln.md
+          - jit-example-pln.html
           - jit-example-pln-jax.md
         aria-label: GitHub
 
