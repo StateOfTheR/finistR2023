@@ -41,6 +41,7 @@ website:
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
           - jit-example-pln.md
+          - jit-example-pln-jax.md
         aria-label: GitHub
 
 
