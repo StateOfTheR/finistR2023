@@ -375,7 +375,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.535, Running = 0.234, Post = 0.0239, Total = 0.793 
+    Pre = 0.543, Running = 0.223, Post = 0.0236, Total = 0.79 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -452,7 +452,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.347, Running = 0.201, Post = 0.0448, Total = 0.592 
+    Pre = 0.348, Running = 0.201, Post = 0.0444, Total = 0.593 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -464,7 +464,7 @@ Random effects:
 
 Model hyperparameters:
                            mean       sd 0.025quant 0.5quant 0.975quant   mode
-Precision for rand.eff 19903.65 19900.90     564.00 13861.14   74196.26 187.83
+Precision for rand.eff 19903.65 19900.90     563.99 13861.13   74196.18 187.82
 
 Deviance Information Criterion (DIC) ...............: 384.03
 Deviance Information Criterion (DIC, saturated) ....: 207.97
@@ -543,7 +543,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.33, Running = 0.205, Post = 0.0436, Total = 0.579 
+    Pre = 0.331, Running = 0.218, Post = 0.0439, Total = 0.593 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.090 0.012      0.067    0.089      0.113  0.089   0
@@ -555,7 +555,7 @@ Random effects:
 
 Model hyperparameters:
                        mean   sd 0.025quant 0.5quant 0.975quant mode
-Precision for rand.eff 6.97 8.93       1.58     4.10      27.94 2.69
+Precision for rand.eff 6.97 8.93       1.58     4.10      27.95 2.69
 
 Deviance Information Criterion (DIC) ...............: 380.37
 Deviance Information Criterion (DIC, saturated) ....: 204.31
@@ -700,10 +700,10 @@ Data attributes:
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>Lambda1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, ips, <span class="sc">~</span> <span class="fu">sum</span>(weight <span class="sc">*</span> <span class="fu">exp</span>(vegetation)))</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>Lambda1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      mean       sd   q0.025     q0.5   q0.975   median mean.mc_std_err
-1 643.7438 27.68395 591.7683 644.7145 694.4383 644.7145        2.768395
+<pre><code>      mean       sd   q0.025     q0.5  q0.975   median mean.mc_std_err
+1 645.9879 24.58564 600.9292 648.0948 696.903 648.0948        2.458564
   sd.mc_std_err
-1      1.975604</code></pre>
+1      1.807141</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -765,10 +765,10 @@ Data attributes:
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Lambda2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       mean       sd      q0.025      q0.5   q0.975    median mean.mc_std_err
-1 0.9230708 2.597849 0.005056062 0.1256613 9.582341 0.1256613       0.2597849
+<pre><code>      mean       sd      q0.025      q0.5  q0.975    median mean.mc_std_err
+1 1.243177 4.641191 0.007393698 0.2136189 8.52166 0.2136189       0.4641191
   sd.mc_std_err
-1     0.6586517</code></pre>
+1      1.865197</code></pre>
 </div>
 </div>
 <p>Look at the contributions to the linear predictor from the SPDE and from vegetation.</p>
@@ -917,7 +917,7 @@ Likelihoods:
     Data class: 'SpatialPointsDataFrame'
     Predictor: pos ~ .
 Time used:
-    Pre = 0.701, Running = 1.38, Post = 0.0895, Total = 2.17 
+    Pre = 0.715, Running = 1.4, Post = 0.0811, Total = 2.2 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 Intercept -1.295 1.282     -3.733   -1.327      1.312 -1.398   0
@@ -936,7 +936,7 @@ Model hyperparameters:
                           mean    sd 0.025quant 0.5quant 0.975quant  mode
 Theta1 for spatial_field  1.32 0.836     -0.172     1.26       3.10  1.04
 Theta2 for spatial_field -2.50 0.708     -4.006    -2.45      -1.24 -2.27
-Precision for village     4.83 2.423      1.685     4.32      10.97  3.45
+Precision for village     4.83 2.423      1.683     4.32      10.97  3.45
 
 Deviance Information Criterion (DIC) ...............: 2326.24
 Deviance Information Criterion (DIC, saturated) ....: 2326.24

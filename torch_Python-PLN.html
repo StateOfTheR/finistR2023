@@ -303,8 +303,8 @@ Fitting a Pln model with full covariance model.
 Tolerance 0.001 reached in 362 iterations
 Fitting a Pln model with full covariance model.
 Tolerance 0.001 reached in 371 iterations
-The slowest run took 37.23 times longer than the fastest. This could mean that an intermediate result is being cached.
-37.7 ms ± 31.4 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+The slowest run took 37.26 times longer than the fastest. This could mean that an intermediate result is being cached.
+38.1 ms ± 31.8 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
 </section>
@@ -396,7 +396,7 @@ The slowest run took 37.23 times longer than the fastest. This could mean that a
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit myPLN.fit(<span class="dv">50</span>, lr <span class="op">=</span> <span class="fl">0.1</span>, tol <span class="op">=</span> <span class="fl">1e-8</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.plot(np.log(<span class="op">-</span>myPLN.ELBO))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>172 ms ± 660 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+<pre><code>172 ms ± 1.14 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="torch_Python-PLN_files/figure-html/cell-5-output-2.png" width="596" height="411"></p>
