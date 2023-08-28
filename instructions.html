@@ -206,6 +206,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Torch &amp; Rcpp</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
+ <span class="dropdown-text">Introduction à JAX</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
  <span class="dropdown-text"></span></a>
   </li>  
@@ -342,8 +346,7 @@ RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc w
 
 RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio 
 RUN pip3 install pyplnmodels
-
-    </code></pre>
+RUN pip3 install optax</code></pre>
 </div>
 </div>
 <p>puis demander la construction de l’image à l’aide de la commande</p>
@@ -370,7 +373,7 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.4
+    container: stateofther/r-finistr2023:0.5
 
     steps:
       - name: Checkout repository
