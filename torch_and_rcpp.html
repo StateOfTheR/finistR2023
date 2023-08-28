@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#torch-on-r" id="toc-torch-on-r" class="nav-link active" data-scroll-target="#torch-on-r">Torch on R</a></li>
   <li><a href="#rcpp" id="toc-rcpp" class="nav-link" data-scroll-target="#rcpp">Rcpp</a>
   <ul class="collapse">
-  <li><a href="#exemple-1" id="toc-exemple-1" class="nav-link" data-scroll-target="#exemple-1">Exemple 1</a></li>
+  <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple">Exemple</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -302,38 +302,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="rcpp" class="level2">
 <h2 class="anchored" data-anchor-id="rcpp">Rcpp</h2>
 <p>L’utilisation de {Rcpp} permet d’exporter des fonction <code>C++</code> en R. Les fonctions seront alors directement utilisable dans un script et avec des arguments R. Ainsi on peu tirer parti de la compilation d’un code <code>C++</code>, et accélérer de nombreux calculs algébriques.</p>
+<p>Pour le calcul algébrique il est utile d’intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de <code>C++</code> lorsque l’on appel une fonction {Rcpp} dans R</p>
 <p><a href="https://stateofther.netlify.app/post/bases-rcpp/">Présentation finistR2018</a></p>
-<section id="exemple-1" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-1">Exemple 1</h3>
+<section id="exemple" class="level3">
+<h3 class="anchored" data-anchor-id="exemple">Exemple</h3>
 <p>Dans cet exemple nous allons calculer la loss d’une fonction logistique en R et en <code>C++</code>. Puis comparer les résultats avec le package {bench} de R.</p>
-<p>```{cpp, eval = FALSE, echo = TRUE} // [[Rcpp::depends(RcppArmadillo)]] #include &lt;RcppArmadillo.h&gt;</p>
-<p>// Logistic loss // [[Rcpp::export]] // const : pas de changement de valeur dans la fonction // arma:: : se sont les classes de Armadillo // using namespace arma to erase all arma:: // &amp; : appel sans copie donc plus rapide double loss_cpp( const arma::vec theta, const arma::vec&amp; y, const arma::mat&amp; x ) { arma::vec odds(x.n_rows); odds = x * theta; double log_lik; log_lik = arma::dot(y, odds) - arma::sum(arma::log(1 + arma::exp(odds))); return(-log_lik); }</p>
-<pre><code>
-
-
-::: {.cell}
-
-```{.cpp .cell-code}
-// [[Rcpp::depends(RcppArmadillo)]]
-#include &lt;RcppArmadillo.h&gt;
-
-// Logistic loss
-// [[Rcpp::export]]
-// const : pas de changement de valeur dans la fonction
-// arma:: : se sont les classes de Armadillo
-// using namespace arma to erase all arma::
-// &amp; :  appel sans copie donc plus rapide
-double loss_cpp( const arma::vec theta, const arma::vec&amp; y, const arma::mat&amp; x ) {
-  arma::vec odds(x.n_rows);
-  odds = x * theta;
-  double log_lik;
-  log_lik = arma::dot(y, odds) - arma::sum(arma::log(1 + arma::exp(odds)));
-  return(-log_lik);
-}</code></pre>
-<p>:::</p>
+<section id="coder-la-fonction-en-c" class="level4">
+<h4 class="anchored" data-anchor-id="coder-la-fonction-en-c">Coder la fonction en <code>C++</code></h4>
+<div class="cell" data-file="logisticloss.cpp">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span><span class="fu">depends</span>(RcppArmadillo)]]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#include &lt;RcppArmadillo.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> Logistic loss</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> [[Rcpp<span class="sc">::</span>export]]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> const <span class="sc">:</span> pas de changement de valeur dans la fonction</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> arma<span class="sc">::</span> <span class="er">:</span> se sont les classes de Armadillo</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">/</span> using namespace arma to erase all arma<span class="sc">::</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="er">//</span> <span class="er">&amp;</span> <span class="er">:</span>  appel sans copie donc plus rapide</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>double <span class="fu">loss_cpp</span>( const arma<span class="sc">::</span>vec theta, const arma<span class="sc">::</span>vec<span class="sc">&amp;</span> y, const arma<span class="sc">::</span>mat<span class="sc">&amp;</span> x ) {</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  arma<span class="sc">::</span>vec <span class="fu">odds</span>(x.n_rows);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">=</span> x <span class="sc">*</span> theta;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  double log_lik;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  log_lik <span class="ot">=</span> arma<span class="sc">::</span><span class="fu">dot</span>(y, odds) <span class="sc">-</span> arma<span class="sc">::</span><span class="fu">sum</span>(arma<span class="sc">::</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> arma<span class="sc">::</span><span class="fu">exp</span>(odds)));</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span>log_lik);</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="appel-et-compilation-du-script-depuis-r-avec-la-fonction-sourcecpp-de-rcpp" class="level4">
+<h4 class="anchored" data-anchor-id="appel-et-compilation-du-script-depuis-r-avec-la-fonction-sourcecpp-de-rcpp">Appel et compilation du script depuis R avec la fonction <code>sourceCpp()</code> de {Rcpp}</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sourceCpp</span>(<span class="at">file =</span> <span class="st">"logisticloss.cpp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="fonction-loss-en-r" class="level4">
+<h4 class="anchored" data-anchor-id="fonction-loss-en-r">Fonction loss en R</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>loss_R <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, y, x) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">&lt;-</span> x <span class="sc">%*%</span> theta</span>
@@ -341,42 +343,57 @@ double loss_cpp( const arma::vec theta, const arma::vec&amp; y, const arma::mat&
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span><span class="fu">as.numeric</span>(log_lik))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="résultats" class="level4">
+<h4 class="anchored" data-anchor-id="résultats">Résultats</h4>
+<p>On remarque que les résultats sont identiques pour la fonction {Rcpp} et la fonction en R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_cpp</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fl">1.0</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fl">1.0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_cpp</span>(theta, y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6587596</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_R</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">theta =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fl">1.0</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_R</span>(theta, y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6587596</code></pre>
 </div>
 </div>
+<p>Dans l’optique de comparer les performances de ces deux fonctions on utilise la fonction <code>mark()</code> du package {bench}.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n_covar &lt;- 30</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># size &lt;- 1000</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># theta &lt;- rnorm(n_covar)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- as.numeric(rbinom(size, 1, 0.3))</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># x &lt;- matrix(rnorm(size * n_covar), size, n_covar)</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># comp_tbl &lt;- bench::mark(</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   loss_cpp(theta, y, x),</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    loss_R(theta, y, x),</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   iterations = 1000</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># autoplot(comp_tbl, type = "boxplot")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n_covar <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_covar)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rbinom</span>(size, <span class="dv">1</span>, <span class="fl">0.3</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size <span class="sc">*</span> n_covar), size, n_covar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>comp_tbl <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">loss_R</span>(<span class="at">theta =</span> theta, <span class="at">y =</span> y, <span class="at">x =</span> x),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">loss_cpp</span>(<span class="at">theta =</span> theta, <span class="at">y =</span> y, <span class="at">x =</span> x),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">1000</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(comp_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required namespace: tidyr</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="torch_and_rcpp_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Comme on peut le voir sur le graphique plus haut la fonction <code>loss_cpp()</code> est environ <strong>2 fois</strong> plus efficace que la fonction <code>loss_R()</code>.</p>
+</section>
+<section id="attention-aux-librairies" class="level4">
+<h4 class="anchored" data-anchor-id="attention-aux-librairies">Attention aux librairies</h4>
+<p>La librairie <code>BLAS</code> de <code>OpenBlas</code> présenté lors de cette même session ne fonctionne pas correctement avec Rcpp. On observe une baisse de fonctionnement <strong>très quantitative</strong> (facteur 100). La librairie <code>BLAS</code> de <code>Intel MKL</code> reste quant à elle plus efficace.</p>
+</section>
 </section>
 </section>
 <section id="references" class="level2">

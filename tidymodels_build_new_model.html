@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()            masks stats::lag()
 ✖ parsnip::prepare_data() masks PLNmodels::prepare_data()
 ✖ recipes::step()         masks stats::step()
-• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
+• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poissonreg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -514,7 +514,7 @@ Remarque
 <pre><code>A multivariate Poisson Lognormal fit with full covariance model.
 ==================================================================
  nb_param    loglik       BIC       ICL
-      170 -1129.909 -1460.714 -2230.658
+      170 -1130.047 -1460.852 -2229.083
 ==================================================================
 * Useful fields
     $model_par, $latent, $latent_pos, $var_par, $optim_par
@@ -544,7 +544,7 @@ Remarque
 A multivariate Poisson Lognormal fit with full covariance model.
 ==================================================================
  nb_param    loglik       BIC       ICL
-      170 -1129.909 -1460.714 -2230.658
+      170 -1130.047 -1460.852 -2229.083
 ==================================================================
 * Useful fields
     $model_par, $latent, $latent_pos, $var_par, $optim_par
@@ -587,12 +587,12 @@ PLNmodels::PLN(formula = missing_arg(), data = missing_arg(),
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour recuperer les coefficients</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(resPLN<span class="sc">$</span>fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                  Che       Hyc      Hym      Hys      Psy        Aga       Glo
-(Intercept) -2.833822 -4.049306 1.051399 -2.17906 3.291263 -0.3560404 -2.217591
-                  Ath      Cea       Ced        Set        All       Han
-(Intercept) -1.661659 -3.36122 0.3593471 -0.6285713 -0.8500234 -1.351443
-                  Hfo        Hsp       Hve       Sta
-(Intercept) -2.190792 -0.3070371 -2.758038 0.9621415</code></pre>
+<pre><code>                  Che       Hyc      Hym       Hys      Psy        Aga
+(Intercept) -2.833542 -4.023858 1.056175 -2.176389 3.305965 -0.3468842
+                  Glo       Ath       Cea       Ced        Set        All
+(Intercept) -2.205421 -1.657137 -3.343267 0.3683657 -0.5991094 -0.8440133
+                  Han       Hfo        Hsp       Hve       Sta
+(Intercept) -1.233492 -2.123357 -0.2549654 -2.750357 0.9776199</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">coef</span>(myPLN), <span class="fu">coef</span>(resPLN<span class="sc">$</span>fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -734,16 +734,16 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Y
-1  0.13408541
-2  0.09317098
-3  0.16585222
-4  0.14393335
-5  0.12491126
-6  0.10001395
-7  0.19110900
-8  0.12491126
-9  0.07605752
-10 0.19110900</code></pre>
+1  0.13402450
+2  0.09294198
+3  0.16581305
+4  0.14387844
+5  0.12484545
+6  0.09977539
+7  0.19109165
+8  0.12484545
+9  0.07597876
+10 0.19109165</code></pre>
 </div>
 </div>
 </div>
@@ -766,14 +766,14 @@ Number of Fisher Scoring iterations: 6</code></pre>
    .pred_Y
      &lt;dbl&gt;
  1  0.134 
- 2  0.0932
+ 2  0.0929
  3  0.166 
  4  0.144 
  5  0.125 
- 6  0.100 
+ 6  0.0998
  7  0.191 
  8  0.125 
- 9  0.0761
+ 9  0.0760
 10  0.191 
 # ℹ 190 more rows</code></pre>
 </div>

@@ -240,7 +240,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#installation-sur-windows-seulement-intel-mkl" id="toc-installation-sur-windows-seulement-intel-mkl" class="nav-link active" data-scroll-target="#installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</a></li>
   <li><a href="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" id="toc-installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" class="nav-link" data-scroll-target="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas">Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)</a></li>
-  <li><a href="#test-de-la-librairie" id="toc-test-de-la-librairie" class="nav-link" data-scroll-target="#test-de-la-librairie">Test de la librairie</a></li>
+  <li><a href="#comparaison-produit-matriciel-blas" id="toc-comparaison-produit-matriciel-blas" class="nav-link" data-scroll-target="#comparaison-produit-matriciel-blas">Comparaison produit matriciel (<code>BLAS</code>)</a></li>
+  <li><a href="#bench-mark-approfondie" id="toc-bench-mark-approfondie" class="nav-link" data-scroll-target="#bench-mark-approfondie">Bench mark approfondie</a></li>
   </ul>
 </nav>
     </div>
@@ -282,35 +283,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>Nous allons d’abord installer les librairies <strong>Intel MKL</strong> (processeur Intel nécéssaire) &amp; <strong>Open Blas</strong>. Ces deux librairies d’algèbre linéaire permettent de d’optimiser et/ou de paralléliser un certains nombre d’opérations algébriques, notamment le calcul matriciel.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>Nous les testons avec un produit matriciel de 10000 x 10000</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size<span class="sc">**</span><span class="dv">2</span>), size, size)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size<span class="sc">**</span><span class="dv">2</span>), size, size)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Avant l’installation les librairies utilisées pour du calcul matriciel en R sont <code>libblas.so.3.10.0</code> et <code>liblapack.so.3.10.0</code> (on peut les voir avec la ligne)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="installation-sur-windows-seulement-intel-mkl" class="level3">
 <h3 class="anchored" data-anchor-id="installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</h3>
-<p>Le plus simple est de recycler les librairies de microsoft R Open (ex version de R distribuée par microsoft qui utilisait la librairie MKL par défaut). Une fois microsoft R open installé, il suffit d’aller récupérer dans le répertoire :</p>
-<p><code>C:\Program Files\Microsoft\R Open\R-4.0.2\bin\x64</code></p>
-<p>les trois fichiers nommés</p>
-<ol type="1">
-<li><p><code>Rblas.dll</code></p></li>
-<li><p><code>Rlapack.dll</code></p></li>
-<li><p><code>libiomp5md.dll</code></p></li>
-</ol>
-<p>et de les copier dans le répertoire</p>
-<p><code>C:\Program Files\R\R-4.1.2\bin\x64</code></p>
-<p>Concrètement on remplace les deux fichiers faisant appel au librairies blas et lapack par des fichiers du même nom mais qui en pratique font implicitement appel à mkl.</p>
+<p>Le plus simple est de télécharger les librairies Intel - MKL sur le <a href="https://seafile.agroparistech.fr/d/696def33ceb848508cb0/">seafile d’Agroparistech</a>.</p>
+<section id="faire-une-copie-de-la-version-actuelle-de-blas-et-lapack" class="level4">
+<h4 class="anchored" data-anchor-id="faire-une-copie-de-la-version-actuelle-de-blas-et-lapack">1 - Faire une copie de la version actuelle de <code>BLAS</code> et <code>LAPACK</code>:</h4>
+<p>Dans le dossier <code>C:\Program Files\R\Your_R_Version\bin\x64</code>, copier <code>Rblas.dll</code> et <code>Rlapack.dll</code> dans un autre dossier à <strong>conserver</strong> pour pouvoir revenir aux librairies de la base <code>R</code>.</p>
+</section>
+<section id="télécharger-les-librairies-intel-mkl" class="level4">
+<h4 class="anchored" data-anchor-id="télécharger-les-librairies-intel-mkl">2 - Télécharger les librairies <strong>Intel-MKL</strong></h4>
+<p>En allant sur <a href="https://seafile.agroparistech.fr/d/696def33ceb848508cb0/" class="uri">https://seafile.agroparistech.fr/d/696def33ceb848508cb0/</a> et en cliquant sur le boutton vert <code>ZIP</code> en haut à droite, vous pouvez télécharger le dossier. Puis le déziper.</p>
+<p><img src="images/image_du_zip.jpg" class="img-fluid"></p>
+</section>
+<section id="copier-les-bibliothèques" class="level4">
+<h4 class="anchored" data-anchor-id="copier-les-bibliothèques">3 - Copier les bibliothèques</h4>
+<p>Lorsque le dossier est décompressé, allez dans <code>\Intel-MKL-Libs\Intel_MKL</code> et copiez tous les fichiers dans votre <code>C:\Program Files\R\Your_R_Version\bin\x64</code>.</p>
+</section>
+<section id="réouverture-de-r" class="level4">
+<h4 class="anchored" data-anchor-id="réouverture-de-r">4 - Réouverture de <code>R</code></h4>
+<p>Vous pouvez fermer votre session <code>R</code> et la rouvrir. Maintenant votre session <code>R</code> devrait fonctionner avec <code>Intel-MKL</code>. Vérifiez si vous avez gagné en efficacité sur votre ordinateur. Attention, le code déjà parallélisé pourrait être moins efficace car ces bibliothèques parallélisent déjà l’algèbre linéaire.</p>
+<p>Concrètement on remplace les deux fichiers faisant appel au librairies <code>BLAS</code> et <code>LAPCK</code> par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.</p>
+<p>Pour retourner à la base <code>R</code> il suffit d’opérer à l’opération inverse, copie des fichiers <code>Rblas.dll</code>, <code>Rlapack.dll</code> et <code>libiomp5md.dll</code> du dossier <code>C:\Program Files\R\Your_R_Version\bin\x64</code>. Les mettre en sécurité puis copier les librairies des <code>Rblas.dll</code> et <code>Rlapack.dll</code> depuis votre sauvegarde ou <a href="https://seafile.agroparistech.fr/d/696def33ceb848508cb0/" class="uri">https://seafile.agroparistech.fr/d/696def33ceb848508cb0/</a>.</p>
+</section>
 </section>
 <section id="installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" class="level3">
 <h3 class="anchored" data-anchor-id="installation-sur-ubuntu-22.04-intel-mkl-et-open-blas">Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)</h3>
@@ -331,16 +337,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Dans les deux cas cela ouvre un menu montrant les différentes librairies disponibles.</p>
 </section>
 </section>
-<section id="test-de-la-librairie" class="level3">
-<h3 class="anchored" data-anchor-id="test-de-la-librairie">Test de la librairie</h3>
+<section id="comparaison-produit-matriciel-blas" class="level3">
+<h3 class="anchored" data-anchor-id="comparaison-produit-matriciel-blas">Comparaison produit matriciel (<code>BLAS</code>)</h3>
 <p>Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <table class="table">
 <colgroup>
@@ -383,8 +389,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+</section>
+<section id="bench-mark-approfondie" class="level3">
+<h3 class="anchored" data-anchor-id="bench-mark-approfondie">Bench mark approfondie</h3>
+<p>Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec un ordinateur à 8 coeurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.</p>
+<section id="set-up" class="level4">
+<h4 class="anchored" data-anchor-id="set-up">Set-up</h4>
+<section id="packages" class="level5">
+<h5 class="anchored" data-anchor-id="packages">Packages</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fonctions-de-test" class="level5">
+<h5 class="anchored" data-anchor-id="fonctions-de-test">Fonctions de test</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>test_type <span class="ot">&lt;-</span> <span class="cf">function</span>(seed, <span class="at">type =</span> <span class="st">'type'</span>){</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">seed =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span>), </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span>), </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">type =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">matrix_size =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">2</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  matrix_size <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">2000</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>){</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set.seed</span>(seed)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      mat <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(matrix_size[[j]] <span class="sc">^</span> <span class="dv">2</span>), <span class="at">ncol =</span> matrix_size[[j]])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      T1 <span class="ot">=</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      res_tmp <span class="ot">=</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      T2 <span class="ot">=</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      res<span class="sc">$</span>seed[[j]] <span class="ot">&lt;-</span> seed</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      res<span class="sc">$</span>time[[j]] <span class="ot">&lt;-</span> <span class="fu">difftime</span>(T2, T1)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      res<span class="sc">$</span>type[[j]] <span class="ot">&lt;-</span> type</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      res<span class="sc">$</span>matrix_size[[j]] <span class="ot">&lt;-</span> matrix_size[[j]]</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>compare <span class="ot">&lt;-</span> <span class="cf">function</span>(seeds,<span class="at">type =</span> <span class="st">'type'</span>){</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(type <span class="sc">==</span> <span class="st">"base"</span>){</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plan</span>(multisession, <span class="at">workers =</span> <span class="fu">availableCores</span>())</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">future_map_dfr</span>(seeds,<span class="sc">~</span><span class="fu">test_type</span>(.x,<span class="at">type =</span> type))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map_dfr</span>(seeds,<span class="sc">~</span><span class="fu">test_type</span>(.x,<span class="at">type =</span> type))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>my_multiplot <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> data,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> type, <span class="at">fill =</span> type,<span class="at">col =</span> type)) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,<span class="at">show.legend =</span> F) <span class="sc">+</span>  </span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"matrix_size"</span>,<span class="at">scales =</span> <span class="st">"free_x"</span>,<span class="at">labeller =</span> label_both)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="paramètres" class="level5">
+<h5 class="anchored" data-anchor-id="paramètres">Paramètres</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"base"</span>,<span class="st">"openblas"</span>,<span class="st">"lasy_intel_mkl"</span>,<span class="st">"intel_mkl_high_perf"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seeds <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="selection-de-la-librarie-active" class="level5">
+<h5 class="anchored" data-anchor-id="selection-de-la-librarie-active">Selection de la librarie active</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> types[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calculs-et-sauvegarde" class="level5">
+<h5 class="anchored" data-anchor-id="calculs-et-sauvegarde">Calculs et sauvegarde</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">compare</span>(seeds,type)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(res, <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">'res_algebrica_calculations/res_'</span>,type,<span class="st">'.RDS'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="chargement-des-résulats" class="level5">
+<h5 class="anchored" data-anchor-id="chargement-des-résulats">Chargement des résulats</h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>list_of_results <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^res_algebrica_calculations/res_.*.RDS$"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">dir</span>(<span class="at">recursive =</span> T),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">value=</span>T)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>res_table <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(list_of_results,readRDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="graph-des-resultats-complets" class="level5">
+<h5 class="anchored" data-anchor-id="graph-des-resultats-complets">Graph des resultats complets</h5>
+<p>On peut voir dans ces graph que dans l’ensemble <strong>OpenBlas</strong> et <strong>Intel-MKL</strong> sont plus efficaces que la base de R. Cependant d’autres remarques sont à faire :</p>
+<ol type="1">
+<li><strong>OpenBlas</strong> est utilise constament l’ensembles des coeurs disponibles, ce comportement extreme peu devenir un problème lors des longs calculs où lorsque l’on utilise des librairies plus complexes comme par exemple <code>Rcpp</code> avec laquelle il obtiens des performances largement plus faible que la base.</li>
+<li>Nous avons aussi remarqué une certaine variations dans les performances de <strong>Intel-MKL</strong> sur Ubuntu seulement. Bien que tourjours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu’à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons “lasy intel mkl” les sessions de faible performances.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_multiplot</span>(res_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Intel_MKL_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="sans-la-base-r" class="level5">
+<h5 class="anchored" data-anchor-id="sans-la-base-r">Sans la base <code>R</code></h5>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>res_table <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">!=</span> <span class="st">"base"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">my_multiplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Intel_MKL_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
