@@ -118,11 +118,10 @@ key,sub1,sub2 = random.split(key, 3)
 ones = jnp.ones((n, 1))
 x = random.normal(sub1, (n, p-1))
 x = jnp.concatenate([ones, x], axis = 1)
-key,subkey = random.split(key, 2)
 beta_true = random.normal(sub2, (p,1))
 ```
 
-Avant de les multiplier. On utilise ici la fonction `block_until_ready()` uniquement pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme {{future}} en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
+Avant de les multiplier. On utilise ici la fonction `block_until_ready()` uniquement pour mesurer le temps effectif de calcul. En effet, JAX fait de l'évaluation asynchrone (comme `{future}` en R) pour rendre la main à l'utilisateur après l'envoi de la commande. 
 
 ```{python}
 %timeit odds = jnp.dot(x, beta_true).block_until_ready()  # runs on the CPU
@@ -138,7 +137,7 @@ y = random.bernoulli(subkey, odds)
 
 et une perte logistique
 
-$$\ell(y, x, \theta) = -\log p(y; \sigma(x^{\top}\theta)) = -y (x^\top \theta) - \log(1 + e^{x^\top \theta})$$
+$$\ell(y, x, \theta) = -\log p(y; \sigma(x^{\top}\theta)) = -y (x^\top \theta) + \log(1 + e^{x^\top \theta})$$
 
 ```{python}
 def logistic_loss(y, x, theta):
@@ -149,6 +148,7 @@ def logistic_loss(y, x, theta):
 Qu'on peut tester sur un example simple
 
 ```{python}
+## Should be log(2)
 logistic_loss(True, 1.0, 0)
 ```
 
@@ -178,9 +178,9 @@ logistic_loss_jit = jit(logistic_loss)
 %timeit logistic_loss_jit(y, x, beta_true).block_until_ready()
 ```
 
-La différence est assez importante dans cet exemple mais il n'est pas toujours intéressant ni même possible de jitter une fonction. 
+La différence n'est pas très importante dans cet exemple. `jit()` permet des gains d'autant plus importants qu'on travaille sur des fonctions complexes. 
 
-En particulier, si une fonction implique un branchement conditionnel:
+Attention, il n'est pas toujours possible de jitter une fonction, en particulier, si cette fonction implique un branchement conditionnel:
 
 ```{python}
 def f(x):
@@ -190,13 +190,20 @@ def f(x):
     return 2*x
 ```
 
-on ne peut la jitter facilement. 
+L'erreur provient du fait que la définition de la fonction dépend de la valeur des entrées. 
 
 ```{python}
 #| error: true
 f_jit = jit(f)
 ## Renvoie une erreur
 f_jit(1)
+```
+
+
+Comme l'indique le message d'erreur
+
+```
+This concrete value was not available in Python because it depends on the value of the argument x.
 ```
 
 ### grad: auto-différentiation
@@ -215,12 +222,12 @@ theta = random.normal(key, (p, 1))
 grad_loss = grad(loss)
 ```
 
-`grad()` peut-être combiné à `jit()` dans tous les sens *à condition que les fonctions s'y prêtent*.
-
 ```{python}
 grad_loss = grad(loss)
 %timeit grad_loss(theta)
 ```
+
+`grad()` peut-être combiné à `jit()` dans tous les sens *à condition que les fonctions s'y prêtent*.
 
 ```{python}
 grad_loss = jit(grad(loss))
@@ -260,14 +267,12 @@ def compute_odds_batched(X,  theta):
 Et testons ce qui se passe. On appelle la fonction sur une tranche de X
 
 ```{python}
-compute_odds(X[:1,:, :], beta_true).shape
 %timeit compute_odds(X[:1,:, :], beta_true)
 ```
 
 Puis sur toutes les tranches de X avec notre fonction vectorisée manuellement. 
 
 ```{python}
-compute_odds_batched(X, beta_true).shape
 %timeit compute_odds_batched(X, beta_true)
 ```
 
@@ -287,11 +292,13 @@ compute_odds_batched_vmap(X, beta_true).shape
 %timeit compute_odds_batched_vmap(X, beta_true)
 ```
 
-A comparer à la version native jax qui est déjà nativement vectorisée pour cette opération
+À comparer à la version native jax qui est déjà nativement vectorisée pour cette opération
 
 ```{python}
 %timeit compute_odds(X, beta_true)
 ```
+
+Le gain n'est pas très important dans cette example précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle. 
 
 ## Optimisation de la fonction objective
 
@@ -356,11 +363,9 @@ On commence par définir la fonction objective avec un ordre précis pour les ar
 - données (avec le mot clé `data`) 
 
 ```{python}
-@jit 
 def logistic_loss(y, x, theta):
   odds = jnp.dot(x, theta)
   return -jnp.vdot(y, odds) + jnp.sum(jnp.log(1.0 + jnp.exp(odds)))
-@jit  
 def objective_and_grad(params, penalty, data):
   x = data[:, :-1]
   y = data[:, -1]
@@ -379,7 +384,7 @@ Adam est un algorithme d'optimisation stochastique. On définit donc un itérate
 batch_size = 100
 n_iter = 1000
 # key, subkey = random.split(key, 2)
-def data_iterator(key):    
+def data_iterator(key, data):    
     return random.choice(key, data, (batch_size, ), replace = False)
 ```
 
@@ -388,7 +393,7 @@ def data_iterator(key):
 On définit enfin une fonction de fit qui travaille sur des batchs. 
 
 ```{python}
-def fit(params, optimizer, key):
+def fit(data, params, optimizer, key):
   opt_state = optimizer.init(params)
   loss_vector = []
 
@@ -401,7 +406,7 @@ def fit(params, optimizer, key):
 
   for i in range(n_iter):
     key, subkey = random.split(key, 2)
-    batch = data_iterator(subkey)
+    batch = data_iterator(subkey, data)
     params, opt_state, loss_value = step(params, opt_state, batch)
     loss_vector.append(loss_value.item())
     if i % 100 == 0:
@@ -417,7 +422,7 @@ Finally, we can fit our parametrized function using the Adam optimizer provided 
 initial_params = jnp.zeros((x.shape[1], ))
 optimizer = optax.adam(learning_rate=1e-2)
 data = jnp.concatenate([x, y], axis = 1)
-params,loss_vector = fit(initial_params, optimizer, key)
+params,loss_vector = fit(data, initial_params, optimizer, key)
 ```
 
 
