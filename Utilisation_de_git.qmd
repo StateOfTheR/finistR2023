@@ -125,25 +125,24 @@ Au cours de ce travail, nous avons utilisé l'application **gitk** (installée a
 Par ailleurs, un point important à mentionner est le recours à la commande `history` de bash pour accéder à l'historique de ce dernier (aussi accessible dans le fichier ~/.bash_history (pour les linuxiens)). En effet, cela nous a permis de retracer ce qui s'était passé et de mieux comprendre certaines choses. Nous avons cependant regrété que les log des commandes git ne soient pas automatiquement sauvegardés. Cela nous aurait beaucoup aidé.
 
 
-# Commandes utilisées 
+# Commandes utiles
 
 *Commandes précédées de git* 
 
-- clone
-- branch
-  - branch -a
-  - branch *new_branch_name*
-- checkout
-- status
-- add
-- commit -m 
-- push 
-- pull
+- clone : clone un dépôt distant (de gitHub par exemple) dans un nouveau répertoire local.
+- branch : affiche les noms des branches sur lesquelles on a travaillé, celle avec une étoile correspond à celle sur laquelle on est.
+  - branch -a : affiche les noms de toutes les branches.
+  - branch *new_branch_name* : créer une nouvelle branche.
+- checkout *branch_name* : se déplacer sur une branche.
+- status : affiche des informations sur la situation de notre git (la branche surlaquelle on est, les commits en cours,...) 
+- add : Instruction à réaliser avant un commit, pour indiquer à git quels fichiers on veut suivre. Si on ne précise pas les noms des fichiers, par défaut tous les fichiers du répertoire sont ajoutés au suivi (sauf ceux du .gitignore).
+- commit -m *commit_message* : "commit" les changements réalisés dans les fichiers suivis (ceux qu'on a indiqué avec l'instruction add). On conseille de mettre un message explicite, c'est utile lorsqu'on souhaite revenir à une version précedente.
+- push : envoi des modifications des fichiers commités sur le dépot distant.
+- pull : incorpore les modifications du dépot distant dans le répertoire local.
   - pull
   - pull --rebase
   - pull --merge 
-- status 
-- config 
+- config : affiche les configurations de notre git 
   - config -l 
 - rebase --continue 
 - log
