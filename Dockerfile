@@ -35,5 +35,4 @@ RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc w
 
 RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio 
 RUN pip3 install pyplnmodels
-
-    
+RUN pip3 install optax
