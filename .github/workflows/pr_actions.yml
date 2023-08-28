@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
       - name: Additional Packages
+        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
       - name: Generate slides
         run: "quarto render"
