@@ -115,7 +115,6 @@ toc()
 
 Nous allons comparer les performances de toutes ces librairies sur Ubuntu avec un ordinateur à 8 cœurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.
 
-
 #### Set-up
 
 ##### Packages
