@@ -13,7 +13,6 @@ author:
 date: 20/08/2023
 ---
 
-
 Nous allons d'abord installer les librairies **Intel MKL** (processeur Intel nécessaire) & **Open Blas**. Ces deux librairies d'algèbre linéaire permettent d'optimiser et/ou de paralléliser un certains nombre d'opérations algébriques, notamment le calcul matriciel.
 
 Nous les testons avec un produit matriciel de 10000 x 10000.
@@ -112,6 +111,7 @@ toc()
 | **Windows 10**         | [Intel MKL]{style="color:red;"} | Intel Xeon - 16 processeur logiques | 15 min | [7 secondes]{style="color:red;"}    |
 | Ubuntu 22.04           | Intel MKL                       | Intel i7 - 8 processeur logiques    | 5 min  | Moins de 1 min                      |
 | **Ubuntu 22.04**       | [Open Blas]{style="color:red;"} | Intel i7 - 8 processeur logiques    | 5 min  | [9-14 secondes]{style="color:red;"} |
+
 
 
 ### Benchmark approfondi
@@ -217,26 +217,6 @@ On peut voir dans ces graphiques que dans l'ensemble **OpenBlas** et **Intel-MKL
 
 1. **OpenBlas** est utilise constamment l'ensemble des cœurs disponibles, ce comportement extrême peu devenir un problème lors des longs calculs où lorsque l'on utilise des librairies plus complexes comme par exemple `Rcpp` avec laquelle il obtiens des performances largement plus faible que la base.
 1. Nous avons aussi remarqué une certaine variations dans les performances de **Intel-MKL** sur Ubuntu seulement. Bien que toujours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu'à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons "lasy intel mkl" les sessions de faible performances.
-
-
-
-
-```{r}
-types <- c("base","openblas","intel_mkl","lasy_intel_mkl")
-seeds <- 1:20
-```
-
-```{r}
-type <- types[[4]]
-res <- compare(seeds,type)
-
-saveRDS(res, file = paste0('res_',type,'.RDS'))
-```
-
-```{r}
-list_of_results <- grep("^res_.*.RDS$",dir(),value=T)
-res_table <- map_dfr(list_of_results,readRDS)
-```
 
 
 ```{r}
