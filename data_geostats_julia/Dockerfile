@@ -22,12 +22,17 @@ RUN apt-get update \
   mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \ 
   libc6-i386
   
-RUN R -e "install.packages('rjags')"
-RUN R -e "install.packages('nimble')"
-RUN R -e "install.packages('ggmcmc')"
-RUN R -e "install.packages('rstan')"
-RUN R -e "install.packages('coda')"
+  
+RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
 RUN R -e "install.packages('reticulate')"
+RUN R -e "install.packages(c('inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR'))"
+RUN R -e "install.packages(c('tidymodels', 'brulee', 'reprex'))"
+RUN R -e "install.packages(c('poissonreg'))"
+RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv && \
+    pip3 install jupyter jupyter-cache flatlatex matplotlib && \
+    apt-get --purge -y remove texlive.\*-doc$ && \
+    apt-get clean
 
-
-
+RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio 
+RUN pip3 install pyplnmodels
+RUN pip3 install optax

@@ -1,9 +1,15 @@
 ---
 title: "Instructions pour le dépot sur le site web"
-author: "Julie Aubert, Julien Chiquet, Marie-Pierre Étienne"
-date: "`r Sys.Date()`"
-output: html_document
+author: 
+  - Julie Aubert
+  - Julien Chiquet
+  - Marie-Pierre Etienne
+format: html
+toc: true
+date: "21 au 25 août 2023"
 ---
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
