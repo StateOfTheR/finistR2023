@@ -1,0 +1,122 @@
+---
+title: "`{torch}` avec `{tidymodels}` et `{brulee}`"
+subtitle: "Résolution de la régression logistique"
+date: "du 21 au 25 août 2023"
+execute: 
+  freeze: auto
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+---
+
+## Introduction
+
+L'idée ici est d'explorer la régression logistique en utilisant `{torch}` à l'aide du package `{brulee}`.
+
+```{r, set-up}
+library(torch)
+library(tidymodels)
+library(brulee)
+```
+
+## Exemple
+
+On reprend l'exemple détaillé l'an dernier pour la régression logistique, disponible à la page <https://stateofther.github.io/finistR2022/autodiff.html>.
+
+```{r}
+set.seed(45)
+n <- 100
+p <- 3
+X <- matrix(rnorm(n = n*p), ncol = p, nrow = n)
+theta <- rnorm(3) %>% round(digits = 2)
+probs <- (X %*% theta) %>% as.vector()
+Y <- purrr::rbernoulli(n = n, p = probs) + 0.
+x <- torch_tensor(X)
+y <- torch_tensor(Y)
+
+logistic_loss <- function(theta, x, y) {
+  if (!is(theta, "torch_tensor")) {
+    stop("theta must be a torch tensor")
+  }
+  odds <- torch_matmul(x, theta)
+  log_lik <- torch_dot(y, odds) - torch_sum(torch_log(1 + torch_exp(odds)))
+  return(-log_lik)
+}
+logistic_loss(theta = torch_tensor(theta), x = x, y = y)
+eval_loss <- function(theta, verbose = TRUE) {
+  loss <- logistic_loss(theta, x, y)
+  if (verbose) {
+    cat(paste(theta |> as.numeric(), collapse=", "), ": ", as.numeric(loss), "\n")
+  }
+  return(loss)
+}
+eval_loss(torch_tensor(theta), verbose = FALSE)
+theta_current <- torch_tensor(rep(0, length(theta)), requires_grad = TRUE)
+theta_optimizer <- optim_rprop(theta_current)
+loss <- eval_loss(theta_current, verbose = FALSE)
+loss$backward()
+theta_optimizer$step()
+num_iterations <- 100
+loss_vector <- vector("numeric", length = num_iterations)
+for (i in 1:num_iterations) {
+  theta_optimizer$zero_grad()
+  loss <- eval_loss(theta_current, verbose = FALSE)
+  loss$backward()
+  theta_optimizer$step()
+  loss_vector[i] <- loss %>% as.numeric()
+}
+dplyr::tibble(
+  torch = theta_current |> as.numeric(),
+  glm   = glm(Y ~ 0 + X, family = "binomial") |> coefficients()
+)
+```
+
+## Tidymodels
+
+Il est possible d'effectuer une régression logistique à l'aide de plusieurs `engine` dans `{tidymodels}` :
+
+```{r}
+show_engines("logistic_reg")
+```
+
+On vérifie qu'on retrouve bien les mêmes coefficient en utilisant le package `{glm}` dans `{tidymodels}` pour effectuer notre régression logistique :
+
+```{r}
+set.seed(20)
+data_df <- data.frame(Y = as.factor(Y), X = X)
+logistic_reg(engine = "glm") %>% 
+  fit(Y ~ 0 + X.1 + X.2 + X.3, family = "binomial", data = data_df) %>% 
+  extract_fit_engine() %>% # besoin d'extraire l'objet lm
+  coef()
+```
+
+Le package `{brulee}` de l'univers tidymodels propose différents modèles classiques (réseau de neurones, régression logistique, régression linéaire, régression multinomiale) via l'infrastructure `torch`. La liste des loss disponibles dans le package :
+
+```{r}
+ls(pattern = "loss$", envir = asNamespace("torch"))
+```
+
+On va regarder ici comment faire la même régression logistique que précédemment. Il est possible de spécifier soit avec les données sous forme de `data.frame` soit en utilisant des matrices. Deux procédures d'optimisation sont disponibles : 'LBFGS' et 'SGD'.
+
+A noter qu'il n'est pas possible de spécifier un modèle sans `intercept`, ni avec `0+` ni avec `-1`.
+
+```{r}
+reg_log_brulee2 <- brulee_logistic_reg(x = as.matrix(X), y = as.factor(Y),
+                         epochs = num_iterations, optimizer = "SGD", validation = 0)
+
+reg_log_brulee1 <- brulee_logistic_reg(Y ~ X.1 + X.2 + X.3, data = data_df,
+                         epochs = num_iterations, optimizer = "SGD", validation = 0)
+
+```
+
+En théorie il est possible récupérer les coefficients du modèle ajusté avec la méthode `coef` en spécifiant l'epoch désirée. Si `epoch = NULL` la meilleure `epoch` est choisie.
+
+```{r}
+#| eval: false
+reg_log_brulee2 %>% coef()
+```
+
+```{r}
+reg_log_brulee2$estimates[[100]]
+```
