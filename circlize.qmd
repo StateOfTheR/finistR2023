@@ -1,0 +1,387 @@
+---
+title: "circlize"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Circlize est un package R qui permet de combiner des graphiques de manière circulaire. Toutes les possibilités du package circlize sont expliquées en détail sur ce site <https://jokergoo.github.io/circlize_book/book/introduction.html>.
+
+![Examples d'utilisation de circlize](resources/images/example_intro.png)
+
+## Idées générales
+
+Le cercle est divisé en **secteur (sector)**, qui est défini par une variable catégorielle. Chaque sector sera divisé en plusieurs **circuits (tracks)** concentriques, qui permettent de faire la construction du graphique depuis l'extérieur du cercle vers l'intérieur. Une intersection entre un secteur et un circuit s'appelle une **cellule (cell)**.
+
+![](resources/images/sector_tracks.png)
+
+Le package circlize contient différents types de fonction :
+
+-   Les fonctions globales, qui régissent la construction générale du cercle
+    -   `circos.initialize()`
+    -   `circos.track()`
+    -   `circos.update()`
+    -   `circos.par()`
+    -   `circos.info()`
+    -   `circos.clear()`
+-   Les fonctions graphiques dites "bas niveau"
+    -   `circos.points()`
+    -   `circos.lines()`
+    -   `circos.segments()`
+    -   `circos.rect()`
+    -   `circos.polygon()`
+    -   `circos.text()`
+    -   `circos.axis()` and `circos.yaxis()`
+-   Les fonctions graphiques dites "haut niveau"
+    -   `circos.barplot()`
+    -   `circos.boxplot()`
+    -   `circos.violin()`
+    -   `circos.heatmap()`
+    -   `circos.raster()`
+    -   `circos.arrow()`
+-   Les fonctions graphiques de liens entre cellule
+    -   `circos.link()`
+
+# Tutoriel étape par étape
+
+Le but de ce tutoriel est d'apprendre à comprendre comment fonctionne l'objet `circos`. On va d'abord créer un jeu de données `data` qui va contenir une variable catégorielle `factor` et des données `x` et `y`.
+
+```{r}
+# Upload library
+library(circlize)
+library(tidyverse)
+ 
+# Create data
+data = data.frame(
+    factor = sample(letters[1:8], 1000, replace = TRUE),
+    x = rnorm(1000), 
+    y = runif(1000)
+    )
+```
+
+La construction du graphique se réalise comme ceci :
+
+1.  On initialise le graphique avec `circos.initialize`
+2.  On fait afficher un circuit avec `circos.track`
+3.  On construit les graphiques dans les cellules avec les fonctions graphiques
+4.  Reprendre depuis l'étape 2. jusqu'à la fin du graphique
+5.  À la fin, on nettoye le graphique avec `circos.clear`
+
+![](resources/images/construction_order.png)
+
+## Initialiser le graphique
+
+L'initialisation du graphique circulaire nécessite 2 variables en entrée :
+
+1.  Les catégories des données.
+2.  La limite de la plage des valeurs de l'axe des abscisses avec`x` ou `xlim`.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+circos.clear()
+```
+
+L'initialisation ne fait rien afficher, c'est normal ! On vient juste de créer un objet `circos` mais sans avoir fait appel à des fonctions graphiques, l'objet ainsi créer est diviser en sécteurs qui dépendent des catégories qu'on a défini, ici les catégories sont "a","b","c","d","e","f","g","h".
+
+## Tracer un circuit
+
+La fonction qui fait afficher les circuits s'appelle `circos.track`. Elle nécessite 2 entrées
+
+1.  Les catégories des données.
+2.  La limite de la plage des valeurs de l'axe des ordonnées via `y` ou `ylim`.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+circos.track(factors = data$factor,
+                       y = data$y)
+circos.clear()
+```
+
+On vient de créer notre premier circuit. La fonction `circos.track` peut prendre en entrée d'autres paramètres afin de changer la bordure des régions, la couleur de fond etc.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+circos.track(factors = data$factor,
+                       y = data$y,
+             bg.col = "green",
+             bg.border = "blue")
+circos.clear()
+```
+
+En appelant la fonction tracks pluiseurs fois, on créer plusieurs circuits.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+circos.track(factors = data$factor,
+                       y = data$y,
+             bg.col = "green",
+             bg.border = "blue")
+circos.track(factors = data$factor,
+                       y = data$y,
+             bg.col = "red",
+             bg.border = "black",
+             track.height = 0.1)
+circos.track(factors = data$factor,
+                       y = data$y,
+             bg.col = 1:8,
+             bg.border = "black",
+             track.height = 0.2,
+             bg.lty = 2)
+circos.clear()
+```
+
+## Tracer les données dans les cellules.
+
+Il est nécessaire de créer un circuit afin d'avoir des cellules (ce circuit peut être invisible/transparent). Une fois les cellules créées, on peut s'en servir pour faire afficher nos graphiques.
+
+Il existe 3 façons différentes de faire tracer les données dans les cellules de l'objet `circos`
+
+1.  Tracer les données cellule par cellule
+2.  Utiliser une des fonctions graphiques comme `circos.trackPoints(),circos.trackLines()`,...
+3.  Utiliser l'argument `panel.fun` de la fonction \``circos.track`
+
+Il est assez déconseillé d'utiliser la méthode 1. mais pour l'exemple on va quand même le montrer les 3 façons.
+
+### Tracer les données cellule par cellule
+
+Les fonctions qui permettent de tracer des graphiques sur une seule cellule vont le faire par défaut dans la dernière cellule générer par `circos`. Il faut donc préciser dans quel secteur et quel circuit on fait le graphique. Si on veut séparer les données par catégorie , il faudra manuellement le faire au moment du plot.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+
+circos.track(factors = data$factor,
+             y = data$y)
+
+
+
+circos.info() 
+
+
+for (j in letters[1:8]){
+  circos.points(x=data$x[data$factor==j],
+                y=data$y[data$factor==j],
+                sector.index = j,
+                track.index = 1,
+                pch = 16,
+                col = "blue",
+                cex = 0.5
+                ) #fait un scatter plot avec les points (x,y) de la catégorie "j" sur le premier circuit
+  
+  circos.axis(sector.index = j,
+                track.index = 1,) #fait afficher l'axe des x sur chaque secteur sélectionné
+
+
+}
+
+circos.update("a",1) #on supprime la cellule "a:1"
+
+ circos.points(x=data$x[data$factor=="a"],
+                y=data$y[data$factor=="a"],
+                sector.index = "a",
+                track.index = 1,
+                pch = 15,
+                col = "green",
+                cex = 0.5
+                ) #on la retrace en vert
+
+
+ 
+circos.clear()
+```
+
+## Utiliser une des fonctions graphiques par circuit
+
+Les fonctions graphiques par circuit sont les fonctions qui commencent par `circos.track...()` comme par exemple `circos.trackHist()`,`circos.trackLines()`,`circos.trackText()` et marchent comme les fonctions de `plot` habituelles. Cependant, si des facteurs sont mis en entrées alors les données seront automatiquement séparé selon les secteurs.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+
+circos.track(factors = data$factor,
+                       y = data$y)
+
+circos.trackPoints(data$factor, data$x, data$y, col = "blue", pch = 16, cex = 0.5) 
+circos.trackHist(data$factor, data$x,col="red")
+circos.clear()
+```
+
+## 3. Utiliser l'argument `panel.fun` de la fonction `circos.track`
+
+Il s'agit de la méthode conseillée par la documentation du package.
+
+La fonction `circos.track` a comme argument possible `panel.fun` qui demande une fonction de `x,y` et appliquera cette fonction à chaque cellule du circuit, en séparant automatiquement les variables selon les facteurs en entrée.
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+
+circos.track(factors = data$factor,
+                       x= data$x,
+                       y = data$y,
+                       panel.fun = function(x,y){
+                         circos.axis(labels.cex = 0.6)
+                         circos.points(x,y,col = "blue",pch= 16 , cex = 0.5)})
+
+circos.track(factors = data$factor,
+             x= data$x,
+             y= data$y,
+             bg.col = "grey",
+             track.height = 0.1,
+             panel.fun = function(x,y){
+                 or  =order(x)
+                 x1 = x[or]
+                 y1 = y[or]
+                 circos.lines(x1,y1)
+             }
+             )
+ circos.track(factors = data$factor,
+             x= data$x,
+             y= data$y,
+             ylim = c(-1,1),
+             track.height = 0.2, panel.fun = function(x,y){
+                 meany = mean(y)
+                 circos.text(x=0,
+                             y=0,
+                             paste0("mean: ", round(meany,2)),
+                             facing = "bending",
+                             niceFacing = TRUE,
+                             cex = 0.5)
+             })
+
+circos.clear()
+```
+
+Il est possible d'accéder à des informations au sujet de la cellule directement en utilsant `CELL_META$`
+
+```{r}
+circos.initialize( factors=data$factor,
+                   x=data$x)
+
+circos.track(factors = data$factor,
+                       x= data$x,
+                       y = data$y,
+                       panel.fun = function(x,y){
+                         circos.axis(labels.cex = 0.6)
+                         circos.points(x,y,col = "blue",pch= 16 , cex = 0.5)
+             circos.text(CELL_META$xcenter, 
+            CELL_META$cell.ylim[2] + mm_y(7), 
+            CELL_META$sector.index,col="red")}
+             )
+circos.clear()
+
+
+couleur = rep(get... , len(value))
+couleur[value>0.5] = "red"
+
+```
+
+Vous savez désormais comment fonctionne l'objet `circos` ! Il reste cependant beaucoup de fonctionnalités, qui sont disponibles sur le lien <https://jokergoo.github.io/circlize_book/book/introduction.html>.
+
+
+# Application in Genomics: Manhattan plot
+
+Pour faciliter l'analyse de données génomique, la librairie circlize propose des fonctions particulières. Ces fonctions sont les mêmes que les fonctions graphiques de base, mais exigent un format spécial des données d'entrée : 
+  *  circos.genomicTrack()
+  * circos.genomicPoints()
+  * circos.genomicLines()
+  * ...
+  
+Les données d'entrées doivent comporter trois colonnes définissant les régions génomiques : la catégorie génomique (dans la plupart des cas, les chromosomes), la position de départ sur la catégorie génomique et la position finale. Dans le cas où on dispose uniquement d'une valeur position en non un intervalle, il suffit de dupliquer cette position. 
+
+
+Dans cette partie, nous présentons comment réaliser un manhattan plot avec circlize. Nous utilisons un jeu de données simulé.  
+
+
+```{r}
+load("data/df_geno.RData")
+```
+
+## Initialisation du circos
+
+On initialise le circos à l'aide de données cytoband contenant la longueur des chromosomes, et optionnellement l'annotation dite "bande chromosomique" qui permet d'identifier les positions sur les chromosomes.
+
+```{r}
+cytoband_data <- data.frame(chr=unique(df_geno$CHR),
+                                   start = map_int(unique(df_geno$CHR),~df_geno%>% filter(CHR==.x) %>% pull(POS)  %>% min()),
+                                   end=map_int(unique(df_geno$CHR),~df_geno%>% filter(CHR==.x) %>% pull(POS)  %>% max())) 
+cytoband_data
+```
+
+
+```{r}
+## plotType = c("axis", "labels")- pour afficher les axes et les noms des chr
+## et pas les annotations (ici on en a pas)
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+circos.clear()
+```
+
+## Quelques paramètres utiles
+
+On peut afficher un sous-ensemble de chromosomes sur le circos à l'aide de l'argument chromosome.index à l'initialisation.  
+
+```{r}
+circos.initializeWithIdeogram(cytoband_data,chromosome.index = c(3,5,2),plotType = c("axis", "labels"))
+circos.clear()
+```
+
+La fonction circos.par définit les paramètres générales du graphe.
+On peut définir à quel degré du cercle commence la premier chromosome en le spécifiant dans l'argument start.degree. On peut également choisir l'espace entre les chromosomes à l'aide de l'argument gap.degree.
+
+```{r}
+circos.par("start.degree" = 90,"gap.degree" = rep(3, nrow(cytoband_data)))
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+circos.clear()
+```
+
+## Tracer le manhattan plot
+
+```{r}
+df_geno1 <- df_geno %>% mutate(log10PVAL.1 = -log10(PVAL.1)) %>%  select(CHR, POS, POS2, log10PVAL.1)
+
+# seuils de significativité
+pvalth <- 4
+pvalth2 <- 6
+
+# palette
+col_palette <-  RColorBrewer::brewer.pal(5, "Set2")
+
+# parametres du circos
+circos.par("start.degree" = 90,
+           "gap.degree" = rep(3, nrow(cytoband_data)),
+           "points.overflow.warning" = FALSE)
+
+# initialisation
+circos.initializeWithIdeogram(cytoband_data,plotType = c("axis", "labels"))
+
+# manhattan plot
+circos.genomicTrack(df_geno1,
+                    ylim=c(8,0), #inverser l'axe des abcisses
+      panel.fun = function(region, value, ...) {
+        
+        # colorier les points significatifs
+        col_value <- rep(col_palette[get.current.chromosome() %>% as.numeric()],nrow(value))
+        col_value[value>pvalth] <- "blue"
+        col_value[value>pvalth2] <- "red"
+        
+        # ajout des points -log10(pval)
+        circos.genomicPoints(region, value, 
+                             pch = 16, cex =0.2,
+                             col=col_value)
+        ## ajout des seuils
+        circos.segments(CELL_META$cell.xlim[1], pvalth, CELL_META$cell.xlim[2], pvalth,lty = 2)
+        circos.segments(CELL_META$cell.xlim[1], pvalth2, CELL_META$cell.xlim[2],pvalth2)
+      
+})
+circos.clear()
+```
+
