@@ -1,14 +1,12 @@
 ---
-title: "JIT with JAX"
-format: html
-toc: true
-author: 
-  - Hugo Gangloff
-date: 25/08/2023
+title: "FinistR : bootcamp R à Roscoff"
+subtitle: "JIT with JAX"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+author: Hugo Gangloff
 ---
-
-# FinistR : bootcamp R à Roscoff
-
 JAX is a Python library, basically a wrapper around numpy for efficient scientific programming: automatic differentiation, parallelization, JIT, etc. Many numpy functions are rewritten in a low level API called LAX. It then uses the XLA compiler to opitmization computations, see [#numpy-lax-xla-jax-api-layering](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#numpy-lax-xla-jax-api-layering) 
 
 __This tutorial is a non exhaustive but dense introduction to JAX, especially JIT compilation with JAX. We try to point the reader to the main concepts with a lot of redirections to external resources and to JAX documentation.__
@@ -154,8 +152,8 @@ with jax.default_device(jax.devices('cpu')[0]): # as opposed to the subsequent j
     )
 ```
 
-    CPU times: user 11min 53s, sys: 21min 52s, total: 33min 45s
-    Wall time: 2min 42s
+    CPU times: user 10min 53s, sys: 21min 15s, total: 32min 8s
+    Wall time: 2min
 
 
 ### JIT with JAX level 1: `jax.jit`
@@ -275,8 +273,8 @@ jaxELBO1 = jax.block_until_ready(
 )
 ```
 
-    CPU times: user 5.99 s, sys: 618 ms, total: 6.61 s
-    Wall time: 5.68 s
+    CPU times: user 3.87 s, sys: 500 ms, total: 4.37 s
+    Wall time: 4.13 s
 
 
 __Note__: Because of the complex JAX internal mechanics, benchmarking with JAX should be done with caution
@@ -355,8 +353,8 @@ other_params, N_iter, lr=lr, tol=1e-8)
 compiled = lowered.compile()
 ```
 
-    CPU times: user 795 ms, sys: 18.4 ms, total: 813 ms
-    Wall time: 559 ms
+    CPU times: user 708 ms, sys: 40.1 ms, total: 748 ms
+    Wall time: 502 ms
 
 
 Let's run the complete fit (including compilation)
@@ -369,13 +367,13 @@ jaxELBO2 = jax.block_until_ready(
 )
 ```
 
-    CPU times: user 3.52 s, sys: 39.1 ms, total: 3.56 s
-    Wall time: 3.31 s
+    CPU times: user 1.97 s, sys: 1.08 s, total: 3.05 s
+    Wall time: 2.83 s
 
 
 ### JIT with JAX level 3: can we jit everything? 
 
-Now we will dive into some of the sharp bits of JAX. Let's try to reuse the above jitted functions with a simple PLN `class` which acts like a container as we did in the tutorial [JIT compilation in pytorch](https://stateofther.github.io/finistR2023/jit-example-pln.html).
+**Now we will dive into some of the sharp bits of JAX**. Let's try to reuse the above jitted functions with a simple PLN `class` which acts like a container as we did in the tutorial [JIT compilation in pytorch](https://stateofther.github.io/finistR2023/jit-example-pln.html).
 
 
 ```python
@@ -448,22 +446,42 @@ def jaxfit3(pln, N_iter, lr, tol = 1e-8) :
 
 And finally, we would like to start the optimization with:
 
-```{python}
+```python
 pln_container = PLN_container(Y, O, X)
 jaxELBO3 = jax.block_until_ready(
     jaxfit3(pln_container, N_iter, lr, tol=1e-8)
 )
 ```
 
-If we run the previous lines, we get an expected error: `class PLN is not a valid JAX type`. Recall that the `scan` loop automatically JIT compiles its content and we cannot JIT compile function whose arguments are custom classes without specific treatment that we will discover in the next subsection. For the moment, as the class PLN acts as a simple container, a common work around can be to use a Python native `namedtuple` class:
+If we run the previous lines, we get an expected error: `class PLN is not a valid JAX type`. Recall that the `scan` loop automatically JIT compiles its content and we cannot JIT compile function whose arguments are custom classes without specific treatment that we will discover in the next subsection. __But what is a valid JAX type?__ From the [documentation](https://jax.readthedocs.io/en/latest/_autosummary/jax.jit.html) of `jax.jit` we read:
 
-See this introduction to `namedtuple`: [https://realpython.com/python-namedtuple/](https://realpython.com/python-namedtuple/)
+> The arguments and return value of fun [the jitted function] should be arrays, scalars, or (nested) standard Python containers (tuple/list/dict) [pytrees] thereof [which themselves contain arrays or scalars].
+
+The variety of containers that JAX can handle are refered to with the term __[Pytrees](https://jax.readthedocs.io/en/latest/pytrees.html)__.
+
+We also read about __pure function__ and __static arguments__, more on that below !
+
+For the moment, as the class PLN acts as a simple container, a common work around can be to use a Python __native and jittable__ `namedtuple` class, or a `NamedTuple` from `typing` library which improves the class creation. See this introduction to `NamedTuple`: [https://www.geeksforgeeks.org/typing-namedtuple-improved-namedtuples/](https://www.geeksforgeeks.org/typing-namedtuple-improved-namedtuples/). NamedTuples are immutable class, so if we want to update one of its attributes we need to use the `_replace()` method which returns a new object!
+Note that we can use `jax.typing` to provide JAX related type hints [#jax.typing](https://jax.readthedocs.io/en/latest/jax.typing.html).
 
 
 ```python
-from collections import namedtuple
+from typing import NamedTuple
+from jax.typing import ArrayLike
 
-PLN = namedtuple("PLN", "Y O X n p d M S B Sigma Omega")
+class PLN(NamedTuple):
+    Y: ArrayLike
+    O: ArrayLike
+    X: ArrayLike
+    n: int
+    p: int
+    d: int
+    M: ArrayLike
+    S: ArrayLike
+    B: ArrayLike
+    Sigma: ArrayLike
+    Omega: ArrayLike
+    
 pln_namedtuple = PLN(
     Y, O, X,
     Y.shape[0], Y.shape[1], X.shape[1],
@@ -530,43 +548,64 @@ jaxELBO3 = jax.block_until_ready(
 )
 ```
 
-    CPU times: user 3.52 s, sys: 0 ns, total: 3.52 s
-    Wall time: 3.23 s
+    CPU times: user 2.34 s, sys: 831 ms, total: 3.17 s
+    Wall time: 2.91 s
 
 
-Ok, our code works but it is getting a little bit messy: we would like more than containers but real classes, with real methods! That's what we will see in the next section. But before, let's try to summarize the main points of jitting functions with JAX:
+Ok, our code works but it is getting a little bit messy: we would like more than containers but real classes, with real methods! That's what we will see in the next section.
 
-- _Not all JAX code can be JIT compiled, as it requires array shapes to be static & known at compile time._ [#to-jit-or-not-to-jit](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#to-jit-or-not-to-jit)
-- _JIT and other JAX transforms work by tracing a function to determine its effect on inputs of a specific shape and type. Variables that you don’t want to be traced can be marked as static_ [#jit-mechanics-tracing-and-static-variables](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#jit-mechanics-tracing-and-static-variables)
-- Recall that JIT compilation in pytorch cannot handle dynamic shapes, control flows, etc. since it is lost when constructing the Intermediate Representation (IR) of the computational graph that is ued for jitting. The same behaviour happens in JAX when constructing the `jaxpr` which is the name of the IR in JAX, see [#why-can-t-we-just-jit-everything](https://jax.readthedocs.io/en/latest/jax-101/02-jitting.html#why-can-t-we-just-jit-everything). However, in JAX, there exists way to not lose all the control flows, to conserve conditional statements even inside the `jaxpr`, etc. Let's mention the `static_argnums` decorator, the special `jax.lax.cond` function, etc. To find more about control flows and jit, see [#python-control-flow-jit](https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#python-control-flow-jit)
+First, let's try to summarize the **main points of JIT compiling functions with JAX**:
+
+- _Not all JAX code can be JIT compiled, as **it requires array shapes to be static & known at compile time**._ [#to-jit-or-not-to-jit](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#to-jit-or-not-to-jit)
+- _JIT and other JAX transforms work by tracing a function to determine its effect on inputs of a specific shape and type. **Variables that you don’t want _[or that cannot be traced because they are not of valid JAX type]_ to be traced can be marked as static**_ [#jit-mechanics-tracing-and-static-variables](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#jit-mechanics-tracing-and-static-variables)
+- Recall that JIT compilation in pytorch cannot handle dynamic shapes, control flows, etc. since it is lost when constructing the Intermediate Representation (IR) of the computational graph that is ued for jitting. The same behaviour happens in JAX when constructing the `jaxpr` which is the name of the IR in JAX, see [#why-can-t-we-just-jit-everything](https://jax.readthedocs.io/en/latest/jax-101/02-jitting.html#why-can-t-we-just-jit-everything). However, in JAX, **there exists way to not lose all the control flows**, to conserve conditional statements even inside the `jaxpr`, etc. Let's mention the `static_argnums` decorator, the special `jax.lax.cond` function, etc. To find more about control flows and jit, see [#python-control-flow-jit](https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#python-control-flow-jit)
 - In fact, JAX is asked to JIT compile a function, it will _trace_ its arguments to create the jaxpr, more precisely [#jitting.html](https://jax.readthedocs.io/en/latest/jax-101/02-jitting.html):
 
 > When tracing, JAX wraps each argument by a tracer object. These tracers then record all JAX operations performed on them during the function call (which happens in regular Python). Then, JAX uses the tracer records to reconstruct the entire function. The output of that reconstruction is the jaxpr
 
-> The more specific information about the values we use in the trace, the more we can use standard Python control flow to express ourselves. However, being too specific means we can’t reuse the same traced function for other values. JAX solves this by tracing at different levels of abstraction for different purposes. For `jax.jit`, the default level is `ShapedArray`_
-We understand that the arguments of a jitted function should inherit from the `ShapedArray` class, or be a Pytree with either 1.Pytree nodes or 2.leaf nodes being either a `ShapedArray` object or leaf nodes treated as `static` arguments.
+> The more specific information about the values we use in the trace, the more we can use standard Python control flow to express ourselves. However, being too specific means we can’t reuse the same traced function for other values. JAX solves this by tracing at different levels of abstraction for different purposes. For `jax.jit`, the default level is `ShapedArray`
+**We understand that the arguments of a jitted function should be traceable as `ShapedArray` class, or be a Pytree with either 1.Pytree nodes or 2.leaf nodes being either traceable as a `ShapedArray` object or leaf nodes treated as `static` arguments.** We saw above that scalars and arrays were the valid JAX types, it makes sense since scalars or arrays can be traced with ShapedArray objects.
 
-**Note on static arguments:**
+- **Note on static arguments:**
 
-> We can tell JAX to help itself to a less abstract tracer for a particular input by specifying static_argnums or static_argnames. The cost of this is that the resulting jaxpr is less flexible, so JAX will have to re-compile the function for every new value of the specified static input. It is only a good strategy if the function is guaranteed to get limited different values.
+> We can tell JAX to help itself to a less abstract tracer for a particular input by specifying static_argnums or static_argnames. The cost of this is that the resulting jaxpr is less flexible, so **JAX will have to re-compile the function for every new value of the specified static input**. It is only a good strategy if the function is guaranteed to get limited different values.
 
-**[Optional] JIT with JAX level 3.5: _dataclasses_ and _pytrees_** 
+- Last but not least, JAX requires the jitted functions to be pure, they cannot have any side effect [#pure-functions](https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#pure-functions):
 
-The container `namedtuple` object we have created in this section can also be seen as a [Pytree](https://jax.readthedocs.io/en/latest/jax-101/05.1-pytrees.html). JAX offers convenient ways to work with such structures that we do not develop here. Pytrees are very popular and have been the object of many helper libraries to work with JAX: [simple-pytree](https://github.com/cgarciae/simple-pytree), [tjax](https://github.com/NeilGirdhar/tjax), [jax_dataclasses](https://github.com/brentyi/jax_dataclasses), etc.
+> JAX transformation and compilation are designed to work only on Python functions that are **functionally pure: all the input data is passed through the function parameters, all the results are output through the function results**. A pure function will always return the same result if invoked with the same inputs.
+
+**JIT with JAX level 3.5: _dataclasses_ and _pytrees_**
+
+Python developpers also love to use `dataclasses` as simple data structures. However they are not supported by default in JAX. Many libraries offer ways to also add `dataclasses` to the Pytrees JAX can handle: [simple-pytree](https://github.com/cgarciae/simple-pytree), [tjax](https://github.com/NeilGirdhar/tjax), [jax_dataclasses](https://github.com/brentyi/jax_dataclasses), [chex dataclasses](https://github.com/deepmind/chex#dataclass-dataclasspy) etc.
 
 ### JIT with JAX level 4: JIT on class methods
-In this section, we study the canonical way to JIT compile class methods, a introduction to this technique can be found here: [#how-to-use-jit-with-methods](https://jax.readthedocs.io/en/latest/faq.html#how-to-use-jit-with-methods). Note that the recipe we give here can also be seen from the viewpoint of Pytrees, since a class is somehow a container. We therefore want to [#extending-pytrees](https://jax.readthedocs.io/en/latest/pytrees.html). We here can draw a link with the elements we noted in the previous section: our custom class is now a Pytree, it can be jitted provided it contains (as attributes) 1.Pytree nodes or 2.leaf nodes being either a `ShapedArray` object or leaf nodes treated as `static` arguments!
+In this section, we study the canonical way to JIT compile class methods, a introduction to this technique can be found here: [#how-to-use-jit-with-methods](https://jax.readthedocs.io/en/latest/faq.html#how-to-use-jit-with-methods). Note that the recipe we give here should be seen from the viewpoint of Pytrees, since a class is always somehow a container. We therefore want to [#extending-pytrees](https://jax.readthedocs.io/en/latest/pytrees.html). The main elements of making custom class jittable are:
 
-**One more important point** that can help you in your debugging: JAX requires the jitted functions to be pure, they cannot have any side effect [#pure-functions](https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#pure-functions):
+1. Decorate the class with `@register_pytree_node_class`
+2. Add the `tree_flatten` method
+3. Add the `tree_unflatten` method
 
-> JAX transformation and compilation are designed to work only on Python functions that are functionally pure: all the input data is passed through the function parameters, all the results are output through the function results. A pure function will always return the same result if invoked with the same inputs.
+We here can draw a link with the elements we noted in the previous section: **we make our custom class a Pytree, so that it can be jitted provided it contains attributes being 1.Pytree nodes or 2.leaf nodes being either inherited `ShapedArray` object or leaf nodes treated as `static` arguments!**
 
 
 ```python
 from jax.tree_util import register_pytree_node_class
+from jax.typing import ArrayLike
 
 @register_pytree_node_class
 class PLN:
+    Y: ArrayLike
+    O: ArrayLike
+    X: ArrayLike
+    n: int
+    p: int
+    d: int
+    M: ArrayLike
+    S: ArrayLike
+    B: ArrayLike
+    Sigma: ArrayLike
+    Omega: ArrayLike
+    
     def __init__(self, Y, O, X): 
         self.Y = Y
         self.O = O
@@ -684,8 +723,8 @@ jaxELBO4 = jax.block_until_ready(
 )
 ```
 
-    CPU times: user 7.45 s, sys: 28.9 ms, total: 7.48 s
-    Wall time: 4.58 s
+    CPU times: user 6.29 s, sys: 901 ms, total: 7.2 s
+    Wall time: 4.34 s
 
 
 ## Conclusion
@@ -703,19 +742,19 @@ plt.legend()
 plt.show()
 ```
 
-    /tmp/ipykernel_58507/3050985271.py:1: RuntimeWarning: invalid value encountered in log
+    /tmp/ipykernel_54173/3050985271.py:1: RuntimeWarning: invalid value encountered in log
       plt.plot(np.log(jaxELBO_no_jit), label='no jit')
-    /tmp/ipykernel_58507/3050985271.py:2: RuntimeWarning: invalid value encountered in log
+    /tmp/ipykernel_54173/3050985271.py:2: RuntimeWarning: invalid value encountered in log
       plt.plot(np.log(jaxELBO1), label='jit level 1')
-    /tmp/ipykernel_58507/3050985271.py:3: RuntimeWarning: invalid value encountered in log
+    /tmp/ipykernel_54173/3050985271.py:3: RuntimeWarning: invalid value encountered in log
       plt.plot(np.log(jaxELBO2), label='jit level 2')
-    /tmp/ipykernel_58507/3050985271.py:4: RuntimeWarning: invalid value encountered in log
+    /tmp/ipykernel_54173/3050985271.py:4: RuntimeWarning: invalid value encountered in log
       plt.plot(np.log(jaxELBO3), label='jit level 3')
 
 
 
     
-![elbo_graph.png](resources/jit-example-pln-jax_files/elbo_graph.png)
+![png](resources/jit-example-pln-jax_files/elbo_graph.png)
     
 
 
