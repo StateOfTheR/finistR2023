@@ -7,12 +7,15 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.5
+    container: stateofther/r-finistr2023:0.6
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Additional Packages
         run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
+      - name: Environment variables
+        run: export PATH="$PATH:/julia-1.9.3/bin"
+        shell: bash
       - name: Generate slides
         run: "quarto render"
