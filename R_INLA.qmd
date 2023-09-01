@@ -1,5 +1,6 @@
 ---
 title: "R INLA"
+lang: fr
 format: html
 toc: true
 author: 
@@ -140,7 +141,7 @@ summary(fit5.glmm.bru)
 
 ### Exemple 2
 
-Dans le jeu de données `gorillas` on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).
+Dans le jeu de données `gorillas`, on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).
 
 ```{r data-set-2}
 data(gorillas, package = "inlabru")
@@ -165,7 +166,7 @@ La construction du maillage peut se faire avec les fonctions de {INLA}:
 -   `inla.mesh.basis()`,
 -   `inla.spde2.pcmatern()`.
 
-voir la vignette suivante pour quelques exemples: https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html.
+voir la vignette suivante pour quelques exemples: [https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html](https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html).
 
 #### Visualisation des données gorilles
 
@@ -186,7 +187,7 @@ ggplot() +
   coord_equal()
 ```
 
-Les graphiques ci-dessus permettent de visualiser les différentes types de végétaions ainsi que les localisations d'habitats de gorilles dans la zone d'étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction `gg()` permettant avac la grammaire ggplot2 de rajouter les différentes couches d'informations.
+Les graphiques ci-dessus permettent de visualiser les différents types de végétations ainsi que les localisations d'habitat de gorilles dans la zone d'étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction `gg()` permettant avac la grammaire ggplot2 de rajouter les différentes couches d'informations.
 
 #### Modèle 1
 
@@ -199,7 +200,7 @@ comp1alt <- coordinates ~ vegetation(gcov$vegetation, model = "factor_contrast")
 
 Pour construire un modèle expliquant les comptages de gorilles avec leurs répartitions dans la zone d'étude et prenant en compte les types de végétations, nous définissons la formule avec:
 
--   `coordinates()` la fonction de {sp} de récupération des coordonnées des habitats dans l'objet nests
+-   `coordinates()` la fonction de {sp} de récupération des coordonnées des habitats dans l'objet `nests`
 -   `vegetation` sera le mot utilisé dans les sorties du modèle faisant référence à la variable explicative `gcov$vegetation` (possible d'écrire le mot que l'on veut...)
 -   `model = "factor_full"` est pour indiquer que la variable explicative est un facteur. Il est possible d'utiliser "factor_full", "factor_contrast" etc... suivant les types de contraintes que l'on souhaite appliquer au modèle. "factor_full" indique estimations de toutes les modalités mais il faut alors supprimer l'intercept afin d'être dans un cas identifiable.
 
@@ -248,7 +249,7 @@ sf::st_area(sf::st_as_sf(boundary)) # surface totale
 
 #### Modèle avec utilisation SPDE
 
-Dans cette section, nous allons essayre d'expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matern en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la forule du modèle INLA. Le modèle intègre alors un champ gaussien avec covariance de Matérn. $$\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))$$ avec $\xi$ suivant un champ gaussien.
+Dans cette section, nous allons essayer d'expliquer la répartition des habitats en rajoutant au facteur **vegetation** une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l'ajout d'une structure de Matérn en utilisant la fonction {INLA} `inla.spde2.pcmatern()` puis réécrire la définition de la formule du modèle INLA. Le modèle intègre alors un champ gaussien avec covariance de Matérn. $$\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))$$ avec $\xi$ suivant un champ gaussien.
 
 ```{r spde-1}
 pcmatern <- inla.spde2.pcmatern(mesh,
@@ -290,11 +291,9 @@ Lambda2 <- predict(fit2,
 Lambda2
 ```
 
-Look at the contributions to the linear predictor from the SPDE and from vegetation.
-
 Examinons les contributions au prédicteur linéaire de la partie SPDE et de celle due à la végatation.
 
-La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du graphique. Dans cet exemple, on le définit tel que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.
+La fonction `scale_fill_gradientn()` définit l'échelle pour la légende du graphique. Dans cet exemple, on la définit telle que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.
 
 ```{r final-triple-plot}
 lp2 <- predict(fit2, 
@@ -349,7 +348,7 @@ multiplot(plot.lp2, plot.lp2.spde, plot.lp2.veg, plot.lp2.ele, cols = 2)
 
 ### Exemple 3
 
-Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre "Spatial and Spatio-temporal Bayesian Models with R-INLA.
+Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre "Spatial and Spatio-temporal Bayesian Models with R-INLA".
 
 ```{r}
 data(gambia, package = "geoR")
@@ -362,7 +361,7 @@ gambia <- gambia %>%
   add_column(village_index) 
 ```
 
-On transforme les données et on transforme le jeu de données en type {SpatialPointsDataFrame}.
+On transforme le jeu de données en type {SpatialPointsDataFrame}.
 
 ```{r}
 gambia <- gambia %>%
@@ -431,7 +430,7 @@ ggplot(data.frame(inla.smarginal(rfprecision)), aes(x, y)) +
   theme_bw()
 ```
 
-Nous essayons de représenter le champ gaussien latent
+Nous essayons de représenter le champs gaussien latent
 
 ```{r}
 domain_lims <- apply(hull$loc, 2, range)

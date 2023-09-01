@@ -1,5 +1,6 @@
 ---
 title: "FinistR : bootcamp R à Roscoff"
+lang: fr
 format: html
 toc: true
 date: last-modified
@@ -26,10 +27,7 @@ Le résultat de cette semaine est disponible  [sur cette page](https://stateofth
 
 ## Participants
 
-Emré Anakok, Julie Aubert,  Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche,   Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff,  Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, Emily Walker. 
-
-## Idées explorées
-
+Emré Anakok, Julie Aubert,  Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche,   Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff,  Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, _Emily Walker_. 
 
 
 ## Soutien
