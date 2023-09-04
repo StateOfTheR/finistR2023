@@ -1,12 +1,15 @@
 ---
 title: "Partager un exemple reproductible dans une issue GitHub"
+lang: fr
 format: html
-editor: visual
+toc: true
+author: 
+  - Julie Aubert
 ---
 
 ## Objectif
 
-L'objectif de ce tuto est de présenter des conseils pour écrire une issue pour demander des améliorations ou soumettre des bugs dans un code déposé sur GitHub.
+L'objectif de ce billet est de présenter des conseils pour écrire une issue pour demander des améliorations ou soumettre des bugs dans un code déposé sur GitHub.
 
 ## Recommandations
 
@@ -26,26 +29,27 @@ D'autres recommandations sont proposées dans le cas d'utilisation de calculs pa
 
 ## Structure de l'issue
 
-1.  Présenter en premier le problème (I'm having trouble with ...)
-2.  Donner un exemple reproductible dans un format
+1.  Présenter en premier le problème (_"I'm having trouble with ..."_)
+2.  Donner un exemple reproductible dans un format adapté.
 
 Un bon exemple de report de bug [#46](https://github.com/tidymodels/tune/issues/46).
 
 ## Exemple reproductible avec le package {reprex}
 
-Il est possible de créer un exemple reproductible avec le package {reprex} qui produit une sortie bien formatée pour GitHub.
+Il est possible de créer un exemple reproductible avec le package {reprex} qui produit une sortie bien formatée notamment pour GitHub, et que l'on peut ensuite faciler copier/coller.
 
 Si le code est un peu long, faire un script, par exemple `mon_probleme.R`
 
-Il suffit ensuite d'utiliser la fonction reprex du package du même nom avec les options de son choix. Par exemple `reprex(input = 'mon_probleme.R', session_info = TRUE)`.
+Il suffit ensuite d'utiliser la fonction `reprex` du package du même nom avec les options de son choix. Par exemple `reprex(input = 'mon_probleme.R', session_info = TRUE)`.
 
 L'option `session_info = TRUE` permet de récuperer les informations sur notre session R.
 
-La fonction génère un fichier markdown (`mon_probleme.md`) dans le cas de l'utilisation d'un script directement intégrable dans l'issue et ouvre également par défaut le rendu dans le viewer de RStudio ou un navigateur (peut se modifier avec l'argument `html_preview = FALSE`.
+La fonction génère un fichier markdown (`mon_probleme.md`) dans le cas de l'utilisation d'un script directement intégrable dans l'issue et ouvre également par défaut le rendu dans le viewer de RStudio ou un navigateur (peut se modifier avec l'argument `html_preview = FALSE`).
 
-Petit exemple plus court (sans utilisation de script extérieur) issu du package {reprex}
+Petit exemple plus court (sans utilisation de script extérieur) issu du package {reprex} :
 
 ```{r}
+#| warning: false
 library(reprex)
-reprex(rbinom(3, size = 10, prob = 0.5), session_info = TRUE)
+reprex(rbinom(3, size = 10, prob = 0.5), session_info = TRUE, html_preview = FALSE)
 ```

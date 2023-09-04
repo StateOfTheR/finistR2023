@@ -1,18 +1,18 @@
 ---
 title: "Construire un modèle parsnip"
 format: html
-editor: visual
+lang: fr
 ---
 
 ## Introduction
 
-Notre objectif ici est de construire un nouveau modèle `{parsnip}` à partir d'une implémentation existente dans un package R.
+Notre objectif ici est de construire un nouveau modèle `{parsnip}` à partir d'une implémentation existante dans un package R.
 
 Intérêts : éliminer des dépendances, du code dupliqué, pouvoir profiter du cadre `{tidymodels}`.
 
 ### Ressources
 
--   [https://www.tidymodels.org/learn/develop/models/](https://www.tidymodels.org/learn/develop/models/)
+-   <https://www.tidymodels.org/learn/develop/models/>
 
 -   [Tuto tidymodels - Rencontres R 2023](https://abichat.github.io/rr23-tuto-tidymodels)
 
@@ -33,6 +33,7 @@ Il est possible de voir l'ensemble des modèles déjà disponibles [ici](https:/
 ## Intégration de la régression PLN
 
 ```{r, set-up}
+#| warning: false
 library(PLNmodels)
 library(tidymodels)
 library(poissonreg)
@@ -40,7 +41,7 @@ library(poissonreg)
 
 ### Données
 
-Nous utiliserons le jeu de données de la [vignette de PLN](https://pln-team.github.io/PLNmodels/articles/PLN.html)
+Nous utiliserons le jeu de données de la [vignette de PLN](https://pln-team.github.io/PLNmodels/articles/PLN.html).
 
 ```{r}
 data(trichoptera)
@@ -175,12 +176,12 @@ coef(resPLN$fit)
 all.equal(coef(myPLN), coef(resPLN$fit))
 # Pour faire de la prediction
 pred_pln <- predict(myPLN, newdata  = prep_trichoptera, type = "response")
+pred_pln %>% head(n=3)
 # On peut appliquer les methodes 
 #pred_parsnipfit <- predict(resPLN$fit, newdata  = prep_trichoptera)
 pred_parsnip <- predict(resPLN, new_data  = trichoptera$Abundance)
-all.equal(pred_pln, pred_parsnip)
+pred_parsnip %>% head(n=3)
 ```
-
 
 ### Test d'un workflow
 
@@ -210,7 +211,7 @@ fitted_workflow <-  pln_workflow %>%
 test_pred <- fitted_workflow %>% predict(new_data = testing(tri_split))
 ```
 
-Pour la suite du workflow, calcul de performance sur des rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus 'tidy' ou réécrire le calcul de métrique sur des matrices.
+Pour la suite du workflow, calcul de performance sur un rééchantillonnage etc., ce serait possible mais nécessite un peu de code. Il faudrait ici que la sortie de prédiction soit en format plus 'tidy' ou réécrire le calcul de métrique sur des matrices.
 
 ### Autre jeu de données, exemple en régression univariée
 
@@ -270,6 +271,6 @@ poisson_reg() %>% translate(engine = "PLN")
 
 ## Pour aller plus loin
 
-Dans le cadre `tidymodels` tout est assez modulaire et personnalisable : on peut ajouter de nouvelles recettes de pré-traitement, personnaliser son rééchantillonnage, le calcul de métrique etc.
+Dans le cadre `tidymodels`, tout est assez modulaire et personnalisable : on peut ajouter de nouvelles recettes de pré-traitement, personnaliser son rééchantillonnage, le calcul de métrique etc.
 
 Un peu de documentation sur le site de `{tidymodels]` dans la [section *Develop custom modeling tools*](https://www.tidymodels.org/learn/).

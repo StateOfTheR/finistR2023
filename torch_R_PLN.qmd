@@ -1,6 +1,6 @@
 ---
 title: "PLN version R"
-date: "du 21 au 25 août 2023"
+lang: fr
 execute: 
   freeze: auto
 output: 

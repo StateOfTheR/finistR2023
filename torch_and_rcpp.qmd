@@ -1,5 +1,6 @@
 ---
 title: "Torch & Rcpp"
+lang: fr
 format: html
 toc: true
 author: 
@@ -28,7 +29,7 @@ library(ggbeeswarm)
 
 ## Torch on R
 
-La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d'évaluer numériquement le gradient d'une fonction et d'effectuer des descente de gradient.
+La librairie {torch} de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d'évaluer numériquement le gradient d'une fonction et d'effectuer des descentes de gradient.
 
 [Présentation finistR2022](https://stateofther.github.io/finistR2022/autodiff.html)
 
@@ -37,15 +38,15 @@ La librairie torch de R permet la manipulation de tenseur en R. Elle permet nota
 
 ## Rcpp
 
-L'utilisation de {Rcpp} permet d'exporter des fonction `C++` en R. Les fonctions seront alors directement utilisable dans un script et avec des arguments R. Ainsi on peu tirer parti de la compilation d'un code `C++`, et accélérer de nombreux calculs algébriques.
+L'utilisation de {Rcpp} permet d'exporter des fonctions `C++` en R. Les fonctions seront alors directement utilisables dans un script et avec des arguments R. Ainsi on peut tirer partie de la compilation d'un code `C++`, et accélérer de nombreux calculs algébriques.
 
-Pour le calcul algébrique il est utile d'intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de `C++` lorsque l'on appel une fonction {Rcpp} dans R
+Pour le calcul algébrique il est utile d'intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de `C++` lorsque l'on appel une fonction {Rcpp} dans R.
 
 [Présentation finistR2018](https://stateofther.netlify.app/post/bases-rcpp/)
 
 ### Exemple
 
-Dans cet exemple nous allons calculer la loss d'une fonction logistique en R et en `C++`. Puis comparer les résultats avec le package {bench} de R. 
+Dans cet exemple nous allons calculer la loss d'une fonction logistique en R et en `C++`, puis comparer les résultats avec le package {bench} de R. 
 
 #### Coder la fonction en `C++`
 
@@ -112,7 +113,7 @@ Comme on peut le voir sur le graphique plus haut la fonction `loss_cpp()` est en
 
 #### Attention aux librairies
 
-La librairie `BLAS` de `OpenBlas` présenté lors de cette même session ne fonctionne pas correctement avec Rcpp. On observe une baisse de fonctionnement **très quantitative** (facteur 100). La librairie `BLAS` de `Intel MKL` reste quant à elle plus efficace.
+La librairie `BLAS` de `OpenBlas` présentée lors de cette même session ne fonctionne pas correctement avec {Rcpp}. On observe une baisse de fonctionnement **très quantitative** (facteur 100). La librairie `BLAS` de `Intel MKL` reste quant à elle plus efficace.
 
 ## References
 
