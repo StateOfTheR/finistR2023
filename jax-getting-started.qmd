@@ -1,7 +1,7 @@
 ---
 title: "Premiers pas avec jax"
+lang: fr
 subtitle: "Différentiation automatique avec Jax"
-date: "du 21 au 25 août 2023"
 execute: 
     freeze: auto
 output: 
@@ -72,12 +72,12 @@ pip3 install optax
 
 ### Philosophie
 
-En quelques mots, JAX est une bibliothèque Python développé par Google et itinitalement utilisé dans TensorFLow. Elle permet de faire de l'algèbre linéaire à la `numpy`, avec 2 propriétés clés le rendant extrêment performant:
+En quelques mots, JAX est une bibliothèque Python développée par Google et initialement utilisée dans TensorFLow. Elle permet de faire de l'algèbre linéaire à la `numpy`, avec 2 propriétés clés la rendant extrêmement performante:
 
-1. un *autograd* permettant la différention automatique de calcul Python/Numpy
-2. un *compileur* pour GPU et autres ([XLA](https://www.tensorflow.org/xla)), dédié à l'algèbre linéaire qui permet d'optimiser les temps d'exécution grace à une approche *JIT* (Just-in Time, c'est-à-dire une optimisation du code à l'exécution et non pas avant l'appel comme avec un compileur classique).
+1. un *autograd* permettant la différenciation automatique de calcul Python/Numpy
+2. un *compileur* pour GPU et autres ([XLA](https://www.tensorflow.org/xla)), dédié à l'algèbre linéaire qui permet d'optimiser les temps d'exécution grâce à une approche *JIT* (Just-in Time, c'est-à-dire une optimisation du code à l'exécution et non pas avant l'appel comme avec un compileur classique).
 
-L'objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la `Numpy`, notamment à l'aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certains nombres de contraintes d'écriture des programmes s'appliquent, que nous allons essayer de présenter pas à pas. 
+L'objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la `Numpy`, notamment à l'aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certain nombre de contraintes d'écriture des programmes s'appliquent, que nous allons essayer de présenter pas à pas. 
 
 ### Import de la bibliothèque
 
@@ -91,12 +91,12 @@ import optax
 import matplotlib.pyplot as plt
 ```
 
-On peut détailler les fonctionnalité des modules comme suit:
+On peut détailler les fonctionnalités des modules comme suit:
 
 - le module `jax.numpy`, aka `jnp`, porte les opérations matricielles usuelles de manière quasi transparente 
 - le module `random` définit les outils de génération de nombres aléatoires, propres à JAX et très différents de Numpy 
-- le module `grad` gère l'autodifférentiation
-- le module `jit` gère la "just-in time" compilation (accélartion du code)
+- le module `grad` gère l'autodifférenciation
+- le module `jit` gère la "just-in time" compilation (accélération du code)
 - le module `vmap` permet de vectoriser automatiquement certaines opérations
 
 ### Jax.numpy: interface Algèbre linéaire haut-niveau
@@ -145,7 +145,7 @@ def logistic_loss(y, x, theta):
   return -jnp.vdot(y, odds) + jnp.sum(jnp.log(1.0 + jnp.exp(odds)))
 ```
 
-Qu'on peut tester sur un example simple
+Qu'on peut tester sur un exemple simple
 
 ```{python}
 ## Should be log(2)
@@ -251,7 +251,7 @@ grad_loss(theta).shape
 
 JAX permet enfin de vectoriser automatiquement des opérations de façon efficace (en faisant descendre la boucle à l'intérieur de la fonction, au niveau des primitives utilisées pour le calcul). 
 
-Considérons un example simple où on veut calculer des logs-odds sur mesures répétées. 
+Considérons un exemple simple où on veut calculer des logs-odds sur mesures répétées. 
 
 ```{python}
 ## Matrice de covariables, répétées en temps 
@@ -298,7 +298,7 @@ compute_odds_batched_vmap(X, beta_true).shape
 %timeit compute_odds(X, beta_true)
 ```
 
-Le gain n'est pas très important dans cette example précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle. 
+Le gain n'est pas très important dans cette exemple précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle. 
 
 ## Optimisation de la fonction objective
 
@@ -415,7 +415,7 @@ def fit(data, params, optimizer, key):
   return [params, loss_vector]
 ```
 
-Finally, we can fit our parametrized function using the Adam optimizer provided by optax.
+Finalement, on peut ajuster notre fonction paramétrée en utilisant l'optimiseur Adam fourni par optax.
 
 ```{python}
 %%time 
@@ -426,7 +426,7 @@ params,loss_vector = fit(data, initial_params, optimizer, key)
 ```
 
 
-On peut vérifier que la fonction objective converge sans décroître systématiquement
+On peut vérifier que la fonction objective converge sans décroître systématiquement,
 
 ```{python}
 plt.plot(range(1, n_iter+1), loss_vector)
@@ -436,7 +436,7 @@ plt.title('Loss vs. Iterations')
 plt.show()
 ```
 
-et que les paramètres sont proches des bonnes valeurs
+et que les paramètres sont proches des bonnes valeurs.
 
 ```{python}
 plt.plot(beta_true, params, marker='o', linestyle="none")
