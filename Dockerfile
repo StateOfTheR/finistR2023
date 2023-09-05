@@ -3,11 +3,11 @@ FROM rocker/geospatial:4
 
 ### JULIA
 
-## Copy Julia's tar.gz and install it 
+## Copy Julia's tar.gz and install it
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-x86_64.tar.gz && \
     tar -xvzf julia-1.7.0-linux-x86_64.tar.gz && \
     ## Connect to Julia's directory
-    cp -r julia-1.7.0 /opt/ && \ 
+    cp -r julia-1.7.0 /opt/ && \
     ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
 
 
@@ -33,7 +33,7 @@ RUN apt-get update \
   mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \
   libc6-i386
 
-### Jupyter Python torch jax etc 
+### Jupyter Python torch jax etc
 
 ## Downloading Python
 RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv && \
