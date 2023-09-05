@@ -9,6 +9,7 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.0-linux-
     ## Connect to Julia's directory
     cp -r julia-1.7.0 /opt/ && \
     ln -s /opt/julia-1.7.0/bin/julia /usr/local/bin/julia
+RUN julia julia_packages.jl
 
 
 ## non Interactive terminal for this docker for the site
