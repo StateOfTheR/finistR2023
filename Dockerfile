@@ -24,6 +24,7 @@ RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.
 RUN R -e "install.packages(c('remotes','microbenchmark','purrr','BiocManager','httr','cowplot','torch','PLNmodels','torchvision','reticulate','inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR','tidymodels', 'brulee', 'reprex','poissonreg','ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
 RUN R -e "BiocManager::install('BiocPkgTools')"
 RUN R -e "torch::install_torch(type = 'cpu')"
+RUN R -e "install_julia()"
 
 ### Ubuntu libraries (for python ?)
 
