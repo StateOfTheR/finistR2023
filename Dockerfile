@@ -4,11 +4,17 @@ FROM rocker/geospatial:4
 ### JULIA
 
 ## Copy Julia's tar.gz and install it
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.9/julia-1.9.3-linux-x86_64.tar.gz && \
-    tar zxvf julia-1.9.3-linux-x86_64.tar.gz && \
+## using 1.8.3 version because it does work with quarto on my computer
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-x86_64.tar.gz && \
+    tar zxvf julia-1.8.3-linux-x86_64.tar.gz && \
     ## Connect to Julia's directory link with real jula's bin
-    cp -r julia-1.9.3 /opt/ && \
-    ln -s /opt/julia-1.9.3/bin/julia /usr/local/bin/julia
+    cp -r julia-1.8.3 /opt/ && \
+    ln -s /opt/julia-1.8.3/bin/julia /usr/local/bin/julia
+
+## Install Julias package (IJulia <-- to connect with jupyter)
+## Installing from julia
+RUN julia -e 'import Pkg; Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie"); Pkg.add("WGLMakie"); Pkg.add("IJulia")'
+
 
 ## non Interactive terminal for this docker for the site
 RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
@@ -24,6 +30,8 @@ RUN R -e "install.packages(c('remotes','microbenchmark','purrr','BiocManager','h
 RUN R -e "BiocManager::install('BiocPkgTools')"
 RUN R -e "torch::install_torch(type = 'cpu')"
 RUN R -e "JuliaCall::install_julia()"
+## Installing from R JuliaCall package
+# RUN R -e "invisible(purrr::map(c('GeoDataFrames','Distributed', 'StatsAPI', 'Plots', 'DelimitedFiles', 'DataFrames', 'CSV', 'GeoStats', 'Rasters',  'Shapefile','GeoTables', 'CairoMakie','WGLMakie'),JuliaCall::julia_install_package))"
 
 ### Ubuntu libraries (for python ?)
 
@@ -42,9 +50,6 @@ RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc w
     apt-get clean
 
 RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio pyplnmodels optax
-
-## Install Julias package (IJulia <-- to connect with jupyter)
-RUN julia -e 'import Pkg; Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie"); Pkg.add("IJulia")'
 
 ## Check if jupyter find julia to then make it work in quarto !
 # RUN quarto check jupyter
