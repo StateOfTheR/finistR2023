@@ -387,7 +387,7 @@ GeoStats propose de faire des modèles spatiaux. Sa particularité va être de t
 ```{julia}
 #| output: false
 # Import package
-using GeoDataFrames,Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF=GeoDataFrames;import WGLMakie as Mke
+using GeoDataFrames,Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF=GeoDataFrames; import WGLMakie as Mke
 ```
 
 ## Importer les données
