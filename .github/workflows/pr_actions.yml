@@ -7,12 +7,12 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: stateofther/r-finistr2023:0.5
+    container: registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.1
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Additional Packages
-        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
+        run: Rscript -e "print('Hola !')"
       - name: Generate slides
         run: "quarto render"
