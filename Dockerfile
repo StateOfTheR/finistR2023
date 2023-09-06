@@ -44,7 +44,7 @@ RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc w
 RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio pyplnmodels optax
 
 ## Install Julias package (IJulia <-- to connect with jupyter)
-RUN julia -e 'using Pkg; Pkg.add("IJulia");Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie");'
+RUN julia -e 'import Pkg; Pkg.add("IJulia"); Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie")'
 
 ## Check if jupyter find julia to then make it work in quarto !
 # RUN quarto check jupyter
