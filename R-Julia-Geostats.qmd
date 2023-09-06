@@ -7,7 +7,7 @@ format:
     error: false
     toc: true
 editor: source
-jupyter: julia-1.7.0
+jupyter: julia-1.9
 execute:
   enabled: true
 ---
