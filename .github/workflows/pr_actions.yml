@@ -7,12 +7,10 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    container: registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.1
+    container: registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.2
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Additional Packages
-        run: Rscript -e "print('Hola !')"
       - name: Generate slides
         run: "quarto render"
