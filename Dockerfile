@@ -26,7 +26,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
 ## Defining web acces for CRAN
 ENV R_CRAN_WEB="https://cran.rstudio.com/"
 RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
-RUN R -e "install.packages(c('remotes','microbenchmark','purrr','BiocManager','httr','cowplot','torch','PLNmodels','torchvision','reticulate','inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR','tidymodels', 'brulee', 'reprex','poissonreg','ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
+RUN R -e "install.packages(c('dyplr','ggplot2','remotes','microbenchmark','purrr','BiocManager','httr','cowplot','torch','PLNmodels','torchvision','reticulate','inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR','tidymodels', 'brulee', 'reprex','poissonreg','ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels','sp','terra','gstat','sf'))"
 RUN R -e "BiocManager::install('BiocPkgTools')"
 RUN R -e "torch::install_torch(type = 'cpu')"
 RUN R -e "JuliaCall::install_julia()"
