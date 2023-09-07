@@ -8,12 +8,11 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
+    before_script: rm -rf /opt/hostedtoolcache
     container: registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.5
 
 
     steps:
-      - name: Delete huge unnecessary tools folder
-        run: rm -rf /opt/hostedtoolcache
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Generate slides
