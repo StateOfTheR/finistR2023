@@ -47,7 +47,7 @@ library(tidyverse)
 library(gstat)
 library(sf)
 library(ggplot2)
-
+library(GeoModels)
 ```
 
 On utilise les données meuse du package sp. Celles-ci contiennent des données de concentration en métaux près de la meuse, avec des coordonnées cartésiennes en m.
@@ -226,7 +226,6 @@ Les données en entrée doivent être, si on fait du spatial uniquement :
 Il n'y a donc pas besoin de gérer des types de données spatiales comme dans gstat.
 
 ```{r}
-library(GeoModels)
 
 data =log(df$zinc)
 
@@ -387,7 +386,7 @@ GeoStats propose de faire des modèles spatiaux. Sa particularité va être de t
 ```{julia}
 #| output: false
 # Import package
-using GeoDataFrames,Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF=GeoDataFrames;import WGLMakie as Mke
+using GeoDataFrames,Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF=GeoDataFrames; import WGLMakie as Mke
 ```
 
 ## Importer les données
