@@ -8,17 +8,14 @@ jobs:
   build:
     name: Build website with rmarkdown
     runs-on: ubuntu-latest
-    # container: registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.4
+    container: stateofther/r-finistr2023:0.5
+
+
     steps:
-     #  - name: free disk space
-     #    run: |
-      #     sudo swapoff /swapfile
-        #   sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
-      - name: install new docker
-        run: |
-          docker run registry.forgemia.inra.fr/theodore.vanrenterghem/docker-finistr:0.0.4
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Additional Packages
+        run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
       - name: Generate slides
         run: "quarto render"
       - name: GitHub Pages action
