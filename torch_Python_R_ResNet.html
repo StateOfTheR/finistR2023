@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -81,15 +81,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -107,8 +107,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -145,6 +145,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -161,7 +169,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -190,10 +202,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -202,16 +210,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -228,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
@@ -238,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#chargement-des-données" id="toc-chargement-des-données" class="nav-link" data-scroll-target="#chargement-des-données">Chargement des données</a></li>
   <li><a href="#construction-dun-block-residual" id="toc-construction-dun-block-residual" class="nav-link" data-scroll-target="#construction-dun-block-residual">Construction d’un block <em>residual</em></a></li>
   <li><a href="#constructeur-resnet" id="toc-constructeur-resnet" class="nav-link" data-scroll-target="#constructeur-resnet">Constructeur <em>ResNet</em></a></li>
-  <li><a href="#instantiation-model-et-optimiseurs" id="toc-instantiation-model-et-optimiseurs" class="nav-link" data-scroll-target="#instantiation-model-et-optimiseurs">Instantiation model et optimiseurs</a></li>
+  <li><a href="#instanciation-modèle-et-optimiseurs" id="toc-instanciation-modèle-et-optimiseurs" class="nav-link" data-scroll-target="#instanciation-modèle-et-optimiseurs">Instanciation modèle et optimiseurs</a></li>
   <li><a href="#apprentissage" id="toc-apprentissage" class="nav-link" data-scroll-target="#apprentissage">Apprentissage</a></li>
   <li><a href="#comparaison-temps-de-calcul" id="toc-comparaison-temps-de-calcul" class="nav-link" data-scroll-target="#comparaison-temps-de-calcul">Comparaison temps de calcul</a></li>
   <li><a href="#précision" id="toc-précision" class="nav-link" data-scroll-target="#précision">Précision</a></li>
@@ -259,12 +271,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
-    </div>
-  </div>
   
     
   </div>
@@ -275,11 +281,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="intro" class="level2">
 <h2 class="anchored" data-anchor-id="intro">Intro</h2>
 <p>Le but est de comparer la syntaxe utilisée par les deux langages, seuls les exemples en <code>R</code> sont exécutés (difficultés de faire un quarto avec deux langages, voir <a href="https://github.com/quarto-dev/quarto-cli/discussions/4232">issue ici</a> ou de faire tourner <code>pytorch</code> avec <code>{reticulate}</code>). L’exemple d’application est un <em>ResNet</em>.</p>
-<p>Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le <a href="https://pytorch.org/get-started/locally/">site web officiel</a>. Vous pouvez utiliser <code>pip</code> ou <code>conda</code>, avec ou sans <code>cuda</code>. Pour <code>R</code>, cela a déjà été fait à la session précédente de <a href="https://stateofther.github.io/finistR2022/autodiff.html">finistR</a>.</p>
+<p>Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le <a href="https://pytorch.org/get-started/locally/">site web officiel</a>. Vous pouvez utiliser <code>pip</code> ou <code>conda</code>, avec ou sans <code>cuda</code>. Pour <code>R</code>, cela a déjà été fait à la session 2022 de <a href="https://stateofther.github.io/finistR2022/autodiff.html">finistR</a>.</p>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-1_4a08393712f96d5428dbc4bc6f4caeed">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(torch)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>torch<span class="sc">::</span><span class="fu">install_torch</span>() <span class="do">## si vous avez un GPU compatible avec CUDA</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## torch::install_torch(type = "cpu") ## sinon</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## torch::install_torch(type = "cpu") ## sinon</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Un bon ouvrage pour démarrer : <a href="https://skeydan.github.io/Deep-Learning-and-Scientific-Computing-with-R-torch/">Deep Learning and Scientific Computing with <code>R</code> <code>torch</code></a>.</p>
 </section>
@@ -288,12 +294,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>En <code>python</code>, un premier exemple serait déjà d’importer la bibliothèque et de créer un <code>tensor</code> :</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="op">=</span> torch.tensor(<span class="dv">1</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Donnera en <code>R</code> :</p>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-2_f049dc77a24ec5f3c8f219b6908c4258">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(torch)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">torch_tensor</span>(<span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>t1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>torch_tensor
  1
@@ -306,12 +312,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="construction-dun-réseau-de-neurone-exemple-dun-resnet">Construction d’un réseau de neurone, exemple d’un ResNet</h2>
 <section id="chargement-des-données" class="level3">
 <h3 class="anchored" data-anchor-id="chargement-des-données">Chargement des données</h3>
-<p>On va utiliser <code>torchvision</code> pour importer un jeu de donné connu (des images annotées). On veut appliquer des transformations sur le jeu de test, mais hélas tout n’est pas encore implémenté. On commente les transformations pas encore implementées.</p>
+<p>On va utiliser <code>torchvision</code> pour importer un jeu de données connu (des images annotées). On veut appliquer des transformations sur le jeu de test, mais hélas tout n’est pas encore implémenté. On commente les transformations pas encore implementées.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>transform <span class="op">=</span> transforms.Compose([</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#transforms.Pad(4),</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#transforms.RandomHorizontalFlip(),</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#transforms.RandomCrop(32),</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor()])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor()])</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-3_d5f54da6f1a4e65c03880a8fc16e40f8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transform <span class="ot">&lt;-</span> <span class="cf">function</span>(img) {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># img &lt;- torchvision::transform_pad(img, 4) # pas implémenté</span></span>
@@ -319,9 +325,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># img &lt;- torchvision::transform_random_crop(img, 32) # bug sur la taille des images</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  img <span class="ot">&lt;-</span> torchvision<span class="sc">::</span><span class="fu">transform_to_tensor</span>(img)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(img)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Voici le code pour chager les données en <code>python</code> et <code>R</code> :</p>
+<p>Voici le code pour charger les données en <code>python</code> et <code>R</code> :</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>trainData <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">"./data"</span>,</span>
@@ -341,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>testLoader <span class="op">=</span> torch.utils.data.DataLoader(</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    dataset<span class="op">=</span>Subset(testData, <span class="bu">range</span>(num_samples)),</span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">256</span>,</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-4_d1eaa7ce8def5107727c2f78d0c1cd31">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>num_samples <span class="ot">=</span> <span class="dv">1000</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="fu">dataset_subset</span>(test_data, <span class="dv">1</span><span class="sc">:</span>num_samples),</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">256</span>,</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">shuffle =</span> <span class="cn">FALSE</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="construction-dun-block-residual" class="level3">
@@ -405,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> <span class="va">self</span>.bn2(o)</span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> o <span class="op">+</span> <span class="va">self</span>.align(x)</span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> <span class="va">self</span>.relu(o)</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> o</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>De la même manière, on peut créer un objet <code>nn_module</code> en <code>R</code> et y spécifier <code>init</code> et <code>forward</code> :</p>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-5_d3d94004d98f403bfc5c42944dea0786">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>align <span class="ot">&lt;-</span> <span class="cf">function</span>(num_in, num_out, stride) {</span>
@@ -448,7 +454,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    o <span class="ot">&lt;-</span> self<span class="sc">$</span><span class="fu">relu</span>(o)</span>
 <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(o)</span>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="constructeur-resnet" class="level3">
@@ -485,7 +491,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> <span class="va">self</span>.blocks3(o)</span>
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> <span class="va">self</span>.avgpool(o)</span>
 <span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        o <span class="op">=</span> <span class="va">self</span>.fc(o.reshape(n, <span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> o</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> o</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>En <code>R</code>, cela donne :</p>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-6_920b0715f13ed332cfd029901cd0a370">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>build_res_blocks <span class="ot">&lt;-</span> <span class="cf">function</span>(num_in, num_out, stride, num_blocks) {</span>
@@ -527,19 +533,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    o <span class="ot">&lt;-</span> self<span class="sc">$</span><span class="fu">fc</span>(o)</span>
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(o)</span>
 <span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="instantiation-model-et-optimiseurs" class="level3">
-<h3 class="anchored" data-anchor-id="instantiation-model-et-optimiseurs">Instantiation model et optimiseurs</h3>
+<section id="instanciation-modèle-et-optimiseurs" class="level3">
+<h3 class="anchored" data-anchor-id="instanciation-modèle-et-optimiseurs">Instanciation modèle et optimiseurs</h3>
 <p>Partie un peu plus rapide et simple, quasi identique dans les deux cas :</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">"cpu"</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ResNet(<span class="dv">10</span>).to(device)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span><span class="fl">0.001</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-7_f45b08bb3c91e66354cf2a9361488a28">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>device <span class="ot">=</span> <span class="st">"cpu"</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> res_net<span class="sc">$</span><span class="fu">new</span>(<span class="dv">10</span>)<span class="sc">$</span><span class="fu">to</span>(<span class="at">device =</span> device)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>An `nn_module` containing 195,738 parameters.
 
@@ -554,7 +560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-8_7f48544fddbb3f4a889722f316345362">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="ot">&lt;-</span> <span class="fu">optim_adam</span>(model<span class="sc">$</span>parameters, <span class="at">lr =</span> <span class="fl">0.001</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>optimizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>optimizer</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;optim_adam&gt;
   Inherits from: &lt;torch_optimizer&gt;
@@ -587,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>            loss.backward()</span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>            optimizer.step()</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                 <span class="bu">print</span>(<span class="st">"Epoch: </span><span class="sc">{}</span><span class="ch">\t</span><span class="st">Loss: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(epoch, loss.item()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                 <span class="bu">print</span>(<span class="st">"Epoch: </span><span class="sc">{}</span><span class="ch">\t</span><span class="st">Loss: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(epoch, loss.item()))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-9_10a672e3b0417abff99e681483067965">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (epoch <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
@@ -607,37 +613,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    })</span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparaison-temps-de-calcul" class="level3">
 <h3 class="anchored" data-anchor-id="comparaison-temps-de-calcul">Comparaison temps de calcul</h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tic <span class="op">=</span> time.time()</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>train()</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(time.time()<span class="op">-</span>tic, <span class="st">"s"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(time.time()<span class="op">-</span>tic, <span class="st">"s"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-10_824940d0e7bbda9d9cd36815e4f3fa28">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tic <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>()</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 1    Loss: 2.3230
-Epoch: 2    Loss: 1.9531
-Epoch: 3    Loss: 1.8095
-Epoch: 4    Loss: 1.7027
-Epoch: 5    Loss: 1.5863
-Epoch: 6    Loss: 1.4897
-Epoch: 7    Loss: 1.4185
-Epoch: 8    Loss: 1.3491
-Epoch: 9    Loss: 1.1876
-Epoch: 10   Loss: 1.1611</code></pre>
+<pre><code>Epoch: 1    Loss: 2.3981
+Epoch: 2    Loss: 1.9986
+Epoch: 3    Loss: 1.8066
+Epoch: 4    Loss: 1.6200
+Epoch: 5    Loss: 1.5309
+Epoch: 6    Loss: 1.5572
+Epoch: 7    Loss: 1.3535
+Epoch: 8    Loss: 1.3265
+Epoch: 9    Loss: 1.1657
+Epoch: 10   Loss: 1.1286</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 69.646   4.237  47.587 </code></pre>
+ 94.612   4.971  66.169 </code></pre>
 </div>
 </div>
-<p>Sur mon ordinateurs : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
+<p>Sur mon ordinateur : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
 <p>Des temps de calcul très comparables !</p>
 </section>
 <section id="précision" class="level3">
@@ -651,7 +657,7 @@ Epoch: 10   Loss: 1.1611</code></pre>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        _, ŷ <span class="op">=</span> torch.<span class="bu">max</span>(o, <span class="dv">1</span>)</span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        N <span class="op">+=</span> y.size(<span class="dv">0</span>)</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        n <span class="op">+=</span> torch.<span class="bu">sum</span>(ŷ <span class="op">==</span> y).item()</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Accuracy: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(n<span class="op">/</span>N))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Accuracy: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(n<span class="op">/</span>N))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell" data-hash="torch_Python_R_ResNet_cache/html/unnamed-chunk-11_b7555000e0859ee43d01c8b24c0ad760">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with_no_grad</span>({</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  n_tests_ok <span class="ot">&lt;-</span> <span class="dv">0</span></span>
@@ -665,9 +671,9 @@ Epoch: 10   Loss: 1.1611</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    n_tests_ok <span class="ot">&lt;-</span> n_tests_ok <span class="sc">+</span> <span class="fu">torch_sum</span>(y <span class="sc">==</span> yest)<span class="sc">$</span><span class="fu">item</span>()</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Accuracy"</span>, n_tests_ok <span class="sc">/</span> n_tests, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy 0.385 </code></pre>
+<pre><code>Accuracy 0.422 </code></pre>
 </div>
 </div>
 <p>Les deux codes donnent des résultats semblables !</p>
@@ -731,12 +737,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

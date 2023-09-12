@@ -6,9 +6,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Julie Aubert">
+<meta name="author" content="Armand Favrot">
+<meta name="author" content="Annaïg De Walsche">
+<meta name="author" content="Emre Anakök">
+<meta name="author" content="Caroline Cognot">
+<meta name="author" content="Florian Teste">
+<meta name="author" content="Barbara Bricout">
 
-<title>Finist’R 2023 - Partager un exemple reproductible dans une issue GitHub</title>
+<title>Finist’R 2023 - FinistR : Utilisation de git</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -244,10 +249,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#objectif" id="toc-objectif" class="nav-link active" data-scroll-target="#objectif">Objectif</a></li>
-  <li><a href="#recommandations" id="toc-recommandations" class="nav-link" data-scroll-target="#recommandations">Recommandations</a></li>
-  <li><a href="#structure-de-lissue" id="toc-structure-de-lissue" class="nav-link" data-scroll-target="#structure-de-lissue">Structure de l’issue</a></li>
-  <li><a href="#exemple-reproductible-avec-le-package-reprex" id="toc-exemple-reproductible-avec-le-package-reprex" class="nav-link" data-scroll-target="#exemple-reproductible-avec-le-package-reprex">Exemple reproductible avec le package {reprex}</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#chronologie-des-commandes" id="toc-chronologie-des-commandes" class="nav-link" data-scroll-target="#chronologie-des-commandes">Chronologie des commandes</a></li>
+  <li><a href="#commandes-utiles" id="toc-commandes-utiles" class="nav-link" data-scroll-target="#commandes-utiles">Commandes utiles</a></li>
+  <li><a href="#perspectives" id="toc-perspectives" class="nav-link" data-scroll-target="#perspectives">Perspectives</a></li>
+  <li><a href="#liens-utiles" id="toc-liens-utiles" class="nav-link" data-scroll-target="#liens-utiles">Liens utiles</a></li>
+  <li><a href="#remerciements" id="toc-remerciements" class="nav-link" data-scroll-target="#remerciements">Remerciements</a></li>
   </ul>
 </nav>
     </div>
@@ -256,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Partager un exemple reproductible dans une issue GitHub</h1>
+<h1 class="title">FinistR : Utilisation de git</h1>
 </div>
 
 
@@ -264,12 +271,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
     <div class="quarto-title-meta-contents">
-             <p>Julie Aubert </p>
+             <p>Armand Favrot </p>
+             <p>Annaïg De Walsche </p>
+             <p>Emre Anakök </p>
+             <p>Caroline Cognot </p>
+             <p>Florian Teste </p>
+             <p>Barbara Bricout </p>
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">21 août 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -277,44 +295,125 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="objectif" class="level2">
-<h2 class="anchored" data-anchor-id="objectif">Objectif</h2>
-<p>L’objectif de ce billet est de présenter des conseils pour écrire une issue pour demander des améliorations ou soumettre des bugs dans un code déposé sur GitHub.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>L’objectif de cet atelier était de voir comment intéragir avec le dépôt github finistR2023 afin de pouvoir contribuer à la réalisation de la page web. Nous avons pour cela crée une branche dédiée à cet atelier sur laquelle nous avons interagi avec deux ordinateurs différents. Ce compte rendu consitste en la restitution chronologique des commandes exécutées par ces deux ordinateurs, et détaille les problèmes rencontrés en cours de route.</p>
 </section>
-<section id="recommandations" class="level2">
-<h2 class="anchored" data-anchor-id="recommandations">Recommandations</h2>
-<p>Les recommandations proposées sur les dépôts des packages du tidyverse :</p>
-<ul>
-<li>Inclure un exemple minimal reproductible, dit <code>reprex</code>.</li>
-</ul>
-<p>Lire <a href="https://github.com/tidyverse/reprex#what-is-a-reprex">What is a reprex</a> pour plus de détails.</p>
-<ul>
-<li><p>Si les données sont confidentielles, utiliser des données disponibles dans <a href="https://modeldata.tidymodels.org/reference/index.html">modeldata</a>, simuler des données ou anonymiser les données.</p></li>
-<li><p>Utiliser des graines <code>set.seed()</code></p></li>
-<li><p>Vérifier sur les blogs ou forums que le problème n’a pas déjà été signalé ou réglé.</p></li>
-</ul>
-<p>D’autres recommandations sont proposées dans le cas d’utilisation de calculs parallèles.</p>
-</section>
-<section id="structure-de-lissue" class="level2">
-<h2 class="anchored" data-anchor-id="structure-de-lissue">Structure de l’issue</h2>
-<ol type="1">
-<li>Présenter en premier le problème (<em>“I’m having trouble with …”</em>)</li>
-<li>Donner un exemple reproductible dans un format adapté.</li>
-</ol>
-<p>Un bon exemple de report de bug <a href="https://github.com/tidymodels/tune/issues/46">#46</a>.</p>
-</section>
-<section id="exemple-reproductible-avec-le-package-reprex" class="level2">
-<h2 class="anchored" data-anchor-id="exemple-reproductible-avec-le-package-reprex">Exemple reproductible avec le package {reprex}</h2>
-<p>Il est possible de créer un exemple reproductible avec le package {reprex} qui produit une sortie bien formatée notamment pour GitHub, et que l’on peut ensuite faciler copier/coller.</p>
-<p>Si le code est un peu long, faire un script, par exemple <code>mon_probleme.R</code></p>
-<p>Il suffit ensuite d’utiliser la fonction <code>reprex</code> du package du même nom avec les options de son choix. Par exemple <code>reprex(input = 'mon_probleme.R', session_info = TRUE)</code>.</p>
-<p>L’option <code>session_info = TRUE</code> permet de récuperer les informations sur notre session R.</p>
-<p>La fonction génère un fichier markdown (<code>mon_probleme.md</code>) dans le cas de l’utilisation d’un script directement intégrable dans l’issue et ouvre également par défaut le rendu dans le viewer de RStudio ou un navigateur (peut se modifier avec l’argument <code>html_preview = FALSE</code>).</p>
-<p>Petit exemple plus court (sans utilisation de script extérieur) issu du package {reprex} :</p>
+<section id="chronologie-des-commandes" class="level1">
+<h1>Chronologie des commandes</h1>
+<p><strong>Ordinateur 1</strong></p>
+<p>On commence par cloner le dépôt github StateOfTheR/finistR2023 :</p>
+<p><code>git clone git@github.com:StateOfTheR/finistR2023.git</code></p>
+<p>On crée une nouvelle branche pour cet atelier git :</p>
+<p><code>git branch Utilisation_de_git</code></p>
+<p>On se déplace sur cette branche :</p>
+<p><code>git checkout Utilisation_de_git</code></p>
+<p>On crée un fichier qmd dans un nouveau dossier dédié à cet atelier :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reprex)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reprex</span>(<span class="fu">rbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>), <span class="at">session_info =</span> <span class="cn">TRUE</span>, <span class="at">html_preview =</span> <span class="cn">FALSE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mkdir Utilisation_de_git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cd Utilisation_de_git</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>nvim Utilisation_de_git.qmd</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>On commit les modification et on les push dans le dépôt.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>git add .</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="sc">-</span>m <span class="st">"création d'une branche pour l'atelier sur git"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>git push <span class="sc">--</span>set<span class="sc">-</span>upstream origin Utilisation_de_git </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La partie <code>--set-upstream origin Utilisation_de_git</code> de la troisième commande n’est utile que parce que la branche n’existe pas encore dans le dépôt. Les prochains push se feront simplement avec la commande <code>git push</code>.</p>
+<p>A ce stade, le fichier Utilisation_de_git.qmd est comme suit :</p>
+<p><img src="resources/Utilisation_de_git/rmd_1.png" title="fichier Rmd" class="img-fluid"> <strong>————————————————————————————————————————————-</strong></p>
+<p><strong>Ordinateur 2</strong></p>
+<p>Avec le deuxième ordinateur, nous avons cloné le dépôt, nous nous sommes placés sur la branche crée précédemment, nous avons ajouté du texte au fichier qmd sans modifier le texte déjà présent, puis nous avons pushé ces modifications sur le dépôt. Le fichier Utilisation_de_git.qmd était comme suit au moment du push :</p>
+<p><img src="resources/Utilisation_de_git/rmd_2.png" class="img-fluid"> <strong>————————————————————————————————————————————-</strong></p>
+<p><strong>Ordinateur 1</strong></p>
+<p>En parallèle de cette opération, nous avons aussi fait un ajout de texte avec le premier ordinateur :</p>
+<p><img src="resources/Utilisation_de_git/rmd_3.png" class="img-fluid"></p>
+<p>Après avoir commité cette ajout de texte, nous avons fait un git pull et nous avons eu un conflit auquel nous ne nous attendions pas étant donné la nature des différences entre le fichier sur le dépôt et le fichier en local. Le message d’erreur était le suivant :</p>
+<p><mark style="background-color:yellow;">You have divergent branches and need to specify how to reconcile them. You can do so by running one of the following commands sometime before your next pull:</mark></p>
+<ul>
+<li><mark style="background-color:yellow;">git config pull.rebase false # merge (the default strategy)</mark></li>
+<li><mark style="background-color:yellow;">git config pull.rebase true # rebase</mark></li>
+<li><mark style="background-color:yellow;">git config pull.ff only # fast-forward only</mark></li>
+</ul>
+<p><mark style="background-color:yellow;">You can replace “git config” with “git config –global” to set a default preference for all repositories. You can also pass –rebase, –no-rebase, or –ff-only on the command line to override the configured default per invocation.</mark></p>
+<p>Nous pensions pouvoir résoudre ce conflit en fast forward, nous avons donc configuré le pull de cette façon :</p>
+<p><code>git config pull.ff only</code></p>
+<p>Puis nous avons fait un git pull, mais cela n’a pas fonctionné.</p>
+<p>Nous avons alors utilisé rebase :</p>
+<p><code>git pull --rebase</code></p>
+<p>Puis nous avons <strong>ouvert le fichier qmd pour gérer les conflits en supprimant les “=” et les “&gt;”</strong>, après quoi nous avons commité ces modifications. Nous avons alors essayé de faire un push et nous avons eu le message d’erreur suivant :</p>
+<p><mark style="background-color:yellow;">fatal: You are not currently on a branch. To push the history leading to the current (detached HEAD) state now, use </mark></p>
+<ul>
+<li><mark style="background-color:yellow;">git push origin HEAD:&lt;name-of-the-remote-branch&gt; </mark></li>
+</ul>
+<p>Effectivement, la commande <code>git branch</code> nous donnait le résultat suivant :</p>
+<p><mark style="background-color:yellow;">*(no branch, rebasing Utilisation_de_git)</mark><br> <mark style="background-color:yellow;">Utilisation_de_git</mark><br> <mark style="background-color:yellow;">main</mark></p>
+<p>Nous avons résolu le problème avec</p>
+<p><code>git rebase --continue</code></p>
+<p>Et le push a ensuite bien fonctionné. <strong>————————————————————————————————————————————-</strong></p>
+<p>A ce stade, nous nous sommes dits que nous avions mal géré le problème et que nous aurions dû utiliser la stratégie par défaut proposée dans le premier message d’erreur. Dans la suite, nous avons donc reconfiguré le pull (<code>git config pull.rebase false</code>) et nous avons recommencé ces ajouts de textes en parallèle avec les deux ordinateurs pour voir si c’était la bonne solution. Mais malgré cette reconfiguration du pull, git tentait toujours de le faire en fast forward. Cela venait de la commande <code>git config pull.ff only</code> exécutée précédemment et nous nous en sommes rendu compte en utilisant la commande <code>git config -l</code> qui permet de voir la configuration de certaines commandes git. Nous avons donc reconfiguré pull.ff :</p>
+<p><code>git config pull.ff false</code></p>
+<p>Et le merge des deux fichiers a bien fonctionné.</p>
+<p>Au cours de ce travail, nous avons utilisé l’application <strong>gitk</strong> (installée avec <code>sudo apt install gitk</code>) qui permet de visualiser l’arbre des commits d’un répertoire git. Cette application s’utilise simplement en exécutant la commande <code>gitk</code> depuis le répertoire git désiré. Des options sont disponible pour customiser la vue et en particulier pour filtrer certaines branches de l’arbre (aller dans View &gt; New view). La figure ci-dessous représente l’arbre de notre branche à la fin des différents tests que l’on a effectués.</p>
+<p><img src="resources/Utilisation_de_git/arbre_git_1.png" class="img-fluid"></p>
+<p>Par ailleurs, un point important à mentionner est le recours à la commande <code>history</code> de bash pour accéder à l’historique de ce dernier (aussi accessible dans le fichier ~/.bash_history (pour les linuxiens)). En effet, cela nous a permis de retracer ce qui s’était passé et de mieux comprendre certaines choses. Nous avons cependant regrété que les log des commandes git ne soient pas automatiquement sauvegardés. Cela nous aurait beaucoup aidé.</p>
+</section>
+<section id="commandes-utiles" class="level1">
+<h1>Commandes utiles</h1>
+<p><em>Commandes précédées de git</em></p>
+<ul>
+<li>clone : clone un dépôt distant (de gitHub par exemple) dans un nouveau répertoire local.</li>
+<li>branch
+<ul>
+<li>branch : affiche les noms des branches sur lesquelles on a travaillé, celle avec une étoile correspond à celle sur laquelle on est.</li>
+<li>branch -a : affiche les noms de toutes les branches.</li>
+<li>branch <em>new_branch_name</em> : créer une nouvelle branche.</li>
+</ul></li>
+<li>checkout
+<ul>
+<li>checkout <em>branch_name</em> : se déplacer sur une branche.</li>
+<li>checkout -b <em>new_branch_name</em> : créer une nouvelle branche et se déplacer sur cette nouvelle branche.</li>
+</ul></li>
+<li>status : affiche des informations sur la situation de notre git (la branche sur laquelle on est, les commits en cours,…)</li>
+<li>add : Instruction à réaliser avant un commit, pour indiquer à git quels fichiers on veut suivre. Si on ne précise pas les noms des fichiers, par défaut tous les fichiers du répertoire sont ajoutés au suivi (sauf ceux du .gitignore).</li>
+<li>commit -m <em>commit_message</em> : “commit” les changements réalisés dans les fichiers suivis (ceux qu’on a indiqué avec l’instruction add). On conseille de mettre un message explicite, c’est utile lorsqu’on souhaite revenir à une version précedente.</li>
+<li>push : envoi des modifications des fichiers commités sur le dépot distant.</li>
+<li>pull<br> <em>par défaut équivalent à git fetch suivi de git merge : télécharge la branche distante (fetch) et la merge à la branche locale</em>
+<ul>
+<li>pull : incorpore les modifications du dépot distant dans le répertoire local.<br>
+</li>
+<li>pull –rebase : pull en faisant un rebase</li>
+<li>pull –merge : pull en faisant un merge</li>
+</ul></li>
+<li>config<br> <em>config permet de customiser la configuration des dossiers git, il y a une configuration locale (le dossier git courrant) et une configuration globale (valable pour tous les dossiers git)</em>
+<ul>
+<li>config -l : affiche les configurations de notre git pour le dossier courrant.</li>
+<li>config pull.rebase true : indique a git de faire un rebase par défaut au moment du pull, pour le dossier git courrant.</li>
+<li>config –global pull.rebase true : même chose mais pour tous les dossiers gits.</li>
+</ul></li>
+<li>rebase –continue : continue un rebase avorté par un échec de merge, après l’édition des fichiers conflictuels</li>
+<li>log
+<ul>
+<li>log : affiche l’historique des commits de la branche sur laquelle on se trouve.</li>
+<li>log –oneline : idem mais avec un affichage plus concis, sur une seule ligne.</li>
+</ul></li>
+</ul>
+</section>
+<section id="perspectives" class="level1">
+<h1>Perspectives</h1>
+<p>Au cours de cet atelier, nous avons pu voir l’intérêt de git pour un projet collaboratif comme celui de la réalisation d’un site web. Néanmoins, n’étant pour la plupart d’entre nous que des utilisateurs novices de git dont l’utilisation se résume parfois à celle d’un simple drive, nous nous sommes demandés quels bénéfices nous pouvions en tirer pour une utilisation solitaire. En particulier pour en finir avec les répertoires remplis de fichiers comme analyse.ipynb, analyse_V2.ipynb, …, analyse_Vn.ipynb, dont l’un des intérêts est que cela permet de travailler simultanément sur plusieurs fichiers à la fois.</p>
+<p>Une solution basée sur la création de différentes branches et des commandes <code>git stash</code> et <code>git pop</code>a émergé au moment de la restitution et sera testée prochainement.</p>
+</section>
+<section id="liens-utiles" class="level1">
+<h1>Liens utiles</h1>
+<ul>
+<li><a href="https://learngitbranching.js.org/">learngitbranching</a></li>
+</ul>
+</section>
+<section id="remerciements" class="level1">
+<h1>Remerciements</h1>
+<p>Un grand merci à Marie-Pierre sans qui cet atelier aurait pû durer très longtemps !</p>
 
 
 </section>

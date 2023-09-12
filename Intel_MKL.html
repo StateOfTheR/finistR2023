@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -12,7 +12,6 @@
 <meta name="author" content="Armand Favrot">
 <meta name="author" content="Félix Cheysson">
 <meta name="author" content="Théodore Vanrenterghem">
-<meta name="dcterms.date" content="2024-08-08">
 
 <title>Finist’R 2023 - Intel MKL &amp; Open Blas</title>
 <style>
@@ -88,15 +87,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -114,8 +113,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -152,6 +151,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -168,7 +175,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -197,10 +208,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -209,16 +216,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -235,13 +246,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#installation-sur-windows-seulement-intel-mkl" id="toc-installation-sur-windows-seulement-intel-mkl" class="nav-link active" data-scroll-target="#installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</a></li>
   <li><a href="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" id="toc-installation-sur-ubuntu-22.04-intel-mkl-et-open-blas" class="nav-link" data-scroll-target="#installation-sur-ubuntu-22.04-intel-mkl-et-open-blas">Installation sur Ubuntu 22.04 (Intel MKL et Open Blas)</a></li>
   <li><a href="#comparaison-produit-matriciel-blas" id="toc-comparaison-produit-matriciel-blas" class="nav-link" data-scroll-target="#comparaison-produit-matriciel-blas">Comparaison produit matriciel (<code>BLAS</code>)</a></li>
-  <li><a href="#bench-mark-approfondie" id="toc-bench-mark-approfondie" class="nav-link" data-scroll-target="#bench-mark-approfondie">Bench mark approfondie</a></li>
+  <li><a href="#benchmark-approfondi" id="toc-benchmark-approfondi" class="nav-link" data-scroll-target="#benchmark-approfondi">Benchmark approfondi</a></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références">Références</a></li>
   </ul>
 </nav>
     </div>
@@ -258,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
     <div class="quarto-title-meta-contents">
              <p>Annaig De Walsche </p>
              <p>Barbara Bricout </p>
@@ -270,9 +282,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 8, 2024</p>
+      <p class="date">8 août 2024</p>
     </div>
   </div>
   
@@ -282,18 +294,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Nous allons d’abord installer les librairies <strong>Intel MKL</strong> (processeur Intel nécéssaire) &amp; <strong>Open Blas</strong>. Ces deux librairies d’algèbre linéaire permettent de d’optimiser et/ou de paralléliser un certains nombre d’opérations algébriques, notamment le calcul matriciel.</p>
-<p>Nous les testons avec un produit matriciel de 10000 x 10000</p>
+<p>Nous allons d’abord installer les librairies <strong>Intel MKL</strong> (processeur Intel nécessaire) &amp; <strong>Open Blas</strong>. Ces deux librairies d’algèbre linéaire permettent d’optimiser et/ou de paralléliser un certains nombre d’opérations algébriques, notamment le calcul matriciel.</p>
+<p>Nous les testons avec un produit matriciel de 10000 x 10000.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size<span class="sc">**</span><span class="dv">2</span>), size, size)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Avant l’installation les librairies utilisées pour du calcul matriciel en R sont <code>libblas.so.3.10.0</code> et <code>liblapack.so.3.10.0</code> (on peut les voir avec la ligne)</p>
+<p>Avant l’installation les librairies utilisées pour du calcul matriciel en R sont <code>libblas.so.3.10.0</code> et <code>liblapack.so.3.10.0</code> (on peut les voir avec la ligne suivante)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="installation-sur-windows-seulement-intel-mkl" class="level3">
 <h3 class="anchored" data-anchor-id="installation-sur-windows-seulement-intel-mkl">Installation sur Windows (seulement Intel MKL)</h3>
@@ -314,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="réouverture-de-r" class="level4">
 <h4 class="anchored" data-anchor-id="réouverture-de-r">4 - Réouverture de <code>R</code></h4>
 <p>Vous pouvez fermer votre session <code>R</code> et la rouvrir. Maintenant votre session <code>R</code> devrait fonctionner avec <code>Intel-MKL</code>. Vérifiez si vous avez gagné en efficacité sur votre ordinateur. Attention, le code déjà parallélisé pourrait être moins efficace car ces bibliothèques parallélisent déjà l’algèbre linéaire.</p>
-<p>Concrètement on remplace les deux fichiers faisant appel au librairies <code>BLAS</code> et <code>LAPCK</code> par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.</p>
+<p>Concrètement on remplace les deux fichiers faisant appel aux librairies <code>BLAS</code> et <code>LAPACK</code> par des fichiers du même nom mais qui en pratique font implicitement appel à mkl. Pensez bien à sauver une copie des fichiers initiaux.</p>
 <p>Pour retourner à la base <code>R</code> il suffit d’opérer à l’opération inverse, copie des fichiers <code>Rblas.dll</code>, <code>Rlapack.dll</code> et <code>libiomp5md.dll</code> du dossier <code>C:\Program Files\R\Your_R_Version\bin\x64</code>. Les mettre en sécurité puis copier les librairies des <code>Rblas.dll</code> et <code>Rlapack.dll</code> depuis votre sauvegarde ou <a href="https://seafile.agroparistech.fr/d/696def33ceb848508cb0/" class="uri">https://seafile.agroparistech.fr/d/696def33ceb848508cb0/</a>.</p>
 </section>
 </section>
@@ -339,14 +352,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="comparaison-produit-matriciel-blas" class="level3">
 <h3 class="anchored" data-anchor-id="comparaison-produit-matriciel-blas">Comparaison produit matriciel (<code>BLAS</code>)</h3>
-<p>Une fois instalée vérifier si les librairies sont bien référencées pour le calcul matriciel avec</p>
+<p>Une fois installées, vérifier si les librairies sont bien référencées pour le calcul matriciel avec</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>get_res <span class="ot">&lt;-</span> mat <span class="sc">%*%</span> mat</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <table class="table">
 <colgroup>
@@ -390,9 +403,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="bench-mark-approfondie" class="level3">
-<h3 class="anchored" data-anchor-id="bench-mark-approfondie">Bench mark approfondie</h3>
-<p>Nous allons comparer les performences de toutes ces librairies sur Ubuntu avec un ordinateur à 8 coeurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.</p>
+<section id="benchmark-approfondi" class="level3">
+<h3 class="anchored" data-anchor-id="benchmark-approfondi">Benchmark approfondi</h3>
+<p>Nous allons comparer les performances de toutes ces librairies sur Ubuntu avec un ordinateur à 8 cœurs Intel I7. Pour effectuer ce benchmark nous devons réitérer les fermetures de sessions donc le même code à été lancé séquentiellement.</p>
 <section id="set-up" class="level4">
 <h4 class="anchored" data-anchor-id="set-up">Set-up</h4>
 <section id="packages" class="level5">
@@ -403,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fonctions-de-test" class="level5">
@@ -443,20 +456,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> type, <span class="at">fill =</span> type,<span class="at">col =</span> type)) <span class="sc">+</span></span>
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>,<span class="at">show.legend =</span> F) <span class="sc">+</span>  </span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"matrix_size"</span>,<span class="at">scales =</span> <span class="st">"free_x"</span>,<span class="at">labeller =</span> label_both)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="paramètres" class="level5">
 <h5 class="anchored" data-anchor-id="paramètres">Paramètres</h5>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"base"</span>,<span class="st">"openblas"</span>,<span class="st">"lasy_intel_mkl"</span>,<span class="st">"intel_mkl_high_perf"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seeds <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>seeds <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="selection-de-la-librarie-active" class="level5">
-<h5 class="anchored" data-anchor-id="selection-de-la-librarie-active">Selection de la librarie active</h5>
+<section id="sélection-de-la-librarie-active" class="level5">
+<h5 class="anchored" data-anchor-id="sélection-de-la-librarie-active">Sélection de la librarie active</h5>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> types[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>type <span class="ot">&lt;-</span> types[[<span class="dv">1</span>]]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculs-et-sauvegarde" class="level5">
@@ -464,27 +477,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">compare</span>(seeds,type)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(res, <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">'res_algebrica_calculations/res_'</span>,type,<span class="st">'.RDS'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(res, <span class="at">file =</span> <span class="fu">paste0</span>(<span class="st">'res_algebrica_calculations/res_'</span>,type,<span class="st">'.RDS'</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="chargement-des-résulats" class="level5">
-<h5 class="anchored" data-anchor-id="chargement-des-résulats">Chargement des résulats</h5>
+<section id="chargement-des-résultats" class="level5">
+<h5 class="anchored" data-anchor-id="chargement-des-résultats">Chargement des résultats</h5>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>list_of_results <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^res_algebrica_calculations/res_.*.RDS$"</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">dir</span>(<span class="at">recursive =</span> T),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">value=</span>T)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>res_table <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(list_of_results,readRDS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>res_table <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(list_of_results,readRDS)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="graph-des-resultats-complets" class="level5">
-<h5 class="anchored" data-anchor-id="graph-des-resultats-complets">Graph des resultats complets</h5>
-<p>On peut voir dans ces graph que dans l’ensemble <strong>OpenBlas</strong> et <strong>Intel-MKL</strong> sont plus efficaces que la base de R. Cependant d’autres remarques sont à faire :</p>
+<section id="graph-des-résultats-complets" class="level5">
+<h5 class="anchored" data-anchor-id="graph-des-résultats-complets">Graph des résultats complets</h5>
+<p>On peut voir dans ces graphiques que dans l’ensemble <strong>OpenBlas</strong> et <strong>Intel-MKL</strong> sont plus efficaces que la base de R. Cependant d’autres remarques sont à faire :</p>
 <ol type="1">
-<li><strong>OpenBlas</strong> est utilise constament l’ensembles des coeurs disponibles, ce comportement extreme peu devenir un problème lors des longs calculs où lorsque l’on utilise des librairies plus complexes comme par exemple <code>Rcpp</code> avec laquelle il obtiens des performances largement plus faible que la base.</li>
-<li>Nous avons aussi remarqué une certaine variations dans les performances de <strong>Intel-MKL</strong> sur Ubuntu seulement. Bien que tourjours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu’à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons “lasy intel mkl” les sessions de faible performances.</li>
+<li><strong>OpenBlas</strong> est utilise constamment l’ensemble des cœurs disponibles, ce comportement extrême peu devenir un problème lors des longs calculs où lorsque l’on utilise des librairies plus complexes comme par exemple <code>Rcpp</code> avec laquelle il obtiens des performances largement plus faible que la base.</li>
+<li>Nous avons aussi remarqué une certaine variations dans les performances de <strong>Intel-MKL</strong> sur Ubuntu seulement. Bien que toujours observée plus efficace que la base. Il est fréquent que pour un même calcul le temps soit jusqu’à 4 fois plus long que le minimum. Cette variation semble être fixe pour chaque session R ouverte. Dans ces graph nous appelons “lasy intel mkl” les sessions de faible performances.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_multiplot</span>(res_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_multiplot</span>(res_table)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Intel_MKL_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -495,15 +508,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>res_table <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">!=</span> <span class="st">"base"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">my_multiplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">my_multiplot</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Intel_MKL_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-
-
 </section>
 </section>
+</section>
+<section id="références" class="level3">
+<h3 class="anchored" data-anchor-id="références">Références</h3>
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/docs/onemkl/get-started-guide/2023-0/overview.html" class="uri">https://www.intel.com/content/www/us/en/docs/onemkl/get-started-guide/2023-0/overview.html</a></li>
+<li><a href="https://www.openblas.net/" class="uri">https://www.openblas.net/</a></li>
+<li><a href="https://github.com/xianyi/OpenBLAS/wiki/faq" class="uri">https://github.com/xianyi/OpenBLAS/wiki/faq</a></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -561,12 +582,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

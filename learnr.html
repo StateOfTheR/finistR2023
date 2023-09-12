@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -9,7 +9,6 @@
 <meta name="author" content="Pierre Barbillon">
 <meta name="author" content="Marie-Pierre Etienne">
 <meta name="author" content="Isabelle Sanchez">
-<meta name="dcterms.date" content="2023-08-24">
 
 <title>Finist’R 2023 - Nouveautés {learnr}</title>
 <style>
@@ -85,15 +84,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -111,8 +110,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -149,6 +148,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -165,7 +172,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -194,10 +205,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -206,16 +213,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -232,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
@@ -253,7 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
     <div class="quarto-title-meta-contents">
              <p>Pierre Barbillon </p>
              <p>Marie-Pierre Etienne </p>
@@ -262,9 +273,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 24, 2023</p>
+      <p class="date">24 août 2023</p>
     </div>
   </div>
   
@@ -276,86 +287,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Nous allons ici présenter les nouveautés dans le packages {learnr} qui permet de créer des tutoriaux interactifs. {learnr} avait déjà été discuté durant la [semaine Finist’R 2020] (https://stateofther.github.io/finistR2020/teach_learnr_gradethis.html){.uri}</p>
+<p>Nous allons ici présenter les nouveautés du package {learnr} qui permet de créer des tutoriaux interactifs. {learnr} avait déjà été discuté durant la <a href="https://stateofther.github.io/finistR2020/teach_learnr_gradethis.html" class="uri">semaine Finist’R 2020</a></p>
 <p>{learnr} repose sur {shiny}. Le tutoriel est construit à partir d’un fichier Rmarkdown et peut être soit executé en local via le bouton <code>run app</code> soit en déployant le fichier sur un serveur Shiny.</p>
-<p>Depuis 2020 environ, il est possible d’intégrer un tutoriel {learnr] dans un package, ce qui rend interactif les classiques vignettes. Les nouvelles versions de Rstudio ont de plus inclus un bouton <code>tutorial</code> disponible dans le panel “Environnement, Git etc…”.</p>
-<p>L’idée est de partager un tutoriel facilement à une large audience et pour cela il est maintenant possible de les intégrer dans un package. Cela peut être intéressant autant pour des tutoriaux à destination d’étudiants mais également pour des tutoriaux à intégrer dans les packages que vous développez pour rendre l’initiation aux méthodes développées plus interactives qu’une vignette.</p>
-<p>L’avantage technique d’intégrer un tutoriel {learnr} dans un package est qu’il est alors possible, après avoir installé le package, d’executer le tutoriel en local sans avoir à le déployer sur un serveur Shiny. C’est donc gratuit et simple d’utilisation.</p>
-<p>A noter qu’il n’est pas nécessaire que le package contenant le tutoriel soit déposé sur le CRAN ou autre, qu’il contienne d’autres ficheirs que le tutoriel. Tout est donc possible.</p>
+<p>Depuis 2020 environ, il est possible d’intégrer un tutoriel {learnr] dans un package, ce qui rend les classiques vignettes interactives. Les nouvelles versions de RStudio ont de plus inclus un bouton <code>tutorial</code> disponible dans le panel “Environnement, Git etc…”.</p>
+<p>L’idée est de partager un tutoriel facilement à une large audience et pour cela il est maintenant possible de les intégrer dans un package. Cela peut être intéressant pour des tutoriaux à destination d’étudiants mais également pour des tutoriaux à intégrer dans les packages que vous développez pour rendre l’initiation aux méthodes développées plus interactives qu’une vignette.</p>
+<p>L’avantage technique d’intégrer un tutoriel {learnr} dans un package est qu’il est alors possible, après avoir installé le package, d’exécuter le tutoriel en local sans avoir à le déployer sur un serveur Shiny. C’est donc gratuit et simple d’utilisation.</p>
+<p>A noter qu’il n’est pas nécessaire que le package contenant le tutoriel soit déposé sur le CRAN ou autre, qu’il contienne d’autres fichiers que le tutoriel. Tout est donc possible.</p>
 <p>Les étapes pour créer un package contenant un tutoriel:</p>
 <ol type="1">
 <li>Si le package n’est pas déjà créé:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"&lt;path_to_folder/name_of_package&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"&lt;path_to_folder/name_of_package&gt;"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>Pour créer le fichier du tutoriel:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_tutorial</span>(<span class="st">"&lt;name-of-learnr-file&gt;"</span>, <span class="st">"&lt;Title You'd Like the User to See&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_tutorial</span>(<span class="st">"&lt;name-of-learnr-file&gt;"</span>, <span class="st">"&lt;Title You'd Like the User to See&gt;"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
-<li><p>Puis dans Rstudio, cliquer sur “Build &gt; Install and Restart”.</p></li>
+<li><p>Puis dans RStudio, cliquer sur “Build &gt; Install and Restart”.</p></li>
 <li><p>Si nécessaire, rajouter le package {gradethis} (noter la fonction de {usethis} spécifique pour les install de package en développement),</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_dev_package</span>(<span class="st">"gradethis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_dev_package</span>(<span class="st">"gradethis"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Si nécessaire, rajouter les packages présent sur le CRAN toujours avec {usethis}</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"palmerpenguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"palmerpenguins"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li><p>Si nécessaire, éditer le fichier DESCRIPTION</p></li>
 <li><p>Exécuter <code>usethis::use_readme_rmd()</code> pour rajouter un fichier README. puis compiler le tout.</p></li>
-<li><p>Déposer le package sur gitlab ou github puis partager le repository qui peut être installer avec les lignes de code suivantes:</p></li>
+<li><p>Déposer le package sur gitlab ou github puis partager le repository qui peut être installé avec les lignes de code suivantes:</p></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"&lt;your-repo&gt;/&lt;package-name&gt;"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_gitlab</span>(<span class="st">"&lt;your-repo&gt;/&lt;package-name&gt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_gitlab</span>(<span class="st">"&lt;your-repo&gt;/&lt;package-name&gt;"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="7" type="1">
-<li><p>Lorsque le package est installé, aller dans le panel <code>Tutorial</code> dans Rstudio et c’est parti…</p></li>
+<li><p>Lorsque le package est installé, aller dans le panel <code>Tutorial</code> dans RStudio et c’est parti…</p></li>
 <li><p>Quelques outils utiles.</p></li>
 </ol>
-<p>Il est possible de chaîner des chunks en utilisant la fonctionnalité <code>exercise.setup</code> dans les chunk. Par exemple, nous pouvons effectuer</p>
+<p>Il est possible de chaîner des chunks en utilisant la fonctionnalité <code>exercise.setup</code> dans les chunks. Par exemple, nous pouvons effectuer</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo1,exercise=TRUE}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo1-solution}</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span><span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo2,exercise=TRUE,exercise.setup="exo1-solution"}</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo2-solution,exercise.setup="exo1-solution"}</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> x <span class="sc">*</span><span class="dv">3</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo3,exercise=TRUE,exercise.setup="exo2-solution"}</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>etc.</p>
 <p>Le package {gradethis} permet de vérifier les solutions proposées à un exercice. Par exemple,</p>
 <p>L’exercice consiste à faire 2+3</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo3}</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo3-solution}</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">+</span><span class="dv">3</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>on ajoute un chunk pour vérifier que le code est le bon (mais cela demande que la solution proposée contienne le même code que dans la solution)</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo3-code-check}</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_this_code</span>()</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>sinon on peut simplement vérifier la sortie du code proposé par l’utilisateur :</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exo3-check}</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(.result, <span class="dv">5</span>))</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="références" class="level1">
 <h1>Références</h1>
@@ -422,12 +433,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

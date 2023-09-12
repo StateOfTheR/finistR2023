@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -47,15 +47,15 @@ ul.task-list li input[type="checkbox"] {
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -73,8 +73,8 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -111,6 +111,14 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -127,7 +135,11 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -156,10 +168,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -168,16 +176,20 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -194,12 +206,11 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#où-quand" id="toc-où-quand" class="nav-link active" data-scroll-target="#où-quand">Où ? Quand ?</a></li>
   <li><a href="#participants" id="toc-participants" class="nav-link" data-scroll-target="#participants">Participants</a></li>
-  <li><a href="#idées-explorées" id="toc-idées-explorées" class="nav-link" data-scroll-target="#idées-explorées">Idées explorées</a></li>
   <li><a href="#soutien" id="toc-soutien" class="nav-link" data-scroll-target="#soutien">Soutien</a></li>
   </ul>
 </nav>
@@ -218,9 +229,9 @@ ul.task-list li input[type="checkbox"] {
 
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last Updated on August, 2023</p>
+      <p class="date">Last Updated on septembre, 2023</p>
     </div>
   </div>
   
@@ -241,10 +252,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="participants" class="level2">
 <h2 class="anchored" data-anchor-id="participants">Participants</h2>
-<p>Emré Anakok, Julie Aubert, Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche, Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff, Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, Emily Walker.</p>
-</section>
-<section id="idées-explorées" class="level2">
-<h2 class="anchored" data-anchor-id="idées-explorées">Idées explorées</h2>
+<p>Emré Anakok, Julie Aubert, Pierre Barbillon, Barbara Bricout, Caroline Cognot, Félix Cheysson, Julien Chiquet, Annaïg De Walsche, Marie-Pierre Etienne, Armand Favrot, Hugo Gangloff, Pierre Gloaguen, Jérémy Lamouroux, Corentin Lothodé, Mahendra Mariadassou, Tristan Mary-Huard, Isabelle Sanchez, Florian Teste, Théodore Vanrentherghem, <em>Emily Walker</em>.</p>
 </section>
 <section id="soutien" class="level2">
 <h2 class="anchored" data-anchor-id="soutien">Soutien</h2>
@@ -308,12 +316,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

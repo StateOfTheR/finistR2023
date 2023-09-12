@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -12,7 +12,6 @@
 <meta name="author" content="Armand Favrot">
 <meta name="author" content="Félix Cheysson">
 <meta name="author" content="Théodore Vanrenterghem">
-<meta name="dcterms.date" content="2024-08-08">
 
 <title>Finist’R 2023 - Torch &amp; Rcpp</title>
 <style>
@@ -88,15 +87,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -114,8 +113,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -152,6 +151,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -168,7 +175,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -197,10 +208,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -209,16 +216,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -235,15 +246,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#torch-on-r" id="toc-torch-on-r" class="nav-link active" data-scroll-target="#torch-on-r">Torch on R</a></li>
   <li><a href="#rcpp" id="toc-rcpp" class="nav-link" data-scroll-target="#rcpp">Rcpp</a>
   <ul class="collapse">
-  <li><a href="#exemple" id="toc-exemple" class="nav-link" data-scroll-target="#exemple">Exemple</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références">Références</a></li>
   </ul>
 </nav>
     </div>
@@ -260,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
     <div class="quarto-title-meta-contents">
              <p>Annaig De-Walsche </p>
              <p>Barbara Bricout </p>
@@ -272,9 +283,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 8, 2024</p>
+      <p class="date">8 août 2024</p>
     </div>
   </div>
   
@@ -291,22 +302,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tictoc)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bench) <span class="co"># comparaison des vitesses</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="torch-on-r" class="level2">
 <h2 class="anchored" data-anchor-id="torch-on-r">Torch on R</h2>
-<p>La librairie torch de R permet la manipulation de tenseur en R. Elle permet notament de faire la différenciation automatique, c-a-d d’évaluer numériquement le gradient d’une fonction et d’effectuer des descente de gradient.</p>
+<p>La librairie {torch} de R permet la manipulation de tenseur en R. Elle permet notamment de faire la différenciation automatique, c-a-d d’évaluer numériquement le gradient d’une fonction et d’effectuer des descentes de gradient.</p>
 <p><a href="https://stateofther.github.io/finistR2022/autodiff.html">Présentation finistR2022</a></p>
 <p><a href="https://stateofther.netlify.app/post/rentree2022/AutomatedDifferentiation.pdf">Torch and Automatic differentiation</a></p>
 </section>
 <section id="rcpp" class="level2">
 <h2 class="anchored" data-anchor-id="rcpp">Rcpp</h2>
-<p>L’utilisation de {Rcpp} permet d’exporter des fonction <code>C++</code> en R. Les fonctions seront alors directement utilisable dans un script et avec des arguments R. Ainsi on peu tirer parti de la compilation d’un code <code>C++</code>, et accélérer de nombreux calculs algébriques.</p>
-<p>Pour le calcul algébrique il est utile d’intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de <code>C++</code> lorsque l’on appel une fonction {Rcpp} dans R</p>
+<p>L’utilisation de {Rcpp} permet d’exporter des fonctions <code>C++</code> en R. Les fonctions seront alors directement utilisables dans un script et avec des arguments R. Ainsi on peut tirer partie de la compilation d’un code <code>C++</code>, et accélérer de nombreux calculs algébriques.</p>
+<p>Pour le calcul algébrique il est utile d’intégrer le package {RcppArmadillo} qui donne accès à la librairie {Armadillo} de <code>C++</code> lorsque l’on appel une fonction {Rcpp} dans R.</p>
 <p><a href="https://stateofther.netlify.app/post/bases-rcpp/">Présentation finistR2018</a></p>
-<section id="exemple" class="level3">
-<h3 class="anchored" data-anchor-id="exemple">Exemple</h3>
-<p>Dans cet exemple nous allons calculer la loss d’une fonction logistique en R et en <code>C++</code>. Puis comparer les résultats avec le package {bench} de R.</p>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example</h3>
+<p>Dans cet exemple nous allons calculer la perte d’une fonction logistique en R et en <code>C++</code>. Puis comparer les résultats avec le package {bench} de R.</p>
 <section id="coder-la-fonction-en-c" class="level4">
 <h4 class="anchored" data-anchor-id="coder-la-fonction-en-c">Coder la fonction en <code>C++</code></h4>
 <div class="cell" data-file="logisticloss.cpp">
@@ -325,13 +336,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  double log_lik;</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  log_lik <span class="ot">=</span> arma<span class="sc">::</span><span class="fu">dot</span>(y, odds) <span class="sc">-</span> arma<span class="sc">::</span><span class="fu">sum</span>(arma<span class="sc">::</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> arma<span class="sc">::</span><span class="fu">exp</span>(odds)));</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span>log_lik);</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="appel-et-compilation-du-script-depuis-r-avec-la-fonction-sourcecpp-de-rcpp" class="level4">
 <h4 class="anchored" data-anchor-id="appel-et-compilation-du-script-depuis-r-avec-la-fonction-sourcecpp-de-rcpp">Appel et compilation du script depuis R avec la fonction <code>sourceCpp()</code> de {Rcpp}</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sourceCpp</span>(<span class="at">file =</span> <span class="st">"logisticloss.cpp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sourceCpp</span>(<span class="at">file =</span> <span class="st">"logisticloss.cpp"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fonction-loss-en-r" class="level4">
@@ -341,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">&lt;-</span> x <span class="sc">%*%</span> theta</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  log_lik <span class="ot">&lt;-</span> <span class="fu">sum</span>(y <span class="sc">*</span> odds <span class="sc">-</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(odds)))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span><span class="fu">as.numeric</span>(log_lik))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="résultats" class="level4">
@@ -350,16 +361,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fl">1.0</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_cpp</span>(theta, y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_cpp</span>(theta, y, x)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6587596</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_R</span>(theta, y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">loss_R</span>(theta, y, x)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6587596</code></pre>
 </div>
@@ -371,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_covar)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rbinom</span>(size, <span class="dv">1</span>, <span class="fl">0.3</span>))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size <span class="sc">*</span> n_covar), size, n_covar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(size <span class="sc">*</span> n_covar), size, n_covar)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>comp_tbl <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
@@ -380,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iterations =</span> <span class="dv">1000</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(comp_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(comp_tbl)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required namespace: tidyr</code></pre>
 </div>
@@ -390,14 +401,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Comme on peut le voir sur le graphique plus haut la fonction <code>loss_cpp()</code> est environ <strong>2 fois</strong> plus efficace que la fonction <code>loss_R()</code>.</p>
 </section>
-<section id="attention-aux-librairies" class="level4">
-<h4 class="anchored" data-anchor-id="attention-aux-librairies">Attention aux librairies</h4>
-<p>La librairie <code>BLAS</code> de <code>OpenBlas</code> présenté lors de cette même session ne fonctionne pas correctement avec Rcpp. On observe une baisse de fonctionnement <strong>très quantitative</strong> (facteur 100). La librairie <code>BLAS</code> de <code>Intel MKL</code> reste quant à elle plus efficace.</p>
+<section id="attention-aux-librairies-blas-et-lapack" class="level4">
+<h4 class="anchored" data-anchor-id="attention-aux-librairies-blas-et-lapack">Attention aux librairies <code>BLAS</code> et <code>LAPACK</code></h4>
+<p>La librairie <code>BLAS</code> de <code>OpenBlas</code> présentée lors de cette même session ne fonctionne pas correctement avec {Rcpp}. On observe une baisse de fonctionnement <strong>très quantitative</strong> (facteur 100). La librairie <code>BLAS</code> de <code>Intel MKL</code> reste quant à elle plus efficace.</p>
 </section>
 </section>
 </section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
 <ul>
 <li><a href="https://stateofther.netlify.app/post/variational-autoencoder-with-torch/">Cours state of the R (2023)</a></li>
 <li><a href="https://stateofther.github.io/finistR2022/autodiff.html">finistR2022 - Torch Auto Diff</a></li>
@@ -461,12 +472,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Théodore Vanrenterghem">
+
+<title>Finist’R 2023 - Gestion d’un Dockerfile en projet collaboratif</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Finist’R 2023</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023" rel="" target=""><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./instructions.html" rel="" target="">
+ <span class="menu-text">Instructions</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enseignement" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Enseignement</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
+        <li>
+    <a class="dropdown-item" href="./learnr.html" rel="" target="">
+ <span class="dropdown-text">Learnr</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exams.html" rel="" target="">
+ <span class="dropdown-text">exams</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Workflow</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
+        <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
+ <span class="dropdown-text">Issue - Reprex</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analyse-statistique" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analyse statistique</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
+        <li>
+    <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
+ <span class="dropdown-text">INLA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-programmation-efficace" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Programmation Efficace</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-programmation-efficace">    
+        <li>
+    <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Intel_MKL.html" rel="" target="">
+ <span class="dropdown-text">Intel MKL &amp; Open Blas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_and_rcpp.html" rel="" target="">
+ <span class="dropdown-text">Torch &amp; Rcpp</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
+ <span class="dropdown-text">Premiers pas avec jax</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-autour-de-pln" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Autour de PLN</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sur cette page</h2>
+   
+  <ul>
+  <li><a href="#i---un-dockerfile" id="toc-i---un-dockerfile" class="nav-link active" data-scroll-target="#i---un-dockerfile">I - Un <code>Dockerfile</code> ?</a>
+  <ul class="collapse">
+  <li><a href="#a-from-le-récypient-de-la-reccette" id="toc-a-from-le-récypient-de-la-reccette" class="nav-link" data-scroll-target="#a-from-le-récypient-de-la-reccette">a) <code>FROM</code> Le récypient de la reccette</a></li>
+  <li><a href="#b-run-les-ingrédients-de-la-recette" id="toc-b-run-les-ingrédients-de-la-recette" class="nav-link" data-scroll-target="#b-run-les-ingrédients-de-la-recette">b) <code>RUN</code> Les ingrédients de la recette</a></li>
+  <li><a href="#c-exemple---instalation-de-julia-pour-quarto" id="toc-c-exemple---instalation-de-julia-pour-quarto" class="nav-link" data-scroll-target="#c-exemple---instalation-de-julia-pour-quarto">c) Exemple - Instalation de <code>Julia</code> pour <strong>quarto</strong></a></li>
+  </ul></li>
+  <li><a href="#ii---construire-mon-dockerfile" id="toc-ii---construire-mon-dockerfile" class="nav-link" data-scroll-target="#ii---construire-mon-dockerfile">II - Construire mon <code>Dockerfile</code> ?</a>
+  <ul class="collapse">
+  <li><a href="#a-organiser-son-fichier" id="toc-a-organiser-son-fichier" class="nav-link" data-scroll-target="#a-organiser-son-fichier">a) Organiser son fichier</a></li>
+  <li><a href="#b-compilation" id="toc-b-compilation" class="nav-link" data-scroll-target="#b-compilation">b) Compilation</a></li>
+  <li><a href="#c-tester-rapidement-un-conteneur-exemple-non-interactif" id="toc-c-tester-rapidement-un-conteneur-exemple-non-interactif" class="nav-link" data-scroll-target="#c-tester-rapidement-un-conteneur-exemple-non-interactif">c) Tester rapidement un conteneur (exemple <strong>non-interactif</strong>)</a></li>
+  <li><a href="#d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout" id="toc-d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout" class="nav-link" data-scroll-target="#d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout">d) Des bonnes pratiques oui ! Mais du groupe avant tout</a></li>
+  </ul></li>
+  <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références">Références</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Gestion d’un Dockerfile en projet collaboratif</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-contents">
+             <p>Théodore Vanrenterghem </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 juillet 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Lors d’un évènement comme <strong>finistR</strong> nous travaillons tous, sur des interfaces, des systèmes et des langages différents. Lors de <strong>finistR2023</strong> par exemple, nous avons dû utiliser dans un même conteneur docker les langages <code>R</code>, <code>Python</code> et <code>Julia</code> et compiler cela via <strong>quarto</strong>. Construire un docker est quasiment aussi simple en principe que de suivre la recette d’une salade. Mais lorsque les problèmes arrivent et que la mayonnaise ne marche plus, il ne vous reste plus qu’à manger votre clavier…</p>
+<p>Sur cette page vous trouverez premièrement un petit rappel sur ce qu’est un <code>Dockerfile</code> et le fonctionnement général de docker. Puis deuxièmement des indications plus particulières au conteneur de <strong>finistR2023</strong> c’est à dire un docker <code>R</code>, <code>Python</code>, <code>Julia</code> et <strong>quarto</strong></p>
+<section id="i---un-dockerfile" class="level2">
+<h2 class="anchored" data-anchor-id="i---un-dockerfile">I - Un <code>Dockerfile</code> ?</h2>
+<p>Docker est une technologie permettant de <strong>créer et utiliser</strong> de manière <strong>efficace</strong> des conteneurs logiciels. Ces conteneurs logiciel sont en fait des <strong>environnements de travail spécialisables, versionnés et facilement partageable</strong>. Docker permet donc de partager : des environnements de calculs pour des travaux en équipe, des applications (par exemple {shiny}), mais aussi permet l’intégration continue de site web et autres.</p>
+<p>Voici le <code>Dockerfile</code> utilisé pour ce projet:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Source Dockerfile</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>FROM rocker<span class="sc">/</span>geospatial<span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">### JULIA</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Copy Julia's tar.gz and install it</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## using 1.8.3 version because it does work with quarto on my computer</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>RUN wget https<span class="sc">:</span><span class="er">//</span>julialang<span class="sc">-</span>s3.julialang.org<span class="sc">/</span>bin<span class="sc">/</span>linux<span class="sc">/</span>x64<span class="sc">/</span><span class="fl">1.8</span><span class="sc">/</span>julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">-</span>linux<span class="sc">-</span>x86_64.tar.gz <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    tar zxvf julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">-</span>linux<span class="sc">-</span>x86_64.tar.gz <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Connect to Julia's directory link with real jula's bin</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    cp <span class="sc">-</span>r julia<span class="dv">-1</span>.<span class="fl">8.3</span> <span class="sc">/</span>opt<span class="sc">/</span> <span class="er">&amp;&amp;</span> \</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ln <span class="sc">-</span>s <span class="sc">/</span>opt<span class="sc">/</span>julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">/</span>bin<span class="sc">/</span>julia <span class="sc">/</span>usr<span class="sc">/</span>local<span class="sc">/</span>bin<span class="sc">/</span>julia</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Install Julias package (IJulia &lt;-- to connect with jupyter)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Installing from julia</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>RUN julia <span class="sc">-</span>e <span class="st">'import Pkg; Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie"); Pkg.add("WGLMakie"); Pkg.add("IJulia")'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">## non Interactive terminal for this docker for the site</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>RUN export DEBIAN_FRONTEND<span class="ot">=</span>noninteractive; apt<span class="sc">-</span>get <span class="sc">-</span>y update \</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="sc">&amp;&amp;</span> apt<span class="sc">-</span>get install <span class="sc">-</span>y pandoc \</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    pandoc<span class="sc">-</span>citeproc</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="do">### R packages</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Defining web acces for CRAN</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>ENV R_CRAN_WEB<span class="ot">=</span><span class="st">"https://cran.rstudio.com/"</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"install.packages(c('dyplr','ggplot2','remotes','microbenchmark','purrr','BiocManager','httr','cowplot','torch','PLNmodels','torchvision','reticulate','inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR','tidymodels', 'brulee', 'reprex','poissonreg','ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels','sp','terra','gstat','sf'))"</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"BiocManager::install('BiocPkgTools')"</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"torch::install_torch(type = 'cpu')"</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"JuliaCall::install_julia()"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="do">### Ubuntu libraries (for python ?)</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>RUN apt<span class="sc">-</span>get update \</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> <span class="sc">&amp;&amp;</span> apt<span class="sc">-</span>get install <span class="sc">-</span>y <span class="sc">--</span>no<span class="sc">-</span>install<span class="sc">-</span>recommends \</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  jags \</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  mercurial gdal<span class="sc">-</span>bin libgdal<span class="sc">-</span>dev gsl<span class="sc">-</span>bin libgsl<span class="sc">-</span>dev \</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  libc6<span class="sc">-</span>i386</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="do">### Jupyter Python torch jax etc</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="do">## Downloading Python</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>RUN apt<span class="sc">-</span>get install <span class="sc">-</span>y <span class="sc">--</span>no<span class="sc">-</span>install<span class="sc">-</span>recommends unzip python3<span class="sc">-</span>pip dvipng pandoc wget git make python3<span class="sc">-</span>venv <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    pip3 install jupyter jupyter<span class="sc">-</span>cache flatlatex matplotlib <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    apt<span class="sc">-</span>get <span class="sc">--</span>purge <span class="sc">-</span>y remove texlive.\<span class="sc">*-</span>doc<span class="sc">$</span> <span class="er">&amp;&amp;</span> \</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    apt<span class="sc">-</span>get clean</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit<span class="sc">-</span>learn torchvision torchaudio pyplnmodels optax</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Malgré ce format peu tentant, l’écriture d’un <code>Dockerfile</code> est facile tant que l’on maîtrise bien les outils que le docker doit contenir.</p>
+<section id="a-from-le-récypient-de-la-reccette" class="level3">
+<h3 class="anchored" data-anchor-id="a-from-le-récypient-de-la-reccette">a) <code>FROM</code> Le récypient de la reccette</h3>
+<p>Pour construire un conteneur docker on utilise en général au départ… un conteneur docker. De préférence il faut trouver un conteneur plus ou moins adapté à ce que l’on veux. Ici nous utilisons <code>rocker/geospatial:4</code>, les conteneurs <code>rocker</code> contiennent <code>R</code> avec ici une adaptation particulière au <code>geospatial</code>.</p>
+</section>
+<section id="b-run-les-ingrédients-de-la-recette" class="level3">
+<h3 class="anchored" data-anchor-id="b-run-les-ingrédients-de-la-recette">b) <code>RUN</code> Les ingrédients de la recette</h3>
+<p>Avec <code>RUN</code> il est possible d’effectuer des commandes en <code>bash</code> pour installer ce dont on a besoin dans le Docker. Pour rappel, ici il faut que nous puissions compiler un site web de manière automatique, et aussi compiler des <strong>quarto</strong> (<code>Julia</code>, <code>R</code> et <code>Python</code>) à l’origine des pages web. Pour chacune de ces étapes il faut vérifier l’installation du langage, installer les dépendances nécessaires au code. Et enfin s’assurer de la compatibilité entre les outils.</p>
+</section>
+<section id="c-exemple---instalation-de-julia-pour-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="c-exemple---instalation-de-julia-pour-quarto">c) Exemple - Instalation de <code>Julia</code> pour <strong>quarto</strong></h3>
+<p>Ici <code>R</code> est déjà installé via <code>rocker</code> mais pas <code>Julia</code>. Le paragraphe suivant consiste à l’installation complète de <code>Julia-1.8.3</code> dans un système type ubuntu.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>RUN wget https<span class="sc">:</span><span class="er">//</span>julialang<span class="sc">-</span>s3.julialang.org<span class="sc">/</span>bin<span class="sc">/</span>linux<span class="sc">/</span>x64<span class="sc">/</span><span class="fl">1.8</span><span class="sc">/</span>julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">-</span>linux<span class="sc">-</span>x86_64.tar.gz <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    tar zxvf julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">-</span>linux<span class="sc">-</span>x86_64.tar.gz <span class="sc">&amp;&amp;</span> \</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Connect to Julia's directory link with real jula's bin</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    cp <span class="sc">-</span>r julia<span class="dv">-1</span>.<span class="fl">8.3</span> <span class="sc">/</span>opt<span class="sc">/</span> <span class="er">&amp;&amp;</span> \</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ln <span class="sc">-</span>s <span class="sc">/</span>opt<span class="sc">/</span>julia<span class="dv">-1</span>.<span class="fl">8.3</span><span class="sc">/</span>bin<span class="sc">/</span>julia <span class="sc">/</span>usr<span class="sc">/</span>local<span class="sc">/</span>bin<span class="sc">/</span>julia</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le symbole <code>&amp;&amp; \</code> permet si la ligne à gauche est un succès de lancer la ligne suivante et le tout dans un seul <code>RUN</code>. En général il vaux mieux avoir peu de <strong>longue ligne de code</strong> que <strong>beaucoup de ligne</strong> faisant un appel systématique à <code>RUN</code>.</p>
+<ol type="1">
+<li><code>wget</code> télécharge <code>Julia</code></li>
+<li><code>tar</code> décompresse le fichier téléchargé</li>
+<li><code>cp</code> copie <code>Julia</code> dans le dossier des programmes</li>
+<li><code>ln</code> créé un lien symbolique qui permet de lancer des script avec la commande <code>$ julia</code> depuis le terminal.</li>
+</ol>
+<p>Cependant pour pouvoir lancer <code>Julia</code> depuis <strong>quarto</strong> cela ne suffit pas. Premièrement la version actuelle du langage ne communique pas correctement avec <strong>quarto</strong> alors que la version <strong>Julia-1.8.3</strong> semble bien fonctionner. Deuxièmement il est nécessaire de créer un kernel <code>IJulia</code> pour connecter <code>Julia</code> à jupyter. C’est jupyter qui vas ensuite communiquer avec <strong>quarto</strong>. Pour faire cela, il faut installer le package {IJulia}.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>RUN julia <span class="sc">-</span>e <span class="st">'import Pkg; Pkg.add("IJulia")'</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On prendra soins d’importer les autres packages dont nos <strong>quarto</strong> dépendent</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>RUN julia <span class="sc">-</span>e <span class="st">'import Pkg; Pkg.add("DataFrames"); Pkg.add("GeoDataFrames"); Pkg.add("IJulia")'</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Par sécurité nous avons aussi choisi de faire la commande R suivante qui installe une petite dépendance de <code>Julia</code> dans <code>R</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>RUN R <span class="sc">-</span>e <span class="st">"JuliaCall::install_julia()"</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="ii---construire-mon-dockerfile" class="level2">
+<h2 class="anchored" data-anchor-id="ii---construire-mon-dockerfile">II - Construire mon <code>Dockerfile</code> ?</h2>
+<p>Pour arriver à écrire cela, avoir déjà installé le programme voulu en local est très utile ! Mais si votre ordinateur est un Windows cela ne vous aidera pas… Arriver à vos fin peut être compliqué et dans tout les cas il vas vous falloir essayer … La compilation d’un docker est assez longue donc chaque essais peut-être coûteux. Il existe cependant différents moyens de gagner du temps. Commencez d’abord par chercher les routines d’installation des vos dépendances sur ubuntu.</p>
+<section id="a-organiser-son-fichier" class="level3">
+<h3 class="anchored" data-anchor-id="a-organiser-son-fichier">a) Organiser son fichier</h3>
+<p>Une image docker lors de sa compilation en local, va garder en cache énormément d’information de manière séquentielle. Changer des lignes au début de mon <code>Dockerfile</code> est <strong>plus coûteux</strong> que de changer des lignes à la fin. Ainsi il est toujours plus intéressant lors du développement d’un conteneur de garder <strong>les lignes les moins sûres</strong> vers <strong>la fin</strong> du fichier (dans la mesure du possible).</p>
+</section>
+<section id="b-compilation" class="level3">
+<h3 class="anchored" data-anchor-id="b-compilation">b) Compilation</h3>
+<p>Pour compiler mon conteneur il suffit de lancer la commande dans le répertoire où est mon Docker.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>docker build <span class="sc">-</span>f Dockerfile <span class="sc">--</span>progress<span class="ot">=</span>plain <span class="sc">-</span>t nom_image<span class="sc">:</span>num_version .</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Un changement de numéro de version suffit à générer une nouvelle image en tirant toujours profit des données en cache.</p>
+</section>
+<section id="c-tester-rapidement-un-conteneur-exemple-non-interactif" class="level3">
+<h3 class="anchored" data-anchor-id="c-tester-rapidement-un-conteneur-exemple-non-interactif">c) Tester rapidement un conteneur (exemple <strong>non-interactif</strong>)</h3>
+<p>Le conteneur fabriqué pour le site de finistR est non interactif, une fois activé avec la ligne</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>docker run nom_image<span class="sc">:</span>num_version</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>il n’est pas possible de lancer des commandes dans l’environnement créé depuis un terminal. Il n’est donc pas évident de tester les installations dans le conteneur.<br>
+Une possibilité est de créé un deuxième <code>Dockerfile</code> (que l’on peut nommer <code>'DockerfileTest'</code>). Voici un exemple</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Source DockerfileTest</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>FROM nom_image<span class="sc">:</span>num_version</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>RUN quarto check jupyter</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>RUN julia <span class="sc">-</span>e <span class="st">'using GeoDataFrames'</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ce <code>Dockerfile</code> se build avec la commande</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>docker build <span class="sc">-</span>f DockerfileTest <span class="sc">--</span>progress<span class="ot">=</span>plain <span class="sc">-</span>t nom_image_test<span class="sc">:</span>num_version .</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Un intérêt de cette méthode est que l’on peux assez rapidement rééditer le conteneur le premier étant inchangé. Dans cet exemple :</p>
+<ul>
+<li><code>quarto check jupyter</code> permet de vérifier si <strong>quarto</strong> a bien accès à jupyter mais aussi de vérifier si le kernel {IJulia} existe.</li>
+<li><code>julia -e 'using GeoDataFrames'</code> vérifie si le package a bien été installé dans <code>Julia</code>.</li>
+</ul>
+<p>C’est lors de ce <code>build</code> que vous pouvez vérifier si ces commandes rendent les résultats attendus.</p>
+<p>Dans le cas du conteneur de finistR, la compilation du conteneur sur github dure environ 45 min et le test à la suite d’une pull request dure environ 30 min. Grace à ces conseils un conteneur modifié aux dernières lignes se compile quasi immédiatement en local (idem pour <code>DockerfileTest</code>).</p>
+</section>
+<section id="d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout" class="level3">
+<h3 class="anchored" data-anchor-id="d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout">d) Des bonnes pratiques oui ! Mais du groupe avant tout</h3>
+<p>L’idéal dans ce genre de projet en groupe, est de pouvoir faire un suivis des packages et langages à installer. Pour cela lorsque que l’on effectue une pull request incluant un nouveau document, il est préférable de joindre explicitement en message :</p>
+<ol type="1">
+<li>les dépendances</li>
+<li>la version du langage utilisé</li>
+<li>le système d’exploitation</li>
+</ol>
+<p>En cas de problème avec un conteneur, ces informations sont très utiles pour résoudre les incompatibilités qui ont lieux.</p>
+</section>
+</section>
+<section id="références" class="level2">
+<h2 class="anchored" data-anchor-id="références">Références</h2>
+<ul>
+<li><a href="https://www.docker.com/" class="uri">https://www.docker.com/</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

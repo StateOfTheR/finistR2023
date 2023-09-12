@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -81,15 +81,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -109,8 +109,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -147,6 +147,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -163,7 +171,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -192,10 +204,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -204,16 +212,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -230,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#préliminaires" id="toc-préliminaires" class="nav-link active" data-scroll-target="#préliminaires">Préliminaires</a>
@@ -268,12 +280,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
-    </div>
-  </div>
   
     
   </div>
@@ -322,12 +328,12 @@ pip3 install optax</code></pre>
 <h2 class="anchored" data-anchor-id="premiers-pas">Premiers pas</h2>
 <section id="philosophie" class="level3">
 <h3 class="anchored" data-anchor-id="philosophie">Philosophie</h3>
-<p>En quelques mots, JAX est une bibliothèque Python développé par Google et itinitalement utilisé dans TensorFLow. Elle permet de faire de l’algèbre linéaire à la <code>numpy</code>, avec 2 propriétés clés le rendant extrêment performant:</p>
+<p>En quelques mots, JAX est une bibliothèque Python développée par Google et initialement utilisée dans TensorFLow. Elle permet de faire de l’algèbre linéaire à la <code>numpy</code>, avec 2 propriétés clés la rendant extrêmement performante:</p>
 <ol type="1">
-<li>un <em>autograd</em> permettant la différention automatique de calcul Python/Numpy</li>
-<li>un <em>compileur</em> pour GPU et autres (<a href="https://www.tensorflow.org/xla">XLA</a>), dédié à l’algèbre linéaire qui permet d’optimiser les temps d’exécution grace à une approche <em>JIT</em> (Just-in Time, c’est-à-dire une optimisation du code à l’exécution et non pas avant l’appel comme avec un compileur classique).</li>
+<li>un <em>autograd</em> permettant la différenciation automatique de calcul Python/Numpy</li>
+<li>un <em>compileur</em> pour GPU et autres (<a href="https://www.tensorflow.org/xla">XLA</a>), dédié à l’algèbre linéaire qui permet d’optimiser les temps d’exécution grâce à une approche <em>JIT</em> (Just-in Time, c’est-à-dire une optimisation du code à l’exécution et non pas avant l’appel comme avec un compileur classique).</li>
 </ol>
-<p>L’objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la <code>Numpy</code>, notamment à l’aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certains nombres de contraintes d’écriture des programmes s’appliquent, que nous allons essayer de présenter pas à pas.</p>
+<p>L’objectif de la bibliothèque est de proposer une expérience utilisateur aussi proche que possible de calculs à la <code>Numpy</code>, notamment à l’aide de décorateurs Python. Néanmoins, pour accéder pleinement aux capacités de JAX, un certain nombre de contraintes d’écriture des programmes s’appliquent, que nous allons essayer de présenter pas à pas.</p>
 </section>
 <section id="import-de-la-bibliothèque" class="level3">
 <h3 class="anchored" data-anchor-id="import-de-la-bibliothèque">Import de la bibliothèque</h3>
@@ -337,14 +343,14 @@ pip3 install optax</code></pre>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax <span class="im">import</span> grad, jit, vmap</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax <span class="im">import</span> random</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optax</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>On peut détailler les fonctionnalité des modules comme suit:</p>
+<p>On peut détailler les fonctionnalités des modules comme suit:</p>
 <ul>
 <li>le module <code>jax.numpy</code>, aka <code>jnp</code>, porte les opérations matricielles usuelles de manière quasi transparente</li>
 <li>le module <code>random</code> définit les outils de génération de nombres aléatoires, propres à JAX et très différents de Numpy</li>
-<li>le module <code>grad</code> gère l’autodifférentiation</li>
-<li>le module <code>jit</code> gère la “just-in time” compilation (accélartion du code)</li>
+<li>le module <code>grad</code> gère l’autodifférenciation</li>
+<li>le module <code>jit</code> gère la “just-in time” compilation (accélération du code)</li>
 <li>le module <code>vmap</code> permet de vectoriser automatiquement certaines opérations</li>
 </ul>
 </section>
@@ -352,7 +358,7 @@ pip3 install optax</code></pre>
 <h3 class="anchored" data-anchor-id="jax.numpy-interface-algèbre-linéaire-haut-niveau">Jax.numpy: interface Algèbre linéaire haut-niveau</h3>
 <p>On commence par simuler des données aléatoires via les outils de jax. Attention la gestion de la clé aléatoire est <strong>explicite</strong>. Après avoir créé une clé et avant chaque appel à une fonction aléatoire, il faut faire évoluer la graine à la main</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>key,subkey <span class="op">=</span> random.split(key, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>key,subkey <span class="op">=</span> random.split(key, <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>et utiliser <code>subkey</code> (les sous-clés) dans l’appel à la fonction aléatoire (ou aux fonctions aléatoire) comme écrit ci-dessous.</p>
 <div class="cell" data-execution_count="3">
@@ -363,35 +369,35 @@ pip3 install optax</code></pre>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ones <span class="op">=</span> jnp.ones((n, <span class="dv">1</span>))</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> random.normal(sub1, (n, p<span class="op">-</span><span class="dv">1</span>))</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> jnp.concatenate([ones, x], axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>beta_true <span class="op">=</span> random.normal(sub2, (p,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>beta_true <span class="op">=</span> random.normal(sub2, (p,<span class="dv">1</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)</code></pre>
 </div>
 </div>
 <p>Avant de les multiplier. On utilise ici la fonction <code>block_until_ready()</code> uniquement pour mesurer le temps effectif de calcul. En effet, JAX fait de l’évaluation asynchrone (comme <code>{future}</code> en R) pour rendre la main à l’utilisateur après l’envoi de la commande.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit odds <span class="op">=</span> jnp.dot(x, beta_true).block_until_ready()  <span class="co"># runs on the CPU</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit odds <span class="op">=</span> jnp.dot(x, beta_true).block_until_ready()  <span class="co"># runs on the CPU</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>204 µs ± 2.13 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
+<pre><code>174 µs ± 1.33 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)</code></pre>
 </div>
 </div>
 <p>On échantillonne ensuite des variables suivant une loi de Bernoulli.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>odds <span class="op">=</span> jnp.dot(x, beta_true)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>key,subkey <span class="op">=</span> random.split(key, <span class="dv">2</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> random.bernoulli(subkey, odds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> random.bernoulli(subkey, odds)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>et une perte logistique</p>
 <p><span class="math display">\[\ell(y, x, \theta) = -\log p(y; \sigma(x^{\top}\theta)) = -y (x^\top \theta) + \log(1 + e^{x^\top \theta})\]</span></p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logistic_loss(y, x, theta):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  odds <span class="op">=</span> jnp.dot(x, theta)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>jnp.vdot(y, odds) <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log(<span class="fl">1.0</span> <span class="op">+</span> jnp.exp(odds)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>jnp.vdot(y, odds) <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log(<span class="fl">1.0</span> <span class="op">+</span> jnp.exp(odds)))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Qu’on peut tester sur un example simple</p>
+<p>Qu’on peut tester sur un exemple simple</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Should be log(2)</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>logistic_loss(<span class="va">True</span>, <span class="fl">1.0</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>logistic_loss(<span class="va">True</span>, <span class="fl">1.0</span>, <span class="dv">0</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Array(0.6931472, dtype=float32)</code></pre>
 </div>
@@ -401,9 +407,9 @@ pip3 install optax</code></pre>
 <h3 class="anchored" data-anchor-id="just-in-time-compilation">Just-in-time compilation</h3>
 <p>La version <em>normale</em> de notre fonction logistique est déjà rapide.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss(y, x, beta_true).block_until_ready()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>366 µs ± 4.22 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>323 µs ± 3.57 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>mais on peut l’accélerer en compilant la fonction via le décorateur <code>@jit</code> ou la fonction <code>jit()</code> de façon complètement transparente pour l’utilisateur.</p>
@@ -412,14 +418,14 @@ pip3 install optax</code></pre>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="at">@jit</span> </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logistic_loss(y, x, theta):</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  odds <span class="op">=</span> jnp.dot(x, theta)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>jnp.vdot(y, odds) <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log(<span class="fl">1.0</span> <span class="op">+</span> jnp.exp(odds)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">-</span>jnp.vdot(y, odds) <span class="op">+</span> jnp.<span class="bu">sum</span>(jnp.log(<span class="fl">1.0</span> <span class="op">+</span> jnp.exp(odds)))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Utilisation de jit()</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>logistic_loss_jit <span class="op">=</span> jit(logistic_loss)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss_jit(y, x, beta_true).block_until_ready()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit logistic_loss_jit(y, x, beta_true).block_until_ready()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>281 µs ± 5.63 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>238 µs ± 4.4 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>La différence n’est pas très importante dans cet exemple. <code>jit()</code> permet des gains d’autant plus importants qu’on travaille sur des fonctions complexes.</p>
@@ -429,16 +435,16 @@ pip3 install optax</code></pre>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">5</span>:</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>x</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>L’erreur provient du fait que la définition de la fonction dépend de la valeur des entrées.</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>f_jit <span class="op">=</span> jit(f)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Renvoie une erreur</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>f_jit(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>f_jit(<span class="dv">1</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>TracerBoolConversionError: Attempted boolean conversion of traced array with shape bool[]..
-The error occurred while tracing the function f at /tmp/ipykernel_6214/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
+The error occurred while tracing the function f at /tmp/ipykernel_6581/2514275982.py:1 for jit. This concrete value was not available in Python because it depends on the value of the argument x.
 See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConversionError</code></pre>
 </div>
 </div>
@@ -450,19 +456,19 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <p>JAX permet de calculer le gradient d’une fonction via <code>grad()</code>. La syntaxe est différente de torch et plus proche de ce qu’on ferait dans une fonction mathématique.</p>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loss(theta):</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> logistic_loss(y, x, theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> logistic_loss(y, x, theta)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">## random start for theta</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>key,subkey <span class="op">=</span> random.split(key, <span class="dv">2</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> random.normal(key, (p, <span class="dv">1</span>))</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>grad_loss <span class="op">=</span> grad(loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>grad_loss <span class="op">=</span> grad(loss)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>grad_loss <span class="op">=</span> grad(loss)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>11.7 ms ± 1.14 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<pre><code>9.89 ms ± 312 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
 <p><code>grad()</code> peut-être combiné à <code>jit()</code> dans tous les sens <em>à condition que les fonctions s’y prêtent</em>.</p>
@@ -471,9 +477,9 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Warmup to cache grad loss</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>grad_loss(theta).shape</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>418 µs ± 10.5 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>349 µs ± 7.17 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 <p>Mais ce n’est pas toujours intéressant.</p>
@@ -482,16 +488,16 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">## Warmup to cache grad loss</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>grad_loss(theta).shape</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Actual time recording</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit grad_loss(theta)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>419 µs ± 5.68 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
+<pre><code>350 µs ± 5.42 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)</code></pre>
 </div>
 </div>
 </section>
 <section id="vectorisation" class="level3">
 <h3 class="anchored" data-anchor-id="vectorisation">Vectorisation</h3>
 <p>JAX permet enfin de vectoriser automatiquement des opérations de façon efficace (en faisant descendre la boucle à l’intérieur de la fonction, au niveau des primitives utilisées pour le calcul).</p>
-<p>Considérons un example simple où on veut calculer des logs-odds sur mesures répétées.</p>
+<p>Considérons un exemple simple où on veut calculer des logs-odds sur mesures répétées.</p>
 <div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Matrice de covariables, répétées en temps </span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">## [temps, individu, variable]</span></span>
@@ -500,20 +506,20 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_odds(x, theta):</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> jnp.dot(x, theta)</span>
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_odds_batched(X,  theta):</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> jnp.stack([compute_odds(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> jnp.stack([compute_odds(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X]) </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Et testons ce qui se passe. On appelle la fonction sur une tranche de X</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X[:<span class="dv">1</span>,:, :], beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X[:<span class="dv">1</span>,:, :], beta_true)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>3.86 ms ± 73.5 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>3.72 ms ± 105 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée manuellement.</p>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched(X, beta_true)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>19.2 ms ± 242 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>17.8 ms ± 213 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>Puis sur toutes les tranches de X avec notre fonction vectorisée via <code>vmap()</code>.</p>
@@ -521,28 +527,28 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_odds_batched_vmap(X,  theta):</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> f(x):</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> compute_odds(x, theta)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> vmap(f)(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> vmap(f)(X)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>compute_odds_batched_vmap(X, beta_true).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>compute_odds_batched_vmap(X, beta_true).shape</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>(10, 10000, 1)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched_vmap(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds_batched_vmap(X, beta_true)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>16.5 ms ± 291 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>15.2 ms ± 205 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>À comparer à la version native jax qui est déjà nativement vectorisée pour cette opération</p>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X, beta_true)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit compute_odds(X, beta_true)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>15 ms ± 324 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>14 ms ± 191 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
-<p>Le gain n’est pas très important dans cette example précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle.</p>
+<p>Le gain n’est pas très important dans cette exemple précis mais on se rapproche quand même de la performance de la version native, par rapport à notre vectorisation manuelle.</p>
 </section>
 </section>
 <section id="optimisation-de-la-fonction-objective" class="level2">
@@ -570,10 +576,10 @@ See https://jax.readthedocs.io/en/latest/errors.html#jax.errors.TracerBoolConver
 <span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Suivi de la fonction de perte</span></span>
 <span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>    loss_vector.append(loss(theta))</span>
 <span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mise à jour du paramètre</span></span>
-<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> theta <span class="op">-</span> lr <span class="op">*</span> grad_loss(theta) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> theta <span class="op">-</span> lr <span class="op">*</span> grad_loss(theta) </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 346 ms, sys: 20.2 ms, total: 366 ms
-Wall time: 365 ms</code></pre>
+<pre><code>CPU times: user 294 ms, sys: 15.7 ms, total: 309 ms
+Wall time: 309 ms</code></pre>
 </div>
 </div>
 <p>Et on peut vérifier que la fonction de perte décroit au cours du temps.</p>
@@ -582,7 +588,7 @@ Wall time: 365 ms</code></pre>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Iterations'</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Loss vs. Iterations'</span>)</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="jax-getting-started_files/figure-html/cell-27-output-1.png" width="601" height="449"></p>
 </div>
@@ -594,7 +600,7 @@ Wall time: 365 ms</code></pre>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'True parameter'</span>)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Estimated parameter'</span>)</span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Estimated versus true parameter'</span>)</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="jax-getting-started_files/figure-html/cell-28-output-1.png" width="587" height="449"></p>
 </div>
@@ -622,7 +628,7 @@ Wall time: 365 ms</code></pre>
 <span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> logistic_loss(y, x, params)</span>
 <span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  loss_value <span class="op">=</span> loss(params)</span>
 <span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  loss_grad <span class="op">=</span> grad(loss)(params)</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [loss_value, loss_grad]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [loss_value, loss_grad]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="itérateur-de-données" class="level4">
@@ -633,7 +639,7 @@ Wall time: 365 ms</code></pre>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>n_iter <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># key, subkey = random.split(key, 2)</span></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> data_iterator(key, data):    </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> random.choice(key, data, (batch_size, ), replace <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> random.choice(key, data, (batch_size, ), replace <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="optimisation" class="level4">
@@ -659,15 +665,15 @@ Wall time: 365 ms</code></pre>
 <span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
 <span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>      <span class="bu">print</span>(<span class="ss">f'step </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">, loss: </span><span class="sc">{</span>loss_value<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [params, loss_vector]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [params, loss_vector]</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we can fit our parametrized function using the Adam optimizer provided by optax.</p>
+<p>Finalement, on peut ajuster notre fonction paramétrée en utilisant l’optimiseur Adam fourni par optax.</p>
 <div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time </span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>initial_params <span class="op">=</span> jnp.zeros((x.shape[<span class="dv">1</span>], ))</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optax.adam(learning_rate<span class="op">=</span><span class="fl">1e-2</span>)</span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> jnp.concatenate([x, y], axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>params,loss_vector <span class="op">=</span> fit(data, initial_params, optimizer, key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>params,loss_vector <span class="op">=</span> fit(data, initial_params, optimizer, key)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>step 0, loss: 69.3147201538086
 step 100, loss: 18.580368041992188
@@ -679,29 +685,29 @@ step 600, loss: 8.130218505859375
 step 700, loss: 8.6331787109375
 step 800, loss: 8.014801025390625
 step 900, loss: 5.246734619140625
-CPU times: user 10.4 s, sys: 369 ms, total: 10.7 s
-Wall time: 10.3 s</code></pre>
+CPU times: user 9.39 s, sys: 280 ms, total: 9.67 s
+Wall time: 9.26 s</code></pre>
 </div>
 </div>
-<p>On peut vérifier que la fonction objective converge sans décroître systématiquement</p>
+<p>On peut vérifier que la fonction objective converge sans décroître systématiquement,</p>
 <div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, n_iter<span class="op">+</span><span class="dv">1</span>), loss_vector)</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Iterations'</span>)</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Loss'</span>)</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Loss vs. Iterations'</span>)</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="jax-getting-started_files/figure-html/cell-33-output-1.png" width="585" height="449"></p>
 </div>
 </div>
-<p>et que les paramètres sont proches des bonnes valeurs</p>
+<p>et que les paramètres sont proches des bonnes valeurs.</p>
 <div class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>plt.plot(beta_true, params, marker<span class="op">=</span><span class="st">'o'</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>], [<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>], color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'True parameter'</span>)</span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Estimated parameter'</span>)</span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Estimated versus true parameter'</span>)</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="jax-getting-started_files/figure-html/cell-34-output-1.png" width="587" height="449"></p>
 </div>
@@ -767,12 +773,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

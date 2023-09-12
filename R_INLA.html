@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -11,7 +11,6 @@
 <meta name="author" content="Jérémy Lamouroux">
 <meta name="author" content="Félix Cheysson">
 <meta name="author" content="Théodore Vanrenterghem">
-<meta name="dcterms.date" content="2024-08-08">
 
 <title>Finist’R 2023 - R INLA</title>
 <style>
@@ -87,15 +86,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer"
   }
 }</script>
 
@@ -115,8 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Recherche"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -153,6 +152,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
         <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
  <span class="dropdown-text">Issue - Reprex</span></a>
   </li>  
@@ -169,7 +176,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
- <span class="dropdown-text">Tidymodels</span></a>
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
   </li>  
     </ul>
   </li>
@@ -198,10 +209,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
  <span class="dropdown-text">Premiers pas avec jax</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./jit-example-pln.md" rel="" target="">
- <span class="dropdown-text"></span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -210,16 +217,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
         <li>
-    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
- <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
-  </li>  
-        <li>
     <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version R</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
  <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
   </li>  
     </ul>
   </li>
@@ -236,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
@@ -264,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Auteur·rice·s</div>
     <div class="quarto-title-meta-contents">
              <p>Pierre Barbillon </p>
              <p>Isabelle Sanchez </p>
@@ -275,9 +286,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
     
     <div>
-    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-heading">Date de publication</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 8, 2024</p>
+      <p class="date">8 août 2024</p>
     </div>
   </div>
   
@@ -310,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base de R INLA</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"INLA"</span>,<span class="at">repos=</span><span class="fu">c</span>(<span class="fu">getOption</span>(<span class="st">"repos"</span>),<span class="at">INLA=</span><span class="st">"https://inla.r-inla-download.org/R/stable"</span>), <span class="at">dep=</span><span class="cn">TRUE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># inlabru wrapper</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"inlabru"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"inlabru"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="utilisation" class="level2">
@@ -328,13 +339,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpolypath)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geoR)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Le dataset <code>awards</code> contient le nombre de réussites (<code>num_awards</code>) en math (<code>math</code>) pour une classe de 200 élèves. La réponse mesurée étant un comptage, nous devons spécifier un modèle généralisé avec fonction de lien Poisson.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement des donnees</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/awards.RData"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(awards)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(awards)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  num_awards       prog math id
 1          0 Vocational   41  1
@@ -348,11 +359,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La fonction <code>bru_options_set</code> permet de fixer des options sur des paramètres spécifiques à INLA.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bru_options_set</span>(<span class="at">bru_verbose =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">control.compute =</span> <span class="fu">list</span>(<span class="at">dic =</span> <span class="cn">TRUE</span>, <span class="at">waic =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">control.compute =</span> <span class="fu">list</span>(<span class="at">dic =</span> <span class="cn">TRUE</span>, <span class="at">waic =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>On peut récupérer ces paramètres avec :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bru_options_get</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bru_options_get</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="application" class="level4">
@@ -362,11 +373,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formulation du modele</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cmp1 <span class="ot">&lt;-</span> num_awards <span class="sc">~</span> math <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Application de la formule avec un modèle de Poisson</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fit.glm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp1, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fit.glm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp1, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.glm.bru)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.glm.bru)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>inlabru version: 2.8.0
 INLA version: 23.04.24
@@ -378,7 +389,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.78, Running = 0.361, Post = 0.0363, Total = 1.18 
+    Pre = 0.742, Running = 0.276, Post = 0.033, Total = 1.05 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -403,7 +414,7 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cmp2 <span class="ot">&lt;-</span> num_awards <span class="sc">~</span> math</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fit2.glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(cmp2, <span class="at">family=</span><span class="st">"poisson"</span>, <span class="at">data =</span> awards)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2.glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2.glm)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -434,7 +445,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cmp3 <span class="ot">&lt;-</span> num_awards <span class="sc">~</span> math <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">rand.eff</span>(<span class="at">map =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">model =</span> <span class="st">"iid"</span>, <span class="at">n =</span> <span class="dv">200</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fit3.glmm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp3, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fit3.glmm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp3, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in inlabru:::component.character("rand.eff", map = 1:200, model =
 "iid", : Use of 'map' is deprecated and may be disabled; use 'main' instead.</code></pre>
@@ -442,7 +453,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3.glmm.bru)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3.glmm.bru)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>inlabru version: 2.8.0
 INLA version: 23.04.24
@@ -455,7 +466,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.494, Running = 0.243, Post = 0.0768, Total = 0.814 
+    Pre = 0.462, Running = 0.223, Post = 0.07, Total = 0.754 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -467,7 +478,7 @@ Random effects:
 
 Model hyperparameters:
                            mean       sd 0.025quant 0.5quant 0.975quant   mode
-Precision for rand.eff 19903.65 19900.90     564.00 13861.14   74196.30 187.83
+Precision for rand.eff 19903.65 19900.90     564.00 13861.13   74196.24 187.83
 
 Deviance Information Criterion (DIC) ...............: 384.03
 Deviance Information Criterion (DIC, saturated) ....: 207.97
@@ -488,7 +499,7 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cmp4<span class="ot">&lt;-</span> num_awards <span class="sc">~</span> math <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>id)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fit4.glmm<span class="ot">&lt;-</span><span class="fu">glmer</span>(cmp4, <span class="at">family =</span> poisson, <span class="at">data =</span> awards)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit4.glmm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit4.glmm)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
@@ -525,7 +536,7 @@ math -0.982</code></pre>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cmp5 <span class="ot">&lt;-</span> num_awards <span class="sc">~</span> math <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">rand.eff</span>(<span class="at">map =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">model =</span> <span class="st">"iid"</span>, <span class="at">n =</span> <span class="dv">200</span>,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="at">hyper=</span><span class="fu">list</span>(<span class="at">prec=</span><span class="fu">list</span>(<span class="at">param=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="fl">0.1</span>),</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                                                      <span class="at">prior=</span><span class="st">"pc.prec"</span>)))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fit5.glmm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp5, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>fit5.glmm.bru <span class="ot">&lt;-</span> <span class="fu">bru</span>(cmp5, <span class="at">family =</span> <span class="st">"poisson"</span>, <span class="at">data =</span> awards )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in inlabru:::component.character("rand.eff", map = 1:200, model =
 "iid", : Use of 'map' is deprecated and may be disabled; use 'main' instead.</code></pre>
@@ -533,7 +544,7 @@ math -0.982</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit5.glmm.bru)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit5.glmm.bru)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>inlabru version: 2.8.0
 INLA version: 23.04.24
@@ -546,7 +557,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.464, Running = 0.258, Post = 0.0747, Total = 0.797 
+    Pre = 0.429, Running = 0.23, Post = 0.0663, Total = 0.725 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.090 0.012      0.067    0.089      0.113  0.089   0
@@ -558,7 +569,7 @@ Random effects:
 
 Model hyperparameters:
                        mean   sd 0.025quant 0.5quant 0.975quant mode
-Precision for rand.eff 6.97 8.93       1.58     4.10      27.95 2.69
+Precision for rand.eff 6.97 8.93       1.58     4.10      27.94 2.69
 
 Deviance Information Criterion (DIC) ...............: 380.37
 Deviance Information Criterion (DIC, saturated) ....: 204.31
@@ -577,9 +588,9 @@ Posterior summaries for the linear predictor and the fitted values are computed
 </section>
 <section id="exemple-2" class="level3">
 <h3 class="anchored" data-anchor-id="exemple-2">Exemple 2</h3>
-<p>Dans le jeu de données <code>gorillas</code> on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).</p>
+<p>Dans le jeu de données <code>gorillas</code>, on cherche à comprendre la répartition de communautés de gorilles dans une région donnée en fonction de facteurs (végétations) ou de variable continue (altitude).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gorillas, <span class="at">package =</span> <span class="st">"inlabru"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gorillas, <span class="at">package =</span> <span class="st">"inlabru"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>On importe l’objet liste <code>gorillas</code> qui contient 4 sous-listes contenant les localisations d’habitats de gorilles (<code>nests</code>), le maillage de la zone d’intérêt (<code>mesh</code>), la frontière du domaine (<code>boundary</code>) et les variables explicatives (<code>gcov</code>).</p>
 <div class="cell">
@@ -588,7 +599,7 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>boundary <span class="ot">&lt;-</span> gorillas<span class="sc">$</span>boundary</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>gcov <span class="ot">&lt;-</span> gorillas<span class="sc">$</span>gcov</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gcov<span class="sc">$</span>vegetation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gcov<span class="sc">$</span>vegetation)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Object of class SpatialPixelsDataFrame
 Coordinates:
@@ -621,7 +632,7 @@ Data attributes:
 <li><code>inla.mesh.basis()</code>,</li>
 <li><code>inla.spde2.pcmatern()</code>.</li>
 </ul>
-<p>voir la vignette suivante pour quelques exemples: https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html.</p>
+<p>voir la vignette suivante pour quelques exemples: <a href="https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html">https://inlabru-org.github.io/inlabru/articles/random_fields_2d.html</a>.</p>
 <section id="visualisation-des-données-gorilles" class="level4">
 <h4 class="anchored" data-anchor-id="visualisation-des-données-gorilles">Visualisation des données gorilles</h4>
 <div class="cell">
@@ -629,7 +640,7 @@ Data attributes:
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(gcov<span class="sc">$</span>vegetation) <span class="sc">+</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(boundary) <span class="sc">+</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -643,7 +654,7 @@ Data attributes:
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(mesh) <span class="sc">+</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(boundary) <span class="sc">+</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -651,18 +662,18 @@ Data attributes:
 <p><img src="R_INLA_files/figure-html/plot-mesh-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Les graphiques ci-dessus permettent de visualiser les différentes types de végétaions ainsi que les localisations d’habitats de gorilles dans la zone d’étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction <code>gg()</code> permettant avac la grammaire ggplot2 de rajouter les différentes couches d’informations.</p>
+<p>Les graphiques ci-dessus permettent de visualiser les différents types de végétations ainsi que les localisations d’habitat de gorilles dans la zone d’étude. Il est également possible de rajouter le maillage construit sur la zone. {inlabru} propose la fonction <code>gg()</code> permettant avac la grammaire ggplot2 de rajouter les différentes couches d’informations.</p>
 </section>
 <section id="modèle-1" class="level4">
 <h4 class="anchored" data-anchor-id="modèle-1">Modèle 1</h4>
 <p>On peut supposer un processus ponctuel spatial d’intensité <span class="math display">\[\lambda(x,y)=\exp(\alpha_i(x,y))\]</span> où <span class="math inline">\(\alpha\)</span> est un paramètre correspondant à un type de végétation (modélisation factor full sans intercept donc).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>comp1 <span class="ot">&lt;-</span> coordinates <span class="sc">~</span> <span class="fu">vegetation</span>(gcov<span class="sc">$</span>vegetation, <span class="at">model =</span> <span class="st">"factor_full"</span>) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>comp1alt <span class="ot">&lt;-</span> coordinates <span class="sc">~</span> <span class="fu">vegetation</span>(gcov<span class="sc">$</span>vegetation, <span class="at">model =</span> <span class="st">"factor_contrast"</span>) <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>comp1alt <span class="ot">&lt;-</span> coordinates <span class="sc">~</span> <span class="fu">vegetation</span>(gcov<span class="sc">$</span>vegetation, <span class="at">model =</span> <span class="st">"factor_contrast"</span>) <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Pour construire un modèle expliquant les comptages de gorilles avec leurs répartitions dans la zone d’étude et prenant en compte les types de végétations, nous définissons la formule avec:</p>
 <ul>
-<li><code>coordinates()</code> la fonction de {sp} de récupération des coordonnées des habitats dans l’objet nests</li>
+<li><code>coordinates()</code> la fonction de {sp} de récupération des coordonnées des habitats dans l’objet <code>nests</code></li>
 <li><code>vegetation</code> sera le mot utilisé dans les sorties du modèle faisant référence à la variable explicative <code>gcov$vegetation</code> (possible d’écrire le mot que l’on veut…)</li>
 <li><code>model = "factor_full"</code> est pour indiquer que la variable explicative est un facteur. Il est possible d’utiliser “factor_full”, “factor_contrast” etc… suivant les types de contraintes que l’on souhaite appliquer au modèle. “factor_full” indique estimations de toutes les modalités mais il faut alors supprimer l’intercept afin d’être dans un cas identifiable.</li>
 </ul>
@@ -673,7 +684,7 @@ Data attributes:
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> nests,       <span class="co"># data set</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">samplers =</span> boundary,  <span class="co"># frontière de la zone d'étude</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">domain =</span> <span class="fu">list</span>(<span class="at">coordinates =</span> mesh) <span class="co"># maillage de la zone</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>             )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>             )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
@@ -687,7 +698,7 @@ Data attributes:
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(int1) <span class="sc">+</span></span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(boundary, <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"DarkGreen"</span>) <span class="sc">+</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -701,21 +712,21 @@ Data attributes:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ips <span class="ot">&lt;-</span> <span class="fu">fm_int</span>(mesh, boundary)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>Lambda1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1, ips, <span class="sc">~</span> <span class="fu">sum</span>(weight <span class="sc">*</span> <span class="fu">exp</span>(vegetation)))</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>Lambda1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>Lambda1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean       sd   q0.025     q0.5   q0.975   median mean.mc_std_err
-1 647.5487 22.73816 606.4747 645.9777 688.4655 645.9777        2.273816
+1 650.2296 25.28652 610.2632 647.8453 697.3896 647.8453        2.528652
   sd.mc_std_err
-1      1.422066</code></pre>
+1      1.808314</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul de la surface de la zone</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ips<span class="sc">$</span>weight) <span class="co"># some des surfaces de chaque triangle du mesh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ips<span class="sc">$</span>weight) <span class="co"># some des surfaces de chaque triangle du mesh</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 19.87366</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">st_area</span>(sf<span class="sc">::</span><span class="fu">st_as_sf</span>(boundary)) <span class="co"># surface totale </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">st_area</span>(sf<span class="sc">::</span><span class="fu">st_as_sf</span>(boundary)) <span class="co"># surface totale </span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>19.87366 [km^2]</code></pre>
 </div>
@@ -723,7 +734,7 @@ Data attributes:
 </section>
 <section id="modèle-avec-utilisation-spde" class="level4">
 <h4 class="anchored" data-anchor-id="modèle-avec-utilisation-spde">Modèle avec utilisation SPDE</h4>
-<p>Dans cette section, nous allons essayre d’expliquer la répartition des habitats en rajoutant au facteur vegetation une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l’ajout d’une structure de Matern en utilisant la fonction {INLA} <code>inla.spde2.pcmatern()</code> puis réécrire la définition de la forule du modèle INLA. Le modèle intègre alors un champ gaussien avec covariance de Matérn. <span class="math display">\[\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))\]</span> avec <span class="math inline">\(\xi\)</span> suivant un champ gaussien.</p>
+<p>Dans cette section, nous allons essayer d’expliquer la répartition des habitats en rajoutant au facteur <strong>vegetation</strong> une modélisation SPDE (Stochastic partial differential equations). Il faut pour cela compléter la définition du maillage par l’ajout d’une structure de Matérn en utilisant la fonction {INLA} <code>inla.spde2.pcmatern()</code> puis réécrire la définition de la formule du modèle INLA. Le modèle intègre alors un champ gaussien avec covariance de Matérn. <span class="math display">\[\lambda(x,y)=\exp(\alpha_i(x,y)+\xi(x,y))\]</span> avec <span class="math inline">\(\xi\)</span> suivant un champ gaussien.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>pcmatern <span class="ot">&lt;-</span> <span class="fu">inla.spde2.pcmatern</span>(mesh,</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior.sigma =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.01</span>),</span>
@@ -739,7 +750,7 @@ Data attributes:
 <span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lgcp</span>(<span class="at">components =</span> comp2, </span>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> nests, </span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">samplers =</span> boundary, </span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">domain =</span> <span class="fu">list</span>(<span class="at">coordinates =</span> mesh))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">domain =</span> <span class="fu">list</span>(<span class="at">coordinates =</span> mesh))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
@@ -752,7 +763,7 @@ Data attributes:
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(int2, <span class="fu">aes</span>(<span class="at">fill =</span> q0<span class="fl">.025</span>)) <span class="sc">+</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(boundary, <span class="at">alpha =</span> <span class="dv">0</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests) <span class="sc">+</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -766,17 +777,16 @@ Data attributes:
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">fm_int</span>(mesh, boundary),</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                   <span class="sc">~</span> <span class="fu">sum</span>(weight <span class="sc">*</span> <span class="fu">exp</span>(mySmooth <span class="sc">+</span> vegetation)))</span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Lambda2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Lambda2</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       mean       sd      q0.025      q0.5   q0.975    median mean.mc_std_err
-1 0.6722012 1.136114 0.008229995 0.2361581 4.237551 0.2361581       0.1136114
+<pre><code>       mean       sd      q0.025      q0.5  q0.975    median mean.mc_std_err
+1 0.8949473 2.460237 0.007384043 0.2472062 4.47594 0.2472062       0.2460237
   sd.mc_std_err
-1     0.2288972</code></pre>
+1      1.005067</code></pre>
 </div>
 </div>
-<p>Look at the contributions to the linear predictor from the SPDE and from vegetation.</p>
 <p>Examinons les contributions au prédicteur linéaire de la partie SPDE et de celle due à la végatation.</p>
-<p>La fonction <code>scale_fill_gradientn()</code> définit l’échelle pour la légende du graphique. Dans cet exemple, on le définit tel que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.</p>
+<p>La fonction <code>scale_fill_gradientn()</code> définit l’échelle pour la légende du graphique. Dans cet exemple, on la définit telle que cela prenne en compte toute la gamme de valeurs des 3 prédicteurs linéaires. Par défaut, ce sont les médianes qui sont représentées.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>lp2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, </span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>               pred.df, <span class="sc">~</span> <span class="fu">list</span>(</span>
@@ -796,7 +806,7 @@ Data attributes:
 <span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"vegetation + elevation"</span>) <span class="sc">+</span></span>
 <span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
 <span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> lprange) <span class="sc">+</span></span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -807,7 +817,7 @@ Data attributes:
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"mySmooth"</span>) <span class="sc">+</span></span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> lprange) <span class="sc">+</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -818,7 +828,7 @@ Data attributes:
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"vegetation"</span>) <span class="sc">+</span></span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> lprange) <span class="sc">+</span></span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
@@ -829,11 +839,11 @@ Data attributes:
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"elevation"</span>) <span class="sc">+</span></span>
 <span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg</span>(nests, <span class="at">color =</span> <span class="st">"firebrick"</span>) <span class="sc">+</span></span>
 <span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> lprange) <span class="sc">+</span></span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Regions defined for each Polygons</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiplot</span>(plot.lp2, plot.lp2.spde, plot.lp2.veg, plot.lp2.ele, <span class="at">cols =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">multiplot</span>(plot.lp2, plot.lp2.spde, plot.lp2.veg, plot.lp2.ele, <span class="at">cols =</span> <span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/final-triple-plot-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -842,7 +852,7 @@ Data attributes:
 </section>
 <section id="exemple-3" class="level3">
 <h3 class="anchored" data-anchor-id="exemple-3">Exemple 3</h3>
-<p>Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre “Spatial and Spatio-temporal Bayesian Models with R-INLA.</p>
+<p>Nous nous intéressons à un jeu de données concernant la prévalence de la malaria en Gambie (disponible dans le package {geoR}). Cet exemple est repris du livre “Spatial and Spatio-temporal Bayesian Models with R-INLA”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gambia, <span class="at">package =</span> <span class="st">"geoR"</span>)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># les coordonnées correspondent au village où se trouve les enfants</span></span>
@@ -851,16 +861,16 @@ Data attributes:
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"lon_lat"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">65</span>)</span>
 <span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>gambia <span class="ot">&lt;-</span> gambia <span class="sc">%&gt;%</span></span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(village_index) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(village_index) </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>On transforme les données et on transforme le jeu de données en type {SpatialPointsDataFrame}.</p>
+<p>On transforme le jeu de données en type {SpatialPointsDataFrame}.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>gambia <span class="ot">&lt;-</span> gambia <span class="sc">%&gt;%</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> x <span class="sc">*</span> <span class="fl">0.001</span>, <span class="co"># to km</span></span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> y <span class="sc">*</span> <span class="fl">0.001</span>, <span class="co"># to km</span></span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> age <span class="sc">/</span> <span class="dv">365</span>) </span>
 <span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(gambia) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>) </span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gambia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gambia)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "SpatialPointsDataFrame"
 attr(,"package")
@@ -874,14 +884,14 @@ attr(,"package")
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">offset =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">60</span>), <span class="at">max.edge =</span> <span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">40</span>))</span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gambia_mesh,<span class="at">main=</span><span class="st">""</span>,<span class="at">asp=</span><span class="dv">1</span>)</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(gambia,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"white"</span>,<span class="at">cex=</span><span class="fl">1.5</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(gambia,<span class="at">pch=</span><span class="dv">21</span>,<span class="at">bg=</span><span class="st">"white"</span>,<span class="at">cex=</span><span class="fl">1.5</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>On définit à partir du maillage le champ spatial spde qui correspond à un champ spatial gaussien avec une covariance Matérn. Nous considérons les lois a priori par défaut sur les paramètres de variance et de portée du champ spatial.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gambia_spde <span class="ot">&lt;-</span> <span class="fu">inla.spde2.matern</span>(<span class="at">mesh =</span> gambia_mesh, <span class="at">alpha=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>gambia_spde <span class="ot">&lt;-</span> <span class="fu">inla.spde2.matern</span>(<span class="at">mesh =</span> gambia_mesh, <span class="at">alpha=</span><span class="dv">2</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tout est prêt pour définir le modèle à ajuster et son estimation : Pour l’enfant <span class="math inline">\(j\)</span> du village <span class="math inline">\(i\)</span>, nous supposons <span class="math display">\[Y_{ij}|V_i\overset{ind}{\sim}b(p_{ij})\]</span> avec <span class="math display">\[S_i\sim GRF, \quad V_i\overset{ind}{\sim}\mathcal{N}(0,\sigma^2_V)\]</span> et <span class="math display">\[p_{ij}=\mu+\beta_1 \cdot treated_{ij}+\beta_2 \cdot netuse_{ij}+\beta_3 \cdot age_{ij}+\beta_4 \cdot green_{ij}+\beta_5\cdot phc_{ij}+S_i+V_i.\]</span></p>
 <div class="cell">
@@ -898,11 +908,11 @@ attr(,"package")
 <span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">bru</span>(<span class="at">components =</span> formula,</span>
 <span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> gambia,</span>
 <span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">family=</span> <span class="st">"binomial"</span></span>
-<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>iinla: Iteration 1 [max:1]</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>inlabru version: 2.8.0
 INLA version: 23.04.24
@@ -920,7 +930,7 @@ Likelihoods:
     Data class: 'SpatialPointsDataFrame'
     Predictor: pos ~ .
 Time used:
-    Pre = 1.14, Running = 2.09, Post = 0.138, Total = 3.37 
+    Pre = 0.964, Running = 1.67, Post = 0.122, Total = 2.75 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 Intercept -1.295 1.282     -3.733   -1.327      1.312 -1.398   0
@@ -938,8 +948,8 @@ Random effects:
 Model hyperparameters:
                           mean    sd 0.025quant 0.5quant 0.975quant  mode
 Theta1 for spatial_field  1.32 0.836     -0.172     1.26       3.10  1.04
-Theta2 for spatial_field -2.50 0.708     -4.005    -2.45      -1.24 -2.27
-Precision for village     4.83 2.423      1.684     4.32      10.97  3.45
+Theta2 for spatial_field -2.50 0.708     -4.006    -2.45      -1.24 -2.27
+Precision for village     4.83 2.423      1.685     4.32      10.97  3.45
 
 Deviance Information Criterion (DIC) ...............: 2326.24
 Deviance Information Criterion (DIC, saturated) ....: 2326.24
@@ -957,26 +967,26 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <p>On peut accéder aux distributions marginales des effets aléatoires et des hyperparamètres :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>summary.random </span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>summary.hyperpar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>summary.hyperpar</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nous pouvons tracer les distributions a posteriori marginales des effets, par exemple :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> fit<span class="sc">$</span>marginals.fixed[[<span class="dv">4</span>]]</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">inla.smarginal</span>(age)), <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>rfprecision <span class="ot">&lt;-</span> fit<span class="sc">$</span>marginals.hyperpar<span class="sc">$</span><span class="st">`</span><span class="at">Precision for village</span><span class="st">`</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">inla.smarginal</span>(rfprecision)), <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Nous essayons de représenter le champ gaussien latent</p>
+<p>Nous essayons de représenter le champs gaussien latent</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>domain_lims <span class="ot">&lt;-</span> <span class="fu">apply</span>(hull<span class="sc">$</span>loc, <span class="dv">2</span>, range)</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>grd_dims <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="at">x =</span> <span class="fu">diff</span>(domain_lims[, <span class="dv">1</span>]), </span>
@@ -1003,7 +1013,7 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <span id="cb70-23"><a href="#cb70-23" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(predicted_field, metric <span class="sc">==</span> <span class="st">"median"</span>)) <span class="sc">+</span></span>
 <span id="cb70-24"><a href="#cb70-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> value) <span class="sc">+</span></span>
 <span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
-<span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1011,7 +1021,7 @@ Posterior summaries for the linear predictor and the fitted values are computed
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(predicted_field, metric <span class="sc">==</span> <span class="st">"range95"</span>)) <span class="sc">+</span></span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> value) <span class="sc">+</span></span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>() <span class="sc">+</span></span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="R_INLA_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -1086,12 +1096,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copié");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copié");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
