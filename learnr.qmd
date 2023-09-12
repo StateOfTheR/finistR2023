@@ -1,6 +1,7 @@
 ---
 title: "Nouveautés {learnr}"
 format: html
+lang: fr
 toc: true
 author: 
   - Pierre Barbillon
@@ -11,18 +12,18 @@ date: 08/24/2023
 
 # Introduction
 
-Nous allons ici présenter les nouveautés dans le packages {learnr} qui permet de créer des tutoriaux interactifs. {learnr} avait déjà été discuté durant la [semaine Finist'R 2020] (https://stateofther.github.io/finistR2020/teach_learnr_gradethis.html){.uri}
+Nous allons ici présenter les nouveautés du package {learnr} qui permet de créer des tutoriaux interactifs. {learnr} avait déjà été discuté durant la [semaine Finist'R 2020](https://stateofther.github.io/finistR2020/teach_learnr_gradethis.html){.uri}
 
 
 {learnr} repose sur {shiny}. Le tutoriel est construit à partir d'un fichier Rmarkdown et peut être soit executé en local via le bouton `run app` soit en déployant le fichier sur un serveur Shiny.
 
-Depuis 2020 environ, il est possible d'intégrer un tutoriel {learnr] dans un package, ce qui rend interactif les classiques vignettes. Les nouvelles versions de Rstudio ont de plus inclus un bouton `tutorial` disponible dans le panel "Environnement, Git etc...".
+Depuis 2020 environ, il est possible d'intégrer un tutoriel {learnr] dans un package, ce qui rend les classiques vignettes interactives. Les nouvelles versions de RStudio ont de plus inclus un bouton `tutorial` disponible dans le panel "Environnement, Git etc...".
 
-L'idée est de partager un tutoriel facilement à une large audience et pour cela il est maintenant possible de les intégrer dans un package. Cela peut être intéressant autant pour des tutoriaux à destination d'étudiants mais également pour des tutoriaux à intégrer dans les packages que vous développez pour rendre l'initiation aux méthodes développées plus interactives qu'une vignette.
+L'idée est de partager un tutoriel facilement à une large audience et pour cela il est maintenant possible de les intégrer dans un package. Cela peut être intéressant pour des tutoriaux à destination d'étudiants mais également pour des tutoriaux à intégrer dans les packages que vous développez pour rendre l'initiation aux méthodes développées plus interactives qu'une vignette.
 
-L'avantage technique d'intégrer un tutoriel {learnr} dans un package est qu'il est alors possible, après avoir installé le package, d'executer le tutoriel en local sans avoir à le déployer sur un serveur Shiny. C'est donc gratuit et simple d'utilisation.
+L'avantage technique d'intégrer un tutoriel {learnr} dans un package est qu'il est alors possible, après avoir installé le package, d'exécuter le tutoriel en local sans avoir à le déployer sur un serveur Shiny. C'est donc gratuit et simple d'utilisation.
 
-A noter qu'il n'est pas nécessaire que le package contenant le tutoriel soit déposé sur le CRAN ou autre, qu'il contienne d'autres ficheirs que le tutoriel. Tout est donc possible.
+A noter qu'il n'est pas nécessaire que le package contenant le tutoriel soit déposé sur le CRAN ou autre, qu'il contienne d'autres fichiers que le tutoriel. Tout est donc possible.
 
 Les étapes pour créer un package contenant un tutoriel:
 
@@ -40,7 +41,7 @@ usethis::create_package("<path_to_folder/name_of_package>")
 usethis::use_tutorial("<name-of-learnr-file>", "<Title You'd Like the User to See>")
 ```
 
-1.  Puis dans Rstudio, cliquer sur "Build \> Install and Restart".
+1.  Puis dans RStudio, cliquer sur "Build \> Install and Restart".
 
 2.  Si nécessaire, rajouter le package {gradethis} (noter la fonction de {usethis} spécifique pour les install de package en développement),
 
@@ -60,7 +61,7 @@ usethis::use_package("palmerpenguins")
 
 5.  Exécuter `usethis::use_readme_rmd()` pour rajouter un fichier README. puis compiler le tout.
 
-6.  Déposer le package sur gitlab ou github puis partager le repository qui peut être installer avec les lignes de code suivantes:
+6.  Déposer le package sur gitlab ou github puis partager le repository qui peut être installé avec les lignes de code suivantes:
 
 ```{r}
 #| eval: false
@@ -68,12 +69,12 @@ devtools::install_github("<your-repo>/<package-name>")
 devtools::install_gitlab("<your-repo>/<package-name>")
 ```
 
-7.  Lorsque le package est installé, aller dans le panel `Tutorial` dans Rstudio et c'est parti...
+7.  Lorsque le package est installé, aller dans le panel `Tutorial` dans RStudio et c'est parti...
 
 
 8. Quelques outils utiles.
 
-Il est possible de chaîner des chunks en utilisant la fonctionnalité `exercise.setup` dans les chunk.
+Il est possible de chaîner des chunks en utilisant la fonctionnalité `exercise.setup` dans les chunks.
 Par exemple, nous pouvons effectuer
 
 ````markdown

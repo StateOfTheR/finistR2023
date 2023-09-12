@@ -1,5 +1,6 @@
 ---
 title: "Nouveautés {learnr} et {exams}"
+lang: fr
 format: html
 toc: true
 author: 
@@ -15,7 +16,7 @@ Nous allons ici discuter du package {exams} qui permet de créer  des feuilles d
 
 # exams
 
-{exams} est un package R disponible sur le CRAN. Il permet de construire des examens de manière automatique au format markdown ou LaTeX et incluant des chunks de code R dynamique. Comme pour learnr les exercices peuvent être à choix multiples ou simples, des problèmes arithmétiques, du code…
+{exams} est un package R disponible sur le CRAN. Il permet de construire des examens de manière automatique au format markdown ou LaTeX, incluant des chunks de code R dynamiques. Comme pour {learnr} les exercices peuvent être à choix multiples ou simples, des problèmes arithmétiques, du code…
 
 <https://www.r-exams.org/>
 
@@ -24,9 +25,9 @@ Un examen exams a plusieurs sorties possibles:
 * fichiers autonomes : PDF, HTML, Docx, ODT, ...
 * fichiers dynamiques: **Moodle XML**, QTI 1.2, QTI 2.1, Blackboard, Canvas, OpenOLAT, ARSnova, and TCExam
     
-Il est possible **de scanner les feuilles d’examens imprimés** et de les évaluer automatiquement avec l'outil **NOPS**.
+Il est possible **de scanner les feuilles d’examens imprimées** et de les évaluer automatiquement avec l'outil **NOPS**.
 
-Une autre option intéressante, pour réduire le risque de triche, exams propose un mécanisme de variations aléatoires des exercices:
+Une autre option intéressante, pour réduire le risque de triche, {exams} propose un mécanisme de variations aléatoires des exercices:
 
 * mélange de l’ordre des questions
 * mélange des réponses possibles pour les QCMs

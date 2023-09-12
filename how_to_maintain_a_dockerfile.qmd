@@ -1,0 +1,188 @@
+---
+title: "Gestion d'un Dockerfile en projet collaboratif"
+lang: fr
+format: 
+  html:
+    eval: false
+toc: true
+author: Théodore Vanrenterghem
+date: 07/09/2023
+---
+
+
+Lors d'un évènement comme **finistR** nous travaillons tous, sur des interfaces, des systèmes et des langages différents. Lors de **finistR2023** par exemple,  nous avons dû utiliser dans un même conteneur docker les langages `R`, `Python` et `Julia` et compiler cela via **quarto**. Construire un docker est quasiment aussi simple en principe que de suivre la recette d'une salade. Mais lorsque les problèmes arrivent et que la mayonnaise ne marche plus, il ne vous reste plus qu'à manger votre clavier... 
+
+Sur cette page vous trouverez premièrement un petit rappel sur ce qu'est un `Dockerfile` et le fonctionnement général de docker. Puis deuxièmement des indications plus particulières au conteneur de **finistR2023** c'est à dire un docker `R`, `Python`, `Julia` et **quarto**
+
+## I - Un `Dockerfile` ? 
+
+Docker est une technologie permettant de **créer et utiliser** de manière **efficace** des conteneurs logiciels. Ces conteneurs logiciel sont en fait des **environnements de travail spécialisables, versionnés et facilement partageable**. Docker permet donc de partager : des environnements de calculs pour des travaux en équipe, des applications (par exemple {shiny}), mais aussi permet l'intégration continue de site web et autres. 
+
+Voici le `Dockerfile` utilisé pour ce projet:
+
+```{r}
+## Source Dockerfile
+FROM rocker/geospatial:4
+
+### JULIA
+
+## Copy Julia's tar.gz and install it
+## using 1.8.3 version because it does work with quarto on my computer
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-x86_64.tar.gz && \
+    tar zxvf julia-1.8.3-linux-x86_64.tar.gz && \
+    ## Connect to Julia's directory link with real jula's bin
+    cp -r julia-1.8.3 /opt/ && \
+    ln -s /opt/julia-1.8.3/bin/julia /usr/local/bin/julia
+
+## Install Julias package (IJulia <-- to connect with jupyter)
+## Installing from julia
+RUN julia -e 'import Pkg; Pkg.add("GeoDataFrames"); Pkg.add("Distributed"); Pkg.add("StatsAPI"); Pkg.add("Plots"); Pkg.add("DelimitedFiles"); Pkg.add("DataFrames"); Pkg.add("CSV"); Pkg.add("GeoStats"); Pkg.add("Rasters"); Pkg.add("Shapefile"); Pkg.add("GeoTables"); Pkg.add("CairoMakie"); Pkg.add("WGLMakie"); Pkg.add("IJulia")'
+
+## non Interactive terminal for this docker for the site
+RUN export DEBIAN_FRONTEND=noninteractive; apt-get -y update \
+    && apt-get install -y pandoc \
+    pandoc-citeproc
+
+### R packages
+
+## Defining web acces for CRAN
+ENV R_CRAN_WEB="https://cran.rstudio.com/"
+RUN R -e "install.packages('INLA',repos=c(getOption('repos'),INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)"
+RUN R -e "install.packages(c('dyplr','ggplot2','remotes','microbenchmark','purrr','BiocManager','httr','cowplot','torch','PLNmodels','torchvision','reticulate','inlabru', 'lme4', 'ggpolypath', 'RColorBrewer', 'geoR','tidymodels', 'brulee', 'reprex','poissonreg','ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels','sp','terra','gstat','sf'))"
+RUN R -e "BiocManager::install('BiocPkgTools')"
+RUN R -e "torch::install_torch(type = 'cpu')"
+RUN R -e "JuliaCall::install_julia()"
+
+### Ubuntu libraries (for python ?)
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+  jags \
+  mercurial gdal-bin libgdal-dev gsl-bin libgsl-dev \
+  libc6-i386
+
+### Jupyter Python torch jax etc
+## Downloading Python
+RUN apt-get install -y --no-install-recommends unzip python3-pip dvipng pandoc wget git make python3-venv && \
+    pip3 install jupyter jupyter-cache flatlatex matplotlib && \
+    apt-get --purge -y remove texlive.\*-doc$ && \
+    apt-get clean
+
+RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvision torchaudio pyplnmodels optax
+```
+
+Malgré ce format peu tentant, l'écriture d'un `Dockerfile` est facile tant que l'on maîtrise bien les outils que le docker doit contenir.
+
+### a) `FROM` Le récypient de la reccette 
+
+Pour construire un conteneur docker on utilise en général au départ... un conteneur docker. De préférence il faut trouver un conteneur plus ou moins adapté à ce que l'on veux. Ici nous utilisons `rocker/geospatial:4`, les conteneurs `rocker` contiennent `R` avec ici une adaptation particulière au `geospatial`.
+
+### b) `RUN` Les ingrédients de la recette
+
+Avec `RUN` il est possible d'effectuer des commandes en `bash` pour installer ce dont on a besoin dans le Docker. Pour rappel, ici il faut que nous puissions compiler un site web de manière automatique, et aussi compiler des **quarto** (`Julia`, `R` et `Python`) à l'origine des pages web. Pour chacune de ces étapes il faut vérifier l'installation du langage, installer les dépendances nécessaires au code. Et enfin s'assurer de la compatibilité entre les outils.
+
+### c) Exemple - Instalation de `Julia` pour **quarto**
+
+Ici `R` est déjà installé via `rocker` mais pas `Julia`. Le paragraphe suivant consiste à l'installation complète de `Julia-1.8.3` dans un système type ubuntu. 
+
+```{r}
+RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-x86_64.tar.gz && \
+    tar zxvf julia-1.8.3-linux-x86_64.tar.gz && \
+    ## Connect to Julia's directory link with real jula's bin
+    cp -r julia-1.8.3 /opt/ && \
+    ln -s /opt/julia-1.8.3/bin/julia /usr/local/bin/julia
+```
+
+Le symbole `&& \` permet si la ligne à gauche est un succès de lancer la ligne suivante et le tout dans un seul `RUN`. En général il vaux mieux avoir peu de **longue ligne de code** que **beaucoup de ligne** faisant un appel systématique à `RUN`.
+
+1. `wget` télécharge `Julia`
+1. `tar` décompresse le fichier téléchargé
+1. `cp` copie `Julia` dans le dossier des programmes
+1. `ln` créé un lien symbolique qui permet de lancer des script avec la commande `$ julia` depuis le terminal.
+
+Cependant pour pouvoir lancer `Julia` depuis **quarto** cela ne suffit pas. Premièrement la version actuelle du langage ne communique pas correctement avec **quarto** alors que la version **Julia-1.8.3** semble bien fonctionner. Deuxièmement il est nécessaire de créer un kernel `IJulia` pour connecter `Julia` à jupyter. C'est jupyter qui vas ensuite communiquer avec **quarto**. Pour faire cela, il faut installer le package {IJulia}.
+
+```{r}
+RUN julia -e 'import Pkg; Pkg.add("IJulia")'
+```
+
+On prendra soins d'importer les autres packages dont nos **quarto** dépendent
+
+```{r}
+RUN julia -e 'import Pkg; Pkg.add("DataFrames"); Pkg.add("GeoDataFrames"); Pkg.add("IJulia")'
+```
+
+Par sécurité nous avons aussi choisi de faire la commande R suivante qui installe une petite dépendance de `Julia` dans `R`. 
+
+```{r}
+RUN R -e "JuliaCall::install_julia()"
+```
+
+## II - Construire mon `Dockerfile` ? 
+
+Pour arriver à écrire cela, avoir déjà installé le programme voulu en local est très utile ! Mais si votre ordinateur est un Windows cela ne vous aidera pas... Arriver à vos fin peut être compliqué et dans tout les cas il vas vous falloir essayer ... La compilation d'un docker est assez longue donc chaque essais peut-être coûteux. Il existe cependant différents moyens de gagner du temps. Commencez d'abord par chercher les routines d'installation des vos dépendances sur ubuntu. 
+
+### a) Organiser son fichier
+
+Une image docker lors de sa compilation en local, va garder en cache énormément d'information de manière séquentielle.  Changer des lignes au début de mon `Dockerfile` est **plus coûteux** que de changer des lignes à la fin. Ainsi il est toujours plus intéressant lors du développement d'un conteneur de garder **les lignes les moins sûres** vers **la fin** du fichier (dans la mesure du possible).
+
+### b) Compilation
+
+Pour compiler mon conteneur il suffit de lancer la commande dans le répertoire où est mon Docker. 
+
+```{r}
+docker build -f Dockerfile --progress=plain -t nom_image:num_version .
+```
+
+Un changement de numéro de version suffit à générer une nouvelle image en tirant toujours profit des données en cache.
+
+### c) Tester rapidement un conteneur (exemple **non-interactif**)
+
+Le conteneur fabriqué pour le site de finistR est non interactif, une fois activé avec la ligne 
+
+```{r}
+docker run nom_image:num_version
+```
+
+il n'est pas possible de lancer des commandes dans l'environnement créé depuis un terminal. Il n'est donc pas évident de tester les installations dans le conteneur.  
+Une possibilité est de créé un deuxième `Dockerfile` (que l'on peut nommer `'DockerfileTest'`). Voici un exemple
+
+```{r}
+## Source DockerfileTest
+FROM nom_image:num_version
+
+RUN quarto check jupyter
+RUN julia -e 'using GeoDataFrames'
+```
+
+Ce `Dockerfile` se build avec la commande 
+
+```{r}
+docker build -f DockerfileTest --progress=plain -t nom_image_test:num_version .
+```
+
+
+Un intérêt de cette méthode est que l'on peux assez rapidement rééditer le conteneur le premier étant inchangé. 
+Dans cet exemple :
+
+ - `quarto check jupyter` permet de vérifier si **quarto** a bien accès à jupyter mais aussi de vérifier si le kernel {IJulia} existe. 
+ - `julia -e 'using GeoDataFrames'` vérifie si le package a bien été installé dans `Julia`.
+
+C'est lors de ce `build` que vous pouvez vérifier si ces commandes rendent les résultats attendus.
+
+Dans le cas du conteneur de finistR, la compilation du conteneur sur github dure environ 45 min et le test à la suite d'une pull request dure environ 30 min. Grace à ces  conseils un conteneur modifié aux dernières lignes se compile quasi immédiatement en local (idem pour `DockerfileTest`). 
+ 
+### d) Des bonnes pratiques oui ! Mais du groupe avant tout 
+
+L'idéal dans ce genre de projet en groupe, est de pouvoir faire un suivis des packages et langages à installer. 
+Pour cela lorsque que l'on effectue une pull request incluant un nouveau document, il est préférable de joindre explicitement en message :
+
+1. les dépendances
+1. la version du langage utilisé
+1. le système d'exploitation
+
+En cas de problème avec un conteneur, ces informations sont très utiles pour résoudre les incompatibilités qui ont lieux.
+
+## Références
+
+- <https://www.docker.com/>

@@ -20,6 +20,10 @@ website:
         aria-label: GitHub
       - text: Workflow
         menu:
+        - text: Initiation à Git
+          href: Utilisation_de_git.qmd
+        - text: Maintenir un docker multi-langage
+          href: how_to_maintain_a_dockerfile.qmd
         - text: Issue - Reprex
           href: issue_reprex.qmd
         aria-label: GitHub
@@ -27,19 +31,19 @@ website:
         menu:
         - text: INLA
           href: R_INLA.qmd
-        - text: Tidymodels
+        - text: Nouveau modèle Parsnip
           href: tidymodels_build_new_model.qmd
+        - torch_test-brulee.qmd
         aria-label: GitHub
       - text: Programmation Efficace
-        menu: 
+        menu:
           - torch_Python_R_ResNet.qmd
           - torch_Python_regression.qmd
           - Intel_MKL.qmd
           - torch_and_rcpp.qmd
           - jax-getting-started.qmd
       - text: Autour de PLN
-        menu: 
-          - torch_test-brulee.qmd
+        menu:
           - torch_R_PLN.qmd
           - torch_Python-PLN.qmd
           - jit-example-pln-jax.qmd
@@ -53,4 +57,4 @@ format:
     theme: flatly
     highlight: tango
     toc: true
-    
+

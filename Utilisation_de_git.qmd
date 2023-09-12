@@ -1,6 +1,7 @@
 ---
 title: "FinistR : Utilisation de git"
 format: html
+lang: fr
 toc: true
 author: 
   - Armand Favrot

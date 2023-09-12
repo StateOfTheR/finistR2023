@@ -14,5 +14,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Additional Packages
         run: Rscript -e "install.packages(c('ggbeeswarm', 'tictoc', 'bench', 'circlize', 'JuliaCall', 'GeoModels'))"
+      - name: erase R-Julia-Geostats.qmd
+        run: rm "R-Julia-Geostats.qmd"
       - name: Generate slides
         run: "quarto render"

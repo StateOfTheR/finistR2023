@@ -1,5 +1,6 @@
 ---
 title: "Instructions pour le dépot sur le site web"
+lang: fr
 author: 
   - Julie Aubert
   - Julien Chiquet
@@ -49,7 +50,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Le docker 
 
-Lien vers la fiche pense-bête : [https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf]
+(Lien vers la fiche pense-bête)[https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf]
 
 Pour créer des images Docker en local sur sa machine, voici une liste de commandes utiles
 

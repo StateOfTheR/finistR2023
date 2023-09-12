@@ -1,8 +1,8 @@
 ---
 title: "_ResNet_ : comparaison `{torch}` et `pytorch`"
+lang: fr
 execute:
   cache: true
-date: "du 21 au 25 août 2023"
 output: 
   html_document:
    toc: true
@@ -13,7 +13,7 @@ output:
 
 Le but est de comparer la syntaxe utilisée par les deux langages, seuls les exemples en `R` sont exécutés (difficultés de faire un quarto avec deux langages, voir [issue ici](https://github.com/quarto-dev/quarto-cli/discussions/4232) ou de faire tourner `pytorch` avec `{reticulate}`). L'exemple d'application est un _ResNet_.
 
-Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le [site web officiel](https://pytorch.org/get-started/locally/). Vous pouvez utiliser `pip` ou `conda`, avec ou sans `cuda`. Pour `R`, cela a déjà été fait à la session précédente de [finistR](https://stateofther.github.io/finistR2022/autodiff.html).
+Pour charger installer la bibliothèque, en python, plusieurs possibilités sont données sur le [site web officiel](https://pytorch.org/get-started/locally/). Vous pouvez utiliser `pip` ou `conda`, avec ou sans `cuda`. Pour `R`, cela a déjà été fait à la session 2022 de [finistR](https://stateofther.github.io/finistR2022/autodiff.html).
 
 ```{r, eval = FALSE}
 install.packages(torch)
@@ -46,7 +46,7 @@ On comprend que la convention de nommage garde `torch_` en préfix de toutes les
 
 ### Chargement des données
 
-On va utiliser `torchvision` pour importer un jeu de donné connu (des images annotées). On veut appliquer des transformations sur le jeu de test, mais hélas tout n'est pas encore implémenté. On commente les transformations pas encore implementées.
+On va utiliser `torchvision` pour importer un jeu de données connu (des images annotées). On veut appliquer des transformations sur le jeu de test, mais hélas tout n'est pas encore implémenté. On commente les transformations pas encore implementées.
 
 ```python
 transform = transforms.Compose([
@@ -66,7 +66,7 @@ transform <- function(img) {
 }
 ```
 
-Voici le code pour chager les données en `python` et `R` :
+Voici le code pour charger les données en `python` et `R` :
 ```python
 num_samples = 1000
 
@@ -288,7 +288,7 @@ res_net <- nn_module(
 )
 ```
 
-### Instantiation model et optimiseurs
+### Instanciation modèle et optimiseurs
 
 Partie un peu plus rapide et simple, quasi identique dans les deux cas :
 
@@ -363,7 +363,7 @@ tic <- system.time(
 tic
 ```
 
-Sur mon ordinateurs :
+Sur mon ordinateur :
 - `python` : 27.6s (elapsed)
 - `R` : 33.1s
 
