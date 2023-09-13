@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+ <span class="dropdown-text">JIT with JAX</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
@@ -498,7 +498,7 @@ Remarque
 <pre><code>A multivariate Poisson Lognormal fit with full covariance model.
 ==================================================================
  nb_param    loglik       BIC       ICL
-      170 -1130.047 -1460.852 -2229.083
+      170 -1129.909 -1460.714 -2230.658
 ==================================================================
 * Useful fields
     $model_par, $latent, $latent_pos, $var_par, $optim_par
@@ -528,7 +528,7 @@ Remarque
 A multivariate Poisson Lognormal fit with full covariance model.
 ==================================================================
  nb_param    loglik       BIC       ICL
-      170 -1130.047 -1460.852 -2229.083
+      170 -1129.909 -1460.714 -2230.658
 ==================================================================
 * Useful fields
     $model_par, $latent, $latent_pos, $var_par, $optim_par
@@ -571,12 +571,12 @@ PLNmodels::PLN(formula = missing_arg(), data = missing_arg(),
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pour recuperer les coefficients</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(resPLN<span class="sc">$</span>fit)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                  Che       Hyc      Hym       Hys      Psy        Aga
-(Intercept) -2.833542 -4.023858 1.056175 -2.176389 3.305965 -0.3468842
-                  Glo       Ath       Cea       Ced        Set        All
-(Intercept) -2.205421 -1.657137 -3.343267 0.3683657 -0.5991094 -0.8440133
-                  Han       Hfo        Hsp       Hve       Sta
-(Intercept) -1.233492 -2.123357 -0.2549654 -2.750357 0.9776199</code></pre>
+<pre><code>                  Che       Hyc      Hym      Hys      Psy        Aga       Glo
+(Intercept) -2.833822 -4.049306 1.051399 -2.17906 3.291263 -0.3560404 -2.217591
+                  Ath      Cea       Ced        Set        All       Han
+(Intercept) -1.661659 -3.36122 0.3593471 -0.6285713 -0.8500234 -1.351443
+                  Hfo        Hsp       Hve       Sta
+(Intercept) -2.190792 -0.3070371 -2.758038 0.9621415</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">coef</span>(myPLN), <span class="fu">coef</span>(resPLN<span class="sc">$</span>fit))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -586,18 +586,18 @@ PLNmodels::PLN(formula = missing_arg(), data = missing_arg(),
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>pred_pln <span class="ot">&lt;-</span> <span class="fu">predict</span>(myPLN, <span class="at">newdata  =</span> prep_trichoptera, <span class="at">type =</span> <span class="st">"response"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pred_pln <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">3</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         Che        Hyc      Hym       Hys     Psy     Aga       Glo       Ath
-1 0.06171337 0.05998778 3.831122 0.1225325 91.0535 2.91355 0.2540807 0.2926166
-2 0.06171337 0.05998778 3.831122 0.1225325 91.0535 2.91355 0.2540807 0.2926166
-3 0.06171337 0.05998778 3.831122 0.1225325 91.0535 2.91355 0.2540807 0.2926166
-        Cea      Ced      Set      All     Han      Hfo      Hsp       Hve
-1 0.1071243 2.570283 3.703422 1.080023 11.0092 1.054269 5.761769 0.1990118
-2 0.1071243 2.570283 3.703422 1.080023 11.0092 1.054269 5.761769 0.1990118
-3 0.1071243 2.570283 3.703422 1.080023 11.0092 1.054269 5.761769 0.1990118
+<pre><code>         Che       Hyc      Hym       Hys      Psy      Aga      Glo       Ath
+1 0.06157233 0.0588531 3.813198 0.1225141 89.53902 2.888241 0.251068 0.2913597
+2 0.06157233 0.0588531 3.813198 0.1225141 89.53902 2.888241 0.251068 0.2913597
+3 0.06157233 0.0588531 3.813198 0.1225141 89.53902 2.888241 0.251068 0.2913597
+        Cea     Ced      Set      All      Han      Hfo      Hsp       Hve
+1 0.1053727 2.54603 3.594756 1.074918 11.25454 1.024682 5.592037 0.1974294
+2 0.1053727 2.54603 3.594756 1.074918 11.25454 1.024682 5.592037 0.1974294
+3 0.1053727 2.54603 3.594756 1.074918 11.25454 1.024682 5.592037 0.1974294
        Sta
-1 7.495402
-2 7.495402
-3 7.495402</code></pre>
+1 7.385873
+2 7.385873
+3 7.385873</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On peut appliquer les methodes </span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pred_parsnipfit &lt;- predict(resPLN$fit, newdata  = prep_trichoptera)</span></span>
@@ -607,9 +607,9 @@ PLNmodels::PLN(formula = missing_arg(), data = missing_arg(),
 <pre><code># A tibble: 3 × 17
   .pred_Che .pred_Hyc .pred_Hym .pred_Hys .pred_Psy .pred_Aga .pred_Glo
       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1    0.0617    0.0600      3.83     0.123      91.1      2.91     0.254
-2    0.0617    0.0600      3.83     0.123      91.1      2.91     0.254
-3    0.0617    0.0600      3.83     0.123      91.1      2.91     0.254
+1    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+2    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
+3    0.0616    0.0589      3.81     0.123      89.5      2.89     0.251
 # ℹ 10 more variables: .pred_Ath &lt;dbl&gt;, .pred_Cea &lt;dbl&gt;, .pred_Ced &lt;dbl&gt;,
 #   .pred_Set &lt;dbl&gt;, .pred_All &lt;dbl&gt;, .pred_Han &lt;dbl&gt;, .pred_Hfo &lt;dbl&gt;,
 #   .pred_Hsp &lt;dbl&gt;, .pred_Hve &lt;dbl&gt;, .pred_Sta &lt;dbl&gt;</code></pre>
@@ -725,16 +725,16 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Y
-1  0.13402450
-2  0.09294198
-3  0.16581305
-4  0.14387844
-5  0.12484545
-6  0.09977539
-7  0.19109165
-8  0.12484545
-9  0.07597876
-10 0.19109165</code></pre>
+1  0.13408541
+2  0.09317098
+3  0.16585222
+4  0.14393335
+5  0.12491126
+6  0.10001395
+7  0.19110900
+8  0.12491126
+9  0.07605752
+10 0.19110900</code></pre>
 </div>
 </div>
 </div>
@@ -757,14 +757,14 @@ Number of Fisher Scoring iterations: 6</code></pre>
    .pred_Y
      &lt;dbl&gt;
  1  0.134 
- 2  0.0929
+ 2  0.0932
  3  0.166 
  4  0.144 
  5  0.125 
- 6  0.0998
+ 6  0.100 
  7  0.191 
  8  0.125 
- 9  0.0760
+ 9  0.0761
 10  0.191 
 # ℹ 190 more rows</code></pre>
 </div>

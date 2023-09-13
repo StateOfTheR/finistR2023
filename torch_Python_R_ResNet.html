@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+ <span class="dropdown-text">JIT with JAX</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
@@ -626,21 +626,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 1    Loss: 2.3981
-Epoch: 2    Loss: 1.9986
-Epoch: 3    Loss: 1.8066
-Epoch: 4    Loss: 1.6200
-Epoch: 5    Loss: 1.5309
-Epoch: 6    Loss: 1.5572
-Epoch: 7    Loss: 1.3535
-Epoch: 8    Loss: 1.3265
-Epoch: 9    Loss: 1.1657
-Epoch: 10   Loss: 1.1286</code></pre>
+<pre><code>Epoch: 1    Loss: 2.3445
+Epoch: 2    Loss: 1.9582
+Epoch: 3    Loss: 1.7365
+Epoch: 4    Loss: 1.6173
+Epoch: 5    Loss: 1.5806
+Epoch: 6    Loss: 1.4706
+Epoch: 7    Loss: 1.4333
+Epoch: 8    Loss: 1.3304
+Epoch: 9    Loss: 1.2252
+Epoch: 10   Loss: 1.1369</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 94.612   4.971  66.169 </code></pre>
+ 45.577   2.512  29.694 </code></pre>
 </div>
 </div>
 <p>Sur mon ordinateur : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
@@ -673,7 +673,7 @@ Epoch: 10   Loss: 1.1286</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Accuracy"</span>, n_tests_ok <span class="sc">/</span> n_tests, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy 0.422 </code></pre>
+<pre><code>Accuracy 0.376 </code></pre>
 </div>
 </div>
 <p>Les deux codes donnent des résultats semblables !</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.353">
@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Hugo Gangloff">
+<meta name="dcterms.date" content="2025-01-08">
 
-<title>Finist’R 2023 - FinistR : bootcamp R à Roscoff</title>
+<title>Finist’R 2023 - JIT with JAX</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,15 +83,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "type": "overlay",
   "limit": 20,
   "language": {
-    "search-no-results-text": "Pas de résultats",
-    "search-matching-documents-text": "documents trouvés",
-    "search-copy-link-title": "Copier le lien vers la recherche",
-    "search-hide-matches-text": "Cacher les correspondances additionnelles",
-    "search-more-match-text": "correspondance de plus dans ce document",
-    "search-more-matches-text": "correspondances de plus dans ce document",
-    "search-clear-button-title": "Effacer",
-    "search-detached-cancel-button-title": "Annuler",
-    "search-submit-button-title": "Envoyer"
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -108,8 +109,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <span class="navbar-title">Finist’R 2023</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Recherche"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Basculer la navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -220,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
- <span class="dropdown-text">FinistR : bootcamp R à Roscoff</span></a>
+ <span class="dropdown-text">JIT with JAX</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
@@ -241,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sur cette page</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#jit-with-jax" id="toc-jit-with-jax" class="nav-link active" data-scroll-target="#jit-with-jax">JIT with JAX</a>
@@ -261,8 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FinistR : bootcamp R à Roscoff</h1>
-<p class="subtitle lead">JIT with JAX</p>
+<h1 class="title">JIT with JAX</h1>
 </div>
 
 
@@ -270,12 +270,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Auteur·rice</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
              <p>Hugo Gangloff </p>
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 8, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -300,20 +306,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>In this tutorial we explore JAX JIT compilation on the same algorithm of the PLN model</strong> as coded in <a href="https://stateofther.github.io/finistR2023/torch_Python-PLN.html">the PLN in pytorch tutorial</a>. Also, this tutorial is to be compared with <a href="https://stateofther.github.io/finistR2023/jit-example-pln.html">JIT compilation in pytorch</a>.</p>
 <p>First, we make the necessary imports</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#os.environ['CUDA_VISIBLE_DEVICES'] = '' # uncomment to force CPU</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#os.environ['CUDA_VISIBLE_DEVICES'] = '' # uncomment to force CPU</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyPLNmodels</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.models <span class="im">import</span> PlnPCAcollection, Pln</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.oaks <span class="im">import</span> load_oaks</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyPLNmodels.oaks <span class="im">import</span> load_oaks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optax</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>jax.config.update(<span class="st">"jax_enable_x64"</span>, <span class="va">False</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(jax.devices())</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>myfloat <span class="op">=</span> np.float32</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>myfloat <span class="op">=</span> np.float32</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>[gpu(id=0)]</code></pre>
 <p><strong>Note</strong>: We use a GPU since JIT compilation is particularly efficient on GPU.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>oaks <span class="op">=</span> load_oaks()</span>
@@ -324,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.ones([Y.shape[<span class="dv">0</span>],<span class="dv">1</span>]).astype(myfloat)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>N_iter <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">1e-4</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">1e-4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="jax-without-jit" class="level3">
 <h3 class="anchored" data-anchor-id="jax-without-jit">JAX without JIT</h3>
 <p>This section does not use any kind of jitting. This is our baseline.</p>
@@ -388,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>            objective <span class="op">=</span> loss_value</span>
 <span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>            ELBO <span class="op">=</span> ELBO.at[i].<span class="bu">set</span>(objective)</span>
 <span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Have a look a the way we update the ELBO vector in the previous functions. This is because JAX arrays are immutable <a href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#in-place-updates">#in-place-updates</a></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pln <span class="op">=</span> PLN(Y, O, X)</span>
@@ -396,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> jax.default_device(jax.devices(<span class="st">'cpu'</span>)[<span class="dv">0</span>]): <span class="co"># as opposed to the subsequent jitted versions of the code, running this code do</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    jaxELBO_no_jit <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        pln.fit(N_iter, lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 10min 53s, sys: 21min 15s, total: 32min 8s
 Wall time: 2min</code></pre>
 </section>
@@ -415,7 +421,7 @@ Wall time: 2min</code></pre>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    Sigma <span class="op">=</span> jnp.eye(p)</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    Omega <span class="op">=</span> jnp.eye(p)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n, p, d, M, S, B, Sigma, Omega</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n, p, d, M, S, B, Sigma, Omega</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s create the jitted functions. Note that <code>_log_stirling</code> will be automatically jitted when called the jitted <code>get_ELBO</code>. The actual <em>Just In Time</em> compilation will actually happen at the first execution of the jitted function. Note that the call <code>jax.jit()</code> is equivalent to using the decorator <code>@jax.jit</code></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _log_stirling(integer):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    integer_ <span class="op">=</span> integer <span class="op">+</span> (integer <span class="op">==</span> <span class="dv">0</span>)</span>
@@ -444,7 +450,7 @@ Wall time: 2min</code></pre>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>jit_getSigma <span class="op">=</span> jax.jit(get_Sigma) <span class="co"># JIT !</span></span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>jit_inv <span class="op">=</span> jax.jit(jnp.linalg.inv) <span class="co"># JIT !</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>jit_inv <span class="op">=</span> jax.jit(jnp.linalg.inv) <span class="co"># JIT !</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In the following, each function inside the for loop is jitted but the for loop is not jitted itself; it is inefficient to do so in JAX mostly due to the long compilation time it would induce, see <a href="https://jax.readthedocs.io/en/latest/faq.html#jit-decorated-function-is-very-slow-to-compile">#jit-decorated-function-is-very-slow-to-compile</a>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jaxfit1(optim_params, other_params, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    ELBO <span class="op">=</span> jnp.zeros(N_iter)</span>
@@ -477,19 +483,19 @@ Wall time: 2min</code></pre>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">=</span> loss_value</span>
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        ELBO <span class="op">=</span> ELBO.at[i].<span class="bu">set</span>(objective)</span>
 <span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Initialize the data for JAX</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> jnp.asarray(Y)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> jnp.asarray(O)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> jnp.array(X)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>n, p, d, M, S, B, Sigma, Omega <span class="op">=</span> init_params(Y, O, X)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>optim_params <span class="op">=</span> {<span class="st">'B'</span>:B, <span class="st">'M'</span>:M, <span class="st">'S'</span>:S}</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>other_params <span class="op">=</span> {<span class="st">'X'</span>:X, <span class="st">'O'</span>:O, <span class="st">'n'</span>:n, <span class="st">'Omega'</span>:Omega, <span class="st">'Y'</span>:Y, <span class="st">'p'</span>:p, <span class="st">'Sigma'</span>:Sigma}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>other_params <span class="op">=</span> {<span class="st">'X'</span>:X, <span class="st">'O'</span>:O, <span class="st">'n'</span>:n, <span class="st">'Omega'</span>:Omega, <span class="st">'Y'</span>:Y, <span class="st">'p'</span>:p, <span class="st">'Sigma'</span>:Sigma}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and run the learning process:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>jaxELBO1 <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    jaxfit1(optim_params, other_params, N_iter, lr<span class="op">=</span>lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 3.87 s, sys: 500 ms, total: 4.37 s
 Wall time: 4.13 s</code></pre>
 <p><strong>Note</strong>: Because of the complex JAX internal mechanics, benchmarking with JAX should be done with caution <a href="https://jax.readthedocs.io/en/latest/async_dispatch.html">https://jax.readthedocs.io/en/latest/async_dispatch.html</a></p>
@@ -537,26 +543,26 @@ Wall time: 4.13 s</code></pre>
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>        jnp.arange(N_iter)</span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Initialize the data for JAX:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> jnp.asarray(Y)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> jnp.asarray(O)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> jnp.array(X)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>n, p, d, M, S, B, Sigma, Omega <span class="op">=</span> init_params(Y, O, X)</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>optim_params <span class="op">=</span> {<span class="st">'B'</span>:B, <span class="st">'M'</span>:M, <span class="st">'S'</span>:S}</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>other_params <span class="op">=</span> {<span class="st">'X'</span>:X, <span class="st">'O'</span>:O, <span class="st">'n'</span>:n, <span class="st">'Omega'</span>:Omega, <span class="st">'Y'</span>:Y, <span class="st">'p'</span>:p, <span class="st">'Sigma'</span>:Sigma}</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>other_params <span class="op">=</span> {<span class="st">'X'</span>:X, <span class="st">'O'</span>:O, <span class="st">'n'</span>:n, <span class="st">'Omega'</span>:Omega, <span class="st">'Y'</span>:Y, <span class="st">'p'</span>:p, <span class="st">'Sigma'</span>:Sigma}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Note</strong>: Let’s us try the Ahead Of Time (AOT) compilation where the compilation is done beforehand in a particular explicit step and not at the first execution of the function (as in classical JIT compilation). By doing so we can get an estimate of the compilation time, which is, in our case, not a bottleneck.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lowered <span class="op">=</span> jax.jit(jaxfit2, static_argnums<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)).lower(optim_params,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>other_params, N_iter, lr<span class="op">=</span>lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> lowered.<span class="bu">compile</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> lowered.<span class="bu">compile</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 708 ms, sys: 40.1 ms, total: 748 ms
 Wall time: 502 ms</code></pre>
 <p>Let’s run the complete fit (including compilation)</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>jaxELBO2 <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    jaxfit2(optim_params, other_params, N_iter, lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 1.97 s, sys: 1.08 s, total: 3.05 s
 Wall time: 2.83 s</code></pre>
 </section>
@@ -578,7 +584,7 @@ Wall time: 2.83 s</code></pre>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Model parameters</span></span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.B <span class="op">=</span> jnp.zeros((<span class="va">self</span>.d, <span class="va">self</span>.p))</span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma <span class="op">=</span> jnp.eye(<span class="va">self</span>.p)</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> jnp.eye(<span class="va">self</span>.p)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Omega <span class="op">=</span> jnp.eye(<span class="va">self</span>.p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Then we would like to adapt the <code>scan_fun</code> as:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jaxfit3(pln, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> optax.chain(</span>
@@ -622,12 +628,12 @@ Wall time: 2.83 s</code></pre>
 <span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>        jnp.arange(N_iter)</span>
 <span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>And finally, we would like to start the optimization with:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pln_container <span class="op">=</span> PLN_container(Y, O, X)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>jaxELBO3 <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    jaxfit3(pln_container, N_iter, lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If we run the previous lines, we get an expected error: <code>class PLN is not a valid JAX type</code>. Recall that the <code>scan</code> loop automatically JIT compiles its content and we cannot JIT compile function whose arguments are custom classes without specific treatment that we will discover in the next subsection. <strong>But what is a valid JAX type?</strong> From the <a href="https://jax.readthedocs.io/en/latest/_autosummary/jax.jit.html">documentation</a> of <code>jax.jit</code> we read:</p>
 <blockquote class="blockquote">
 <p>The arguments and return value of fun [the jitted function] should be arrays, scalars, or (nested) standard Python containers (tuple/list/dict) [pytrees] thereof [which themselves contain arrays or scalars].</p>
@@ -656,7 +662,7 @@ Wall time: 2.83 s</code></pre>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    Y.shape[<span class="dv">0</span>], Y.shape[<span class="dv">1</span>], X.shape[<span class="dv">1</span>],</span>
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    jnp.full(Y.shape, <span class="fl">0.0</span>), jnp.full(Y.shape, <span class="fl">1.0</span>),</span>
 <span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    jnp.zeros((X.shape[<span class="dv">1</span>], Y.shape[<span class="dv">1</span>])), jnp.eye(Y.shape[<span class="dv">1</span>]),</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    jnp.eye(Y.shape[<span class="dv">1</span>]))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    jnp.eye(Y.shape[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s adapt the <code>scan_fun</code> function</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jaxfit3(pln, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> optax.chain(</span>
@@ -701,11 +707,11 @@ Wall time: 2.83 s</code></pre>
 <span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>        jnp.arange(N_iter)</span>
 <span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>jaxELBO3 <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    jaxfit3(pln_namedtuple, N_iter, lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 2.34 s, sys: 831 ms, total: 3.17 s
 Wall time: 2.91 s</code></pre>
 <p>Ok, our code works but it is getting a little bit messy: we would like more than containers but real classes, with real methods! That’s what we will see in the next section.</p>
@@ -821,7 +827,7 @@ Wall time: 2.91 s</code></pre>
 <span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a>        obj.B <span class="op">=</span> B</span>
 <span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>        obj.M <span class="op">=</span> M</span>
 <span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>        obj.S <span class="op">=</span> S</span>
-<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> obj</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> obj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s adapt the <code>scan_fun</code> function, we are now free to use our new class methods</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jaxfit4(pln, N_iter, lr, tol <span class="op">=</span> <span class="fl">1e-8</span>) :</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> optax.chain(</span>
@@ -863,12 +869,12 @@ Wall time: 2.91 s</code></pre>
 <span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>        jnp.arange(N_iter)</span>
 <span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ELBO</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>pln <span class="op">=</span> PLN(Y, O, X)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>jaxELBO4 <span class="op">=</span> jax.block_until_ready(</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    jaxfit4(pln, N_iter, lr, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>CPU times: user 6.29 s, sys: 901 ms, total: 7.2 s
 Wall time: 4.34 s</code></pre>
 </section>
@@ -882,7 +888,7 @@ Wall time: 4.34 s</code></pre>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.plot(np.log(jaxELBO3), label<span class="op">=</span><span class="st">'jit level 3'</span>)</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.plot(np.log(jaxELBO4), label<span class="op">=</span><span class="st">'jit level 4'</span>)</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>/tmp/ipykernel_54173/3050985271.py:1: RuntimeWarning: invalid value encountered in log
   plt.plot(np.log(jaxELBO_no_jit), label='no jit')
 /tmp/ipykernel_54173/3050985271.py:2: RuntimeWarning: invalid value encountered in log
@@ -962,12 +968,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copié");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copié");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
