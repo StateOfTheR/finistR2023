@@ -1,13 +1,12 @@
 ---
-title: "FinistR : bootcamp R à Roscoff"
-subtitle: "JIT with JAX"
-lang: fr
-output: 
-  html_document:
-   toc: true
-   toc_float: true
-author: Hugo Gangloff
+title: "JIT with JAX"
+format: html
+toc: true
+author: 
+  - Hugo Gangloff
+date: 25/08/2023
 ---
+
 JAX is a Python library, basically a wrapper around numpy for efficient scientific programming: automatic differentiation, parallelization, JIT, etc. Many numpy functions are rewritten in a low level API called LAX. It then uses the XLA compiler to opitmization computations, see [#numpy-lax-xla-jax-api-layering](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html#numpy-lax-xla-jax-api-layering) 
 
 __This tutorial is a non exhaustive but dense introduction to JAX, especially JIT compilation with JAX. We try to point the reader to the main concepts with a lot of redirections to external resources and to JAX documentation.__
