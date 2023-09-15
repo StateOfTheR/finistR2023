@@ -1,5 +1,5 @@
 ---
-title: "R-Julia-Geostats"
+title: "Comparaison de l'efficatité de R et Julia en Geostatistiques"
 format:
   html:
     code-fold: false
