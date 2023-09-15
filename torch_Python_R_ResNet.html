@@ -183,6 +183,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-programmation-efficace">    
         <li>
+    <a class="dropdown-item" href="./R-Julia-Geostats-v-fix-no-CairoMakie.html" rel="" target="">
+ <span class="dropdown-text">Comparaison de l’efficatité de R et Julia en Geostatistiques</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
  <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
   </li>  
@@ -626,21 +630,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">train</span>()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 1    Loss: 2.4415
-Epoch: 2    Loss: 1.9300
-Epoch: 3    Loss: 1.8064
-Epoch: 4    Loss: 1.7098
-Epoch: 5    Loss: 1.5846
-Epoch: 6    Loss: 1.4819
-Epoch: 7    Loss: 1.4359
-Epoch: 8    Loss: 1.2887
-Epoch: 9    Loss: 1.2151
-Epoch: 10   Loss: 1.1323</code></pre>
+<pre><code>Epoch: 1    Loss: 2.3799
+Epoch: 2    Loss: 2.0263
+Epoch: 3    Loss: 1.8510
+Epoch: 4    Loss: 1.7074
+Epoch: 5    Loss: 1.6638
+Epoch: 6    Loss: 1.6062
+Epoch: 7    Loss: 1.5259
+Epoch: 8    Loss: 1.3865
+Epoch: 9    Loss: 1.3425
+Epoch: 10   Loss: 1.2090</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 74.253   4.946  52.626 </code></pre>
+ 44.978   3.288  31.441 </code></pre>
 </div>
 </div>
 <p>Sur mon ordinateur : - <code>python</code> : 27.6s (elapsed) - <code>R</code> : 33.1s</p>
@@ -673,7 +677,7 @@ Epoch: 10   Loss: 1.1323</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Accuracy"</span>, n_tests_ok <span class="sc">/</span> n_tests, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy 0.414 </code></pre>
+<pre><code>Accuracy 0.395 </code></pre>
 </div>
 </div>
 <p>Les deux codes donnent des résultats semblables !</p>
