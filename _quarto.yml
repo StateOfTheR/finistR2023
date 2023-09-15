@@ -37,6 +37,7 @@ website:
         aria-label: GitHub
       - text: Programmation Efficace
         menu:
+          - R-Julia-Geostats-v-fix-no-CairoMakie.qmd
           - torch_Python_R_ResNet.qmd
           - torch_Python_regression.qmd
           - Intel_MKL.qmd
