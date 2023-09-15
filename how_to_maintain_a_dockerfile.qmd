@@ -5,20 +5,20 @@ format:
   html:
     eval: false
 toc: true
-author: Théodore Vanrenterghem
+author:
+  - Théodore Vanrenterghem
 date: 07/09/2023
 ---
 
-
-Lors d'un évènement comme **finistR** nous travaillons tous, sur des interfaces, des systèmes et des langages différents. Lors de **finistR2023** par exemple,  nous avons dû utiliser dans un même conteneur docker les langages `R`, `Python` et `Julia` et compiler cela via **quarto**. Construire un docker est quasiment aussi simple en principe que de suivre la recette d'une salade. Mais lorsque les problèmes arrivent et que la mayonnaise ne marche plus, il ne vous reste plus qu'à manger votre clavier... 
+Lors d'un évènement comme **finistR** nous travaillons tous, sur des interfaces, des systèmes et des langages différents. Lors de **finistR2023** par exemple, nous avons dû utiliser dans un même conteneur docker les langages `R`, `Python` et `Julia` et compiler cela via **quarto**. Construire un docker est quasiment aussi simple en principe que de suivre la recette d'une salade. Mais lorsque les problèmes arrivent et que la mayonnaise ne marche plus, il ne vous reste plus qu'à manger votre clavier...
 
 Sur cette page vous trouverez premièrement un petit rappel sur ce qu'est un `Dockerfile` et le fonctionnement général de docker. Puis deuxièmement des indications plus particulières au conteneur de **finistR2023** c'est à dire un docker `R`, `Python`, `Julia` et **quarto**
 
-## I - Un `Dockerfile` ? 
+## I - Un `Dockerfile` ?
 
-Docker est une technologie permettant de **créer et utiliser** de manière **efficace** des conteneurs logiciels. Ces conteneurs logiciel sont en fait des **environnements de travail spécialisables, versionnés et facilement partageable**. Docker permet donc de partager : des environnements de calculs pour des travaux en équipe, des applications (par exemple {shiny}), mais aussi permet l'intégration continue de site web et autres. 
+Docker est une technologie permettant de **créer et utiliser** de manière **efficace** des conteneurs logiciels. Ces conteneurs logiciel sont en fait des **environnements de travail spécialisables, versionnés et facilement partageable**. Docker permet donc de partager : des environnements de calculs pour des travaux en équipe, des applications (par exemple {shiny}), mais aussi permet l'intégration continue de site web et autres.
 
-Voici le `Dockerfile` utilisé pour ce projet:
+Voici un `Dockerfile` utile pour ce projet:
 
 ```{r}
 ## Source Dockerfile
@@ -73,7 +73,7 @@ RUN pip3 install jax jaxlib torch numpy matplotlib pandas scikit-learn torchvisi
 
 Malgré ce format peu tentant, l'écriture d'un `Dockerfile` est facile tant que l'on maîtrise bien les outils que le docker doit contenir.
 
-### a) `FROM` Le récypient de la reccette 
+### a) `FROM` Le récypient de la reccette
 
 Pour construire un conteneur docker on utilise en général au départ... un conteneur docker. De préférence il faut trouver un conteneur plus ou moins adapté à ce que l'on veux. Ici nous utilisons `rocker/geospatial:4`, les conteneurs `rocker` contiennent `R` avec ici une adaptation particulière au `geospatial`.
 
@@ -83,7 +83,7 @@ Avec `RUN` il est possible d'effectuer des commandes en `bash` pour installer ce
 
 ### c) Exemple - Instalation de `Julia` pour **quarto**
 
-Ici `R` est déjà installé via `rocker` mais pas `Julia`. Le paragraphe suivant consiste à l'installation complète de `Julia-1.8.3` dans un système type ubuntu. 
+Ici `R` est déjà installé via `rocker` mais pas `Julia`. Le paragraphe suivant consiste à l'installation complète de `Julia-1.8.3` dans un système type ubuntu.
 
 ```{r}
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-x86_64.tar.gz && \
@@ -95,10 +95,10 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.8/julia-1.8.3-linux-
 
 Le symbole `&& \` permet si la ligne à gauche est un succès de lancer la ligne suivante et le tout dans un seul `RUN`. En général il vaux mieux avoir peu de **longue ligne de code** que **beaucoup de ligne** faisant un appel systématique à `RUN`.
 
-1. `wget` télécharge `Julia`
-1. `tar` décompresse le fichier téléchargé
-1. `cp` copie `Julia` dans le dossier des programmes
-1. `ln` créé un lien symbolique qui permet de lancer des script avec la commande `$ julia` depuis le terminal.
+1.  `wget` télécharge `Julia`
+2.  `tar` décompresse le fichier téléchargé
+3.  `cp` copie `Julia` dans le dossier des programmes
+4.  `ln` créé un lien symbolique qui permet de lancer des script avec la commande `$ julia` depuis le terminal.
 
 Cependant pour pouvoir lancer `Julia` depuis **quarto** cela ne suffit pas. Premièrement la version actuelle du langage ne communique pas correctement avec **quarto** alors que la version **Julia-1.8.3** semble bien fonctionner. Deuxièmement il est nécessaire de créer un kernel `IJulia` pour connecter `Julia` à jupyter. C'est jupyter qui vas ensuite communiquer avec **quarto**. Pour faire cela, il faut installer le package {IJulia}.
 
@@ -112,23 +112,23 @@ On prendra soins d'importer les autres packages dont nos **quarto** dépendent
 RUN julia -e 'import Pkg; Pkg.add("DataFrames"); Pkg.add("GeoDataFrames"); Pkg.add("IJulia")'
 ```
 
-Par sécurité nous avons aussi choisi de faire la commande R suivante qui installe une petite dépendance de `Julia` dans `R`. 
+Par sécurité nous avons aussi choisi de faire la commande R suivante qui installe une petite dépendance de `Julia` dans `R`.
 
 ```{r}
 RUN R -e "JuliaCall::install_julia()"
 ```
 
-## II - Construire mon `Dockerfile` ? 
+## II - Construire mon `Dockerfile` ?
 
-Pour arriver à écrire cela, avoir déjà installé le programme voulu en local est très utile ! Mais si votre ordinateur est un Windows cela ne vous aidera pas... Arriver à vos fin peut être compliqué et dans tout les cas il vas vous falloir essayer ... La compilation d'un docker est assez longue donc chaque essais peut-être coûteux. Il existe cependant différents moyens de gagner du temps. Commencez d'abord par chercher les routines d'installation des vos dépendances sur ubuntu. 
+Pour arriver à écrire cela, avoir déjà installé le programme voulu en local est très utile ! Mais si votre ordinateur est un Windows cela ne vous aidera pas... Arriver à vos fin peut être compliqué et dans tout les cas il vas vous falloir essayer ... La compilation d'un docker est assez longue donc chaque essais peut-être coûteux. Il existe cependant différents moyens de gagner du temps. Commencez d'abord par chercher les routines d'installation des vos dépendances sur ubuntu.
 
 ### a) Organiser son fichier
 
-Une image docker lors de sa compilation en local, va garder en cache énormément d'information de manière séquentielle.  Changer des lignes au début de mon `Dockerfile` est **plus coûteux** que de changer des lignes à la fin. Ainsi il est toujours plus intéressant lors du développement d'un conteneur de garder **les lignes les moins sûres** vers **la fin** du fichier (dans la mesure du possible).
+Une image docker lors de sa compilation en local, va garder en cache énormément d'information de manière séquentielle. Changer des lignes au début de mon `Dockerfile` est **plus coûteux** que de changer des lignes à la fin. Ainsi il est toujours plus intéressant lors du développement d'un conteneur de garder **les lignes les moins sûres** vers **la fin** du fichier (dans la mesure du possible).
 
 ### b) Compilation
 
-Pour compiler mon conteneur il suffit de lancer la commande dans le répertoire où est mon Docker. 
+Pour compiler mon conteneur il suffit de lancer la commande dans le répertoire où est mon Docker.
 
 ```{r}
 docker build -f Dockerfile --progress=plain -t nom_image:num_version .
@@ -138,13 +138,13 @@ Un changement de numéro de version suffit à générer une nouvelle image en ti
 
 ### c) Tester rapidement un conteneur (exemple **non-interactif**)
 
-Le conteneur fabriqué pour le site de finistR est non interactif, une fois activé avec la ligne 
+Le conteneur fabriqué pour le site de finistR est non interactif, une fois activé avec la ligne
 
 ```{r}
 docker run nom_image:num_version
 ```
 
-il n'est pas possible de lancer des commandes dans l'environnement créé depuis un terminal. Il n'est donc pas évident de tester les installations dans le conteneur.  
+il n'est pas possible de lancer des commandes dans l'environnement créé depuis un terminal. Il n'est donc pas évident de tester les installations dans le conteneur.\
 Une possibilité est de créé un deuxième `Dockerfile` (que l'on peut nommer `'DockerfileTest'`). Voici un exemple
 
 ```{r}
@@ -155,34 +155,55 @@ RUN quarto check jupyter
 RUN julia -e 'using GeoDataFrames'
 ```
 
-Ce `Dockerfile` se build avec la commande 
+Ce `Dockerfile` se build avec la commande
 
 ```{r}
 docker build -f DockerfileTest --progress=plain -t nom_image_test:num_version .
 ```
 
+Un intérêt de cette méthode est que l'on peux assez rapidement rééditer le conteneur le premier étant inchangé. Dans cet exemple :
 
-Un intérêt de cette méthode est que l'on peux assez rapidement rééditer le conteneur le premier étant inchangé. 
-Dans cet exemple :
-
- - `quarto check jupyter` permet de vérifier si **quarto** a bien accès à jupyter mais aussi de vérifier si le kernel {IJulia} existe. 
- - `julia -e 'using GeoDataFrames'` vérifie si le package a bien été installé dans `Julia`.
+-   `quarto check jupyter` permet de vérifier si **quarto** a bien accès à jupyter mais aussi de vérifier si le kernel {IJulia} existe.
+-   `julia -e 'using GeoDataFrames'` vérifie si le package a bien été installé dans `Julia`.
 
 C'est lors de ce `build` que vous pouvez vérifier si ces commandes rendent les résultats attendus.
 
-Dans le cas du conteneur de finistR, la compilation du conteneur sur github dure environ 45 min et le test à la suite d'une pull request dure environ 30 min. Grace à ces  conseils un conteneur modifié aux dernières lignes se compile quasi immédiatement en local (idem pour `DockerfileTest`). 
- 
-### d) Des bonnes pratiques oui ! Mais du groupe avant tout 
+Dans le cas du conteneur de finistR, la compilation du conteneur sur github dure environ 45 min et le test à la suite d'une pull request dure environ 30 min. Grace à ces conseils un conteneur modifié aux dernières lignes se compile quasi immédiatement en local (idem pour `DockerfileTest`).
 
-L'idéal dans ce genre de projet en groupe, est de pouvoir faire un suivis des packages et langages à installer. 
-Pour cela lorsque que l'on effectue une pull request incluant un nouveau document, il est préférable de joindre explicitement en message :
+### d) Des bonnes pratiques oui ! Mais du groupe avant tout
 
-1. les dépendances
-1. la version du langage utilisé
-1. le système d'exploitation
+L'idéal dans ce genre de projet en groupe, est de pouvoir faire un suivis des packages et langages à installer. Pour cela lorsque que l'on effectue une pull request incluant un nouveau document, il est préférable de joindre explicitement en message :
+
+1.  les dépendances
+2.  la version du langage utilisé
+3.  le système d'exploitation
 
 En cas de problème avec un conteneur, ces informations sont très utiles pour résoudre les incompatibilités qui ont lieux.
 
+## III - La réalité, une limite de mémoire
+
+### a) Un `Dockerfile` ça doit être petit
+
+Lors de ce projet nous avons utilisé un autre `Dockerfile` (voir: [Instructions pour le dépot sur le site web](https://stateofther.github.io/finistR2023/instructions.html)), car celui montré plus haut est beaucoup trop lourd (18GB), et ... en pratique il ne rentre pas dans un runner GitHub (max 14GB) sans aménagement. Mes connaissances étant limitées, je ne sais comment économiser de la mémoire dans un docker.
+
+### b) Abandon : Du docker plein au `qmd` fixés.
+
+Pour résoudre ce problème on vas donc transformer ce `qmd` (R & Julia) en un md fixe au moins pour la partie Julia. Je crée donc un `qmd` contenant uniquement du texte et du Julia. Puis je le fais tourner en local pour produire un fichier `md`. Je remplace ensuite le passage en Julia dans mon `qmd` (R & Julia de base). Ainsi seul le R est du code réel. Pour finir je remplace les
+
+\`\`\` julia
+
+avant chaque chunks de Julia par des
+
+\`\`\`{r,eval = FALSE}
+
+Ce qui va le faire s'afficher comme un chunk de R avec des couleurs dans le texte mais sans l'évaluer.
+
+## Conclusion
+
+Docker c'est formidable ça permet de simplifier énormément de processus en remotes, d'automatiser des actions de contrôles et de diffusion mais aussi de partager des programmes plus simplement. 
+Cependant c'est une technologie qui nécessite une liste claire des dépendances de chaque code. Enfin lorsque des procédés complexes sont nécessaires, comme par exemples mélanger de nombreux outils différents, il vaux tout de même mieux jouer la carte de l'économie, et reporter la plus part des calculs en local. 
+Et ainsi faire travailler un minimum le runner à chaque action. 
+
 ## Références
 
-- <https://www.docker.com/>
+-   <https://www.docker.com/>
