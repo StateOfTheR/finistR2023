@@ -389,7 +389,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.545, Running = 0.224, Post = 0.0237, Total = 0.793 
+    Pre = 0.895, Running = 0.299, Post = 0.0329, Total = 1.23 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -466,7 +466,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.351, Running = 0.216, Post = 0.045, Total = 0.611 
+    Pre = 0.501, Running = 0.242, Post = 0.0684, Total = 0.811 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.086 0.010      0.067    0.086      0.105  0.086   0
@@ -478,7 +478,7 @@ Random effects:
 
 Model hyperparameters:
                            mean       sd 0.025quant 0.5quant 0.975quant   mode
-Precision for rand.eff 19903.65 19900.90     564.00 13861.13   74196.22 187.83
+Precision for rand.eff 19903.65 19900.90     563.99 13861.13   74196.19 187.82
 
 Deviance Information Criterion (DIC) ...............: 384.03
 Deviance Information Criterion (DIC, saturated) ....: 207.97
@@ -557,7 +557,7 @@ Likelihoods:
     Data class: 'data.frame'
     Predictor: num_awards ~ .
 Time used:
-    Pre = 0.335, Running = 0.207, Post = 0.0439, Total = 0.586 
+    Pre = 0.451, Running = 0.243, Post = 0.0793, Total = 0.774 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 math       0.090 0.012      0.067    0.089      0.113  0.089   0
@@ -569,7 +569,7 @@ Random effects:
 
 Model hyperparameters:
                        mean   sd 0.025quant 0.5quant 0.975quant mode
-Precision for rand.eff 6.97 8.93       1.58     4.10      27.94 2.69
+Precision for rand.eff 6.97 8.93       1.58     4.10      27.95 2.69
 
 Deviance Information Criterion (DIC) ...............: 380.37
 Deviance Information Criterion (DIC, saturated) ....: 204.31
@@ -715,9 +715,9 @@ Data attributes:
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>Lambda1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean       sd   q0.025     q0.5   q0.975   median mean.mc_std_err
-1 648.4464 24.40695 607.5679 650.7602 700.2498 650.7602        2.440695
+1 646.9817 26.31883 596.5334 646.8636 700.7959 646.8636        2.631883
   sd.mc_std_err
-1       1.63577</code></pre>
+1      1.930196</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -779,10 +779,10 @@ Data attributes:
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Lambda2</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       mean        sd      q0.025      q0.5   q0.975    median mean.mc_std_err
-1 0.4559292 0.7428501 0.004647021 0.1824485 2.871949 0.1824485      0.07428501
+<pre><code>       mean       sd     q0.025      q0.5   q0.975    median mean.mc_std_err
+1 0.7023356 1.328071 0.01070441 0.1432543 4.535278 0.1432543       0.1328071
   sd.mc_std_err
-1     0.1336252</code></pre>
+1     0.2729947</code></pre>
 </div>
 </div>
 <p>Examinons les contributions au prédicteur linéaire de la partie SPDE et de celle due à la végatation.</p>
@@ -930,7 +930,7 @@ Likelihoods:
     Data class: 'SpatialPointsDataFrame'
     Predictor: pos ~ .
 Time used:
-    Pre = 0.726, Running = 1.36, Post = 0.0815, Total = 2.17 
+    Pre = 1.25, Running = 1.98, Post = 0.131, Total = 3.36 
 Fixed effects:
             mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 Intercept -1.295 1.282     -3.733   -1.327      1.312 -1.398   0
@@ -947,7 +947,7 @@ Random effects:
 
 Model hyperparameters:
                           mean    sd 0.025quant 0.5quant 0.975quant  mode
-Theta1 for spatial_field  1.32 0.837     -0.172     1.26       3.10  1.04
+Theta1 for spatial_field  1.32 0.836     -0.172     1.26       3.10  1.04
 Theta2 for spatial_field -2.50 0.708     -4.006    -2.45      -1.24 -2.27
 Precision for village     4.83 2.423      1.683     4.32      10.97  3.45
 

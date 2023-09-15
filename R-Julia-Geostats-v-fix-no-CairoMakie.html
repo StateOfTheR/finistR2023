@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Finist’R 2023 - R-Julia-Geostats</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Finist’R 2023</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/StateOfTheR/finistR2023" rel="" target=""><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./instructions.html" rel="" target="">
+ <span class="menu-text">Instructions</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-enseignement" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Enseignement</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-enseignement">    
+        <li>
+    <a class="dropdown-item" href="./learnr.html" rel="" target="">
+ <span class="dropdown-text">Learnr</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./exams.html" rel="" target="">
+ <span class="dropdown-text">exams</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-workflow" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Workflow</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-workflow">    
+        <li>
+    <a class="dropdown-item" href="./Utilisation_de_git.html" rel="" target="">
+ <span class="dropdown-text">Initiation à Git</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./how_to_maintain_a_dockerfile.html" rel="" target="">
+ <span class="dropdown-text">Maintenir un docker multi-langage</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./issue_reprex.html" rel="" target="">
+ <span class="dropdown-text">Issue - Reprex</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analyse-statistique" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Analyse statistique</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-analyse-statistique">    
+        <li>
+    <a class="dropdown-item" href="./R_INLA.html" rel="" target="">
+ <span class="dropdown-text">INLA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tidymodels_build_new_model.html" rel="" target="">
+ <span class="dropdown-text">Nouveau modèle Parsnip</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_test-brulee.html" rel="" target="">
+ <span class="dropdown-text"><code>{torch}</code> avec <code>{tidymodels}</code> et <code>{brulee}</code></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-programmation-efficace" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Programmation Efficace</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-programmation-efficace">    
+        <li>
+    <a class="dropdown-item" href="./torch_Python_R_ResNet.html" rel="" target="">
+ <span class="dropdown-text"><em>ResNet</em> : comparaison <code>{torch}</code> et <code>pytorch</code></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python_regression.html" rel="" target="">
+ <span class="dropdown-text">Introduction à Pytorch</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Intel_MKL.html" rel="" target="">
+ <span class="dropdown-text">Intel MKL &amp; Open Blas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_and_rcpp.html" rel="" target="">
+ <span class="dropdown-text">Torch &amp; Rcpp</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jax-getting-started.html" rel="" target="">
+ <span class="dropdown-text">Premiers pas avec jax</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-autour-de-pln" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Autour de PLN</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-autour-de-pln">    
+        <li>
+    <a class="dropdown-item" href="./torch_R_PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./torch_Python-PLN.html" rel="" target="">
+ <span class="dropdown-text">PLN version Python</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln-jax.html" rel="" target="">
+ <span class="dropdown-text">JIT with JAX</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./jit-example-pln.html" rel="" target="">
+ <span class="dropdown-text">JIT with pytorch</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#données" id="toc-données" class="nav-link active" data-scroll-target="#données">Données</a></li>
+  <li><a href="#le-package-terra" id="toc-le-package-terra" class="nav-link" data-scroll-target="#le-package-terra">0 - Le package terra</a></li>
+  <li><a href="#package-r-gstat" id="toc-package-r-gstat" class="nav-link" data-scroll-target="#package-r-gstat">1 - Package R gstat</a>
+  <ul class="collapse">
+  <li><a href="#transformation-au-format-sf" id="toc-transformation-au-format-sf" class="nav-link" data-scroll-target="#transformation-au-format-sf">Transformation au format sf</a></li>
+  <li><a href="#variogramme-empirique" id="toc-variogramme-empirique" class="nav-link" data-scroll-target="#variogramme-empirique">Variogramme empirique</a></li>
+  <li><a href="#le-type-vgm" id="toc-le-type-vgm" class="nav-link" data-scroll-target="#le-type-vgm">Le type vgm</a></li>
+  <li><a href="#estimation-du-variogramme-théorique" id="toc-estimation-du-variogramme-théorique" class="nav-link" data-scroll-target="#estimation-du-variogramme-théorique">Estimation du variogramme théorique</a></li>
+  <li><a href="#krigeage" id="toc-krigeage" class="nav-link" data-scroll-target="#krigeage">Krigeage</a></li>
+  </ul></li>
+  <li><a href="#package-r-geomodels" id="toc-package-r-geomodels" class="nav-link" data-scroll-target="#package-r-geomodels">2 - Package R GeoModels</a>
+  <ul class="collapse">
+  <li><a href="#variogramme-empirique-1" id="toc-variogramme-empirique-1" class="nav-link" data-scroll-target="#variogramme-empirique-1">Variogramme empirique</a></li>
+  <li><a href="#modèles-supportés" id="toc-modèles-supportés" class="nav-link" data-scroll-target="#modèles-supportés">Modèles supportés</a></li>
+  <li><a href="#estimation-du-variogramme-théorique-1" id="toc-estimation-du-variogramme-théorique-1" class="nav-link" data-scroll-target="#estimation-du-variogramme-théorique-1">Estimation du variogramme théorique</a></li>
+  <li><a href="#krigeage-1" id="toc-krigeage-1" class="nav-link" data-scroll-target="#krigeage-1">Krigeage</a></li>
+  </ul></li>
+  <li><a href="#package-julia-geostats" id="toc-package-julia-geostats" class="nav-link" data-scroll-target="#package-julia-geostats">3 - Package Julia GeoStats</a>
+  <ul class="collapse">
+  <li><a href="#bibliothèques-julia" id="toc-bibliothèques-julia" class="nav-link" data-scroll-target="#bibliothèques-julia">Bibliothèques Julia</a></li>
+  <li><a href="#importer-les-données" id="toc-importer-les-données" class="nav-link" data-scroll-target="#importer-les-données">Importer les données</a></li>
+  <li><a href="#transformation-en-données-spatiale" id="toc-transformation-en-données-spatiale" class="nav-link" data-scroll-target="#transformation-en-données-spatiale">Transformation en données spatiale</a></li>
+  <li><a href="#variogramme" id="toc-variogramme" class="nav-link" data-scroll-target="#variogramme">Variogramme</a></li>
+  <li><a href="#création-de-la-grille" id="toc-création-de-la-grille" class="nav-link" data-scroll-target="#création-de-la-grille">Création de la grille</a></li>
+  <li><a href="#krigeage-2" id="toc-krigeage-2" class="nav-link" data-scroll-target="#krigeage-2">Krigeage</a></li>
+  <li><a href="#affichage-du-krigeage" id="toc-affichage-du-krigeage" class="nav-link" data-scroll-target="#affichage-du-krigeage">Affichage du Krigeage</a></li>
+  </ul></li>
+  <li><a href="#comparaison" id="toc-comparaison" class="nav-link" data-scroll-target="#comparaison">4 - Comparaison</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">R-Julia-Geostats</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>L’objectif est de comparer des packages R, et Julia pour du krigeage.</p>
+<p>On va utiliser :</p>
+<p>- R : gstat</p>
+<p>- R : GeoModels</p>
+<p>- Julia : GeoStats</p>
+<p>On compare les points suivant :</p>
+<p>- simplicité des données d’entrée</p>
+<p>- concision du code</p>
+<p>- vitesse d’exécution</p>
+<p>- type d’estimation</p>
+<p>Pour chaque package, on calculera pour les mêmes données le variogramme empirique, puis on ajustera un variogramme théorique et on fera un krigeage.</p>
+<section id="données" class="level2">
+<h2 class="anchored" data-anchor-id="données">Données</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(meuse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(meuse.grid)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GeoModels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On utilise les données meuse du package sp. Celles-ci contiennent des données de concentration en métaux près de la meuse, avec des coordonnées cartésiennes en m.</p>
+<p>Pour travailler sur ces concentrations, on passera tout au log afin de les normaliser.</p>
+<p>Pour la visualisation en R, on utilise le package terra.</p>
+</section>
+<section id="le-package-terra" class="level1">
+<h1>0 - Le package terra</h1>
+<ul>
+<li><p>dernière version : 1.7-39 du 22/06/2023</p></li>
+<li><p>Travail des données spatiales sous 2 formes : raster et vector.</p>
+<ul>
+<li><p>raster = grilles rectangulaires, adapté aux données continues -&gt; Classe SpatRaster</p></li>
+<li><p>vector = points, lignes, polygones = données discrètes. -&gt; classe SpatVector</p></li>
+</ul></li>
+<li><p>Début de la doc = récap des méthodes importantes (il faut bien, la doc fait 300 pages)</p></li>
+<li><p>Sert à manipuler, visualiser des objets spatiaux, notamment après les calculs pour simplifier le travail sur les résultats.</p></li>
+</ul>
+<p>Méthode rast = créer un objet de classe SpatRaster. Le type de la 1ere entrée peut varier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meuseRast <span class="ot">=</span> <span class="fu">rast</span>(meuse.grid,<span class="at">type=</span><span class="st">"xyz"</span>,<span class="at">crs =</span> <span class="st">"EPSG:2154"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meuseVect <span class="ot">=</span> <span class="fu">vect</span>(meuse,<span class="at">geom=</span>(<span class="fu">c</span>(<span class="st">'x'</span>,<span class="st">'y'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>meuseRastCd <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">select</span>(meuse,x,y,zinc),<span class="at">type=</span><span class="st">"xyz"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(meuseRastCd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+dimensions  : 3898, 2786, 1  (nrow, ncol, nlyr)
+resolution  : 1, 1  (x, y)
+extent      : 178604.5, 181390.5, 329713.5, 333611.5  (xmin, xmax, ymin, ymax)
+coord. ref. :  
+source(s)   : memory
+name        :     zinc 
+min value   : 4.727388 
+max value   : 7.516977 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>meuseRastCu <span class="ot">=</span> <span class="fu">rast</span>(<span class="fu">select</span>(meuse,x,y,copper),<span class="at">type=</span><span class="st">"xyz"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>meuseRastCuCd <span class="ot">=</span> <span class="fu">c</span>(meuseRastCd,meuseRastCd) <span class="co">#methode c() = combinaison de layers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="package-r-gstat" class="level1">
+<h1>1 - Package R gstat</h1>
+<p>gstat est disponible sur le CRAN : https://CRAN.R-project.org/package=gstat</p>
+<p>On peut y trouver également un tutoriel sur le dataset “meuse” utilisé ici, qui présentent le type de données spatiales utilisées par le package (spatial dataframe, données grillées) et les méthodes permettant de travailler avec (méthodes de visualisation du package sp, ajustement de variogrammes, directionnels ou non, krigeage, simulation conditionnelle).</p>
+<p>La version la plus ancienne sur les archives du CRAN date de 2003.</p>
+<p>Au départ, les données spatiales supportées étaient celles du package sp, mais les données de type sf le sont également.</p>
+<p>INSERER AU BON ENDROIT LES CELLULES</p>
+<section id="transformation-au-format-sf" class="level2">
+<h2 class="anchored" data-anchor-id="transformation-au-format-sf">Transformation au format sf</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">select</span>(meuse,x,y,cadmium,zinc)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_grid <span class="ot">=</span> <span class="fu">select</span>(meuse.grid,x,y)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_sf <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>( <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">'x'</span>,<span class="st">'y'</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df_sf <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_make_valid</span>(df_sf)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df_grid_sf <span class="ot">=</span> df_grid<span class="sc">%&gt;%</span> sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">'x'</span>,<span class="st">'y'</span>))<span class="sc">%&gt;%</span>sf<span class="sc">::</span><span class="fu">st_make_valid</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">y=</span><span class="fu">log</span>(zinc))) <span class="sc">+</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Log(Zn concentration)"</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span>                                   </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="variogramme-empirique" class="level2">
+<h2 class="anchored" data-anchor-id="variogramme-empirique">Variogramme empirique</h2>
+<p>Pour simplifier la comparaison avec le package Julia, on va se contenter d’une moyenne constante sans introduire de prédicteurs : on demande donc log(zinc)~1. Si on avait voulu, comme dans le tutoriel du package, expliquer la moyenne par la distance à la rivière, il faudrait modifier cette formule en log(zinc)~distance après avoir rajouté une colonne distance au sf dataframe.</p>
+<p>Appeler plot sur un objet issu de variogram permet d’en obtenir un tracé.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">variogram</span>(<span class="fu">log</span>(zinc)<span class="sc">~</span><span class="dv">1</span>  , df_sf,<span class="at">cutoff =</span> <span class="dv">2000</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.02771139 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="le-type-vgm" class="level2">
+<h2 class="anchored" data-anchor-id="le-type-vgm">Le type vgm</h2>
+<p>Plusieurs modèles de variogrammes spatiaux sont disponibles dans la librairie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show.vgms</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">vgm</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   short                                      long
+1    Nug                              Nug (nugget)
+2    Exp                         Exp (exponential)
+3    Sph                           Sph (spherical)
+4    Gau                            Gau (gaussian)
+5    Exc        Exclass (Exponential class/stable)
+6    Mat                              Mat (Matern)
+7    Ste Mat (Matern, M. Stein's parameterization)
+8    Cir                            Cir (circular)
+9    Lin                              Lin (linear)
+10   Bes                              Bes (bessel)
+11   Pen                      Pen (pentaspherical)
+12   Per                            Per (periodic)
+13   Wav                                Wav (wave)
+14   Hol                                Hol (hole)
+15   Log                         Log (logarithmic)
+16   Pow                               Pow (power)
+17   Spl                              Spl (spline)
+18   Leg                            Leg (Legendre)
+19   Err                   Err (Measurement error)
+20   Int                           Int (Intercept)</code></pre>
+</div>
+</div>
+<p>Un variogramme théorique est un objet de type vgm, qui doit être initialisé avec des paramètres avant de l’insérer dans la fonction d’estimation.</p>
+<p>Un inconvénient dans la création d’un objet vgm est l’absence de nom pour certains paramètres, il faut se référer à la documentation pour savoir à quel place il faut rentrer quel argument lorsque’on appelle vgm(). Ne pas renseigner un argument initialise celui-ci à NA. Utiliser fit.variogram sur un objet avec des NA fait appel à une étape supplémentaire qui initialise avec des paramètres issus du variogramme empirique. Cela empêche de contrôler les valeurs initiales de l’estimation.</p>
+</section>
+<section id="estimation-du-variogramme-théorique" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-du-variogramme-théorique">Estimation du variogramme théorique</h2>
+<p>Les paramètres du variogramme théorique sont ajustés par moindres carrés sur le variogramme empirique.</p>
+<p>vgmModelwav &lt;- fit.variogram(test,vgm(‘Wav’))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vgmModelexp <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(test, <span class="fu">vgm</span>(<span class="dv">2</span>, <span class="st">"Exp"</span>, <span class="dv">1000</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>vgmModelexp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model     psill    range
+1   Exp 0.6849652 421.2255</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>vgmModelmat <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(test, <span class="fu">vgm</span>(<span class="dv">10</span>, <span class="st">"Mat"</span>, <span class="dv">300</span>, <span class="fl">4.5</span>, <span class="at">kappa =</span> <span class="fl">0.7</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>vgmModelmat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model      psill    range kappa
+1   Nug 0.05112814   0.0000   0.0
+2   Mat 0.62395526 340.0403   0.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vgmModelNA <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(test,<span class="fu">vgm</span>(<span class="st">'Mat'</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>vgmModelNA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model       psill    range kappa
+1   Nug 0.001864289   0.0000   0.0
+2   Mat 0.684275121 424.4234   0.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>vgmModelwav <span class="ot">&lt;-</span> <span class="fu">fit.variogram</span>(test,<span class="fu">vgm</span>(<span class="st">'Wav'</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.00620985 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>vgmModelwav</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model     psill    range
+1   Nug 0.1556503   0.0000
+2   Wav 0.4407740 643.9395</code></pre>
+</div>
+</div>
+<p>La fonction plot() appelée sur un modèle estimé trace en continu le variogramme théorique et en points le variogramme empirique.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test, vgmModelmat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(test, vgmModelwav)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="krigeage" class="level2">
+<h2 class="anchored" data-anchor-id="krigeage">Krigeage</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>krig <span class="ot">&lt;-</span> <span class="fu">krige</span>(<span class="fu">log</span>(zinc)<span class="sc">~</span><span class="dv">1</span> , df_sf, df_grid_sf, <span class="at">model =</span> vgmModelmat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[using ordinary kriging]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.6506536 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Kres_pred <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x=</span>meuse.grid<span class="sc">$</span>x,<span class="at">y=</span>meuse.grid<span class="sc">$</span>y,<span class="at">pred=</span>krig<span class="sc">$</span>var1.pred)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>krig_res<span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(Kres_pred, <span class="at">type=</span><span class="st">"xyz"</span>, <span class="at">crs=</span><span class="st">"EPSG:2154"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>Kres_var <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x=</span>meuse.grid<span class="sc">$</span>x,<span class="at">y=</span>meuse.grid<span class="sc">$</span>y,<span class="at">pred=</span>krig<span class="sc">$</span>var1.var)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>krig_var<span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(Kres_var, <span class="at">type=</span><span class="st">"xyz"</span>, <span class="at">crs=</span><span class="st">"EPSG:2154"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>((krig_res), <span class="at">main =</span> <span class="st">'Krigeage de log(zinc) - gstat'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(krig_var,<span class="at">main =</span> <span class="st">'Erreur de krigeage pour log(zinc) - gstat'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="package-r-geomodels" class="level1">
+<h1>2 - Package R GeoModels</h1>
+<p>GeoModels est un package relativement récent (2022), il prend la suite de CompRandFld suite à une mise à jour majeure de R.</p>
+<p>Il est disponible sur le CRAN :</p>
+<p>https://CRAN.R-project.org/package=GeoModels</p>
+<p>Le package propose des fonctions pour de la simulation, de l’inférence et de la prédiction de champs spatiaux et spatio-temporels, univarié ou multivarié. Il contient des méthode spour des champs Gaussiens et non Gaussiens.</p>
+<p>On peut travailler en coordonnées euclidiennes et sphériques.</p>
+<p>GeoModels propose de faire des modèles spatiaux et spatiotemporels.</p>
+<p>Les estimations se font par maximisation de vraisemblance composite.</p>
+<p>Du fait de la variété de modèles et de données possibles en entrée (spatial, spatiotemporel, 1 ou plusieurs variables …), chaque fonction est définie généralement pour prendre en entrée des données (notamment data et coordonnées) sous plusieurs types. Dans tous les cas, on ne dépend pas de structures “évoluées”, on n’a besoin que de vecteurs et de matrices. En contrepartie, on est probablement moins libres sur les systèmes de coordonnées.</p>
+<p>Les données en entrée doivent être, si on fait du spatial uniquement :</p>
+<p>- data : un vecteur de taille <span class="math inline">\(d\)</span></p>
+<p>- coordx : une matrice <span class="math inline">\(d \times 2\)</span> si on met directement les coordonnées, ou un vecteur de taille <span class="math inline">\(d\)</span> si on sépare les coordonnées</p>
+<p>- coordy : NULL si on a déjà mis les 2 coordonnées dans coordx, vecteur de taille <span class="math inline">\(d\)</span> sinon.</p>
+<p>Il n’y a donc pas besoin de gérer des types de données spatiales comme dans gstat.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span><span class="fu">log</span>(df<span class="sc">$</span>zinc)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>coordx <span class="ot">=</span> df<span class="sc">$</span>x</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>coordy <span class="ot">=</span> df<span class="sc">$</span>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="variogramme-empirique-1" class="level2">
+<h2 class="anchored" data-anchor-id="variogramme-empirique-1">Variogramme empirique</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variogramme empirique : </span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>emp_vario <span class="ot">=</span> <span class="fu">GeoVariogram</span>(data, coordx, <span class="at">coordy=</span>coordy,<span class="at">numbins =</span> <span class="dv">16</span>,<span class="at">maxdist =</span> <span class="dv">2000</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.01098108 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(emp_vario,<span class="at">main =</span> <span class="st">"Variogramme empirique Zinc - GeoModels"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="modèles-supportés" class="level2">
+<h2 class="anchored" data-anchor-id="modèles-supportés">Modèles supportés</h2>
+<p>Voir documentation, fonction “GeoCovMatrix”</p>
+<p>CorrParam, et NuisParam permettent d’obtenir la listes des paramètres requis pour les modèles.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">NuisParam</span>(<span class="st">'Gaussian'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "mean"   "nugget" "sill"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CorrParam</span>(<span class="st">"Exp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "scale"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CorrParam</span>(<span class="st">'Matern'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "scale"  "smooth"</code></pre>
+</div>
+</div>
+</section>
+<section id="estimation-du-variogramme-théorique-1" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-du-variogramme-théorique-1">Estimation du variogramme théorique</h2>
+<p>L’estimation nécessite de donner en entrée deux listes, fixed et start, correspondant aux paramètres fixés et libres dans l’ajustement.</p>
+<p>ATTENTION : si on ne fixe rien, il ne faut pas une liste vide mais un NULL, ou alors ne pas renseigner l’argument (NULL est la valeur par défaut)</p>
+<p>L’algorithme vérifiera automatiquement que tous les paramètres nécessaires sont remplis. Il n’y a pas comme dans gstat de méthode qui rempli automatiquement des oublis, il faut vérifier avec les fonctions précédentes qu’on a bien tout initialisé.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fixed <span class="ot">=</span> <span class="cn">NULL</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>start <span class="ot">=</span> <span class="fu">list</span>( <span class="at">mean =</span> <span class="dv">0</span> , <span class="at">sill=</span><span class="fl">0.5</span>,<span class="at">smooth=</span><span class="fl">0.7</span>,<span class="at">scale =</span> <span class="dv">300</span>,<span class="at">nugget =</span> <span class="fl">0.044</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>modelemat <span class="ot">=</span> <span class="fu">GeoFit</span>(data, <span class="at">coordx=</span>coordx, <span class="at">coordy=</span>coordy, <span class="at">fixed =</span> fixed, <span class="at">start=</span>start, </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="at">corrmodel=</span><span class="st">"Matern"</span>,<span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">maxdist =</span> <span class="dv">2000</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>modelemat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+##################################################################
+Maximum  Composite-Likelihood Fitting of Gaussian Random Fields
+
+Setting: Marginal Composite-Likelihood 
+
+Model: Gaussian 
+
+Type of the likelihood objects: Pairwise 
+
+Covariance model: Matern 
+
+Optimizer: Nelder-Mead 
+
+Number of spatial coordinates: 155 
+Number of dependent temporal realisations: 1 
+Type of the random field: univariate 
+Number of estimated parameters: 5 
+
+Type of convergence: Successful 
+Maximum log-Composite-Likelihood value: -37443.52
+
+Estimated parameters:
+    mean    nugget     scale      sill    smooth  
+  5.8692    0.9994  266.5697    0.5482   68.5193  
+
+##################################################################</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vario fit : il faut mettre en entrée des valeurs de départ et des valeurs qu'on fixe pour les paramètres</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>fixed <span class="ot">=</span> <span class="fu">list</span>(<span class="at">nugget =</span> <span class="fl">0.044</span>) <span class="co">#fixe la valeur obtenue avec gstat</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>start <span class="ot">=</span> <span class="fu">list</span>( <span class="at">mean =</span> <span class="dv">0</span> , <span class="at">sill=</span><span class="fl">0.5</span>,<span class="at">smooth=</span><span class="fl">0.7</span>,<span class="at">scale =</span> <span class="dv">300</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>modelemat2 <span class="ot">=</span> <span class="fu">GeoFit</span>(data, <span class="at">coordx=</span>coordx, <span class="at">coordy=</span>coordy, <span class="at">fixed =</span> fixed, <span class="at">start=</span>start, </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="at">corrmodel=</span><span class="st">"Matern"</span>,<span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">maxdist =</span> <span class="dv">2000</span>)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>modelemat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+##################################################################
+Maximum  Composite-Likelihood Fitting of Gaussian Random Fields
+
+Setting: Marginal Composite-Likelihood 
+
+Model: Gaussian 
+
+Type of the likelihood objects: Pairwise 
+
+Covariance model: Matern 
+
+Optimizer: Nelder-Mead 
+
+Number of spatial coordinates: 155 
+Number of dependent temporal realisations: 1 
+Type of the random field: univariate 
+Number of estimated parameters: 4 
+
+Type of convergence: Successful 
+Maximum log-Composite-Likelihood value: -37218.17
+
+Estimated parameters:
+    mean     scale      sill    smooth  
+  5.8673  114.4160    0.5495    1.5971  
+
+##################################################################</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fixed <span class="ot">=</span> <span class="cn">NULL</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>start <span class="ot">=</span> <span class="fu">list</span>( <span class="at">mean =</span> <span class="dv">0</span> , <span class="at">sill=</span><span class="fl">0.5</span>,<span class="at">scale =</span> <span class="dv">300</span>,<span class="at">nugget =</span> <span class="fl">0.044</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>modelewav <span class="ot">=</span> <span class="fu">GeoFit</span>(data, <span class="at">coordx=</span>coordx, <span class="at">coordy=</span>coordy, <span class="at">fixed =</span> fixed, <span class="at">start=</span>start, </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="at">corrmodel=</span><span class="st">"Wave"</span>,<span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">maxdist =</span> <span class="dv">2000</span>)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.7888947 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>modelewav</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+##################################################################
+Maximum  Composite-Likelihood Fitting of Gaussian Random Fields
+
+Setting: Marginal Composite-Likelihood 
+
+Model: Gaussian 
+
+Type of the likelihood objects: Pairwise 
+
+Covariance model: Wave 
+
+Optimizer: Nelder-Mead 
+
+Number of spatial coordinates: 155 
+Number of dependent temporal realisations: 1 
+Type of the random field: univariate 
+Number of estimated parameters: 4 
+
+Type of convergence: Successful 
+Maximum log-Composite-Likelihood value: -37191.31
+
+Estimated parameters:
+    mean    nugget     scale      sill  
+  5.8669    0.3839  200.4165    0.5509  
+
+##################################################################</code></pre>
+</div>
+</div>
+<p>On peut comparer les modèles que l’on vient de faire avec le variogramme empirique :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison avec l'empirique matern :</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">GeoCovariogram</span>(modelemat, <span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">show.vario=</span> <span class="cn">TRUE</span>,<span class="at">vario =</span> emp_vario)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GeoCovariogram</span>(modelemat2, <span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">show.vario=</span> <span class="cn">TRUE</span>,<span class="at">vario =</span> emp_vario)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison avec l'empirique Wave :</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">GeoCovariogram</span>(modelewav, <span class="at">distance=</span><span class="st">"Eucl"</span>,<span class="at">show.vario=</span> <span class="cn">TRUE</span>,<span class="at">vario =</span> emp_vario)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="krigeage-1" class="level2">
+<h2 class="anchored" data-anchor-id="krigeage-1">Krigeage</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>locskrig <span class="ot">=</span> <span class="fu">data.frame</span> (<span class="at">x =</span>meuse.grid<span class="sc">$</span>x,<span class="at">y=</span> meuse.grid<span class="sc">$</span>y)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>krig_geomodels <span class="ot">=</span> <span class="fu">GeoKrig</span>(<span class="at">loc=</span> locskrig,<span class="at">coordx=</span>coordx, <span class="at">coordy=</span>coordy,<span class="at">corrmodel =</span> <span class="st">'Wave'</span>,<span class="at">param =</span> <span class="fu">c</span>(modelemat<span class="sc">$</span>fixed,modelewav<span class="sc">$</span>param),<span class="at">mse =</span><span class="cn">TRUE</span>,<span class="at">data=</span>data)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 0.8939211 secs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>coords  <span class="ot">=</span> <span class="fu">cbind</span>(coordx,coordy)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>Kres_pred_geo <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x=</span>meuse.grid<span class="sc">$</span>x,<span class="at">y=</span>meuse.grid<span class="sc">$</span>y,<span class="at">pred=</span>krig_geomodels<span class="sc">$</span>pred)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>krig_res_geo<span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(Kres_pred_geo, <span class="at">type=</span><span class="st">"xyz"</span>, <span class="at">crs=</span><span class="st">"EPSG:2154"</span>)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>Kres_var_geo <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x=</span>meuse.grid<span class="sc">$</span>x,<span class="at">y=</span>meuse.grid<span class="sc">$</span>y,<span class="at">pred=</span>krig_geomodels<span class="sc">$</span>mse)</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>krig_var_geo<span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(Kres_var_geo, <span class="at">type=</span><span class="st">"xyz"</span>, <span class="at">crs=</span><span class="st">"EPSG:2154"</span>)</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>((krig_res_geo), <span class="at">main =</span> <span class="st">'Krigeage de log(zinc) - GeoModels'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(krig_var_geo,<span class="at">main =</span> <span class="st">'Erreur de krigeage pour log(zinc) - GeoModels'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="R-Julia-Geostats-v-fix-no-CairoMakie_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="package-julia-geostats" class="level1">
+<h1>3 - Package Julia GeoStats</h1>
+<p>Julia est un langage de programmation de haut niveau, performant et dynamique pour le calcul scientifique, avec une syntaxe familière aux utilisateurs d’autres environnements de développement similaires (Matlab, R, Scilab, Python, etc.). Il fournit un compilateur sophistiqué, un système de types dynamiques avec polymorphisme paramétré, une exécution parallèle distribuée, des appels directs de fonctions C, Fortran et Python. (source Wikipedia)</p>
+<p>Un avantage de Julia est la possibilité d’écrire en LaTeX dans les lignes de code.</p>
+<p>GeoStats est un package récent (avril 2015), sa dernière mise à jour date de 3 mois, c’est le package majeur en statistiques spatiales de Julia.</p>
+<p>Il est disponible sur le :</p>
+<p>https://juliaearth.github.io/GeoStats.jl/stable/</p>
+<p>Pour l’installer faire la commande suivante dans le terminal de votre IDE : ]add GeoStats</p>
+<p>Le package propose des fonctions pour de la simulation, de l’inférence et de la prédiction de champs spatiaux</p>
+<p>On peut travailler en coordonnées euclidiennes et sphériques.</p>
+<p>GeoStats propose de faire des modèles spatiaux. Sa particularité va être de tester tous les variogrammes disponibles (dans une même exécution) dans le package pour obtenir le plus optimisé avec les paramètres qui fonctionnent le mieux.</p>
+<section id="bibliothèques-julia" class="level2">
+<h2 class="anchored" data-anchor-id="bibliothèques-julia">Bibliothèques Julia</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import package</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>using GeoDataFrames, Distributed, StatsAPI, Plots, DelimitedFiles, DataFrames, CSV, GeoStats, Rasters,  Shapefile,GeoTables, CairoMakie; const GDF<span class="ot">=</span>GeoDataFrames; import WGLMakie as Mke</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="importer-les-données" class="level2">
+<h2 class="anchored" data-anchor-id="importer-les-données">Importer les données</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the current working directory</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>current_directory <span class="ot">=</span> <span class="fu">pwd</span>()</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#import data</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>meuse <span class="ot">=</span> <span class="fu">CSV.read</span>(<span class="fu">joinpath</span>(current_directory,<span class="st">"meuse.txt"</span>),DataFrame;<span class="at">delim=</span><span class="st">","</span> )</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>meuse_grid <span class="ot">=</span> <span class="fu">CSV.read</span>(<span class="fu">joinpath</span>(current_directory, <span class="st">"meuse.grid.txt"</span>),DataFrame; <span class="at">delim=</span><span class="st">","</span>)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>meuse_geom <span class="ot">=</span> <span class="fu">georef</span>(<span class="fu">CSV.File</span>(<span class="fu">joinpath</span>(current_directory,<span class="st">"meuse.txt"</span>)),(<span class="sc">:</span>x,<span class="sc">:</span>y,<span class="sc">:</span>cadmium))</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co">#describe data</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(meuse)</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(meuse_grid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transformation-en-données-spatiale" class="level2">
+<h2 class="anchored" data-anchor-id="transformation-en-données-spatiale">Transformation en données spatiale</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add log zinc to the data</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>logmeuse <span class="ot">=</span> <span class="fu">log.</span>(meuse.zinc)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>meuse.logzinc <span class="ot">=</span> logmeuse</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co">#create coord of data meuse</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>coord <span class="ot">=</span> [(x, y) <span class="cf">for</span> (x, y) <span class="cf">in</span> <span class="fu">zip</span>(meuse.x, meuse.y)]</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="co">#create spatial object of meuse</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>meuselog <span class="ot">=</span> <span class="fu">georef</span>(meuse[<span class="sc">:</span>,[<span class="st">"x"</span>,<span class="st">"y"</span>,<span class="st">"logzinc"</span>]],coord)</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="co"># list of properties with coordinates</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>props <span class="ot">=</span> (<span class="at">logzinc=</span>meuse.logzinc,)</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>𝒟 <span class="ot">=</span> <span class="fu">georef</span>(props, coord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="variogramme" class="level2">
+<h2 class="anchored" data-anchor-id="variogramme">Variogramme</h2>
+<p>Le fit pour tester les différents variogramme va nous donner le SineHoleVariogram avec tous les paramètres optimisé. On décide à la base d’utiliser ce dernier mais il s’avère qu’il ne donne pas de bon résultat pour le Krigeage. On utilisera donc un variogramme de Matérn. Si vous voulez observer ce dernier dans le krigeage il suffira de mettre dans la fonction kriging, le variogramme désiré.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># empirical variogram</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>time empvario <span class="ot">=</span> <span class="fu">EmpiricalVariogram</span>(meuselog, <span class="sc">:</span>logzinc, <span class="at">maxlag =</span> <span class="fl">2000.</span>)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="do">## plot of empirical variogram</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Mke.plot(empvario) plot interactive</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot(empvario) #plot sans interaction</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="do">## plot theorical variogram</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot(MaternVariogram(range=691, nugget=0.04))</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot(SineHoleVariogram(range=691, nugget=0.25))</span></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a><span class="co">#fit theorical and empirical variogramand </span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>time fitvario <span class="ot">=</span> <span class="fu">fit</span>(Variogram, empvario)</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot(empvario)</span></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot!(fitvario, maxlag = 2000.)</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.current_figure()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="création-de-la-grille" class="level2">
+<h2 class="anchored" data-anchor-id="création-de-la-grille">Création de la grille</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grid creation</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the x and y coordinates to numeric arrays</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>x_coords <span class="ot">=</span> <span class="fu">Float64.</span>(meuse.x)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>y_coords <span class="ot">=</span> <span class="fu">Float64.</span>(meuse.y)<span class="co"># Create the Cartesian grid dimensions, origin, and spacing</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>dims <span class="ot">=</span> (<span class="dv">100</span>, <span class="dv">100</span>)  <span class="co"># Number of grid points in x and y directions</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>origin <span class="ot">=</span> (<span class="fu">minimum</span>(x_coords), <span class="fu">minimum</span>(y_coords)) <span class="co"># Lower left corner of the grid</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>spacing <span class="ot">=</span> ((<span class="fu">maximum</span>(x_coords) <span class="sc">-</span> <span class="fu">minimum</span>(x_coords)) <span class="sc">/</span> (dims[<span class="dv">1</span>] <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>           (<span class="fu">maximum</span>(y_coords) <span class="sc">-</span> <span class="fu">minimum</span>(y_coords)) <span class="sc">/</span> (dims[<span class="dv">2</span>] <span class="sc">-</span> <span class="dv">1</span>)) </span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a> <span class="co"># Cell spacing in x and y directions# Create the CartesianGrid</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>𝒢 <span class="ot">=</span> <span class="fu">CartesianGrid</span>(dims, origin, spacing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="krigeage-2" class="level2">
+<h2 class="anchored" data-anchor-id="krigeage-2">Krigeage</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>𝒫 <span class="ot">=</span> <span class="fu">EstimationProblem</span>(𝒟, 𝒢, <span class="sc">:</span>logzinc)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>time 𝒮 <span class="ot">=</span> <span class="fu">Kriging</span>(<span class="sc">:</span><span class="at">logzinc =</span><span class="sc">&gt;</span> (<span class="at">variogram=</span><span class="fu">MaternVariogram</span>(<span class="at">nugget =</span> <span class="fl">0.21</span>,<span class="at">sill =</span> <span class="fl">0.59</span>,<span class="at">range=</span><span class="fl">706.78</span>),))</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co"># perform estimation</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>time Ω <span class="ot">=</span> <span class="fu">solve</span>(𝒫, 𝒮)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co"># CairoMakie.plot(Ω.geometry, color = Ω.logzinc_variance)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="affichage-du-krigeage" class="level2">
+<h2 class="anchored" data-anchor-id="affichage-du-krigeage">Affichage du Krigeage</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Export Kriging</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">GeoTables.save</span>(<span class="fu">joinpath</span>(current_directory,<span class="st">"data_geostats_julia/Kriging2.shp"</span>), Ω,<span class="at">force=</span>true )</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co">#read kriging</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>shape <span class="ot">=</span>  <span class="fu">Shapefile.Handle</span>(<span class="fu">joinpath</span>(current_directory,<span class="st">"data_geostats_julia/Kriging2.shp"</span>)).shapes</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># read grid </span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>grid_shp <span class="ot">=</span>  <span class="fu">Shapefile.Handle</span>(<span class="fu">joinpath</span>(current_directory,<span class="st">"data_geostats_julia/boundary1.shp"</span>)).shapes</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a reducer function (e.g., to sum values within each cell)</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="fu">reducer</span>(cell_values) <span class="ot">=</span> <span class="fu">sum</span>(cell_values)</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>rasterized_krig <span class="ot">=</span> <span class="fu">rasterize</span>(shape, <span class="at">fill=</span>Ω.logzinc, <span class="at">reducer =</span> reducer, <span class="at">size=</span>(<span class="dv">100</span>, <span class="dv">100</span>))</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a><span class="fu">Plots.plot</span>(rasterized_krig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Burning each geometry to a BitArray slice...   0%|                                                  |  ETA: 0:48:28
+
+Burning each geometry to a BitArray slice... 100%|██████████████████████████████████████████████████| Time: 0:00:00
+
+Reducing...   4%|██                                                |  ETA: 0:00:02
+
+Reducing...  47%|███████████████████████▌                          |  ETA: 0:00:00
+
+Reducing...  89%|████████████████████████████████████████████▌     |  ETA: 0:00:00
+
+Reducing... 100%|██████████████████████████████████████████████████| Time: 0:00:00</code></pre>
+<p><img src="R-Julia-Geostats-v-fix-version/figure-markdown_strict/cell-8-output-7.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Crop </span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>masked <span class="ot">=</span> <span class="fu">mask</span>(rasterized_krig,<span class="at">with=</span>grid_shp)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Plots.plot</span>(masked, <span class="at">title =</span> <span class="st">"Krigeage logzinc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="R-Julia-Geostats-v-fix-version/figure-markdown_strict/cell-9-output-1.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="comparaison" class="level1">
+<h1>4 - Comparaison</h1>
+
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Package
+</th>
+<th>
+R : gstat
+</th>
+<th>
+R : GeoModels
+</th>
+<th>
+Julia : GeoStats
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+Type de données d’entrée
+</td>
+<td>
+sp, sf
+</td>
+<td>
+matrices, vecteurs
+</td>
+<td>
+<p>
+dataframes
+</p>
+<p>
+Coordonées de type CartesianGrid
+</p>
+<p>
+Inconvénient : peu de documentation - difficile à prendre en main
+</p>
+</td>
+</tr>
+<tr class="even">
+<td>
+Documentation
+</td>
+<td>
+CRAN
+</td>
+<td>
+<p>
+CRAN
+</p>
+<p>
+https://vmoprojs.github.io/GeoModels-page/
+</p>
+</td>
+<td>
+<p>
+<a href="https://github.com/JuliaEarth/GeoStats.jl" class="uri">https://github.com/JuliaEarth/GeoStats.jl</a>
+</p>
+<p>
+https://juliapackages.com/p/geostats
+</p>
+</td>
+</tr>
+<tr class="odd">
+<td>
+Estimation de paramètres du variogramme
+</td>
+<td>
+<p>
+Moindres carrés sur variogramme empirique
+</p>
+<p>
+1 modèle à la fois au choix
+</p>
+</td>
+<td>
+<p>
+Vraisemblance composite sur les données
+</p>
+<p>
+1 modèle à la fois
+</p>
+<p>
+Paramètres fixes ou variables au choix
+</p>
+</td>
+<td>
+<p>
+Moindres carrés sur le variogramme empirique
+</p>
+<p>
+Tous les modèles disponibles à la fois
+</p>
+</td>
+</tr>
+<tr class="even">
+<td>
+Vitesse d’exécution - estimation du variogramme empirique
+</td>
+<td>
+0.05s
+</td>
+<td>
+0.07s
+</td>
+<td>
+0.012s
+</td>
+</tr>
+<tr class="odd">
+<td>
+Vitesse d’exécution - estimation du variogramme théorique
+</td>
+<td>
+0.04s
+</td>
+<td>
+1.15s
+</td>
+<td>
+0.05s (TOUS LES MODELES)
+</td>
+</tr>
+<tr class="even">
+<td>
+Vitesse d’exécution - krigeage
+</td>
+<td>
+0.42s
+</td>
+<td>
+0.87s
+</td>
+<td>
+<p>
+0.08s (Kriging)
+</p>
+<p>
+10.6s (solve)
+</p>
+</td>
+</tr>
+</tbody>
+
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

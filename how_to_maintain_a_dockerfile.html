@@ -257,6 +257,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#c-tester-rapidement-un-conteneur-exemple-non-interactif" id="toc-c-tester-rapidement-un-conteneur-exemple-non-interactif" class="nav-link" data-scroll-target="#c-tester-rapidement-un-conteneur-exemple-non-interactif">c) Tester rapidement un conteneur (exemple <strong>non-interactif</strong>)</a></li>
   <li><a href="#d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout" id="toc-d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout" class="nav-link" data-scroll-target="#d-des-bonnes-pratiques-oui-mais-du-groupe-avant-tout">d) Des bonnes pratiques oui ! Mais du groupe avant tout</a></li>
   </ul></li>
+  <li><a href="#iii---la-réalité-une-limite-de-mémoire" id="toc-iii---la-réalité-une-limite-de-mémoire" class="nav-link" data-scroll-target="#iii---la-réalité-une-limite-de-mémoire">III - La réalité, une limite de mémoire</a>
+  <ul class="collapse">
+  <li><a href="#a-un-dockerfile-ça-doit-être-petit" id="toc-a-un-dockerfile-ça-doit-être-petit" class="nav-link" data-scroll-target="#a-un-dockerfile-ça-doit-être-petit">a) Un <code>Dockerfile</code> ça doit être petit</a></li>
+  <li><a href="#b-abandon-du-docker-plein-au-qmd-fixés." id="toc-b-abandon-du-docker-plein-au-qmd-fixés." class="nav-link" data-scroll-target="#b-abandon-du-docker-plein-au-qmd-fixés.">b) Abandon : Du docker plein au <code>qmd</code> fixés.</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#références" id="toc-références" class="nav-link" data-scroll-target="#références">Références</a></li>
   </ul>
 </nav>
@@ -298,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="i---un-dockerfile" class="level2">
 <h2 class="anchored" data-anchor-id="i---un-dockerfile">I - Un <code>Dockerfile</code> ?</h2>
 <p>Docker est une technologie permettant de <strong>créer et utiliser</strong> de manière <strong>efficace</strong> des conteneurs logiciels. Ces conteneurs logiciel sont en fait des <strong>environnements de travail spécialisables, versionnés et facilement partageable</strong>. Docker permet donc de partager : des environnements de calculs pour des travaux en équipe, des applications (par exemple {shiny}), mais aussi permet l’intégration continue de site web et autres.</p>
-<p>Voici le <code>Dockerfile</code> utilisé pour ce projet:</p>
+<p>Voici un <code>Dockerfile</code> utile pour ce projet:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Source Dockerfile</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>FROM rocker<span class="sc">/</span>geospatial<span class="sc">:</span><span class="dv">4</span></span>
@@ -441,6 +447,25 @@ Une possibilité est de créé un deuxième <code>Dockerfile</code> (que l’on 
 </ol>
 <p>En cas de problème avec un conteneur, ces informations sont très utiles pour résoudre les incompatibilités qui ont lieux.</p>
 </section>
+</section>
+<section id="iii---la-réalité-une-limite-de-mémoire" class="level2">
+<h2 class="anchored" data-anchor-id="iii---la-réalité-une-limite-de-mémoire">III - La réalité, une limite de mémoire</h2>
+<section id="a-un-dockerfile-ça-doit-être-petit" class="level3">
+<h3 class="anchored" data-anchor-id="a-un-dockerfile-ça-doit-être-petit">a) Un <code>Dockerfile</code> ça doit être petit</h3>
+<p>Lors de ce projet nous avons utilisé un autre <code>Dockerfile</code> (voir: <a href="https://stateofther.github.io/finistR2023/instructions.html">Instructions pour le dépot sur le site web</a>), car celui montré plus haut est beaucoup trop lourd (18GB), et … en pratique il ne rentre pas dans un runner GitHub (max 14GB) sans aménagement. Mes connaissances étant limitées, je ne sais comment économiser de la mémoire dans un docker.</p>
+</section>
+<section id="b-abandon-du-docker-plein-au-qmd-fixés." class="level3">
+<h3 class="anchored" data-anchor-id="b-abandon-du-docker-plein-au-qmd-fixés.">b) Abandon : Du docker plein au <code>qmd</code> fixés.</h3>
+<p>Pour résoudre ce problème on vas donc transformer ce <code>qmd</code> (R &amp; Julia) en un md fixe au moins pour la partie Julia. Je crée donc un <code>qmd</code> contenant uniquement du texte et du Julia. Puis je le fais tourner en local pour produire un fichier <code>md</code>. Je remplace ensuite le passage en Julia dans mon <code>qmd</code> (R &amp; Julia de base). Ainsi seul le R est du code réel. Pour finir je remplace les</p>
+<p>``` julia</p>
+<p>avant chaque chunks de Julia par des</p>
+<p>```{r,eval = FALSE}</p>
+<p>Ce qui va le faire s’afficher comme un chunk de R avec des couleurs dans le texte mais sans l’évaluer.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Docker c’est formidable ça permet de simplifier énormément de processus en remotes, d’automatiser des actions de contrôles et de diffusion mais aussi de partager des programmes plus simplement. Cependant c’est une technologie qui nécessite une liste claire des dépendances de chaque code. Enfin lorsque des procédés complexes sont nécessaires, comme par exemples mélanger de nombreux outils différents, il vaux tout de même mieux jouer la carte de l’économie, et reporter la plus part des calculs en local. Et ainsi faire travailler un minimum le runner à chaque action.</p>
 </section>
 <section id="références" class="level2">
 <h2 class="anchored" data-anchor-id="références">Références</h2>
